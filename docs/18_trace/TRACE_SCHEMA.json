@@ -1,0 +1,7 @@
+{
+  "trace_id": "string",
+  "timestamp": "number",
+  "contract_address": "string",
+  "chain": "string",
+  "latency_ms": "number"
+}

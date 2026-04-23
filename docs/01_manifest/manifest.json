@@ -1,0 +1,35 @@
+{
+  "name": "Sentinel Alpha",
+  "version": "1.0.0",
+  "type": "execution_fidelity_layer",
+  "endpoint": "/contracts/risk-score",
+  "engine": "Mycelium Engine",
+  "agents": [
+    "Scout Cell",
+    "T-Cell",
+    "B-Cell",
+    "Signal Cell",
+    "Synapse Cell"
+  ],
+  "capabilities": [
+    "contract_risk_scoring",
+    "oracle_dislocation_detection",
+    "simulation_validation",
+    "cluster_analysis",
+    "emergency_exit_signal"
+  ],
+  "output_schema": {
+    "risk_score": "0-100",
+    "confidence": "0-1",
+    "action": ["BLOCK", "REDUCE", "ALLOW", "EXIT_NOW", "REVIEW"],
+    "emergency_signal": "string"
+  },
+  "payment": {
+    "model": "x402",
+    "tiers": {
+      "basic": 0.02,
+      "executive": 0.05,
+      "priority": 0.15
+    }
+  }
+}

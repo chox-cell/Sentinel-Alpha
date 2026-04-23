@@ -1,0 +1,5 @@
+{
+  "attestation_hash": "string",
+  "trace_id": "string",
+  "timestamp": "number"
+}

@@ -1,0 +1,38 @@
+engine: mycelium
+
+weights:
+  honeypot: 30
+  owner_privileges: 20
+  liquidity_unlocked: 15
+  deployer_cluster: 25
+  oracle_dislocation: 40
+  simulation_revert: 35
+  entropy: 10
+
+thresholds:
+  block: 85
+  reduce: 65
+  allow: 40
+
+oracle:
+  tolerance: 0.02
+
+latency_targets:
+  p50_ms: 30
+  p95_ms: 50
+
+pricing:
+  basic: 0.02
+  executive: 0.05
+  priority: 0.15
+
+phi:
+  learning_rate: 0.05
+
+cache:
+  ttl_seconds: 300
+
+chains:
+  - base
+  - solana
+  - ethereum
