@@ -41,5 +41,7 @@ def test_webhook_uses_reducer_and_returns_summary(monkeypatch):
     assert body["status"] == "ok"
     assert body["result"]["status"] == "ok"
     assert body["result"]["candidates"] == 1
+    assert body["result"]["evaluated"] == 1
+    assert body["result"]["skipped"] == 0
     assert len(body["result"]["results"]) == 1
     assert body["result"]["results"][0]["status_code"] == 200

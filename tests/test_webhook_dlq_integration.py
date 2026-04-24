@@ -18,7 +18,11 @@ def test_failed_candidate_goes_to_dlq_and_webhook_continues(monkeypatch):
                 "transaction_hash": "0xtx1",
                 "block_number": 1,
                 "log_count": 1,
-                "context": {"event_type": "contract_event"},
+                    "context": {
+                        "event_type": "contract_event",
+                        "topic0": "0xddf252ad00000000000000000000000000000000000000000000000000000000",
+                        "force_evaluate": True,
+                    },
             },
             {
                 "contract_address": "0x2222222222222222222222222222222222222222",
@@ -27,7 +31,11 @@ def test_failed_candidate_goes_to_dlq_and_webhook_continues(monkeypatch):
                 "transaction_hash": "0xtx2",
                 "block_number": 2,
                 "log_count": 1,
-                "context": {"event_type": "contract_event"},
+                    "context": {
+                        "event_type": "contract_event",
+                        "topic0": "0xddf252ad00000000000000000000000000000000000000000000000000000000",
+                        "force_evaluate": True,
+                    },
             },
         ],
     )

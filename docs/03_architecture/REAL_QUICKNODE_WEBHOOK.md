@@ -21,6 +21,7 @@ Health response:
 - If `QUICKNODE_DRY_RUN=true`, webhook still processes normally.
 - Billing remains demo because risk response billing mode is unchanged.
 - QuickNode Event Reducer v0.2 converts large payloads into canonical candidate packets before evaluation.
+- Candidate Classification v0.1 prioritizes high-value candidates before evaluation.
 - QuickNode Payload Inspector v0.1 summarizes unknown large payload structures safely.
 - Candidate fan-out is capped at 50 per webhook.
 - Webhook logs include:
@@ -28,6 +29,8 @@ Health response:
   - `dry_run: <bool>`
   - `payload_size_bytes`
   - `candidate_count`
+  - `evaluated_count`
+  - `skipped_count`
   - `block_number`
 - For large payloads (>100000 bytes) with zero candidates:
   - logs `quicknode_payload_inspected` with inspection summary only.
@@ -41,6 +44,18 @@ Each reduced candidate uses:
 - `block_number`
 - `log_count`
 - `context`
+
+## Candidate classification (v0.1)
+- `first_liquidity` => evaluate (priority 100)
+- `new_token_candidate` => evaluate (priority 90)
+- transfer topic => `token_transfer`, skip by default unless force evaluate
+- approval topic => `approval`, skip
+- unknown => skip
+- Webhook summary now reports:
+  - `candidates`
+  - `evaluated`
+  - `skipped`
+  - `results`
 
 ### matchingReceipts support (v0.2)
 - Supports top-level `matchingReceipts`.

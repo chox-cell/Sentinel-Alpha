@@ -15,6 +15,7 @@ Client/Bot
 QuickNode
 → /webhooks/quicknode
 → Scout Cell
+→ Candidate Classification v0.1
 → QuickNode Payload Normalizer v0.1
 → evaluate_contract
 → extract_signals
