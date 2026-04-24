@@ -1,9 +1,11 @@
 import os
+import uuid
 from dotenv import load_dotenv
 from fastapi import HTTPException
 from services.x402.coinbase import verify_demo_payment, verify_real_payment
 from services.x402.payment_config import get_pricing_tiers
 from services.x402.replay_guard import is_payment_replay, record_payment_fingerprint
+from services.x402.settlement_ledger import write_settlement_record
 
 load_dotenv()
 
@@ -64,7 +66,25 @@ def require_x402_payment(headers: dict, lane: str = "basic") -> dict:
         raise HTTPException(status_code=402, detail={"error": "invalid_x402_payment"})
     if is_payment_replay(x402_payment_header):
         raise HTTPException(status_code=402, detail={"error": "x402_replay_detected"})
-    record_payment_fingerprint(x402_payment_header, trace_id=None)
+    trace_id = str(uuid.uuid4())
+    replay_record = record_payment_fingerprint(x402_payment_header, trace_id=trace_id)
+    network = (os.getenv("X402_NETWORK", "base") or "base").strip().lower() or "base"
+    treasury_wallet = (
+        (os.getenv("X402_REVENUE_ADDRESS") or "").strip()
+        or (os.getenv("SENTINEL_TREASURY_WALLET") or "").strip()
+    )
+    write_settlement_record(
+        {
+            "trace_id": trace_id,
+            "tx_hash": verification.get("tx_hash"),
+            "payment_fingerprint": replay_record.get("fingerprint"),
+            "lane": selected_lane,
+            "amount": verification["amount"],
+            "network": network,
+            "treasury_wallet": treasury_wallet,
+            "verification_status": "tx_format_valid_unverified",
+        }
+    )
 
     return {
         "amount": verification["amount"],

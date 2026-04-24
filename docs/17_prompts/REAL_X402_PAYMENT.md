@@ -1,4 +1,4 @@
-# REAL X402 PAYMENT + ENV LOCK v0.5
+# REAL X402 PAYMENT + ENV LOCK v0.6
 
 Goal:
 - Add safe planning/status scaffolding for real x402 payments without enabling real settlement by default.
@@ -12,6 +12,7 @@ Implementation:
 - `GET /internal/x402/challenge`
 - `GET /internal/x402/verification/status`
 - `GET /internal/x402/replay/status`
+- `GET /internal/x402/settlements/status`
 
 Function:
 - `get_payment_status() -> dict`
@@ -95,3 +96,22 @@ x402 replay protection v0.5:
 - In `PAYMENT_MODE=real` + `X402_ENABLED=true`:
   - replayed payment header returns `402` + `{"error":"x402_replay_detected"}`
   - accepted payment records fingerprint after tx-format verification succeeds
+
+x402 settlement logging v0.6:
+- Create `services/x402/settlement_ledger.py`
+- Add:
+  - `write_settlement_record(record: dict) -> dict`
+  - `read_settlement_records(limit: int = 50) -> list[dict]`
+  - `get_settlement_status() -> dict`
+- Store in `logs/x402_settlements.jsonl`
+- Record includes:
+  - `trace_id`
+  - `tx_hash`
+  - `payment_fingerprint`
+  - `lane`
+  - `amount`
+  - `network`
+  - `treasury_wallet`
+  - `verification_status`
+  - `created_at`
+- Never store raw full `X402-PAYMENT` header

@@ -68,6 +68,7 @@ Signals:
 - x402 Real Payment Challenge v0.2 active
 - x402 Real Payment Verification v0.4 active
 - x402 Replay Protection v0.5 active
+- x402 Settlement Logging v0.6 active
 - Attestation active
 - Redis cache active
 - Webhook ingestion active
