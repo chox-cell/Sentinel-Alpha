@@ -25,3 +25,12 @@ node_modules/
 
 *.log
 
+
+# runtime logs / memory
+
+logs/*.log
+
+logs/*.jsonl
+
+logs/phi_state.json
+
