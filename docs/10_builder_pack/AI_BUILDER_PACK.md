@@ -1,60 +1,60 @@
-# 🤖 Sentinel Alpha — AI Builder Pack
+# AI Builder Pack v1.8
 
-## Purpose
+## Project
+Sentinel Alpha
 
-Control all AI builders (Claude, Cursor, Codex)
+## System Type
+Execution Fidelity Layer for Bots and Agents
 
----
+## Engine
+Mycelium Engine
 
-## Core Rule
+## Agents
+Sentinel Cells:
+- Scout Cell
+- T-Cell
+- B-Cell
+- Signal Cell
+- Synapse Cell
 
-AI must FOLLOW SSOT
+## Core Endpoint
+POST /contracts/risk-score
 
-Never:
-- rename system
-- change endpoint
-- change pipeline
-- modify agent names
+## Current Code State
+Real Signals v0 is active.
 
----
+Current flow:
+Request/Webhook
+→ extract_signals
+→ compute_score
+→ compute_confidence
+→ decide
+→ classify_threat
+→ build_attestation
+→ return Executive JSON
 
-## Build Mode
+## Files to respect
+- services/signals/extractor.py
+- services/mycelium_engine/engine.py
+- services/risk_service/service.py
+- services/attestation_layer/attestation.py
+- apps/api/main.py
+- apps/webhooks/quicknode.py
 
-AI builds ONLY:
+## Builder Mission
+Improve Sentinel Alpha without changing identity.
 
-- modules
-- functions
-- logic
+## Allowed Next Builds
+1. tests
+2. bytecode scanner
+3. QuickNode event normalizer
+4. simulation stub
+5. deployer profile stub
+6. cache metrics
+7. real docs update
 
-NOT:
-- architecture
-- system identity
-
----
-
-## Input Context
-
-Always load:
-
-- SSOT.md
-- TRUTH.md
-- ARCHITECTURE.md
-- ACTION_POLICY.md
-
----
-
-## Output Expectation
-
-AI must produce:
-
-- clean code
-- deterministic logic
-- no hallucination
-
----
-
-## Failure Rule
-
-If AI violates SSOT:
-
-→ reject output
+## Forbidden
+- rename
+- dashboard
+- architecture rewrite
+- endpoint change

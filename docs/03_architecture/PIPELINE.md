@@ -1,41 +1,32 @@
-# 🔁 Sentinel Alpha — Pipeline (LOCKED)
+# Sentinel Alpha Pipeline v1.8
 
-## Flow
+## Public API Path
+Client/Bot
+→ /contracts/risk-score
+→ payment gate
+→ evaluate_contract
+→ extract_signals
+→ Mycelium Engine
+→ Attestation Layer
+→ Executive JSON
 
-1. Scout Cell
-→ detect contract / liquidity
+## QuickNode Webhook Path
+QuickNode
+→ /webhooks/quicknode
+→ Scout Cell
+→ QuickNode Payload Normalizer v0.1
+→ evaluate_contract
+→ extract_signals
+→ Mycelium Engine
+→ Attestation Layer
+→ Executive JSON
 
-2. T-Cell
-→ simulate tx
-→ detect revert / honeypot
+## Current Design Rule
+Webhook must NOT call local API through HTTP.
+It must call evaluate_contract directly to avoid self-call deadlock.
 
-3. B-Cell
-→ cluster analysis
-→ deployer history
-
-4. Signal Cell
-→ external signals
-→ bot activity / noise
-
-5. Mycelium Engine
-→ calculate Risk Score (R_s)
-
-6. Policy Engine
-→ convert score → action
-
-7. Attestation Layer
-→ sign result (proof)
-
-8. Synapse Cell
-→ return JSON + collect payment
-
----
-
-## Output Format (MANDATORY)
-
-{
-  risk_score: number,
-  confidence: number,
-  action: string,
-  emergency_signal: string
-}
+## Current Status
+- API works
+- Webhook works
+- Real Signals v0 works
+- Attestation works

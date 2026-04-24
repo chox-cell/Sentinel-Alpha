@@ -1,31 +1,18 @@
-# 🧾 Attestation Layer
+# Attestation Layer v1.8
 
 ## Purpose
+Every decision must include proof of audit.
 
-Proof that decision was made by Sentinel Alpha
+## Current File
+services/attestation_layer/attestation.py
 
----
+## Current Attestation Fields
+- decision_fingerprint
+- engine_version
+- signed_at
 
-## Structure
+## Current Engine Version
+mycelium-wrsi-0.2
 
-hash = SHA256(
-  contract_address +
-  risk_score +
-  action +
-  timestamp
-)
-
----
-
-## Output
-
-{
-  attestation_hash: string
-}
-
----
-
-## Usage
-
-- proof for bots
-- proof for investors
+## Rule
+Every /contracts/risk-score response must include attestation.

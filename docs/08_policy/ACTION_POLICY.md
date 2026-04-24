@@ -1,42 +1,37 @@
-# ⚖️ Action Policy (LOCKED LOGIC)
+# Action Policy v1.8
 
-## Decision Mapping
+## Decisions
+- BLOCK
+- REDUCE
+- ALLOW
+- REVIEW
+- EXIT_NOW
 
-IF risk_score >= 85:
-→ BLOCK
+## Current Logic
+IF confidence < 0.5:
+  REVIEW
 
-IF 65 <= risk_score < 85:
-→ REDUCE
+IF oracle_dislocation OR liquidity_unlocked AND score >= 80:
+  EXIT_NOW
 
-IF risk_score < 65:
-→ ALLOW
+IF score >= 85:
+  BLOCK
 
----
+IF score >= 65:
+  REDUCE
 
-## Emergency Overrides
+ELSE:
+  ALLOW
 
-IF oracle_dislocation > threshold:
-→ EXIT_NOW
+## Emergency Priority
+EXIT_NOW overrides BLOCK when liquidity/oracle emergency exists.
 
-IF simulation_revert == true:
-→ BLOCK
-
-IF insufficient_data:
-→ REVIEW
-
----
-
-## Priority Rules
-
-1. EXIT_NOW overrides everything
-2. BLOCK overrides REDUCE
-3. REVIEW only if confidence < 0.5
-
----
-
-## Output Guarantee
-
-System must ALWAYS return:
-- action
-- confidence
-- reason (optional)
+## Current Threat Classes
+- invalid_contract_address
+- oracle_dislocation
+- liquidity_rug
+- execution_drift
+- behavioral_launch_syndicate
+- privilege_rug
+- insufficient_data
+- normal
