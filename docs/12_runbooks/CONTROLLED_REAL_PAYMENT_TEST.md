@@ -14,6 +14,7 @@ Run:
 - `python scripts/print_real_payment_readiness.py`
 
 The script reports:
+- `env_source` (`.env`)
 - `payment_mode`
 - `x402_enabled`
 - `onchain_verify_enabled`
@@ -24,6 +25,7 @@ The script reports:
 - `readiness_verdict`
 
 It does not print secret values.
+It loads repo-root `.env` with override behavior, so `.env` is the source of truth even if shell vars differ.
 
 ## Controlled test steps
 1. Set scoped environment for a single test session.
