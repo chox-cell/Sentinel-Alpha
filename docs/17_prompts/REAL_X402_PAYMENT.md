@@ -1,4 +1,4 @@
-# REAL X402 PAYMENT + ENV LOCK v0.1
+# REAL X402 PAYMENT + ENV LOCK v0.2
 
 Goal:
 - Add safe planning/status scaffolding for real x402 payments without enabling real settlement by default.
@@ -9,6 +9,7 @@ Implementation:
 - `services/x402/coinbase.py`
 - `GET /internal/x402/status`
 - `GET /internal/x402/pricing`
+- `GET /internal/x402/challenge`
 
 Function:
 - `get_payment_status() -> dict`
@@ -43,3 +44,17 @@ Middleware behavior v0.1:
   - `executive` -> `PRICE_EXECUTIVE`
   - `premium` -> `PRICE_PREMIUM`
   - `priority` -> `PRICE_PRIORITY`
+
+Challenge behavior v0.2:
+- Add `build_x402_challenge(lane: str = "basic") -> dict`
+- In real mode with `X402_ENABLED=true` and missing `X402-PAYMENT`, return `HTTP 402` with structured challenge detail
+- In real mode with `X402_ENABLED=false`, return `HTTP 402` with `{"error":"x402_disabled"}`
+- Challenge includes:
+  - `x402_version: "0.2"`
+  - `payment_method: "x402"`
+  - `network`
+  - `pay_to`
+  - `amount_usdc`
+  - `asset: "USDC"`
+  - `resource: "/contracts/risk-score"`
+  - `instructions`

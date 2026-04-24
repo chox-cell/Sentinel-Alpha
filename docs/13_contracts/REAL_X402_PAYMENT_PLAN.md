@@ -12,6 +12,7 @@ Prepare Sentinel Alpha for future real x402/Coinbase payment enablement without 
 - `get_payment_status() -> dict`
 - internal endpoint: `GET /internal/x402/status`
 - internal endpoint: `GET /internal/x402/pricing`
+- internal endpoint: `GET /internal/x402/challenge?lane=basic`
 
 ## Environment inputs
 - `PAYMENT_MODE` (default `demo`)
@@ -71,3 +72,23 @@ Lane pricing mapping:
 
 Settlement:
 - No live Coinbase settlement is executed in v0.1.
+
+## Real Payment Challenge v0.2
+- `services/x402/payment.py`
+- `build_x402_challenge(lane: str = "basic") -> dict`
+
+When `PAYMENT_MODE=real` and `X402_ENABLED=true`:
+- missing `X402-PAYMENT` returns `HTTP 402` with challenge payload
+
+Challenge payload:
+- `x402_version: "0.2"`
+- `payment_method: "x402"`
+- `network` from `X402_NETWORK`
+- `pay_to` from `X402_REVENUE_ADDRESS` or `SENTINEL_TREASURY_WALLET`
+- `amount_usdc` from lane pricing
+- `asset: "USDC"`
+- `resource: "/contracts/risk-score"`
+- `instructions: "Submit X402-PAYMENT header to access this resource."`
+
+When `PAYMENT_MODE=real` and `X402_ENABLED=false`:
+- return `HTTP 402` with `{"error":"x402_disabled"}`

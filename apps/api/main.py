@@ -8,7 +8,7 @@ from pydantic import BaseModel
 from typing import Optional, Dict, Any
 
 from apps.webhooks.quicknode import router as quicknode_router
-from services.x402.payment import require_x402_payment
+from services.x402.payment import require_x402_payment, build_x402_challenge
 from services.risk_service.service import evaluate_contract_with_meta
 from services.cache.metrics import get_cache_metrics
 from services.attestation_layer.key_signing import (
@@ -148,3 +148,8 @@ def internal_x402_pricing():
         "pricing_tiers": get_pricing_tiers(),
         "default_lane": "basic",
     }
+
+
+@app.get("/internal/x402/challenge")
+def internal_x402_challenge(lane: str = "basic"):
+    return build_x402_challenge(lane=lane)

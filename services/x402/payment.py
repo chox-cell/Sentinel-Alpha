@@ -7,6 +7,28 @@ from services.x402.payment_config import get_pricing_tiers
 load_dotenv()
 
 
+def build_x402_challenge(lane: str = "basic") -> dict:
+    pricing = get_pricing_tiers()
+    selected_lane = lane if lane in {"basic", "executive", "premium", "priority"} else "basic"
+    network = (os.getenv("X402_NETWORK", "base") or "base").strip().lower() or "base"
+    pay_to = (
+        (os.getenv("X402_REVENUE_ADDRESS") or "").strip()
+        or (os.getenv("SENTINEL_TREASURY_WALLET") or "").strip()
+    )
+
+    return {
+        "x402_version": "0.2",
+        "payment_method": "x402",
+        "network": network,
+        "pay_to": pay_to,
+        "amount_usdc": f"{pricing[selected_lane]:.2f}",
+        "asset": "USDC",
+        "resource": "/contracts/risk-score",
+        "instructions": "Submit X402-PAYMENT header to access this resource.",
+        "lane": selected_lane,
+    }
+
+
 def require_x402_payment(headers: dict, lane: str = "basic") -> dict:
     mode = (os.getenv("PAYMENT_MODE", "demo") or "demo").strip().lower()
     x402_enabled = (os.getenv("X402_ENABLED", "false") or "false").strip().lower() in {"1", "true", "yes", "on"}
@@ -31,10 +53,10 @@ def require_x402_payment(headers: dict, lane: str = "basic") -> dict:
 
     # PAYMENT_MODE=real
     if not x402_enabled:
-        raise HTTPException(status_code=402, detail="Real x402 payments are disabled")
+        raise HTTPException(status_code=402, detail={"error": "x402_disabled"})
 
     if not verify_real_payment_placeholder(x402_payment_header):
-        raise HTTPException(status_code=402, detail="x402 payment header required")
+        raise HTTPException(status_code=402, detail=build_x402_challenge(selected_lane))
 
     return {
         "amount": f"{amount:.2f}",
