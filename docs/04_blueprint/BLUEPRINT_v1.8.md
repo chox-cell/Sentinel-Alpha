@@ -53,6 +53,7 @@ Signals:
 - Identity & Attestation v0.1 active
 - Real QuickNode Webhook Dry Run v0.1 active
 - Agentic / Discovery Manifest Hardening v0.1 active
+- Real QuickNode Live Setup v0.1 active
 - Attestation active
 - Redis cache active
 - Webhook ingestion active

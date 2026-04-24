@@ -12,6 +12,7 @@ from services.x402.payment import require_payment
 from services.risk_service.service import evaluate_contract_with_meta
 from services.cache.metrics import get_cache_metrics
 from services.latency_shield.background import schedule_post_risk_tasks
+from shared.config.env import get_env_bool, get_quicknode_env_status
 
 load_dotenv()
 
@@ -69,3 +70,24 @@ def internal_cache_metrics():
 @app.get("/internal/manifest")
 def internal_manifest():
     return json.loads(MANIFEST_PATH.read_text(encoding="utf-8"))
+
+
+@app.get("/internal/quicknode-live-check")
+def internal_quicknode_live_check():
+    status = get_quicknode_env_status()
+    chain = os.getenv("QUICKNODE_CHAIN", "base").strip().lower() or "base"
+    checks = {
+        "webhook_url_configured": status["webhook_url_configured"],
+        "webhook_secret_configured": status["webhook_secret_configured"],
+        "dry_run": get_env_bool("QUICKNODE_DRY_RUN", default=False),
+        "chain": chain,
+    }
+    ready_for_live = (
+        checks["webhook_url_configured"]
+        and checks["webhook_secret_configured"]
+        and not checks["dry_run"]
+    )
+    return {
+        "ready_for_live": ready_for_live,
+        "checks": checks,
+    }
