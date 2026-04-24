@@ -11,6 +11,11 @@ from apps.webhooks.quicknode import router as quicknode_router
 from services.x402.payment import require_payment
 from services.risk_service.service import evaluate_contract_with_meta
 from services.cache.metrics import get_cache_metrics
+from services.attestation_layer.key_signing import (
+    get_attestation_private_key,
+    get_attestation_public_key,
+    get_signing_mode,
+)
 from services.dlq.dead_letter import DLQ_PATH, read_dlq
 from services.identity.identity_config import get_identity_status
 from services.latency_shield.background import schedule_post_risk_tasks
@@ -112,3 +117,13 @@ def internal_ingestion_status():
 @app.get("/internal/identity/status")
 def internal_identity_status():
     return get_identity_status()
+
+
+@app.get("/internal/attestation/status")
+def internal_attestation_status():
+    return {
+        "attestation_version": "attestation-0.1",
+        "signing_mode": get_signing_mode(),
+        "public_key_configured": bool(get_attestation_public_key()),
+        "private_key_configured": bool(get_attestation_private_key()),
+    }

@@ -62,6 +62,7 @@ Signals:
 - Candidate Classification v0.1 active
 - Cost / Volume Control v0.1 active
 - Real Identity / ERC-8004 Planning v0.1 active
+- Real Attestation Key Signing v0.1 active
 - Attestation active
 - Redis cache active
 - Webhook ingestion active

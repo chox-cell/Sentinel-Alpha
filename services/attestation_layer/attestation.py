@@ -1,6 +1,7 @@
 import hashlib
 from datetime import datetime, timezone
 
+from services.attestation_layer.key_signing import get_signing_mode, sign_attestation_message
 from services.identity.agent_identity import get_agent_identity
 
 ENGINE_VERSION = "mycelium-wrsi-0.2"
@@ -13,7 +14,7 @@ def build_attestation(contract_address: str, chain: str, score: int, action: str
     fingerprint = hashlib.sha256(raw.encode("utf-8")).hexdigest()
     decision_fingerprint = f"sha256:{fingerprint}"
     signature_raw = f"{decision_fingerprint}{agent_identity['did']}{ENGINE_VERSION}"
-    signature = hashlib.sha256(signature_raw.encode("utf-8")).hexdigest()
+    signature = sign_attestation_message(signature_raw)
 
     return {
         "decision_fingerprint": decision_fingerprint,
@@ -21,5 +22,6 @@ def build_attestation(contract_address: str, chain: str, score: int, action: str
         "signed_at": signed_at,
         "agent_identity": agent_identity,
         "attestation_version": "attestation-0.1",
-        "signature": f"sha256:{signature}",
+        "signing_mode": get_signing_mode(),
+        "signature": signature,
     }
