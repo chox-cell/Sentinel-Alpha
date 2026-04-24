@@ -1,4 +1,4 @@
-# X402 Payment Runbook v0.6
+# X402 Payment Runbook v0.7
 
 ## Goal
 Enable safe x402 payment enforcement paths without enabling live settlement.
@@ -25,6 +25,9 @@ Enable safe x402 payment enforcement paths without enabling live settlement.
   - invalid payment header returns `402` with `{"error":"invalid_x402_payment"}`
   - valid tx-format header returns billing status `tx_format_valid_unverified`
   - verification result reason: `onchain_verification_not_enabled`
+  - if `X402_ONCHAIN_VERIFY=true`, tx proof is passed to on-chain adapter
+  - if on-chain verification fails, request returns `402` with `{"error":"x402_payment_not_verified","status":"..."}` 
+  - if on-chain verification succeeds, billing status becomes `verified`
   - replayed tx proof returns `402` with `{"error":"x402_replay_detected"}`
   - accepted tx proof appends settlement ledger entry in `logs/x402_settlements.jsonl`
   - successful `/contracts/risk-score` response billing is overridden from payment middleware result
@@ -46,11 +49,13 @@ Enable safe x402 payment enforcement paths without enabling live settlement.
 - `GET /internal/x402/verification/status`
 - `GET /internal/x402/replay/status`
 - `GET /internal/x402/settlements/status`
+- `GET /internal/x402/onchain/status`
 
 ## Security notes
 - Never log or return private keys or secret values.
-- v0.4 does not perform Coinbase settlement.
+- v0.7 does not perform irreversible settlement actions.
 - `X402_ONCHAIN_VERIFY` defaults to `false`; onchain verification is not enabled yet.
+- `BASE_RPC_URL` is optional and used only when `X402_ONCHAIN_VERIFY=true`.
 - Replay fingerprints are stored in `logs/x402_payments.jsonl` and never include raw payment headers.
 - Settlement records are append-only in `logs/x402_settlements.jsonl` and never include raw payment headers.
 - Successful response schema keys are unchanged; only `billing` values are updated by payment mode.

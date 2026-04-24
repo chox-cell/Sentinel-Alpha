@@ -1,7 +1,7 @@
 from fastapi import HTTPException
 
 from services.x402.payment import require_x402_payment
-from services.x402 import replay_guard
+from services.x402 import replay_guard, settlement_ledger
 
 
 def test_real_mode_rejects_when_x402_disabled(monkeypatch):
@@ -28,6 +28,7 @@ def test_real_mode_requires_x402_payment_header(monkeypatch):
 
 def test_real_mode_returns_pending_validation(monkeypatch, tmp_path):
     monkeypatch.setattr(replay_guard, "PAYMENTS_LOG_PATH", tmp_path / "x402_payments.jsonl")
+    monkeypatch.setattr(settlement_ledger, "SETTLEMENT_LOG_PATH", tmp_path / "x402_settlements.jsonl")
     monkeypatch.setenv("PAYMENT_MODE", "real")
     monkeypatch.setenv("X402_ENABLED", "true")
     monkeypatch.setenv("PRICE_PRIORITY", "0.21")

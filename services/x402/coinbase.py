@@ -1,6 +1,8 @@
 import os
+from fastapi import HTTPException
 from dotenv import load_dotenv
 from services.x402.payment_config import get_pricing_tiers
+from services.x402.onchain_verifier import verify_usdc_transfer_tx
 
 load_dotenv()
 
@@ -42,7 +44,7 @@ def verify_real_payment(payment_header: str, lane: str = "basic") -> dict:
             "reason": parsed.get("error", "invalid_x402_payment"),
         }
 
-    return {
+    result = {
         "verified": False,
         "status": "tx_format_valid_unverified",
         "tx_hash": parsed["tx_hash"],
@@ -50,3 +52,26 @@ def verify_real_payment(payment_header: str, lane: str = "basic") -> dict:
         "amount": f"{pricing[selected_lane]:.2f}",
         "reason": "onchain_verification_not_enabled",
     }
+    onchain_enabled = (os.getenv("X402_ONCHAIN_VERIFY", "false") or "false").strip().lower() in {"1", "true", "yes", "on"}
+    if not onchain_enabled:
+        return result
+
+    treasury_wallet = (
+        (os.getenv("X402_REVENUE_ADDRESS") or "").strip()
+        or (os.getenv("SENTINEL_TREASURY_WALLET") or "").strip()
+    )
+    onchain = verify_usdc_transfer_tx(
+        tx_hash=parsed["tx_hash"],
+        expected_amount=float(pricing[selected_lane]),
+        treasury_wallet=treasury_wallet,
+    )
+    if onchain.get("verified") is True:
+        result["verified"] = True
+        result["status"] = "verified"
+        result["reason"] = "onchain_verified"
+        return result
+
+    raise HTTPException(
+        status_code=402,
+        detail={"error": "x402_payment_not_verified", "status": onchain.get("status", "verification_failed")},
+    )

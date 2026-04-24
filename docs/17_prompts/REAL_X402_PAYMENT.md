@@ -1,4 +1,4 @@
-# REAL X402 PAYMENT + ENV LOCK v0.6
+# REAL X402 PAYMENT + ENV LOCK v0.7
 
 Goal:
 - Add safe planning/status scaffolding for real x402 payments without enabling real settlement by default.
@@ -13,6 +13,7 @@ Implementation:
 - `GET /internal/x402/verification/status`
 - `GET /internal/x402/replay/status`
 - `GET /internal/x402/settlements/status`
+- `GET /internal/x402/onchain/status`
 
 Function:
 - `get_payment_status() -> dict`
@@ -115,3 +116,24 @@ x402 settlement logging v0.6:
   - `verification_status`
   - `created_at`
 - Never store raw full `X402-PAYMENT` header
+
+x402 on-chain USDC verification adapter v0.7:
+- Create `services/x402/onchain_verifier.py`
+- Constants:
+  - `BASE_USDC_ADDRESS = "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913"`
+  - `USDC_DECIMALS = 6`
+- Add:
+  - `usdc_to_units(amount: float) -> int`
+  - `get_onchain_verification_status() -> dict`
+  - `verify_usdc_transfer_tx(tx_hash: str, expected_amount: float, treasury_wallet: str) -> dict`
+- Behavior:
+  - `X402_ONCHAIN_VERIFY=false` -> `verified=false`, `status=onchain_verification_disabled`
+  - `X402_ONCHAIN_VERIFY=true` and no `BASE_RPC_URL` -> `verified=false`, `status=rpc_not_configured`
+  - no external calls unless both on-chain verify is enabled and RPC is configured
+- In `services/x402/coinbase.py`:
+  - when on-chain verify enabled, call adapter for tx proof
+  - if verified true, billing status is `verified`
+  - if not verified, return `402` with `{"error":"x402_payment_not_verified","status":"..."}`
+- `.env`:
+  - `X402_ONCHAIN_VERIFY=false`
+  - `BASE_RPC_URL=`

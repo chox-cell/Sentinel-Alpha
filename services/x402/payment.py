@@ -62,7 +62,7 @@ def require_x402_payment(headers: dict, lane: str = "basic") -> dict:
         raise HTTPException(status_code=402, detail=build_x402_challenge(selected_lane))
 
     verification = verify_real_payment(x402_payment_header, lane=selected_lane)
-    if verification["status"] != "tx_format_valid_unverified":
+    if verification["status"] not in {"tx_format_valid_unverified", "verified"}:
         raise HTTPException(status_code=402, detail={"error": "invalid_x402_payment"})
     if is_payment_replay(x402_payment_header):
         raise HTTPException(status_code=402, detail={"error": "x402_replay_detected"})
@@ -82,14 +82,14 @@ def require_x402_payment(headers: dict, lane: str = "basic") -> dict:
             "amount": verification["amount"],
             "network": network,
             "treasury_wallet": treasury_wallet,
-            "verification_status": "tx_format_valid_unverified",
+            "verification_status": verification["status"],
         }
     )
 
     return {
         "amount": verification["amount"],
         "method": "x402",
-        "status": "tx_format_valid_unverified",
+        "status": verification["status"],
         "lane": selected_lane,
     }
 

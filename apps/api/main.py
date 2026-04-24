@@ -9,6 +9,7 @@ from typing import Optional, Dict, Any
 
 from apps.webhooks.quicknode import router as quicknode_router
 from services.x402.payment import require_x402_payment, build_x402_challenge
+from services.x402.onchain_verifier import get_onchain_verification_status
 from services.x402.replay_guard import get_replay_status
 from services.x402.settlement_ledger import get_settlement_status
 from services.risk_service.service import evaluate_contract_with_meta
@@ -187,3 +188,8 @@ def internal_x402_replay_status():
 @app.get("/internal/x402/settlements/status")
 def internal_x402_settlements_status():
     return get_settlement_status()
+
+
+@app.get("/internal/x402/onchain/status")
+def internal_x402_onchain_status():
+    return get_onchain_verification_status()

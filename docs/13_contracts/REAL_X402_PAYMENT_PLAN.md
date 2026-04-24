@@ -27,6 +27,7 @@ Prepare Sentinel Alpha for future real x402/Coinbase payment enablement without 
 - `SENTINEL_TREASURY_WALLET` (optional)
 - `X402_NETWORK` (default `base`)
 - `X402_ONCHAIN_VERIFY` (default `false`)
+- `BASE_RPC_URL` (optional)
 - Pricing env:
   - `PRICE_BASIC` (default `0.02`)
   - `PRICE_EXECUTIVE` (default `0.05`)
@@ -117,3 +118,23 @@ Runtime behavior:
 - `PAYMENT_MODE=real`, `X402_ENABLED=true`, missing header: `402` challenge
 - `PAYMENT_MODE=real`, `X402_ENABLED=true`, invalid header: `402` + `{"error":"invalid_x402_payment"}`
 - `PAYMENT_MODE=real`, `X402_ENABLED=true`, valid tx format: request allowed with billing status `tx_format_valid_unverified`
+
+## On-chain USDC Verification Adapter v0.7
+- `services/x402/onchain_verifier.py`
+- constants:
+  - `BASE_USDC_ADDRESS = "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913"`
+  - `USDC_DECIMALS = 6`
+- functions:
+  - `usdc_to_units(amount: float) -> int`
+  - `get_onchain_verification_status() -> dict`
+  - `verify_usdc_transfer_tx(tx_hash: str, expected_amount: float, treasury_wallet: str) -> dict`
+
+Adapter safety:
+- if `X402_ONCHAIN_VERIFY=false`: `verified=false`, `status=onchain_verification_disabled`
+- if enabled but no `BASE_RPC_URL`: `verified=false`, `status=rpc_not_configured`
+- no external RPC calls unless both on-chain verify is enabled and RPC is configured
+
+Validation:
+- tx hash must be `0x` + 64 hex chars
+- treasury wallet must be valid `0x` address
+- expected amount must be greater than zero

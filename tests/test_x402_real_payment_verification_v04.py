@@ -2,7 +2,7 @@ from fastapi import HTTPException
 
 from services.x402.coinbase import verify_real_payment
 from services.x402.payment import require_x402_payment
-from services.x402 import replay_guard
+from services.x402 import replay_guard, settlement_ledger
 
 
 def test_verify_real_payment_valid_tx_format(monkeypatch):
@@ -42,6 +42,7 @@ def test_require_x402_payment_rejects_invalid_real_header(monkeypatch):
 
 def test_require_x402_payment_accepts_valid_real_header(monkeypatch, tmp_path):
     monkeypatch.setattr(replay_guard, "PAYMENTS_LOG_PATH", tmp_path / "x402_payments.jsonl")
+    monkeypatch.setattr(settlement_ledger, "SETTLEMENT_LOG_PATH", tmp_path / "x402_settlements.jsonl")
     monkeypatch.setenv("PAYMENT_MODE", "real")
     monkeypatch.setenv("X402_ENABLED", "true")
     monkeypatch.setenv("PRICE_BASIC", "0.02")
