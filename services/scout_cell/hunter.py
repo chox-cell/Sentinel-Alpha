@@ -1,19 +1,63 @@
 import uuid
+import json
 
 from shared.utils.logger import log_event
+from shared.config.limits import get_ingestion_limits
 from services.scout_cell.candidate_classifier import classify_candidate
 from services.dlq.dead_letter import write_dlq
 from services.risk_service.service import evaluate_contract
 from services.scout_cell.event_reducer import reduce_quicknode_event
 
 def handle_new_contract(event: dict):
-    candidates = reduce_quicknode_event(event)
+    limits = get_ingestion_limits()
+    payload_size_bytes = _estimate_payload_bytes(event)
+    max_eval = limits["max_evaluations_per_webhook"]
+    max_candidates = limits["max_candidates_per_webhook"]
+    warn_threshold = limits["max_payload_bytes_warn"]
+    hard_threshold = limits["max_payload_bytes_hard"]
+
+    if payload_size_bytes > hard_threshold:
+        log_event(
+            "cost_warning",
+            {
+                "payload_size_bytes": payload_size_bytes,
+                "threshold_type": "hard",
+                "max_payload_bytes_hard": hard_threshold,
+            },
+        )
+        return {
+            "status": "ignored",
+            "reason": "payload_too_large",
+            "candidates": 0,
+            "evaluated": 0,
+            "skipped": 0,
+            "results": [],
+        }
+
+    if payload_size_bytes > warn_threshold:
+        log_event(
+            "cost_warning",
+            {
+                "payload_size_bytes": payload_size_bytes,
+                "threshold_type": "warn",
+                "max_payload_bytes_warn": warn_threshold,
+            },
+        )
+
+    candidates = reduce_quicknode_event(event)[:max_candidates]
     results = []
     evaluated_count = 0
     skipped_count = 0
 
     for candidate in candidates:
         classification = classify_candidate(candidate)
+        if classification["should_evaluate"] and evaluated_count >= max_eval:
+            classification = {
+                **classification,
+                "should_evaluate": False,
+                "reason": "evaluation_cap_reached",
+            }
+
         if not classification["should_evaluate"]:
             skipped_count += 1
             results.append(
@@ -91,3 +135,10 @@ def handle_new_contract(event: dict):
         },
     )
     return summary
+
+
+def _estimate_payload_bytes(payload: dict) -> int:
+    try:
+        return len(json.dumps(payload or {}, ensure_ascii=False).encode("utf-8"))
+    except Exception:
+        return len(str(payload).encode("utf-8"))

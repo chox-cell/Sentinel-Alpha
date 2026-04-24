@@ -14,6 +14,7 @@ from services.cache.metrics import get_cache_metrics
 from services.dlq.dead_letter import DLQ_PATH, read_dlq
 from services.latency_shield.background import schedule_post_risk_tasks
 from shared.config.env import get_env_bool, get_quicknode_env_status
+from shared.config.limits import get_ingestion_limits
 
 load_dotenv()
 
@@ -100,3 +101,8 @@ def internal_dlq_status():
         "count_estimate": len(read_dlq(limit=1000)),
         "dlq_path": str(DLQ_PATH),
     }
+
+
+@app.get("/internal/ingestion/status")
+def internal_ingestion_status():
+    return get_ingestion_limits()

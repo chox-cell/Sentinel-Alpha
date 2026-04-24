@@ -60,6 +60,7 @@ Signals:
 - Payload Inspector v0.1 active
 - DLQ + Replay v0.1 active
 - Candidate Classification v0.1 active
+- Cost / Volume Control v0.1 active
 - Attestation active
 - Redis cache active
 - Webhook ingestion active
