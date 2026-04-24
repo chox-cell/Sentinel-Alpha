@@ -1,4 +1,4 @@
-# QuickNode Signature Verification v0.1
+# QuickNode Signature Verification v0.2
 
 ## Purpose
 Protect `/webhooks/quicknode` from fake payloads using HMAC-SHA256 before enabling live QuickNode traffic.
@@ -7,15 +7,25 @@ Protect `/webhooks/quicknode` from fake payloads using HMAC-SHA256 before enabli
 - `services/scout_cell/signature.py`
 
 ## Function
-- `verify_quicknode_signature(raw_body: bytes, signature: str | None, secret: str | None) -> bool`
+- `verify_quicknode_signature(raw_body: bytes, signature: str | None, secret: str | None, nonce: str | None = None, timestamp: str | None = None) -> bool`
 
 ## Rules
 - Uses HMAC-SHA256 over the raw request body.
 - Reads signature from header: `x-qn-signature`.
+- Supports QuickNode nonce/timestamp headers:
+  - `x-qn-nonce`
+  - `x-qn-timestamp`
 - Reads secret from environment: `QUICKNODE_WEBHOOK_SECRET`.
 - Supports dry-run ops flag: `QUICKNODE_DRY_RUN`.
 - Supports deployment URL registration var: `QUICKNODE_WEBHOOK_URL`.
 - If secret is empty or missing, verification is disabled and returns `True` (dev mode).
+- Signature compatibility candidates:
+  - `raw_body`
+  - `timestamp + nonce + raw_body`
+  - `nonce + timestamp + raw_body`
+  - `timestamp + raw_body`
+- If any candidate matches, request is accepted.
+- On mismatch, logs header presence and body length only (no secrets logged).
 
 ## Webhook integration
 - `apps/webhooks/quicknode.py` reads `await req.body()`.

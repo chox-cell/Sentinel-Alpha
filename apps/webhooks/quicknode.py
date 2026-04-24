@@ -25,10 +25,12 @@ async def quicknode_webhook_health():
 async def quicknode_webhook(req: Request):
     raw_body = await req.body()
     signature = req.headers.get("x-qn-signature")
+    nonce = req.headers.get("x-qn-nonce")
+    timestamp = req.headers.get("x-qn-timestamp")
     secret = os.getenv("QUICKNODE_WEBHOOK_SECRET")
     dry_run = get_env_bool("QUICKNODE_DRY_RUN", default=False)
 
-    if not verify_quicknode_signature(raw_body, signature, secret):
+    if not verify_quicknode_signature(raw_body, signature, secret, nonce=nonce, timestamp=timestamp):
         raise HTTPException(status_code=401, detail="Invalid QuickNode signature")
 
     try:

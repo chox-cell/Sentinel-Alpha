@@ -6,6 +6,8 @@ from apps.api.main import app
 def test_webhook_quicknode_accepts_nested_payload(monkeypatch):
     from services.scout_cell import hunter
 
+    monkeypatch.delenv("QUICKNODE_WEBHOOK_SECRET", raising=False)
+
     captured = {}
 
     def fake_evaluate(contract_address: str, chain: str, context: dict | None = None) -> dict:
@@ -60,7 +62,9 @@ def test_webhook_quicknode_accepts_nested_payload(monkeypatch):
     assert captured["context"]["bad_cluster"] is True
 
 
-def test_webhook_quicknode_ignores_missing_contract():
+def test_webhook_quicknode_ignores_missing_contract(monkeypatch):
+    monkeypatch.delenv("QUICKNODE_WEBHOOK_SECRET", raising=False)
+
     client = TestClient(app)
     response = client.post(
         "/webhooks/quicknode",
