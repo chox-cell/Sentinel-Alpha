@@ -20,7 +20,7 @@ Health response:
 - Signature verification uses `x-qn-signature` and `QUICKNODE_WEBHOOK_SECRET`.
 - If `QUICKNODE_DRY_RUN=true`, webhook still processes normally.
 - Billing remains demo because risk response billing mode is unchanged.
-- QuickNode Event Reducer v0.1 converts large payloads into canonical candidate packets before evaluation.
+- QuickNode Event Reducer v0.2 converts large payloads into canonical candidate packets before evaluation.
 - QuickNode Payload Inspector v0.1 summarizes unknown large payload structures safely.
 - Candidate fan-out is capped at 50 per webhook.
 - Webhook logs include:
@@ -41,6 +41,15 @@ Each reduced candidate uses:
 - `block_number`
 - `log_count`
 - `context`
+
+### matchingReceipts support (v0.2)
+- Supports top-level `matchingReceipts`.
+- Supports `matchingReceipts[i].logs`.
+- Uses `receipt.contractAddress` (when present) as `new_token_candidate`.
+- Uses each `log.address` as `contract_event` / `first_liquidity` candidate.
+- Extracts transaction hash from log first, then receipt fallback.
+- Extracts block number from log first, then receipt fallback.
+- Priority sort: `first_liquidity` > `new_token_candidate` > high `log_count` > `contract_event`.
 
 ## Payload inspector summary
 Inspection summary includes only structure metadata:
