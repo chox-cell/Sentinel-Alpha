@@ -19,6 +19,7 @@ from services.attestation_layer.key_signing import (
 from services.dlq.dead_letter import DLQ_PATH, read_dlq
 from services.identity.identity_config import get_identity_status
 from services.latency_shield.background import schedule_post_risk_tasks
+from services.x402.payment_config import get_payment_status
 from shared.config.env import get_env_bool, get_quicknode_env_status
 from shared.config.limits import get_ingestion_limits
 
@@ -127,3 +128,8 @@ def internal_attestation_status():
         "public_key_configured": bool(get_attestation_public_key()),
         "private_key_configured": bool(get_attestation_private_key()),
     }
+
+
+@app.get("/internal/x402/status")
+def internal_x402_status():
+    return get_payment_status()
