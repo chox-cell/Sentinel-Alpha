@@ -17,7 +17,13 @@ Output:
 - `cdp_api_key_configured`
 - `wallet_address_configured`
 - `network`
+- `pricing_tiers` (`basic`, `executive`, `premium`, `priority`, `default`)
+- `pricing_valid`
 - `real_payments_enabled`
+
+Env alias compatibility:
+- canonical: `CDP_API_KEY_NAME` + `CDP_API_KEY_PRIVATE_KEY`
+- alias: `CDP_API_KEY_ID` + `CDP_API_KEY_SECRET`
 
 Constraints:
 - Do not change `/contracts/risk-score`.

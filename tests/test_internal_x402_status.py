@@ -18,5 +18,7 @@ def test_internal_x402_status_endpoint(monkeypatch):
     body = response.json()
     assert body["payment_method"] == "x402"
     assert body["payment_mode"] == "real"
+    assert "pricing_tiers" in body
+    assert body["pricing_valid"] is True
     assert body["real_payments_enabled"] is True
     assert "CDP_API_KEY_PRIVATE_KEY" not in body

@@ -6,6 +6,8 @@ def test_x402_payment_status_defaults(monkeypatch):
     monkeypatch.delenv("CDP_PROJECT_ID", raising=False)
     monkeypatch.delenv("CDP_API_KEY_NAME", raising=False)
     monkeypatch.delenv("CDP_API_KEY_PRIVATE_KEY", raising=False)
+    monkeypatch.delenv("CDP_API_KEY_ID", raising=False)
+    monkeypatch.delenv("CDP_API_KEY_SECRET", raising=False)
     monkeypatch.delenv("SENTINEL_TREASURY_WALLET", raising=False)
     monkeypatch.delenv("X402_NETWORK", raising=False)
 
@@ -17,6 +19,14 @@ def test_x402_payment_status_defaults(monkeypatch):
         "cdp_api_key_configured": False,
         "wallet_address_configured": False,
         "network": "base",
+        "pricing_tiers": {
+            "basic": 0.02,
+            "executive": 0.05,
+            "premium": 0.10,
+            "priority": 0.15,
+            "default": 0.05,
+        },
+        "pricing_valid": True,
         "real_payments_enabled": False,
     }
 
@@ -34,4 +44,5 @@ def test_x402_payment_status_real_mode_requires_all_env(monkeypatch):
     assert status["cdp_project_configured"] is True
     assert status["cdp_api_key_configured"] is True
     assert status["wallet_address_configured"] is True
+    assert status["pricing_valid"] is True
     assert status["real_payments_enabled"] is True
