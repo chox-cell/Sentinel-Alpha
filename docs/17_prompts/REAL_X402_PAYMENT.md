@@ -1,4 +1,4 @@
-# REAL X402 PAYMENT + ENV LOCK v0.4
+# REAL X402 PAYMENT + ENV LOCK v0.5
 
 Goal:
 - Add safe planning/status scaffolding for real x402 payments without enabling real settlement by default.
@@ -11,6 +11,7 @@ Implementation:
 - `GET /internal/x402/pricing`
 - `GET /internal/x402/challenge`
 - `GET /internal/x402/verification/status`
+- `GET /internal/x402/replay/status`
 
 Function:
 - `get_payment_status() -> dict`
@@ -82,3 +83,15 @@ Real payment verification v0.4:
   - `reason: onchain_verification_not_enabled`
 - If payment header is invalid, return `verified: false` and reject request with `402` + `{"error":"invalid_x402_payment"}`
 - `X402_ONCHAIN_VERIFY=false` by default
+
+x402 replay protection v0.5:
+- Create `services/x402/replay_guard.py`
+- Add:
+  - `get_payment_fingerprint(payment_header: str) -> str`
+  - `is_payment_replay(payment_header: str) -> bool`
+  - `record_payment_fingerprint(payment_header: str, trace_id: str | None = None) -> dict`
+- Store fingerprints in `logs/x402_payments.jsonl`
+- Never store raw full payment header
+- In `PAYMENT_MODE=real` + `X402_ENABLED=true`:
+  - replayed payment header returns `402` + `{"error":"x402_replay_detected"}`
+  - accepted payment records fingerprint after tx-format verification succeeds

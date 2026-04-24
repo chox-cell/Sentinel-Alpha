@@ -9,6 +9,7 @@ from typing import Optional, Dict, Any
 
 from apps.webhooks.quicknode import router as quicknode_router
 from services.x402.payment import require_x402_payment, build_x402_challenge
+from services.x402.replay_guard import get_replay_status
 from services.risk_service.service import evaluate_contract_with_meta
 from services.cache.metrics import get_cache_metrics
 from services.attestation_layer.key_signing import (
@@ -175,3 +176,8 @@ def internal_x402_verification_status():
         "network": network,
         "treasury_configured": bool(treasury),
     }
+
+
+@app.get("/internal/x402/replay/status")
+def internal_x402_replay_status():
+    return get_replay_status()

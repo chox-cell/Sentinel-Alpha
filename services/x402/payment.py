@@ -3,6 +3,7 @@ from dotenv import load_dotenv
 from fastapi import HTTPException
 from services.x402.coinbase import verify_demo_payment, verify_real_payment
 from services.x402.payment_config import get_pricing_tiers
+from services.x402.replay_guard import is_payment_replay, record_payment_fingerprint
 
 load_dotenv()
 
@@ -61,6 +62,9 @@ def require_x402_payment(headers: dict, lane: str = "basic") -> dict:
     verification = verify_real_payment(x402_payment_header, lane=selected_lane)
     if verification["status"] != "tx_format_valid_unverified":
         raise HTTPException(status_code=402, detail={"error": "invalid_x402_payment"})
+    if is_payment_replay(x402_payment_header):
+        raise HTTPException(status_code=402, detail={"error": "x402_replay_detected"})
+    record_payment_fingerprint(x402_payment_header, trace_id=None)
 
     return {
         "amount": verification["amount"],
