@@ -1,35 +1,49 @@
 {
   "name": "Sentinel Alpha",
-  "version": "1.0.0",
-  "type": "execution_fidelity_layer",
-  "endpoint": "/contracts/risk-score",
+  "category": "execution_fidelity_layer",
   "engine": "Mycelium Engine",
-  "agents": [
-    "Scout Cell",
-    "T-Cell",
-    "B-Cell",
-    "Signal Cell",
-    "Synapse Cell"
+  "agent_system": "Sentinel Cells",
+  "primary_endpoint": "/contracts/risk-score",
+  "webhook_endpoint": "/webhooks/quicknode",
+  "health_endpoint": "/health",
+  "quicknode_health_endpoint": "/webhooks/quicknode/health",
+  "payment_method": "x402",
+  "payment_mode": "demo",
+  "api_version": "2026.8.0",
+  "engine_version": "mycelium-wrsi-0.2",
+  "identity_version": "identity-0.1",
+  "attestation_version": "attestation-0.1",
+  "supported_chains": [
+    "base"
   ],
-  "capabilities": [
-    "contract_risk_scoring",
-    "oracle_dislocation_detection",
-    "simulation_validation",
-    "cluster_analysis",
-    "emergency_exit_signal"
+  "outputs": [
+    "score",
+    "confidence",
+    "action",
+    "emergency_signal",
+    "attestation"
   ],
-  "output_schema": {
-    "risk_score": "0-100",
-    "confidence": "0-1",
-    "action": ["BLOCK", "REDUCE", "ALLOW", "EXIT_NOW", "REVIEW"],
-    "emergency_signal": "string"
+  "actions": [
+    "BLOCK",
+    "REDUCE",
+    "ALLOW",
+    "REVIEW",
+    "EXIT_NOW"
+  ],
+  "modes": [
+    "scan",
+    "webhook",
+    "dry_run"
+  ],
+  "pricing": {
+    "basic": "0.02",
+    "executive": "0.05",
+    "priority": "0.15"
   },
-  "payment": {
-    "model": "x402",
-    "tiers": {
-      "basic": 0.02,
-      "executive": 0.05,
-      "priority": 0.15
-    }
+  "constraints": {
+    "first_60_minutes_security": true,
+    "no_dashboard": true,
+    "no_compliance_suite": true,
+    "machine_native": true
   }
 }

@@ -1,4 +1,6 @@
 import os
+import json
+from pathlib import Path
 from dotenv import load_dotenv
 
 from fastapi import BackgroundTasks, FastAPI, Header
@@ -15,6 +17,7 @@ load_dotenv()
 
 app = FastAPI(title="Sentinel Alpha API")
 app.include_router(quicknode_router)
+MANIFEST_PATH = Path("docs/01_manifest/manifest.json")
 
 class RequestModel(BaseModel):
     contract_address: str
@@ -61,3 +64,8 @@ def risk_score(
 @app.get("/internal/cache-metrics")
 def internal_cache_metrics():
     return get_cache_metrics()
+
+
+@app.get("/internal/manifest")
+def internal_manifest():
+    return json.loads(MANIFEST_PATH.read_text(encoding="utf-8"))
