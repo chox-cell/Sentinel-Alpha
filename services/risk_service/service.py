@@ -2,6 +2,7 @@ import time
 import uuid
 
 from services.cache.redis_client import get_cache, set_cache
+from services.cache.metrics import record_cache_hit, record_cache_miss
 from services.signals.extractor import extract_signals
 from services.mycelium_engine.engine import (
     compute_score,
@@ -19,7 +20,9 @@ def evaluate_contract(contract_address: str, chain: str, context: dict | None = 
     cache_key = f"{chain}:{contract_address}:{hash(str(context))}"
     cached = get_cache(cache_key)
     if cached:
+        record_cache_hit(cache_key)
         return cached
+    record_cache_miss(cache_key)
 
     extracted = extract_signals(contract_address, chain, context)
     signals = extracted["signals"]

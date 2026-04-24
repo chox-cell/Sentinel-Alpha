@@ -8,6 +8,7 @@ from typing import Optional, Dict, Any
 from apps.webhooks.quicknode import router as quicknode_router
 from services.x402.payment import require_payment
 from services.risk_service.service import evaluate_contract
+from services.cache.metrics import get_cache_metrics
 from shared.utils.logger import log_event
 
 load_dotenv()
@@ -49,3 +50,8 @@ def risk_score(
     })
 
     return response
+
+
+@app.get("/internal/cache-metrics")
+def internal_cache_metrics():
+    return get_cache_metrics()

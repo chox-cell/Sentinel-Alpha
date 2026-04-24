@@ -44,6 +44,7 @@ Signals:
 - Adaptive Phi Stub v0.1 active
 - Shadow Link v0.1 active
 - Policy Calibration v0.1 active
+- Cache Metrics v0.1 active
 - Attestation active
 - Redis cache active
 - Webhook ingestion active

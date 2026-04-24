@@ -34,3 +34,5 @@ logs/*.jsonl
 
 logs/phi_state.json
 
+logs/cache_metrics.json
+
