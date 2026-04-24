@@ -3,6 +3,7 @@ import os
 
 from fastapi import APIRouter, HTTPException, Request
 from services.scout_cell.hunter import handle_new_contract
+from services.scout_cell.payload_inspector import inspect_quicknode_payload
 from services.scout_cell.signature import verify_quicknode_signature
 from shared.config.env import get_env_bool, get_quicknode_env_status
 from shared.utils.logger import log_event
@@ -48,6 +49,16 @@ async def quicknode_webhook(req: Request):
         },
     )
     result = handle_new_contract(payload)
+    if result.get("candidates") == 0 and len(raw_body) > 100000:
+        log_event(
+            "quicknode_payload_inspected",
+            {
+                "source": "quicknode",
+                "dry_run": dry_run,
+                "payload_size_bytes": len(raw_body),
+                "inspection": inspect_quicknode_payload(payload),
+            },
+        )
     log_event(
         "webhook_processed",
         {
