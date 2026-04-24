@@ -10,11 +10,10 @@ def test_quicknode_dry_run_logs_source_and_flag(monkeypatch):
     monkeypatch.setenv("QUICKNODE_DRY_RUN", "true")
     monkeypatch.setattr(quicknode, "handle_new_contract", lambda payload: {"status_code": 200, "body": payload})
 
-    captured = {}
+    captured = []
 
     def fake_log_event(event_type, payload):
-        captured["event_type"] = event_type
-        captured["payload"] = payload
+        captured.append((event_type, payload))
 
     monkeypatch.setattr(quicknode, "log_event", fake_log_event)
 
@@ -26,6 +25,6 @@ def test_quicknode_dry_run_logs_source_and_flag(monkeypatch):
 
     assert response.status_code == 200
     assert response.json()["status"] == "ok"
-    assert captured["event_type"] == "webhook_received"
-    assert captured["payload"]["source"] == "quicknode"
-    assert captured["payload"]["dry_run"] is True
+    assert captured[0][0] == "webhook_received"
+    assert captured[0][1]["source"] == "quicknode"
+    assert captured[0][1]["dry_run"] is True

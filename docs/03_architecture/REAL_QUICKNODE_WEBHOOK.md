@@ -20,9 +20,24 @@ Health response:
 - Signature verification uses `x-qn-signature` and `QUICKNODE_WEBHOOK_SECRET`.
 - If `QUICKNODE_DRY_RUN=true`, webhook still processes normally.
 - Billing remains demo because risk response billing mode is unchanged.
+- QuickNode Event Reducer v0.1 converts large payloads into canonical candidate packets before evaluation.
+- Candidate fan-out is capped at 50 per webhook.
 - Webhook logs include:
   - `source: "quicknode"`
   - `dry_run: <bool>`
+  - `payload_size_bytes`
+  - `candidate_count`
+  - `block_number`
+
+## Event reducer output
+Each reduced candidate uses:
+- `contract_address`
+- `chain`
+- `event_type`
+- `transaction_hash`
+- `block_number`
+- `log_count`
+- `context`
 
 ## Environment variables
 - `QUICKNODE_WEBHOOK_SECRET`

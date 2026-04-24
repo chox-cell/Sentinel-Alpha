@@ -44,8 +44,10 @@ def test_webhook_quicknode_accepts_nested_payload(monkeypatch):
     body = response.json()
 
     assert body["status"] == "ok"
-    assert body["result"]["status_code"] == 200
-    assert set(body["result"]["body"].keys()) == {
+    assert body["result"]["status"] == "ok"
+    assert body["result"]["candidates"] == 1
+    assert body["result"]["results"][0]["status_code"] == 200
+    assert set(body["result"]["results"][0]["body"].keys()) == {
         "api_version",
         "decision",
         "risk_metrics",
@@ -74,4 +76,5 @@ def test_webhook_quicknode_ignores_missing_contract(monkeypatch):
     assert response.status_code == 200
     body = response.json()
     assert body["status"] == "ok"
-    assert body["result"]["status"] == "ignored"
+    assert body["result"]["status"] == "ok"
+    assert body["result"]["candidates"] == 0

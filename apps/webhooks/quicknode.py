@@ -43,8 +43,19 @@ async def quicknode_webhook(req: Request):
         {
             "source": "quicknode",
             "dry_run": dry_run,
-            "payload": payload,
+            "payload_size_bytes": len(raw_body),
+            "block_number": payload.get("block_number") or payload.get("blockNumber"),
         },
     )
     result = handle_new_contract(payload)
+    log_event(
+        "webhook_processed",
+        {
+            "source": "quicknode",
+            "dry_run": dry_run,
+            "payload_size_bytes": len(raw_body),
+            "candidate_count": result.get("candidates"),
+            "block_number": payload.get("block_number") or payload.get("blockNumber"),
+        },
+    )
     return {"status": "ok", "result": result}

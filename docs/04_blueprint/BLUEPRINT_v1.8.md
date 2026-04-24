@@ -55,6 +55,7 @@ Signals:
 - Agentic / Discovery Manifest Hardening v0.1 active
 - Real QuickNode Live Setup v0.1 active
 - Real QuickNode Live Connection v0.1 active
+- QuickNode Event Reducer v0.1 active
 - Attestation active
 - Redis cache active
 - Webhook ingestion active
