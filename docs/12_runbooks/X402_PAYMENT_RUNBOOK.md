@@ -1,4 +1,4 @@
-# X402 Payment Runbook v0.2
+# X402 Payment Runbook v0.4
 
 ## Goal
 Enable safe x402 payment enforcement paths without enabling live settlement.
@@ -21,7 +21,10 @@ Enable safe x402 payment enforcement paths without enabling live settlement.
     - `asset: "USDC"`
     - `resource: "/contracts/risk-score"`
     - `instructions: "Submit X402-PAYMENT header to access this resource."`
-  - if `X402-PAYMENT` is present, billing status is `pending_real_validation`
+  - supported header format: `X402-PAYMENT: tx:0x<64_hex_chars>`
+  - invalid payment header returns `402` with `{"error":"invalid_x402_payment"}`
+  - valid tx-format header returns billing status `tx_format_valid_unverified`
+  - verification result reason: `onchain_verification_not_enabled`
   - successful `/contracts/risk-score` response billing is overridden from payment middleware result
 - Real disabled:
   - `PAYMENT_MODE=real`
@@ -38,8 +41,10 @@ Enable safe x402 payment enforcement paths without enabling live settlement.
 - `GET /internal/x402/status`
 - `GET /internal/x402/pricing`
 - `GET /internal/x402/challenge?lane=basic`
+- `GET /internal/x402/verification/status`
 
 ## Security notes
 - Never log or return private keys or secret values.
-- v0.2 does not perform Coinbase settlement.
+- v0.4 does not perform Coinbase settlement.
+- `X402_ONCHAIN_VERIFY` defaults to `false`; onchain verification is not enabled yet.
 - Successful response schema keys are unchanged; only `billing` values are updated by payment mode.

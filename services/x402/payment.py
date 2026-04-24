@@ -1,7 +1,7 @@
 import os
 from dotenv import load_dotenv
 from fastapi import HTTPException
-from services.x402.coinbase import verify_demo_payment, verify_real_payment_placeholder
+from services.x402.coinbase import verify_demo_payment, verify_real_payment
 from services.x402.payment_config import get_pricing_tiers
 
 load_dotenv()
@@ -34,7 +34,7 @@ def require_x402_payment(headers: dict, lane: str = "basic") -> dict:
     x402_enabled = (os.getenv("X402_ENABLED", "false") or "false").strip().lower() in {"1", "true", "yes", "on"}
     pricing = get_pricing_tiers()
     selected_lane = lane if lane in {"basic", "executive", "premium", "priority"} else "basic"
-    amount = pricing[selected_lane]
+    lane_amount = pricing[selected_lane]
 
     payment_signature = headers.get("PAYMENT-SIGNATURE") if isinstance(headers, dict) else None
     x402_payment_header = None
@@ -45,7 +45,7 @@ def require_x402_payment(headers: dict, lane: str = "basic") -> dict:
         if not verify_demo_payment(payment_signature):
             raise HTTPException(status_code=402, detail="Payment Required")
         return {
-            "amount": f"{amount:.2f}",
+            "amount": f"{lane_amount:.2f}",
             "method": "x402",
             "status": "demo",
             "lane": selected_lane,
@@ -55,13 +55,17 @@ def require_x402_payment(headers: dict, lane: str = "basic") -> dict:
     if not x402_enabled:
         raise HTTPException(status_code=402, detail={"error": "x402_disabled"})
 
-    if not verify_real_payment_placeholder(x402_payment_header):
+    if not x402_payment_header:
         raise HTTPException(status_code=402, detail=build_x402_challenge(selected_lane))
 
+    verification = verify_real_payment(x402_payment_header, lane=selected_lane)
+    if verification["status"] != "tx_format_valid_unverified":
+        raise HTTPException(status_code=402, detail={"error": "invalid_x402_payment"})
+
     return {
-        "amount": f"{amount:.2f}",
+        "amount": verification["amount"],
         "method": "x402",
-        "status": "pending_real_validation",
+        "status": "tx_format_valid_unverified",
         "lane": selected_lane,
     }
 

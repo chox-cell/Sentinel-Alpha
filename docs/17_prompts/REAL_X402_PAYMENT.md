@@ -1,4 +1,4 @@
-# REAL X402 PAYMENT + ENV LOCK v0.2
+# REAL X402 PAYMENT + ENV LOCK v0.4
 
 Goal:
 - Add safe planning/status scaffolding for real x402 payments without enabling real settlement by default.
@@ -10,6 +10,7 @@ Implementation:
 - `GET /internal/x402/status`
 - `GET /internal/x402/pricing`
 - `GET /internal/x402/challenge`
+- `GET /internal/x402/verification/status`
 
 Function:
 - `get_payment_status() -> dict`
@@ -67,6 +68,17 @@ Billing propagation v0.3:
   - `amount` matches lane price
 - Real guarded success billing (`X402-PAYMENT` present):
   - `method: x402`
-  - `status: pending_real_validation`
+  - `status: tx_format_valid_unverified`
   - `amount` matches lane price
 - Missing real payment must continue returning `402` challenge payload
+
+Real payment verification v0.4:
+- `parse_x402_payment_header(header: str) -> dict`
+- `verify_real_payment(payment_header: str, lane: str = "basic") -> dict`
+- Accepted payment format: `tx:0x<64_hex_chars>`
+- If tx hash format is valid, return:
+  - `verified: false`
+  - `status: tx_format_valid_unverified`
+  - `reason: onchain_verification_not_enabled`
+- If payment header is invalid, return `verified: false` and reject request with `402` + `{"error":"invalid_x402_payment"}`
+- `X402_ONCHAIN_VERIFY=false` by default

@@ -13,6 +13,7 @@ Prepare Sentinel Alpha for future real x402/Coinbase payment enablement without 
 - internal endpoint: `GET /internal/x402/status`
 - internal endpoint: `GET /internal/x402/pricing`
 - internal endpoint: `GET /internal/x402/challenge?lane=basic`
+- internal endpoint: `GET /internal/x402/verification/status`
 
 ## Environment inputs
 - `PAYMENT_MODE` (default `demo`)
@@ -25,6 +26,7 @@ Prepare Sentinel Alpha for future real x402/Coinbase payment enablement without 
   - `CDP_API_KEY_SECRET`
 - `SENTINEL_TREASURY_WALLET` (optional)
 - `X402_NETWORK` (default `base`)
+- `X402_ONCHAIN_VERIFY` (default `false`)
 - Pricing env:
   - `PRICE_BASIC` (default `0.02`)
   - `PRICE_EXECUTIVE` (default `0.05`)
@@ -92,3 +94,26 @@ Challenge payload:
 
 When `PAYMENT_MODE=real` and `X402_ENABLED=false`:
 - return `HTTP 402` with `{"error":"x402_disabled"}`
+
+## Real Payment Verification v0.4
+- `services/x402/coinbase.py`
+- `parse_x402_payment_header(header: str) -> dict`
+- `verify_real_payment(payment_header: str, lane: str = "basic") -> dict`
+
+Accepted format:
+- `X402-PAYMENT: tx:0xTRANSACTION_HASH`
+- tx hash must start with `0x` and be length 66
+
+v0.4 verification behavior:
+- parse tx hash
+- validate tx hash shape only
+- if valid shape, return:
+  - `verified: false`
+  - `status: tx_format_valid_unverified`
+  - `reason: onchain_verification_not_enabled`
+- if invalid header, return `verified: false` with invalid reason
+
+Runtime behavior:
+- `PAYMENT_MODE=real`, `X402_ENABLED=true`, missing header: `402` challenge
+- `PAYMENT_MODE=real`, `X402_ENABLED=true`, invalid header: `402` + `{"error":"invalid_x402_payment"}`
+- `PAYMENT_MODE=real`, `X402_ENABLED=true`, valid tx format: request allowed with billing status `tx_format_valid_unverified`

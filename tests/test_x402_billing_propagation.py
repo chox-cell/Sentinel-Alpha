@@ -29,7 +29,7 @@ def test_demo_response_billing_status(monkeypatch):
     assert billing["amount"] == "0.02"
 
 
-def test_real_placeholder_response_billing_status(monkeypatch):
+def test_real_tx_format_valid_response_billing_status(monkeypatch):
     monkeypatch.setenv("PAYMENT_MODE", "real")
     monkeypatch.setenv("X402_ENABLED", "true")
     monkeypatch.setenv("PRICE_BASIC", "0.09")
@@ -38,12 +38,12 @@ def test_real_placeholder_response_billing_status(monkeypatch):
     response = client.post(
         "/contracts/risk-score",
         json=_request_body(),
-        headers={"X402-PAYMENT": "placeholder-token"},
+        headers={"X402-PAYMENT": "tx:0xaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"},
     )
     assert response.status_code == 200
     billing = response.json()["billing"]
     assert billing["method"] == "x402"
-    assert billing["status"] == "pending_real_validation"
+    assert billing["status"] == "tx_format_valid_unverified"
     assert billing["amount"] == "0.09"
 
 

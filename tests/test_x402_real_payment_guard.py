@@ -30,8 +30,9 @@ def test_real_mode_returns_pending_validation(monkeypatch):
     monkeypatch.setenv("X402_ENABLED", "true")
     monkeypatch.setenv("PRICE_PRIORITY", "0.21")
 
-    billing = require_x402_payment({"X402-PAYMENT": "x402-proof"}, lane="priority")
-    assert billing["status"] == "pending_real_validation"
+    tx_hash = "0x" + ("a" * 64)
+    billing = require_x402_payment({"X402-PAYMENT": f"tx:{tx_hash}"}, lane="priority")
+    assert billing["status"] == "tx_format_valid_unverified"
     assert billing["method"] == "x402"
     assert billing["lane"] == "priority"
     assert billing["amount"] == "0.21"

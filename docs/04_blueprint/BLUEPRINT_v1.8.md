@@ -66,6 +66,7 @@ Signals:
 - x402 Payments Planning + Env Lock v0.1 active
 - x402 Real Payment Middleware v0.1 active
 - x402 Real Payment Challenge v0.2 active
+- x402 Real Payment Verification v0.4 active
 - Attestation active
 - Redis cache active
 - Webhook ingestion active

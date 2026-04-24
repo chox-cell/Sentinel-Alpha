@@ -159,3 +159,19 @@ def internal_x402_pricing():
 @app.get("/internal/x402/challenge")
 def internal_x402_challenge(lane: str = "basic"):
     return build_x402_challenge(lane=lane)
+
+
+@app.get("/internal/x402/verification/status")
+def internal_x402_verification_status():
+    onchain_verify = (os.getenv("X402_ONCHAIN_VERIFY", "false") or "false").strip().lower() in {"1", "true", "yes", "on"}
+    network = (os.getenv("X402_NETWORK", "base") or "base").strip().lower() or "base"
+    treasury = (
+        (os.getenv("X402_REVENUE_ADDRESS") or "").strip()
+        or (os.getenv("SENTINEL_TREASURY_WALLET") or "").strip()
+    )
+    return {
+        "onchain_verify_enabled": onchain_verify,
+        "accepted_payment_format": "tx:0x<64_hex_chars>",
+        "network": network,
+        "treasury_configured": bool(treasury),
+    }
