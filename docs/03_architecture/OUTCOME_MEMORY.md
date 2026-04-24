@@ -27,7 +27,8 @@ Each record includes:
 - `created_at`
 
 ## Integration
-- `services/risk_service/service.py` records one outcome for each non-cached evaluation.
+- `services/risk_service/service.py` builds one outcome record for each non-cached evaluation.
+- `apps/api/main.py` records that outcome through BackgroundTasks (Latency Shield v0.1).
 - Cache hits return cached responses and do not create duplicate memory records.
 
 ## Constraints

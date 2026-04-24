@@ -48,6 +48,7 @@ Signals:
 - Policy Calibration v0.1 active
 - Cache Metrics v0.1 active
 - QuickNode Signature Verification v0.1 active
+- Latency Shield v0.1 active
 - Attestation active
 - Redis cache active
 - Webhook ingestion active

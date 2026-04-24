@@ -5,6 +5,7 @@ Client/Bot
 → /contracts/risk-score
 → payment gate
 → evaluate_contract
+→ Latency Shield v0.1 (background side effects)
 → extract_signals
 → Mycelium Engine
 → Attestation Layer

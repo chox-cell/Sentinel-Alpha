@@ -1,15 +1,15 @@
 import os
 from dotenv import load_dotenv
 
-from fastapi import FastAPI, Header
+from fastapi import BackgroundTasks, FastAPI, Header
 from pydantic import BaseModel
 from typing import Optional, Dict, Any
 
 from apps.webhooks.quicknode import router as quicknode_router
 from services.x402.payment import require_payment
-from services.risk_service.service import evaluate_contract
+from services.risk_service.service import evaluate_contract_with_meta
 from services.cache.metrics import get_cache_metrics
-from shared.utils.logger import log_event
+from services.latency_shield.background import schedule_post_risk_tasks
 
 load_dotenv()
 
@@ -32,22 +32,28 @@ def health():
 @app.post("/contracts/risk-score")
 def risk_score(
     req: RequestModel,
+    background_tasks: BackgroundTasks,
     payment_signature: str | None = Header(default=None, alias="PAYMENT-SIGNATURE"),
 ):
     require_payment(payment_signature)
 
-    response = evaluate_contract(
+    result = evaluate_contract_with_meta(
         contract_address=req.contract_address,
         chain=req.chain,
         context=req.context,
     )
+    response = result["response"]
 
-    log_event("risk_score_generated", {
-        "contract_address": req.contract_address,
-        "chain": req.chain,
-        "context": req.context,
-        "response": response,
-    })
+    schedule_post_risk_tasks(
+        background_tasks,
+        event_payload={
+            "contract_address": req.contract_address,
+            "chain": req.chain,
+            "context": req.context,
+            "response": response,
+        },
+        outcome_record=result.get("outcome_record"),
+    )
 
     return response
 

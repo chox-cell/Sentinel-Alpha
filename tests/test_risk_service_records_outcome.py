@@ -19,41 +19,32 @@ def _build_cached_response():
 
 
 def test_evaluate_contract_records_outcome_on_non_cached(monkeypatch):
-    calls = {"count": 0}
-
-    def fake_record(record):
-        calls["count"] += 1
-        calls["record"] = record
-        return record
-
     monkeypatch.setattr(service, "get_cache", lambda _key: None)
     monkeypatch.setattr(service, "set_cache", lambda _key, _value, ttl=300: None)
-    monkeypatch.setattr(service, "record_decision", fake_record)
 
-    result = service.evaluate_contract(
+    result = service.evaluate_contract_with_meta(
         contract_address="0x1111111111111111111111111111111111111111",
         chain="base",
         context={"event_type": "new_deploy"},
     )
 
-    assert calls["count"] == 1
-    assert calls["record"]["trace_id"] == result["meta"]["trace_id"]
-    assert calls["record"]["action"] == result["decision"]["action"]
-    assert calls["record"]["score"] == result["risk_metrics"]["score"]
+    assert result["cache_hit"] is False
+    assert result["outcome_record"]["trace_id"] == result["response"]["meta"]["trace_id"]
+    assert result["outcome_record"]["action"] == result["response"]["decision"]["action"]
+    assert result["outcome_record"]["score"] == result["response"]["risk_metrics"]["score"]
 
 
 def test_evaluate_contract_does_not_record_on_cache_hit(monkeypatch):
-    calls = {"count": 0}
     cached = _build_cached_response()
 
     monkeypatch.setattr(service, "get_cache", lambda _key: cached)
-    monkeypatch.setattr(service, "record_decision", lambda _record: calls.__setitem__("count", calls["count"] + 1))
 
-    result = service.evaluate_contract(
+    result = service.evaluate_contract_with_meta(
         contract_address="0x1111111111111111111111111111111111111111",
         chain="base",
         context={"event_type": "new_deploy"},
     )
 
-    assert result == cached
-    assert calls["count"] == 0
+    assert result["response"] == cached
+    assert result["cache_hit"] is True
+    assert result["outcome_record"] is None

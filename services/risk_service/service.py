@@ -11,9 +11,13 @@ from services.mycelium_engine.engine import (
     classify_threat,
 )
 from services.attestation_layer.attestation import build_attestation
-from services.outcome_memory.memory import record_decision
 
 def evaluate_contract(contract_address: str, chain: str, context: dict | None = None) -> dict:
+    result = evaluate_contract_with_meta(contract_address, chain, context)
+    return result["response"]
+
+
+def evaluate_contract_with_meta(contract_address: str, chain: str, context: dict | None = None) -> dict:
     start = time.time()
     trace_id = str(uuid.uuid4())
 
@@ -21,7 +25,11 @@ def evaluate_contract(contract_address: str, chain: str, context: dict | None = 
     cached = get_cache(cache_key)
     if cached:
         record_cache_hit(cache_key)
-        return cached
+        return {
+            "response": cached,
+            "cache_hit": True,
+            "outcome_record": None,
+        }
     record_cache_miss(cache_key)
 
     extracted = extract_signals(contract_address, chain, context)
@@ -68,8 +76,11 @@ def evaluate_contract(contract_address: str, chain: str, context: dict | None = 
         },
     }
 
-    record_decision(
-        {
+    set_cache(cache_key, response, ttl=300)
+    return {
+        "response": response,
+        "cache_hit": False,
+        "outcome_record": {
             "trace_id": trace_id,
             "contract_address": extracted["contract_address"],
             "chain": extracted["chain"],
@@ -80,8 +91,5 @@ def evaluate_contract(contract_address: str, chain: str, context: dict | None = 
             "signals": signals,
             "attestation": attestation,
             "created_at": response["attestation"]["signed_at"],
-        }
-    )
-
-    set_cache(cache_key, response, ttl=300)
-    return response
+        },
+    }
