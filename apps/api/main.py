@@ -12,6 +12,7 @@ from services.x402.payment import require_payment
 from services.risk_service.service import evaluate_contract_with_meta
 from services.cache.metrics import get_cache_metrics
 from services.dlq.dead_letter import DLQ_PATH, read_dlq
+from services.identity.identity_config import get_identity_status
 from services.latency_shield.background import schedule_post_risk_tasks
 from shared.config.env import get_env_bool, get_quicknode_env_status
 from shared.config.limits import get_ingestion_limits
@@ -106,3 +107,8 @@ def internal_dlq_status():
 @app.get("/internal/ingestion/status")
 def internal_ingestion_status():
     return get_ingestion_limits()
+
+
+@app.get("/internal/identity/status")
+def internal_identity_status():
+    return get_identity_status()
