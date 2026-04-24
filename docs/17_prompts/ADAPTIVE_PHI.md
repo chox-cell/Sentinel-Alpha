@@ -11,15 +11,19 @@ Functions:
 - `load_phi_state() -> dict`
 - `save_phi_state(state: dict) -> None`
 - `update_phi_from_outcomes(records: list) -> dict`
+- `get_learning_rate() -> float`
 
 State file:
 - `logs/phi_state.json`
 
 Rules:
 - Default multiplier for each signal: `1.0`
-- `BLOCK` or `EXIT_NOW` with `score >= 85`: slight increase (max `1.5`)
-- `ALLOW` with non-normal threat class: stronger increase (max `1.75`)
+- Default learning rate eta: `0.01`
+- `PHI_LEARNING_RATE` env overrides eta; invalid values fallback to `0.01`
+- `BLOCK` or `EXIT_NOW` with `score >= 85`: slight increase using eta (max `1.25`)
+- `ALLOW` with non-normal threat class: stronger increase using eta (max `1.25`)
 - `ALLOW` with `normal`: unchanged
+- conservative floor: min `0.75`
 
 Constraint:
 - Do not apply Phi multipliers to live scoring yet.

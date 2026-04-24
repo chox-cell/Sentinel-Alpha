@@ -44,6 +44,7 @@ Signals:
 - Outcome Verifier v0.1 active
 - Outcome States v0.1 active
 - Adaptive Phi Stub v0.1 active
+- Phi Learning Rate Calibration v0.1 active
 - Shadow Link v0.1 active
 - Policy Calibration v0.1 active
 - Cache Metrics v0.1 active

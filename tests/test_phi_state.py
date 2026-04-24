@@ -61,4 +61,4 @@ def test_update_phi_from_outcomes_stub_rules(tmp_path, monkeypatch):
     )
 
     assert updated["multipliers"]["shadow_link"] > 1.0
-    assert updated["multipliers"]["shadow_link"] <= 1.75
+    assert updated["multipliers"]["shadow_link"] <= 1.25
