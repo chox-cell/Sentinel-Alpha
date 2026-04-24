@@ -1,12 +1,27 @@
-from fastapi import APIRouter, Request
+import json
+import os
+
+from fastapi import APIRouter, HTTPException, Request
 from services.scout_cell.hunter import handle_new_contract
+from services.scout_cell.signature import verify_quicknode_signature
 from shared.utils.logger import log_event
 
 router = APIRouter()
 
 @router.post("/webhooks/quicknode")
 async def quicknode_webhook(req: Request):
-    payload = await req.json()
+    raw_body = await req.body()
+    signature = req.headers.get("x-qn-signature")
+    secret = os.getenv("QUICKNODE_WEBHOOK_SECRET")
+
+    if not verify_quicknode_signature(raw_body, signature, secret):
+        raise HTTPException(status_code=401, detail="Invalid QuickNode signature")
+
+    try:
+        payload = json.loads(raw_body.decode("utf-8"))
+    except (UnicodeDecodeError, json.JSONDecodeError) as exc:
+        raise HTTPException(status_code=400, detail="Invalid JSON payload") from exc
+
     log_event("webhook_received", payload)
     result = handle_new_contract(payload)
     return {"status": "ok", "result": result}

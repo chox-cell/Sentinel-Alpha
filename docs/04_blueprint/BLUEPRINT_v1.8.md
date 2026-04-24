@@ -47,6 +47,7 @@ Signals:
 - Shadow Link v0.1 active
 - Policy Calibration v0.1 active
 - Cache Metrics v0.1 active
+- QuickNode Signature Verification v0.1 active
 - Attestation active
 - Redis cache active
 - Webhook ingestion active
@@ -57,7 +58,6 @@ Signals:
 - live liquidity scan
 - real simulation
 - real x402 settlement
-- QuickNode signature verification
 
 ## Next Build Priority
 1. tests
