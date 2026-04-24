@@ -58,6 +58,7 @@ Signals:
 - QuickNode Event Reducer v0.1 active
 - QuickNode Event Reducer matchingReceipts v0.2 active
 - Payload Inspector v0.1 active
+- DLQ + Replay v0.1 active
 - Attestation active
 - Redis cache active
 - Webhook ingestion active
