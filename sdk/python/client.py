@@ -1,23 +1,49 @@
 import requests
+from typing import Any
 
-def check_contract(base_url: str, contract_address: str, chain: str = "base"):
-    res = requests.post(
-        f"{base_url}/contracts/risk-score",
-        json={"contract_address": contract_address, "chain": chain},
-        headers={"PAYMENT-SIGNATURE": "demo"},
-        timeout=15,
-    )
 
-    try:
-        return {
-            "status_code": res.status_code,
-            "json": res.json(),
+class SentinelAlphaClient:
+    def __init__(self, base_url: str, payment_signature: str = "demo"):
+        self.base_url = base_url.rstrip("/")
+        self.payment_signature = payment_signature
+
+    def _request(self, method: str, path: str, *, json_payload: dict | None = None, timeout: int = 15) -> dict[str, Any]:
+        url = f"{self.base_url}{path}"
+        headers = {"PAYMENT-SIGNATURE": self.payment_signature}
+
+        try:
+            response = requests.request(
+                method=method,
+                url=url,
+                json=json_payload,
+                headers=headers,
+                timeout=timeout,
+            )
+        except requests.Timeout as exc:
+            raise RuntimeError(f"Request timeout for {method} {path}") from exc
+        except requests.RequestException as exc:
+            raise RuntimeError(f"Request failed for {method} {path}: {exc}") from exc
+
+        if response.status_code != 200:
+            raise RuntimeError(
+                f"Non-200 response for {method} {path}: {response.status_code} {response.text[:300]}"
+            )
+
+        try:
+            return response.json()
+        except ValueError as exc:
+            raise RuntimeError(f"Non-JSON response for {method} {path}") from exc
+
+    def risk_score(self, contract_address: str, chain: str = "base", context: dict | None = None) -> dict:
+        payload = {
+            "contract_address": contract_address,
+            "chain": chain,
+            "context": context,
         }
-    except Exception:
-        return {
-            "status_code": res.status_code,
-            "raw": res.text[:500],
-        }
+        return self._request("POST", "/contracts/risk-score", json_payload=payload)
 
-if __name__ == "__main__":
-    print(check_contract("http://127.0.0.1:8000", "0x123"))
+    def health(self) -> dict:
+        return self._request("GET", "/health")
+
+    def manifest(self) -> dict:
+        return self._request("GET", "/internal/manifest")
