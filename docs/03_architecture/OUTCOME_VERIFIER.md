@@ -5,10 +5,24 @@ Outcome Verifier converts predicted decisions from Outcome Memory into local ver
 
 ## Module
 - `services/outcome_memory/verifier.py`
+- `services/outcome_memory/outcome_states.py`
 
 ## Functions
 - `verify_outcome(record: dict) -> dict`
 - `verify_recent_outcomes(limit: int = 50) -> list`
+- `classify_stub_outcome(record: dict) -> str`
+
+## Outcome States v0.1
+Formal constants are defined in `outcome_states.py`:
+- `RUGGED`
+- `HONEYPOT`
+- `PRIVILEGE_ABUSE`
+- `LEGIT`
+- `UNKNOWN`
+- `SAFE_SO_FAR`
+- `BLOCKED_HIGH_RISK`
+- `EMERGENCY_RISK_CONFIRMED`
+- `MISSED_RISK_CANDIDATE`
 
 ## Storage
 - Verified outcomes file: `logs/verified_outcomes.jsonl`

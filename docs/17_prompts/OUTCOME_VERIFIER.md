@@ -5,12 +5,25 @@ Goal:
 
 Implementation:
 - `services/outcome_memory/verifier.py`
+- `services/outcome_memory/outcome_states.py`
 - `workers/outcome_verifier/run.py`
 - output file: `logs/verified_outcomes.jsonl`
 
 Required API:
 - `verify_outcome(record: dict) -> dict`
 - `verify_recent_outcomes(limit: int = 50) -> list`
+- `classify_stub_outcome(record: dict) -> str`
+
+Outcome States v0.1 constants:
+- `RUGGED`
+- `HONEYPOT`
+- `PRIVILEGE_ABUSE`
+- `LEGIT`
+- `UNKNOWN`
+- `SAFE_SO_FAR`
+- `BLOCKED_HIGH_RISK`
+- `EMERGENCY_RISK_CONFIRMED`
+- `MISSED_RISK_CANDIDATE`
 
 Stub verification rules:
 - `BLOCK` and `score >= 85` -> `blocked_high_risk` with confidence `0.7`
