@@ -1,5 +1,5 @@
 from pathlib import Path
-from datetime import datetime
+from datetime import datetime, timezone
 import json
 
 LOG_FILE = Path("logs/events.log")
@@ -7,7 +7,7 @@ LOG_FILE.parent.mkdir(parents=True, exist_ok=True)
 
 def log_event(event_type: str, payload: dict):
     row = {
-        "ts": datetime.utcnow().isoformat() + "Z",
+        "ts": datetime.now(timezone.utc).isoformat(),
         "event_type": event_type,
         "payload": payload,
     }
