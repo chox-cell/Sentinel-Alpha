@@ -1,7 +1,11 @@
 import os
 import json
 from pathlib import Path
+
 from dotenv import load_dotenv
+
+_REPO_ROOT = Path(__file__).resolve().parents[2]
+load_dotenv(_REPO_ROOT / ".env", override=True)
 
 from fastapi import BackgroundTasks, FastAPI, Header
 from pydantic import BaseModel
@@ -26,8 +30,6 @@ from services.x402.payment_config import get_payment_status, get_pricing_tiers
 from shared.config.env import get_env_bool, get_quicknode_env_status
 from shared.config.limits import get_ingestion_limits
 
-load_dotenv()
-
 app = FastAPI(title="Sentinel Alpha API")
 app.include_router(quicknode_router)
 MANIFEST_PATH = Path("docs/01_manifest/manifest.json")
@@ -44,6 +46,19 @@ def health():
         "service": "Sentinel Alpha",
         "env": os.getenv("APP_ENV", "dev"),
     }
+
+
+@app.get("/internal/env/source")
+def internal_env_source():
+    payment_status = get_payment_status()
+    return {
+        "env_source": ".env",
+        "override": True,
+        "app_env": os.getenv("APP_ENV", "dev"),
+        "payment_mode": payment_status["payment_mode"],
+        "x402_enabled": get_env_bool("X402_ENABLED", default=False),
+    }
+
 
 @app.post("/contracts/risk-score")
 def risk_score(

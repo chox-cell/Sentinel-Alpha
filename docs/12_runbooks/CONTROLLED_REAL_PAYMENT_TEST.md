@@ -27,6 +27,8 @@ The script reports:
 It does not print secret values.
 It loads repo-root `.env` with override behavior, so `.env` is the source of truth even if shell vars differ.
 
+The API process uses the same rule: `apps/api/main.py` loads repo-root `.env` with `override=True` before other app imports, so runtime matches the readiness script. Check alignment with `GET /internal/env/source` (fields: `env_source`, `override`, `app_env`, `payment_mode`, `x402_enabled`) and compare `payment_mode` to `GET /internal/x402/status`.
+
 ## Controlled test steps
 1. Set scoped environment for a single test session.
 2. Enable:
