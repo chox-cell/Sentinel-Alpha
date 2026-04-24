@@ -8,6 +8,7 @@ Enable safe x402 payment enforcement paths without enabling live settlement.
   - `PAYMENT_MODE=demo`
   - request must include `PAYMENT-SIGNATURE=demo` (or configured demo signature)
   - billing status: `demo`
+  - successful `/contracts/risk-score` response billing is overridden from payment middleware result
 - Real guarded mode:
   - `PAYMENT_MODE=real`
   - `X402_ENABLED=true`
@@ -21,6 +22,7 @@ Enable safe x402 payment enforcement paths without enabling live settlement.
     - `resource: "/contracts/risk-score"`
     - `instructions: "Submit X402-PAYMENT header to access this resource."`
   - if `X402-PAYMENT` is present, billing status is `pending_real_validation`
+  - successful `/contracts/risk-score` response billing is overridden from payment middleware result
 - Real disabled:
   - `PAYMENT_MODE=real`
   - `X402_ENABLED=false`
@@ -40,3 +42,4 @@ Enable safe x402 payment enforcement paths without enabling live settlement.
 ## Security notes
 - Never log or return private keys or secret values.
 - v0.2 does not perform Coinbase settlement.
+- Successful response schema keys are unchanged; only `billing` values are updated by payment mode.

@@ -49,7 +49,7 @@ def risk_score(
     payment_signature: str | None = Header(default=None, alias="PAYMENT-SIGNATURE"),
     x402_payment: str | None = Header(default=None, alias="X402-PAYMENT"),
 ):
-    require_x402_payment(
+    payment_billing = require_x402_payment(
         {
             "PAYMENT-SIGNATURE": payment_signature,
             "X402-PAYMENT": x402_payment,
@@ -63,6 +63,12 @@ def risk_score(
         context=req.context,
     )
     response = result["response"]
+    if isinstance(payment_billing, dict):
+        response["billing"] = {
+            "amount": payment_billing.get("amount", response.get("billing", {}).get("amount", "0.02")),
+            "method": payment_billing.get("method", response.get("billing", {}).get("method", "x402")),
+            "status": payment_billing.get("status", response.get("billing", {}).get("status", "demo")),
+        }
 
     schedule_post_risk_tasks(
         background_tasks,

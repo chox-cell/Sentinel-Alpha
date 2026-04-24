@@ -58,3 +58,15 @@ Challenge behavior v0.2:
   - `asset: "USDC"`
   - `resource: "/contracts/risk-score"`
   - `instructions`
+
+Billing propagation v0.3:
+- Payment middleware result from `require_x402_payment(...)` must override successful `/contracts/risk-score` response `billing`
+- Demo success billing:
+  - `method: x402`
+  - `status: demo`
+  - `amount` matches lane price
+- Real guarded success billing (`X402-PAYMENT` present):
+  - `method: x402`
+  - `status: pending_real_validation`
+  - `amount` matches lane price
+- Missing real payment must continue returning `402` challenge payload
