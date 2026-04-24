@@ -5,6 +5,8 @@ from services.signals.validators import (
     is_probably_evm_like,
 )
 from services.signals.bytecode_scanner import scan_bytecode
+from services.profiler.deployer_profile import build_deployer_profile
+from services.shadow_link_tracker.tracker import compute_shadow_link_score
 
 def extract_signals(contract_address: str, chain: str, context: dict | None = None) -> dict:
     """
@@ -68,6 +70,17 @@ def extract_signals(contract_address: str, chain: str, context: dict | None = No
         signals["owner_privileges"] = 1
     if bytecode_findings.get("simulation_revert_detected"):
         signals["simulation_revert"] = 1
+
+    # Deployer Profile + Shadow Link Tracker stubs (existing signal keys only).
+    profile = build_deployer_profile(address, chain, context)
+    shadow_link_score = compute_shadow_link_score(profile)
+
+    if profile.get("cluster_risk") == "high":
+        signals["bad_cluster"] = 1
+    if profile.get("owner_privileges"):
+        signals["owner_privileges"] = 1
+    if shadow_link_score >= 0.75:
+        signals["shadow_link"] = 1
 
     # Optional upstream flags
     for key in [
