@@ -40,7 +40,7 @@ Signals:
 - insufficient_data
 
 ## Current Moat Foundations
-- Outcome Memory placeholder
+- Outcome Memory v0.1 active
 - Shadow Link v0.1 active
 - Policy Calibration v0.1 active
 - Attestation active

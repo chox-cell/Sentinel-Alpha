@@ -10,6 +10,7 @@ from services.mycelium_engine.engine import (
     classify_threat,
 )
 from services.attestation_layer.attestation import build_attestation
+from services.outcome_memory.memory import record_decision
 
 def evaluate_contract(contract_address: str, chain: str, context: dict | None = None) -> dict:
     start = time.time()
@@ -63,6 +64,21 @@ def evaluate_contract(contract_address: str, chain: str, context: dict | None = 
             "status": "demo",
         },
     }
+
+    record_decision(
+        {
+            "trace_id": trace_id,
+            "contract_address": extracted["contract_address"],
+            "chain": extracted["chain"],
+            "score": score,
+            "confidence": confidence,
+            "action": action,
+            "threat_class": threat_class,
+            "signals": signals,
+            "attestation": attestation,
+            "created_at": response["attestation"]["signed_at"],
+        }
+    )
 
     set_cache(cache_key, response, ttl=300)
     return response
