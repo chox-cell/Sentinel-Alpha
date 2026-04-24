@@ -13,6 +13,8 @@ Protect `/webhooks/quicknode` from fake payloads using HMAC-SHA256 before enabli
 - Uses HMAC-SHA256 over the raw request body.
 - Reads signature from header: `x-qn-signature`.
 - Reads secret from environment: `QUICKNODE_WEBHOOK_SECRET`.
+- Supports dry-run ops flag: `QUICKNODE_DRY_RUN`.
+- Supports deployment URL registration var: `QUICKNODE_WEBHOOK_URL`.
 - If secret is empty or missing, verification is disabled and returns `True` (dev mode).
 
 ## Webhook integration

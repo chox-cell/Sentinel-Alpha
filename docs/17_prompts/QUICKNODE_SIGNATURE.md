@@ -14,6 +14,8 @@ Rules:
 - Use HMAC-SHA256.
 - Signature header: `x-qn-signature`.
 - Secret env var: `QUICKNODE_WEBHOOK_SECRET`.
+- Dry-run env var: `QUICKNODE_DRY_RUN`.
+- Webhook URL env var: `QUICKNODE_WEBHOOK_URL`.
 - If secret is empty/None, treat as dev mode and allow (`True`).
 - If secret exists and signature is invalid, return HTTP `401`.
 

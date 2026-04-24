@@ -31,3 +31,8 @@ Implementation:
 Integration:
 - `services/scout_cell/hunter.py` calls normalizer first, then calls `evaluate_contract` directly.
 - Public API schema is unchanged.
+
+Ops env:
+- `QUICKNODE_WEBHOOK_SECRET`
+- `QUICKNODE_DRY_RUN`
+- `QUICKNODE_WEBHOOK_URL`
