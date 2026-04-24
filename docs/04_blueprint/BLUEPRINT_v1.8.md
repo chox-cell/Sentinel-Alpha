@@ -42,6 +42,7 @@ Signals:
 ## Current Moat Foundations
 - Outcome Memory placeholder
 - Shadow Link v0.1 active
+- Policy Calibration v0.1 active
 - Attestation active
 - Redis cache active
 - Webhook ingestion active

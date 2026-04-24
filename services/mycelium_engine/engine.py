@@ -21,7 +21,15 @@ def compute_score(signals: Dict[str, int]) -> int:
     for signal_name, signal_value in signals.items():
         score += WEIGHTS.get(signal_name, 0) * int(signal_value)
 
-    return max(0, min(100, score))
+    score = max(0, min(100, score))
+
+    # Policy Calibration v0.1: enforce score floors for shadow-link risk.
+    if signals.get("shadow_link"):
+        score = max(score, 70)
+    if signals.get("shadow_link") and signals.get("bad_cluster"):
+        score = max(score, 85)
+
+    return score
 
 def compute_confidence(signals: Dict[str, int]) -> float:
     if signals.get("invalid_address"):
