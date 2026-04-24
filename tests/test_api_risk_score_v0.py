@@ -6,7 +6,7 @@ from apps.api.main import app
 def test_risk_score_endpoint_schema_stable(monkeypatch):
     from apps.api import main
 
-    monkeypatch.setattr(main, "require_payment", lambda _sig: None)
+    monkeypatch.setattr(main, "require_x402_payment", lambda _headers, lane="basic": None)
 
     client = TestClient(app)
     response = client.post(

@@ -10,7 +10,7 @@ class _FakeBackgroundTasks:
 
 
 def test_background_tasks_scheduled_for_non_cache(monkeypatch):
-    monkeypatch.setattr(main, "require_payment", lambda _sig: None)
+    monkeypatch.setattr(main, "require_x402_payment", lambda _headers, lane="basic": None)
     monkeypatch.setattr(
         main,
         "evaluate_contract_with_meta",
@@ -43,7 +43,7 @@ def test_background_tasks_scheduled_for_non_cache(monkeypatch):
 
 
 def test_cache_hit_does_not_schedule_outcome_record_task(monkeypatch):
-    monkeypatch.setattr(main, "require_payment", lambda _sig: None)
+    monkeypatch.setattr(main, "require_x402_payment", lambda _headers, lane="basic": None)
     monkeypatch.setattr(
         main,
         "evaluate_contract_with_meta",

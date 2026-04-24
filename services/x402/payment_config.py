@@ -74,3 +74,14 @@ def get_payment_status() -> dict:
         "pricing_valid": pricing_valid,
         "real_payments_enabled": real_payments_enabled,
     }
+
+
+def get_pricing_tiers() -> dict:
+    tiers = _build_pricing_tiers()
+    return {
+        "basic": tiers["basic"],
+        "executive": tiers["executive"],
+        "premium": tiers["premium"],
+        "priority": tiers["priority"],
+        "default": tiers["default"],
+    }

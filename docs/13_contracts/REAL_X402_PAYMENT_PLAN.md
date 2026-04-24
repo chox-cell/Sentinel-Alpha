@@ -11,9 +11,11 @@ Prepare Sentinel Alpha for future real x402/Coinbase payment enablement without 
 - `services/x402/payment_config.py`
 - `get_payment_status() -> dict`
 - internal endpoint: `GET /internal/x402/status`
+- internal endpoint: `GET /internal/x402/pricing`
 
 ## Environment inputs
 - `PAYMENT_MODE` (default `demo`)
+- `X402_ENABLED` (default `false`)
 - `CDP_PROJECT_ID` (optional)
 - `CDP_API_KEY_NAME` (optional)
 - `CDP_API_KEY_PRIVATE_KEY` (optional)
@@ -44,3 +46,28 @@ Pricing validity rule:
 ## Security
 - Status responses expose booleans only, never secret values.
 - `/contracts/risk-score` schema remains unchanged.
+
+## Real Payment Middleware v0.1
+- `services/x402/payment.py`
+- `services/x402/coinbase.py`
+- `require_x402_payment(headers: dict, lane: str = "basic") -> dict`
+
+Behavior:
+- Demo mode (`PAYMENT_MODE=demo`):
+  - accepts `PAYMENT-SIGNATURE=demo` (or configured demo signature)
+  - returns billing status `demo`
+- Real mode disabled (`PAYMENT_MODE=real`, `X402_ENABLED=false`):
+  - rejects with `402`
+- Real mode guarded (`PAYMENT_MODE=real`, `X402_ENABLED=true`):
+  - requires `X402-PAYMENT` header
+  - performs placeholder validation in v0.1 only
+  - returns billing status `pending_real_validation`
+
+Lane pricing mapping:
+- `basic` -> `PRICE_BASIC`
+- `executive` -> `PRICE_EXECUTIVE`
+- `premium` -> `PRICE_PREMIUM`
+- `priority` -> `PRICE_PRIORITY`
+
+Settlement:
+- No live Coinbase settlement is executed in v0.1.

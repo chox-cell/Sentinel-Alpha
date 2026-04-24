@@ -64,6 +64,7 @@ Signals:
 - Real Identity / ERC-8004 Planning v0.1 active
 - Real Attestation Key Signing v0.1 active
 - x402 Payments Planning + Env Lock v0.1 active
+- x402 Real Payment Middleware v0.1 active
 - Attestation active
 - Redis cache active
 - Webhook ingestion active

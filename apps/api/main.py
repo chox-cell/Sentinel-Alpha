@@ -8,7 +8,7 @@ from pydantic import BaseModel
 from typing import Optional, Dict, Any
 
 from apps.webhooks.quicknode import router as quicknode_router
-from services.x402.payment import require_payment
+from services.x402.payment import require_x402_payment
 from services.risk_service.service import evaluate_contract_with_meta
 from services.cache.metrics import get_cache_metrics
 from services.attestation_layer.key_signing import (
@@ -19,7 +19,7 @@ from services.attestation_layer.key_signing import (
 from services.dlq.dead_letter import DLQ_PATH, read_dlq
 from services.identity.identity_config import get_identity_status
 from services.latency_shield.background import schedule_post_risk_tasks
-from services.x402.payment_config import get_payment_status
+from services.x402.payment_config import get_payment_status, get_pricing_tiers
 from shared.config.env import get_env_bool, get_quicknode_env_status
 from shared.config.limits import get_ingestion_limits
 
@@ -47,8 +47,15 @@ def risk_score(
     req: RequestModel,
     background_tasks: BackgroundTasks,
     payment_signature: str | None = Header(default=None, alias="PAYMENT-SIGNATURE"),
+    x402_payment: str | None = Header(default=None, alias="X402-PAYMENT"),
 ):
-    require_payment(payment_signature)
+    require_x402_payment(
+        {
+            "PAYMENT-SIGNATURE": payment_signature,
+            "X402-PAYMENT": x402_payment,
+        },
+        lane="basic",
+    )
 
     result = evaluate_contract_with_meta(
         contract_address=req.contract_address,
@@ -133,3 +140,11 @@ def internal_attestation_status():
 @app.get("/internal/x402/status")
 def internal_x402_status():
     return get_payment_status()
+
+
+@app.get("/internal/x402/pricing")
+def internal_x402_pricing():
+    return {
+        "pricing_tiers": get_pricing_tiers(),
+        "default_lane": "basic",
+    }

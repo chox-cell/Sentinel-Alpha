@@ -5,7 +5,10 @@ Goal:
 
 Implementation:
 - `services/x402/payment_config.py`
+- `services/x402/payment.py`
+- `services/x402/coinbase.py`
 - `GET /internal/x402/status`
+- `GET /internal/x402/pricing`
 
 Function:
 - `get_payment_status() -> dict`
@@ -29,3 +32,14 @@ Constraints:
 - Do not change `/contracts/risk-score`.
 - Do not change public response schema.
 - Do not expose secrets in status output.
+
+Middleware behavior v0.1:
+- Add `require_x402_payment(headers: dict, lane: str = "basic") -> dict`
+- `PAYMENT_MODE=demo` accepts `PAYMENT-SIGNATURE=demo`, billing status `demo`
+- `PAYMENT_MODE=real` and `X402_ENABLED=false` rejects with `402`
+- `PAYMENT_MODE=real` and `X402_ENABLED=true` requires `X402-PAYMENT` and returns `pending_real_validation`
+- Lane pricing:
+  - `basic` -> `PRICE_BASIC`
+  - `executive` -> `PRICE_EXECUTIVE`
+  - `premium` -> `PRICE_PREMIUM`
+  - `priority` -> `PRICE_PRIORITY`
