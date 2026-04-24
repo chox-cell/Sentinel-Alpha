@@ -1,0 +1,48 @@
+# Controlled Real Payment Test v0.8
+
+## Goal
+Run one controlled real-payment verification exercise on Base without changing default behavior or enabling real payments globally.
+
+## Safety defaults
+- `PAYMENT_MODE` default remains `demo`
+- `X402_ENABLED` default remains `false`
+- `X402_ONCHAIN_VERIFY` default remains `false`
+- No irreversible settlement behavior is enabled by default
+
+## Pre-check
+Run:
+- `python scripts/print_real_payment_readiness.py`
+
+The script reports:
+- `payment_mode`
+- `x402_enabled`
+- `onchain_verify_enabled`
+- `base_rpc_configured`
+- `treasury_configured`
+- `wallet_address_configured`
+- `pricing_tiers`
+- `readiness_verdict`
+
+It does not print secret values.
+
+## Controlled test steps
+1. Set scoped environment for a single test session.
+2. Enable:
+   - `PAYMENT_MODE=real`
+   - `X402_ENABLED=true`
+   - `X402_ONCHAIN_VERIFY=true`
+3. Configure non-empty:
+   - `BASE_RPC_URL`
+   - treasury wallet (`X402_REVENUE_ADDRESS` or `SENTINEL_TREASURY_WALLET`)
+4. Submit one tx-shaped payment header:
+   - `X402-PAYMENT: tx:0x...`
+5. Observe:
+   - billing status response
+   - replay guard behavior on repeat attempt
+   - settlement and replay internal status endpoints
+
+## Rollback
+- Restore env to safe defaults:
+  - `PAYMENT_MODE=demo`
+  - `X402_ENABLED=false`
+  - `X402_ONCHAIN_VERIFY=false`
