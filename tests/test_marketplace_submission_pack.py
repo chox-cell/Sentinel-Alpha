@@ -28,6 +28,7 @@ def test_marketplace_submission_json_required_fields():
     }
     assert data["github"] == "https://github.com/chox-cell/Sentinel-Alpha"
     assert data["release_tag"] == "v1.5.0"
+    assert data["public_base_url_required"] is True
     assert data["identity_status"] == "local_did_pending_erc8004"
     assert data["real_payment_verified"] is True
 

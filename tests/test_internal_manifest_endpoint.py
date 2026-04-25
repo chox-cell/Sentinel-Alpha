@@ -6,7 +6,8 @@ from fastapi.testclient import TestClient
 from apps.api.main import app
 
 
-def test_internal_manifest_endpoint_returns_manifest_json():
+def test_internal_manifest_endpoint_returns_manifest_json(monkeypatch):
+    monkeypatch.delenv("PUBLIC_BASE_URL", raising=False)
     client = TestClient(app)
     response = client.get("/internal/manifest")
 

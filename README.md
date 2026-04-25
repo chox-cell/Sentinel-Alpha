@@ -9,6 +9,7 @@ Bots and autonomous agents need a deterministic risk gate before execution, but 
 ## API Endpoint
 
 - `POST /contracts/risk-score`
+- Use your deployed `PUBLIC_BASE_URL` in production.
 
 ## What The API Returns
 
@@ -41,7 +42,7 @@ Pricing tiers (USDC):
 ## Quickstart cURL (x402 tx header)
 
 ```bash
-curl -X POST "http://localhost:8000/contracts/risk-score" \
+curl -X POST "${PUBLIC_BASE_URL}/contracts/risk-score" \
   -H "Content-Type: application/json" \
   -H "X402-PAYMENT: tx:0xaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" \
   -d '{"contract_address":"0x1111111111111111111111111111111111111111","chain":"base","context":{}}'
@@ -50,10 +51,12 @@ curl -X POST "http://localhost:8000/contracts/risk-score" \
 ## Python SDK Quickstart
 
 ```python
+import os
+
 from sdk.python.client import SentinelAlphaClient
 
 client = SentinelAlphaClient(
-    base_url="http://localhost:8000",
+    base_url=os.environ["PUBLIC_BASE_URL"],
     payment_header="tx:0xaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
 )
 
@@ -67,7 +70,7 @@ print(result)
 import { SentinelAlphaClient } from "./sdk/typescript/client";
 
 const client = new SentinelAlphaClient(
-  "http://localhost:8000",
+  process.env.PUBLIC_BASE_URL!,
   "tx:0xaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
 );
 

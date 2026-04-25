@@ -28,6 +28,7 @@
   },
   "github": "https://github.com/chox-cell/Sentinel-Alpha",
   "release_tag": "v1.5.0",
+  "public_base_url_required": true,
   "identity_status": "local_did_pending_erc8004",
   "real_payment_verified": true
 }

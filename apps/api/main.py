@@ -146,7 +146,11 @@ def internal_cache_metrics():
 
 @app.get("/internal/manifest")
 def internal_manifest():
-    return json.loads(MANIFEST_PATH.read_text(encoding="utf-8"))
+    manifest = json.loads(MANIFEST_PATH.read_text(encoding="utf-8"))
+    public_base_url = (os.getenv("PUBLIC_BASE_URL") or "").strip()
+    if public_base_url:
+        manifest["public_base_url"] = public_base_url
+    return manifest
 
 
 @app.get("/internal/quicknode-live-check")

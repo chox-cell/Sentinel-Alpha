@@ -82,6 +82,7 @@ Signals:
 - Agentic Market Submission Pack v1.7 active
 - Real Identity ERC-8004 Planning Pack v1.8 active
 - ERC-8004 Adapter Stub v1.9 active
+- Deploy Pack v2.1 active
 - Controlled Real Payment Test Plan v0.8 active
 - Attestation active
 - Redis cache active
