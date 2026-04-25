@@ -78,6 +78,7 @@ Signals:
 - Pre-launch Hardening Pack v1.3 active
 - Launch Env Finalizer v1.4 active
 - Release Candidate Freeze v1.5 active
+- Production Guard Pack v1.6 active
 - Controlled Real Payment Test Plan v0.8 active
 - Attestation active
 - Redis cache active

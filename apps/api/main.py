@@ -1,5 +1,7 @@
 import os
 import json
+import threading
+import time
 from pathlib import Path
 
 from dotenv import load_dotenv
@@ -7,7 +9,7 @@ from dotenv import load_dotenv
 _REPO_ROOT = Path(__file__).resolve().parents[2]
 load_dotenv(_REPO_ROOT / ".env", override=True)
 
-from fastapi import BackgroundTasks, FastAPI, Header
+from fastapi import BackgroundTasks, FastAPI, Header, HTTPException, Request
 from pydantic import BaseModel
 from typing import Optional, Dict, Any
 
@@ -33,6 +35,35 @@ from shared.config.limits import get_ingestion_limits
 app = FastAPI(title="Sentinel Alpha API")
 app.include_router(quicknode_router)
 MANIFEST_PATH = Path("docs/01_manifest/manifest.json")
+_RATE_LIMIT_LOCK = threading.Lock()
+_RATE_LIMIT_BUCKETS: dict[str, tuple[int, int]] = {}
+
+
+def _get_rate_limit_config() -> tuple[bool, int]:
+    enabled = get_env_bool("RATE_LIMIT_ENABLED", default=False)
+    try:
+        per_minute = int((os.getenv("RATE_LIMIT_PER_MINUTE", "60") or "60").strip())
+    except ValueError:
+        per_minute = 60
+    if per_minute <= 0:
+        per_minute = 60
+    return enabled, per_minute
+
+
+def _rate_limit_allow(client_ip: str | None) -> bool:
+    enabled, per_minute = _get_rate_limit_config()
+    if not enabled:
+        return True
+    key = (client_ip or "unknown").strip() or "unknown"
+    window = int(time.time() // 60)
+    with _RATE_LIMIT_LOCK:
+        prev_window, count = _RATE_LIMIT_BUCKETS.get(key, (window, 0))
+        if prev_window != window:
+            count = 0
+            prev_window = window
+        count += 1
+        _RATE_LIMIT_BUCKETS[key] = (prev_window, count)
+        return count <= per_minute
 
 class RequestModel(BaseModel):
     contract_address: str
@@ -64,9 +95,14 @@ def internal_env_source():
 def risk_score(
     req: RequestModel,
     background_tasks: BackgroundTasks,
+    request: Request = None,
     payment_signature: str | None = Header(default=None, alias="PAYMENT-SIGNATURE"),
     x402_payment: str | None = Header(default=None, alias="X402-PAYMENT"),
 ):
+    client_ip = request.client.host if (request and request.client) else None
+    if not _rate_limit_allow(client_ip):
+        raise HTTPException(status_code=429, detail={"error": "rate_limit_exceeded"})
+
     payment_billing = require_x402_payment(
         {
             "PAYMENT-SIGNATURE": payment_signature,
@@ -130,6 +166,29 @@ def internal_quicknode_live_check():
     return {
         "ready_for_live": ready_for_live,
         "checks": checks,
+    }
+
+
+@app.get("/internal/rate-limit/status")
+def internal_rate_limit_status():
+    enabled, per_minute = _get_rate_limit_config()
+    with _RATE_LIMIT_LOCK:
+        keys_tracked = len(_RATE_LIMIT_BUCKETS)
+    return {
+        "rate_limit_enabled": enabled,
+        "rate_limit_per_minute": per_minute,
+        "key_strategy": "client_ip",
+        "keys_tracked": keys_tracked,
+    }
+
+
+@app.get("/internal/security/status")
+def internal_security_status():
+    enabled, per_minute = _get_rate_limit_config()
+    return {
+        "quicknode_signature_required": get_env_bool("QUICKNODE_SIGNATURE_REQUIRED", default=False),
+        "rate_limit_enabled": enabled,
+        "rate_limit_per_minute": per_minute,
     }
 
 
