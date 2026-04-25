@@ -30,3 +30,13 @@ Use this checklist before public launch to bot builders and agent marketplaces.
 
 - [ ] Real payment test completed before launch.
 - [ ] No secrets are present in docs or manifests.
+
+## Script Usage
+
+Run the internal pre-launch checker before launch:
+
+```bash
+python3 scripts/prelaunch_check.py
+```
+
+The script prints non-secret readiness checks for payment mode, x402 flags, RPC configuration presence, wallet/treasury presence, required distribution files, and a final readiness verdict.

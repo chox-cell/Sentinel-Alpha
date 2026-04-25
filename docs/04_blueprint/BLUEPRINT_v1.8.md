@@ -75,6 +75,7 @@ Signals:
 - Agentic Market Listing Pack v1.0 active
 - SDK Quickstart Pack v1.1 active
 - Public Launch Docs Pack v1.2 active
+- Pre-launch Hardening Pack v1.3 active
 - Controlled Real Payment Test Plan v0.8 active
 - Attestation active
 - Redis cache active
