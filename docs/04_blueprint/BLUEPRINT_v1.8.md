@@ -80,6 +80,7 @@ Signals:
 - Release Candidate Freeze v1.5 active
 - Production Guard Pack v1.6 active
 - Agentic Market Submission Pack v1.7 active
+- Real Identity ERC-8004 Planning Pack v1.8 active
 - Controlled Real Payment Test Plan v0.8 active
 - Attestation active
 - Redis cache active

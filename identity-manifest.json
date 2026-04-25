@@ -1,0 +1,11 @@
+{
+  "project": "Sentinel Alpha",
+  "engine": "Mycelium Engine",
+  "agent_system": "Sentinel Cells",
+  "current_identity": "did:sentinel-alpha:local",
+  "target_identity": "erc8004",
+  "status": "planned",
+  "wallet": "0x3cf9C2E55485fF8DAFfb59c84a0fa7c03bDbAeaf",
+  "attestation_version": "attestation-0.1",
+  "release_target": "v1.8"
+}
