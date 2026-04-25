@@ -73,6 +73,7 @@ Signals:
 - Base USDC Receipt Verification v0.9 active
 - Mock Onchain Verification v0.9.1 active
 - Agentic Market Listing Pack v1.0 active
+- SDK Quickstart Pack v1.1 active
 - Controlled Real Payment Test Plan v0.8 active
 - Attestation active
 - Redis cache active

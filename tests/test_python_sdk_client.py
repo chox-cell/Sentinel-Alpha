@@ -31,10 +31,27 @@ def test_client_health_manifest_risk_score(monkeypatch):
     client = SentinelAlphaClient("http://localhost:8000", payment_signature="demo")
     assert client.health()["ok"] is True
     assert client.manifest()["name"] == "Sentinel Alpha"
-    result = client.risk_score("0x1111111111111111111111111111111111111111")
+    result = client.scan("0x1111111111111111111111111111111111111111")
     assert result["api_version"] == "2026.8.0"
     assert calls[2][0] == "POST"
     assert calls[2][3]["PAYMENT-SIGNATURE"] == "demo"
+
+
+def test_client_uses_payment_header_when_provided(monkeypatch):
+    calls = []
+
+    def fake_request(method, url, json=None, headers=None, timeout=15):
+        calls.append((method, url, json, headers, timeout))
+        return _StubResponse(json_data={"ok": True})
+
+    monkeypatch.setattr("sdk.python.client.requests.request", fake_request)
+    client = SentinelAlphaClient(
+        "http://localhost:8000",
+        payment_header="tx:0xaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    )
+    client.scan("0x1111111111111111111111111111111111111111")
+    assert calls[0][3]["X402-PAYMENT"].startswith("tx:0x")
+    assert "PAYMENT-SIGNATURE" not in calls[0][3]
 
 
 def test_client_non_200_raises(monkeypatch):
