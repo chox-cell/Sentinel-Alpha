@@ -1,0 +1,33 @@
+{
+  "name": "Sentinel Alpha",
+  "tagline": "Execution Fidelity Layer for Bots and Agents",
+  "category": "execution_fidelity_layer",
+  "endpoint": "/contracts/risk-score",
+  "payment_method": "x402",
+  "network": "eip155:8453",
+  "treasury_wallet": "0x3cf9C2E55485fF8DAFfb59c84a0fa7c03bDbAeaf",
+  "pricing_tiers": {
+    "basic": "0.02",
+    "executive": "0.05",
+    "premium": "0.10",
+    "priority": "0.15"
+  },
+  "supported_chains": [
+    "base"
+  ],
+  "outputs": [
+    "score",
+    "confidence",
+    "action",
+    "emergency_signal",
+    "attestation"
+  ],
+  "sdk": {
+    "python": "sdk/python/README.md",
+    "typescript": "sdk/typescript/README.md"
+  },
+  "github": "https://github.com/chox-cell/Sentinel-Alpha",
+  "release_tag": "v1.5.0",
+  "identity_status": "local_did_pending_erc8004",
+  "real_payment_verified": true
+}
