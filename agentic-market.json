@@ -1,0 +1,31 @@
+{
+  "name": "Sentinel Alpha",
+  "category": "execution_fidelity_layer",
+  "endpoint": "/contracts/risk-score",
+  "pricing_tiers": {
+    "basic": "0.02",
+    "executive": "0.05",
+    "premium": "0.10",
+    "priority": "0.15"
+  },
+  "payment": "x402",
+  "network": "eip155:8453",
+  "outputs": [
+    "score",
+    "confidence",
+    "action",
+    "emergency_signal",
+    "attestation"
+  ],
+  "supported_chains": [
+    "base"
+  ],
+  "modes": [
+    "scan",
+    "webhook",
+    "dry_run"
+  ],
+  "identity": "did:sentinel-alpha:local",
+  "engine": "Mycelium Engine",
+  "agent_system": "Sentinel Cells"
+}

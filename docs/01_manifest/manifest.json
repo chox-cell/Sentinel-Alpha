@@ -8,7 +8,9 @@
   "health_endpoint": "/health",
   "quicknode_health_endpoint": "/webhooks/quicknode/health",
   "payment_method": "x402",
+  "network": "eip155:8453",
   "payment_mode": "demo",
+  "identity": "did:sentinel-alpha:local",
   "api_version": "2026.8.0",
   "engine_version": "mycelium-wrsi-0.2",
   "identity_version": "identity-0.1",
@@ -38,6 +40,7 @@
   "pricing": {
     "basic": "0.02",
     "executive": "0.05",
+    "premium": "0.10",
     "priority": "0.15"
   },
   "constraints": {
