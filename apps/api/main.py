@@ -27,6 +27,7 @@ from services.attestation_layer.key_signing import (
 )
 from services.dlq.dead_letter import DLQ_PATH, read_dlq
 from services.identity.identity_config import get_identity_status
+from services.identity.erc8004_adapter import get_erc8004_status
 from services.latency_shield.background import schedule_post_risk_tasks
 from services.x402.payment_config import get_payment_status, get_pricing_tiers
 from shared.config.env import get_env_bool, get_quicknode_env_status
@@ -208,6 +209,11 @@ def internal_ingestion_status():
 @app.get("/internal/identity/status")
 def internal_identity_status():
     return get_identity_status()
+
+
+@app.get("/internal/identity/erc8004/status")
+def internal_identity_erc8004_status():
+    return get_erc8004_status()
 
 
 @app.get("/internal/attestation/status")
