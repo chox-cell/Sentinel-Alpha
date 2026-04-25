@@ -19,6 +19,8 @@ def test_settlement_logging_and_replay_block(monkeypatch, tmp_path):
     settlement_path = tmp_path / "x402_settlements.jsonl"
     monkeypatch.setattr(replay_guard, "PAYMENTS_LOG_PATH", replay_path)
     monkeypatch.setattr(settlement_ledger, "SETTLEMENT_LOG_PATH", settlement_path)
+    monkeypatch.setenv("X402_ONCHAIN_VERIFY", "false")
+    monkeypatch.delenv("BASE_RPC_URL", raising=False)
     monkeypatch.setenv("PAYMENT_MODE", "real")
     monkeypatch.setenv("X402_ENABLED", "true")
     monkeypatch.setenv("X402_NETWORK", "base")

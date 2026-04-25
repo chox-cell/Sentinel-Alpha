@@ -14,6 +14,8 @@ def _request_body() -> dict:
 
 def test_replay_detection_blocks_second_use(monkeypatch, tmp_path):
     monkeypatch.setattr(replay_guard, "PAYMENTS_LOG_PATH", tmp_path / "x402_payments.jsonl")
+    monkeypatch.setenv("X402_ONCHAIN_VERIFY", "false")
+    monkeypatch.delenv("BASE_RPC_URL", raising=False)
     monkeypatch.setenv("PAYMENT_MODE", "real")
     monkeypatch.setenv("X402_ENABLED", "true")
     monkeypatch.setenv("PRICE_BASIC", "0.02")

@@ -33,6 +33,8 @@ def test_demo_response_billing_status(monkeypatch):
 def test_real_tx_format_valid_response_billing_status(monkeypatch, tmp_path):
     monkeypatch.setattr(replay_guard, "PAYMENTS_LOG_PATH", tmp_path / "x402_payments.jsonl")
     monkeypatch.setattr(settlement_ledger, "SETTLEMENT_LOG_PATH", tmp_path / "x402_settlements.jsonl")
+    monkeypatch.setenv("X402_ONCHAIN_VERIFY", "false")
+    monkeypatch.delenv("BASE_RPC_URL", raising=False)
     monkeypatch.setenv("PAYMENT_MODE", "real")
     monkeypatch.setenv("X402_ENABLED", "true")
     monkeypatch.setenv("PRICE_BASIC", "0.09")

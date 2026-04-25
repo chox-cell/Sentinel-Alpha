@@ -1,4 +1,4 @@
-# REAL X402 PAYMENT + ENV LOCK v0.7
+# REAL X402 PAYMENT + ENV LOCK v0.9.1
 
 Goal:
 - Add safe planning/status scaffolding for real x402 payments without enabling real settlement by default.
@@ -137,3 +137,23 @@ x402 on-chain USDC verification adapter v0.7:
 - `.env`:
   - `X402_ONCHAIN_VERIFY=false`
   - `BASE_RPC_URL=`
+
+Base USDC on-chain receipt verification v0.9:
+- `services/x402/onchain_verifier.py` calls `eth_getTransactionReceipt` on `BASE_RPC_URL` via `requests.post` (timeout ≤ 8s); never log or return the RPC URL
+- Verifies: receipt present, `status` success, log `address` == `BASE_USDC_ADDRESS`, `topics[0]` == ERC-20 `Transfer` (`0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef`), `topics[2]` recipient == treasury wallet, `data` amount ≥ expected lane price in USDC (6 decimals)
+- Success: `verified: true`, `status: verified`, plus `tx_hash`, `amount_units`, `expected_units`, `treasury_wallet`
+- Failure `status` values include: `receipt_not_found`, `tx_failed`, `no_matching_usdc_transfer`, `amount_too_low`, `rpc_error` (plus disabled / invalid / `rpc_not_configured` from earlier gates)
+- `services/x402/coinbase.py` / payment path: when adapter returns `verified: true`, billing `status` is `verified`
+
+Mock onchain verification test mode v0.9.1:
+- Add env `X402_MOCK_ONCHAIN_VERIFY=false` (default, production-safe)
+- If `X402_ONCHAIN_VERIFY=true` and `X402_MOCK_ONCHAIN_VERIFY=true`, `verify_usdc_transfer_tx(...)` still validates tx hash shape, treasury wallet shape, and `expected_amount > 0`, then returns:
+  - `verified: true`
+  - `status: verified`
+  - `tx_hash`
+  - `mock: true`
+  - `amount_units == expected_units`
+  - `expected_units`
+  - `treasury_wallet`
+- No real Base RPC call is required in this explicit mock mode
+- `/internal/x402/onchain/status` includes `mock_onchain_verify_enabled`

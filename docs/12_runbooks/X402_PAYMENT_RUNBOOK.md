@@ -1,4 +1,4 @@
-# X402 Payment Runbook v0.7
+# X402 Payment Runbook v0.9.1
 
 ## Goal
 Enable safe x402 payment enforcement paths without enabling live settlement.
@@ -25,8 +25,8 @@ Enable safe x402 payment enforcement paths without enabling live settlement.
   - invalid payment header returns `402` with `{"error":"invalid_x402_payment"}`
   - valid tx-format header returns billing status `tx_format_valid_unverified`
   - verification result reason: `onchain_verification_not_enabled`
-  - if `X402_ONCHAIN_VERIFY=true`, tx proof is passed to on-chain adapter
-  - if on-chain verification fails, request returns `402` with `{"error":"x402_payment_not_verified","status":"..."}` 
+  - if `X402_ONCHAIN_VERIFY=true`, tx proof is verified on Base via JSON-RPC `eth_getTransactionReceipt` (`BASE_RPC_URL`, timeout ≤ 8s): receipt success, USDC contract log, ERC-20 `Transfer` to treasury, amount ≥ lane price in USDC units
+  - if on-chain verification fails, request returns `402` with `{"error":"x402_payment_not_verified","status":"..."}` (e.g. `receipt_not_found`, `tx_failed`, `no_matching_usdc_transfer`, `amount_too_low`, `rpc_error`)
   - if on-chain verification succeeds, billing status becomes `verified`
   - replayed tx proof returns `402` with `{"error":"x402_replay_detected"}`
   - accepted tx proof appends settlement ledger entry in `logs/x402_settlements.jsonl`
@@ -53,8 +53,10 @@ Enable safe x402 payment enforcement paths without enabling live settlement.
 
 ## Security notes
 - Never log or return private keys or secret values.
-- v0.7 does not perform irreversible settlement actions.
-- `X402_ONCHAIN_VERIFY` defaults to `false`; onchain verification is not enabled yet.
+- v0.9 does not perform irreversible settlement actions beyond receipt checks.
+- `X402_ONCHAIN_VERIFY` defaults to `false`; set `true` plus `BASE_RPC_URL` for Base USDC receipt verification (v0.9).
+- `X402_MOCK_ONCHAIN_VERIFY` defaults to `false`; when set `true` together with `X402_ONCHAIN_VERIFY=true`, valid tx-shaped proof is accepted in safe local mock mode and billing can reach `verified` without real RPC.
+- Never log or return `BASE_RPC_URL` in API or status payloads.
 - `BASE_RPC_URL` is optional and used only when `X402_ONCHAIN_VERIFY=true`.
 - Replay fingerprints are stored in `logs/x402_payments.jsonl` and never include raw payment headers.
 - Settlement records are append-only in `logs/x402_settlements.jsonl` and never include raw payment headers.

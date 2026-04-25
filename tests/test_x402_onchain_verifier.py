@@ -24,6 +24,7 @@ def test_verify_usdc_transfer_tx_disabled_by_default(monkeypatch):
 
 def test_verify_usdc_transfer_tx_requires_rpc_when_enabled(monkeypatch):
     monkeypatch.setenv("X402_ONCHAIN_VERIFY", "true")
+    monkeypatch.setenv("X402_MOCK_ONCHAIN_VERIFY", "false")
     monkeypatch.delenv("BASE_RPC_URL", raising=False)
     result = verify_usdc_transfer_tx(
         tx_hash="0x" + ("a" * 64),
@@ -35,10 +36,12 @@ def test_verify_usdc_transfer_tx_requires_rpc_when_enabled(monkeypatch):
 
 def test_get_onchain_verification_status_no_secrets(monkeypatch):
     monkeypatch.setenv("X402_ONCHAIN_VERIFY", "true")
+    monkeypatch.setenv("X402_MOCK_ONCHAIN_VERIFY", "true")
     monkeypatch.setenv("BASE_RPC_URL", "https://base-rpc.example")
     monkeypatch.setenv("X402_NETWORK", "base")
     status = get_onchain_verification_status()
     assert status["onchain_verify_enabled"] is True
+    assert status["mock_onchain_verify_enabled"] is True
     assert status["rpc_configured"] is True
     assert status["network"] == "base"
     assert status["base_usdc_address"] == BASE_USDC_ADDRESS

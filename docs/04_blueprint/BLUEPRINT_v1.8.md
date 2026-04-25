@@ -70,6 +70,8 @@ Signals:
 - x402 Replay Protection v0.5 active
 - x402 Settlement Logging v0.6 active
 - x402 On-chain USDC Verification Adapter v0.7 active
+- Base USDC Receipt Verification v0.9 active
+- Mock Onchain Verification v0.9.1 active
 - Controlled Real Payment Test Plan v0.8 active
 - Attestation active
 - Redis cache active

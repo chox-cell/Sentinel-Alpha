@@ -138,3 +138,9 @@ Validation:
 - tx hash must be `0x` + 64 hex chars
 - treasury wallet must be valid `0x` address
 - expected amount must be greater than zero
+
+## Base USDC receipt verification v0.9
+- `services/x402/onchain_verifier.py`: when `X402_ONCHAIN_VERIFY=true` and `BASE_RPC_URL` is set, `verify_usdc_transfer_tx` performs real verification via JSON-RPC `eth_getTransactionReceipt` (POST, timeout ≤ 8 seconds)
+- Confirms Base USDC ERC-20 `Transfer` in receipt logs to configured treasury with amount ≥ expected USDC (6 decimals); `BASE_RPC_URL` must never appear in logs or HTTP responses
+- On success: `verified: true`, `status: verified`, and fields `amount_units`, `expected_units`, `treasury_wallet`; billing in the x402 payment path becomes `verified`
+- On failure: `verified: false` with `status` among `receipt_not_found`, `tx_failed`, `no_matching_usdc_transfer`, `amount_too_low`, `rpc_error` (or pre-RPC gates: disabled, invalid inputs, `rpc_not_configured`)

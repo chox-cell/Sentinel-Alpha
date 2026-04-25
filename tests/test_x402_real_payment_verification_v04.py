@@ -6,6 +6,8 @@ from services.x402 import replay_guard, settlement_ledger
 
 
 def test_verify_real_payment_valid_tx_format(monkeypatch):
+    monkeypatch.setenv("X402_ONCHAIN_VERIFY", "false")
+    monkeypatch.delenv("BASE_RPC_URL", raising=False)
     monkeypatch.setenv("PRICE_EXECUTIVE", "0.06")
     result = verify_real_payment(
         "tx:0xbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
@@ -43,6 +45,8 @@ def test_require_x402_payment_rejects_invalid_real_header(monkeypatch):
 def test_require_x402_payment_accepts_valid_real_header(monkeypatch, tmp_path):
     monkeypatch.setattr(replay_guard, "PAYMENTS_LOG_PATH", tmp_path / "x402_payments.jsonl")
     monkeypatch.setattr(settlement_ledger, "SETTLEMENT_LOG_PATH", tmp_path / "x402_settlements.jsonl")
+    monkeypatch.setenv("X402_ONCHAIN_VERIFY", "false")
+    monkeypatch.delenv("BASE_RPC_URL", raising=False)
     monkeypatch.setenv("PAYMENT_MODE", "real")
     monkeypatch.setenv("X402_ENABLED", "true")
     monkeypatch.setenv("PRICE_BASIC", "0.02")
