@@ -1,10 +1,23 @@
 # Sentinel Alpha
 
-Sentinel Alpha is the Execution Fidelity Layer for Bots and Agents, designed to score execution risk with machine-native outputs for automated policy decisions.
+Sentinel Alpha is the Execution Fidelity Layer for Bots and Agents.
+
+## What Problem It Solves
+
+Bots and autonomous agents need a deterministic risk gate before execution, but most stacks still rely on ad hoc heuristics, dashboards, or manual reviews. Sentinel Alpha provides one machine-native API decision path that can be used directly in trading, policy, and automation loops.
 
 ## API Endpoint
 
 - `POST /contracts/risk-score`
+
+## What The API Returns
+
+The response is built for machine enforcement and includes:
+- `score`
+- `confidence`
+- `action`
+- `emergency_signal`
+- `attestation`
 
 ## Payments
 
@@ -16,6 +29,23 @@ Pricing tiers (USDC):
 - `executive`: `0.05`
 - `premium`: `0.10`
 - `priority`: `0.15`
+
+## Proof Points
+
+- Real Base USDC payment verified
+- x402 replay protection active
+- settlement ledger active
+- smoke test pass
+- release tag `v1.5.0`
+
+## Quickstart cURL (x402 tx header)
+
+```bash
+curl -X POST "http://localhost:8000/contracts/risk-score" \
+  -H "Content-Type: application/json" \
+  -H "X402-PAYMENT: tx:0xaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" \
+  -d '{"contract_address":"0x1111111111111111111111111111111111111111","chain":"base","context":{}}'
+```
 
 ## Python SDK Quickstart
 
@@ -45,9 +75,22 @@ const result = await client.scan("0x1111111111111111111111111111111111111111", "
 console.log(result);
 ```
 
-## Safety Note
+## Marketplace Files
+
+- `agentic-market.json`
+- `marketplace-submission.json`
+- `identity-manifest.json`
+
+## Identity Status
+
+- local DID active (`did:sentinel-alpha:local`)
+- ERC-8004 planned / adapter stub (`services/identity/erc8004_adapter.py`)
+
+## Production Warning
 
 Real payment test is required before launch. Validate end-to-end Base USDC verification behavior in your deployment environment before enabling production payment enforcement.
+- Do not enable mock verification in production.
+- Never commit `.env`.
 
 ## Additional Docs
 
