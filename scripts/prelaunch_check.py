@@ -8,7 +8,7 @@ ROOT = Path(__file__).resolve().parents[1]
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
-load_dotenv(ROOT / ".env", override=False)
+load_dotenv(ROOT / ".env", override=True)
 
 
 def _env_bool(name: str, default: bool = False) -> bool:
@@ -47,11 +47,13 @@ def build_prelaunch_report() -> dict:
         ]
     )
 
-    ready = all(
+    payment_real_mode_ready = payment_mode == "real"
+    mock_mode_disabled = not mock_onchain_verify
+    launch_ready = all(
         [
-            payment_mode == "real",
+            payment_real_mode_ready,
             x402_enabled,
-            not mock_onchain_verify,
+            mock_mode_disabled,
             base_rpc_configured,
             wallet_configured,
             treasury_configured,
@@ -66,8 +68,9 @@ def build_prelaunch_report() -> dict:
         "pytest_command_reminder": "python3 -m pytest tests/ -q --tb=no",
         "env_source": ".env",
         "payment_mode": payment_mode,
+        "payment_real_mode_ready": payment_real_mode_ready,
         "x402_enabled": x402_enabled,
-        "x402_mock_onchain_verify_is_false": not mock_onchain_verify,
+        "mock_mode_disabled": mock_mode_disabled,
         "base_rpc_url_configured": base_rpc_configured,
         "wallet_configured": wallet_configured,
         "treasury_configured": treasury_configured,
@@ -75,7 +78,8 @@ def build_prelaunch_report() -> dict:
         "readme_exists": readme_exists,
         "sdk_docs_exist": sdk_docs_exist,
         "launch_docs_exist": launch_docs_exist,
-        "readiness_verdict": "ready" if ready else "not_ready",
+        "launch_ready": launch_ready,
+        "readiness_verdict": "ready" if launch_ready else "not_ready",
     }
 
 
@@ -86,9 +90,10 @@ def format_prelaunch_report(report: dict) -> str:
             f"pytest command reminder: {report['pytest_command_reminder']}",
             f"env source: {report['env_source']}",
             f"PAYMENT_MODE: {report['payment_mode']}",
+            f"payment real mode ready: {str(report['payment_real_mode_ready']).lower()}",
             f"X402_ENABLED: {str(report['x402_enabled']).lower()}",
-            "X402_MOCK_ONCHAIN_VERIFY must be false: "
-            f"{str(report['x402_mock_onchain_verify_is_false']).lower()}",
+            f"x402 enabled: {str(report['x402_enabled']).lower()}",
+            f"mock mode disabled: {str(report['mock_mode_disabled']).lower()}",
             f"BASE_RPC_URL configured: {str(report['base_rpc_url_configured']).lower()}",
             f"wallet configured: {str(report['wallet_configured']).lower()}",
             f"treasury configured: {str(report['treasury_configured']).lower()}",
@@ -96,6 +101,7 @@ def format_prelaunch_report(report: dict) -> str:
             f"README exists: {str(report['readme_exists']).lower()}",
             f"SDK docs exist: {str(report['sdk_docs_exist']).lower()}",
             f"launch docs exist: {str(report['launch_docs_exist']).lower()}",
+            f"launch ready: {str(report['launch_ready']).lower()}",
             f"readiness verdict: {report['readiness_verdict']}",
         ]
     )

@@ -1,4 +1,4 @@
-# Pre-Launch Checklist v1.2
+# Pre-Launch Checklist v1.4
 
 Use this checklist before public launch to bot builders and agent marketplaces.
 
@@ -39,4 +39,11 @@ Run the internal pre-launch checker before launch:
 python3 scripts/prelaunch_check.py
 ```
 
-The script prints non-secret readiness checks for payment mode, x402 flags, RPC configuration presence, wallet/treasury presence, required distribution files, and a final readiness verdict.
+The script prints non-secret readiness checks including:
+- `payment real mode ready`
+- `x402 enabled`
+- `mock mode disabled`
+- `treasury configured`
+- `launch ready`
+
+See runbook: `docs/12_runbooks/LAUNCH_ENV.md`.
