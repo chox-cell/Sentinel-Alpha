@@ -13,9 +13,10 @@ export class SentinelAlphaClient {
     this.paymentHeader = paymentHeader;
   }
 
-  async scan(contractAddress: string, chain = "base"): Promise<Record<string, unknown>> {
+  async scan(contractAddress: string, chain = "base", lane = "basic"): Promise<Record<string, unknown>> {
     const headers: Record<string, string> = {
       "Content-Type": "application/json",
+      "X-SENTINEL-LANE": lane,
     };
     if (this.paymentHeader) {
       headers["X402-PAYMENT"] = this.paymentHeader;

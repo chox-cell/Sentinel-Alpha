@@ -10,6 +10,7 @@ _REPO_ROOT = Path(__file__).resolve().parents[2]
 load_dotenv(_REPO_ROOT / ".env", override=True)
 
 from fastapi import BackgroundTasks, FastAPI, Header, HTTPException, Request
+from fastapi.responses import JSONResponse
 from pydantic import BaseModel
 from typing import Optional, Dict, Any
 
@@ -36,6 +37,7 @@ from shared.config.limits import get_ingestion_limits
 app = FastAPI(title="Sentinel Alpha API")
 app.include_router(quicknode_router)
 MANIFEST_PATH = Path("docs/01_manifest/manifest.json")
+_SUPPORTED_LANES = {"basic", "executive", "premium", "priority"}
 _RATE_LIMIT_LOCK = threading.Lock()
 _RATE_LIMIT_BUCKETS: dict[str, tuple[int, int]] = {}
 
@@ -99,17 +101,23 @@ def risk_score(
     request: Request = None,
     payment_signature: str | None = Header(default=None, alias="PAYMENT-SIGNATURE"),
     x402_payment: str | None = Header(default=None, alias="X402-PAYMENT"),
+    x_sentinel_lane: str | None = Header(default=None, alias="X-SENTINEL-LANE"),
 ):
     client_ip = request.client.host if (request and request.client) else None
     if not _rate_limit_allow(client_ip):
         raise HTTPException(status_code=429, detail={"error": "rate_limit_exceeded"})
+
+    lane_raw = x_sentinel_lane if isinstance(x_sentinel_lane, str) else None
+    lane = (lane_raw or "basic").strip().lower()
+    if lane not in _SUPPORTED_LANES:
+        return JSONResponse(status_code=400, content={"error": "invalid_lane"})
 
     payment_billing = require_x402_payment(
         {
             "PAYMENT-SIGNATURE": payment_signature,
             "X402-PAYMENT": x402_payment,
         },
-        lane="basic",
+        lane=lane,
     )
 
     result = evaluate_contract_with_meta(
@@ -240,6 +248,15 @@ def internal_x402_pricing():
     return {
         "pricing_tiers": get_pricing_tiers(),
         "default_lane": "basic",
+    }
+
+
+@app.get("/internal/x402/lanes")
+def internal_x402_lanes():
+    return {
+        "supported_lanes": ["basic", "executive", "premium", "priority"],
+        "default_lane": "basic",
+        "pricing_tiers": get_pricing_tiers(),
     }
 
 

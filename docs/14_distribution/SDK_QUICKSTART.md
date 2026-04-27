@@ -1,4 +1,4 @@
-# SDK Quickstart Pack v1.1
+# SDK Quickstart Pack v2.5
 
 ## Goal
 Help bot builders integrate Sentinel Alpha quickly with minimal client code and no runtime behavior changes.
@@ -11,7 +11,7 @@ Help bot builders integrate Sentinel Alpha quickly with minimal client code and 
 
 Supported constructor and method:
 - `SentinelAlphaClient(base_url, payment_header=None, payment_signature="demo")`
-- `scan(contract_address, chain="base")`
+- `scan(contract_address, chain="base", lane="basic")`
 
 ## TypeScript
 
@@ -20,7 +20,7 @@ Supported constructor and method:
 
 Supported constructor and method:
 - `new SentinelAlphaClient(baseUrl, paymentHeader?)`
-- `scan(contractAddress, chain="base")`
+- `scan(contractAddress, chain="base", lane="basic")`
 
 ## Safety
 

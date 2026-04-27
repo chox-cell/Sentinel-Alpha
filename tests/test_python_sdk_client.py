@@ -35,6 +35,7 @@ def test_client_health_manifest_risk_score(monkeypatch):
     assert result["api_version"] == "2026.8.0"
     assert calls[2][0] == "POST"
     assert calls[2][3]["PAYMENT-SIGNATURE"] == "demo"
+    assert calls[2][3]["X-SENTINEL-LANE"] == "basic"
 
 
 def test_client_uses_payment_header_when_provided(monkeypatch):
@@ -52,6 +53,20 @@ def test_client_uses_payment_header_when_provided(monkeypatch):
     client.scan("0x1111111111111111111111111111111111111111")
     assert calls[0][3]["X402-PAYMENT"].startswith("tx:0x")
     assert "PAYMENT-SIGNATURE" not in calls[0][3]
+    assert calls[0][3]["X-SENTINEL-LANE"] == "basic"
+
+
+def test_client_scan_supports_lane_override(monkeypatch):
+    calls = []
+
+    def fake_request(method, url, json=None, headers=None, timeout=15):
+        calls.append((method, url, json, headers, timeout))
+        return _StubResponse(json_data={"ok": True})
+
+    monkeypatch.setattr("sdk.python.client.requests.request", fake_request)
+    client = SentinelAlphaClient("http://localhost:8000", payment_signature="demo")
+    client.scan("0x1111111111111111111111111111111111111111", lane="priority")
+    assert calls[0][3]["X-SENTINEL-LANE"] == "priority"
 
 
 def test_client_non_200_raises(monkeypatch):

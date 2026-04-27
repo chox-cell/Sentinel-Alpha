@@ -11,6 +11,8 @@ Bots and autonomous agents need a deterministic risk gate before execution, but 
 - `POST /contracts/risk-score`
 - Use your deployed `PUBLIC_BASE_URL` in production.
 - Production endpoint: `https://api.beezshield.com/contracts/risk-score`
+- Optional lane header: `X-SENTINEL-LANE` (`basic`, `executive`, `premium`, `priority`)
+- Default lane: `basic`
 
 ## Product and Brand
 
@@ -52,6 +54,7 @@ Example tx hashes below are placeholders for integration examples only.
 ```bash
 curl -X POST "${PUBLIC_BASE_URL}/contracts/risk-score" \
   -H "Content-Type: application/json" \
+  -H "X-SENTINEL-LANE: priority" \
   -H "X402-PAYMENT: tx:0xaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" \
   -d '{"contract_address":"0x1111111111111111111111111111111111111111","chain":"base","context":{}}'
 ```
@@ -85,6 +88,10 @@ const client = new SentinelAlphaClient(
 const result = await client.scan("0x1111111111111111111111111111111111111111", "base");
 console.log(result);
 ```
+
+Lane-aware examples:
+- Python: `client.scan("0x...", chain="base", lane="priority")`
+- TypeScript: `client.scan("0x...", "base", "priority")`
 
 ## Marketplace Files
 

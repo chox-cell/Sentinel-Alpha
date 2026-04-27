@@ -1,4 +1,4 @@
-# X402 Payment Runbook v0.9.1
+# X402 Payment Runbook v2.5
 
 ## Goal
 Enable safe x402 payment enforcement paths without enabling live settlement.
@@ -22,6 +22,8 @@ Enable safe x402 payment enforcement paths without enabling live settlement.
     - `resource: "/contracts/risk-score"`
     - `instructions: "Submit X402-PAYMENT header to access this resource."`
   - supported header format: `X402-PAYMENT: tx:0x<64_hex_chars>`
+  - optional lane header: `X-SENTINEL-LANE` (`basic`, `executive`, `premium`, `priority`)
+  - invalid lane header returns `400` with `{"error":"invalid_lane"}`
   - invalid payment header returns `402` with `{"error":"invalid_x402_payment"}`
   - valid tx-format header returns billing status `tx_format_valid_unverified`
   - verification result reason: `onchain_verification_not_enabled`
@@ -45,6 +47,7 @@ Enable safe x402 payment enforcement paths without enabling live settlement.
 ## Internal checks
 - `GET /internal/x402/status`
 - `GET /internal/x402/pricing`
+- `GET /internal/x402/lanes`
 - `GET /internal/x402/challenge?lane=basic`
 - `GET /internal/x402/verification/status`
 - `GET /internal/x402/replay/status`
