@@ -1,6 +1,7 @@
 {
   "name": "Sentinel Alpha",
   "category": "execution_fidelity_layer",
+  "public_base_url": "https://api.beezshield.com",
   "endpoint": "/contracts/risk-score",
   "pricing_tiers": {
     "basic": "0.02",

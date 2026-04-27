@@ -5,6 +5,7 @@
 - Product: `Sentinel Alpha`
 - Positioning: Execution Fidelity Layer for Bots and Agents
 - Endpoint: `POST /contracts/risk-score`
+- Public base URL: `https://api.beezshield.com`
 - Payment: `x402` on Base (`eip155:8453`)
 - Pricing tiers: basic `0.02`, executive `0.05`, premium `0.10`, priority `0.15`
 

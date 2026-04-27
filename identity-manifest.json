@@ -5,6 +5,8 @@
   "current_identity": "did:sentinel-alpha:local",
   "target_identity": "erc8004",
   "status": "planned",
+  "public_base_url": "https://api.beezshield.com",
+  "domain": "beezshield.com",
   "wallet": "0x3cf9C2E55485fF8DAFfb59c84a0fa7c03bDbAeaf",
   "attestation_version": "attestation-0.1",
   "release_target": "v1.8"

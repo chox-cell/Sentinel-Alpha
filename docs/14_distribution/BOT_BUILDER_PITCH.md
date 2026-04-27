@@ -5,6 +5,7 @@ Sentinel Alpha is the Execution Fidelity Layer for Bots and Agents, built to hel
 ## Why builders use it
 
 - One API endpoint: `POST /contracts/risk-score`
+- Public production URL: `https://api.beezshield.com/contracts/risk-score`
 - Machine-native outputs: `score`, `confidence`, `action`, `emergency_signal`, `attestation`
 - x402 payment support on Base (`eip155:8453`)
 - Lightweight SDK paths for Python and TypeScript

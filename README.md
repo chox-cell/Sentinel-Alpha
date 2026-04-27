@@ -10,6 +10,7 @@ Bots and autonomous agents need a deterministic risk gate before execution, but 
 
 - `POST /contracts/risk-score`
 - Use your deployed `PUBLIC_BASE_URL` in production.
+- Production endpoint: `https://api.beezshield.com/contracts/risk-score`
 
 ## What The API Returns
 
