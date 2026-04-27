@@ -1,6 +1,6 @@
 # Sentinel Alpha
 
-Sentinel Alpha is the Execution Fidelity Layer for Bots and Agents.
+Sentinel Alpha is the production Execution Fidelity Layer for Bots and Agents, under the BeezShield umbrella brand.
 
 ## What Problem It Solves
 
@@ -11,6 +11,11 @@ Bots and autonomous agents need a deterministic risk gate before execution, but 
 - `POST /contracts/risk-score`
 - Use your deployed `PUBLIC_BASE_URL` in production.
 - Production endpoint: `https://api.beezshield.com/contracts/risk-score`
+
+## Product and Brand
+
+- Product/agent: `Sentinel Alpha`
+- Umbrella brand: `BeezShield`
 
 ## What The API Returns
 
@@ -34,13 +39,15 @@ Pricing tiers (USDC):
 
 ## Proof Points
 
-- Real Base USDC payment verified
+- Verified production payment proof: Real Base USDC payment verified
 - x402 replay protection active
 - settlement ledger active
 - smoke test pass
 - release tag `v1.5.0`
 
 ## Quickstart cURL (x402 tx header)
+
+Example tx hashes below are placeholders for integration examples only.
 
 ```bash
 curl -X POST "${PUBLIC_BASE_URL}/contracts/risk-score" \
@@ -89,12 +96,19 @@ console.log(result);
 
 - local DID active (`did:sentinel-alpha:local`)
 - ERC-8004 planned / adapter stub (`services/identity/erc8004_adapter.py`)
+- ERC-8004 is not yet registered in this public repo state.
 
 ## Production Warning
 
 Real payment test is required before launch. Validate end-to-end Base USDC verification behavior in your deployment environment before enabling production payment enforcement.
 - Do not enable mock verification in production.
 - Never commit `.env`.
+
+## Public Smoke Test
+
+```bash
+python3 scripts/public_smoke_test.py
+```
 
 ## Additional Docs
 
