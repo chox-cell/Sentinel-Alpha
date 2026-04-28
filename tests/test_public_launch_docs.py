@@ -32,7 +32,9 @@ def test_readme_has_required_public_launch_content():
     assert "marketplace-submission.json" in readme
     assert "identity-manifest.json" in readme
     assert "local DID active" in readme
-    assert "ERC-8004 planned / adapter stub" in readme
+    assert "registered on 8004scan" in readme
+    assert "Agent ID: `45967`" in readme
+    assert "https://8004scan.io/agents/base/45967" in readme
     assert "Real payment test is required before launch" in readme
     assert "Do not enable mock verification in production" in readme
     assert "Never commit `.env`" in readme

@@ -30,6 +30,8 @@
   "release_tag": "v1.5.0",
   "public_base_url_required": true,
   "public_base_url": "https://api.beezshield.com",
-  "identity_status": "local_did_pending_erc8004",
+  "identity_status": "erc8004_registered",
+  "erc8004_agent_id": "45967",
+  "erc8004_url": "https://8004scan.io/agents/base/45967",
   "real_payment_verified": true
 }

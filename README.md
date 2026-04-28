@@ -19,6 +19,14 @@ Bots and autonomous agents need a deterministic risk gate before execution, but 
 - Product/agent: `Sentinel Alpha`
 - Umbrella brand: `BeezShield`
 
+## ERC-8004 Identity
+
+- Sentinel Alpha is registered on 8004scan.
+- Agent ID: `45967`
+- Network: `Base`
+- Agent URL: `https://8004scan.io/agents/base/45967`
+- BeezShield remains the umbrella brand, while Sentinel Alpha is the product agent.
+
 ## What The API Returns
 
 The response is built for machine enforcement and includes:
@@ -102,8 +110,8 @@ Lane-aware examples:
 ## Identity Status
 
 - local DID active (`did:sentinel-alpha:local`)
-- ERC-8004 planned / adapter stub (`services/identity/erc8004_adapter.py`)
-- ERC-8004 is not yet registered in this public repo state.
+- ERC-8004 registered on 8004scan (Agent ID `45967`)
+- Registration URL: `https://8004scan.io/agents/base/45967`
 
 ## Production Warning
 

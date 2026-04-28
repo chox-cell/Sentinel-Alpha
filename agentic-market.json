@@ -27,6 +27,9 @@
     "dry_run"
   ],
   "identity": "did:sentinel-alpha:local",
+  "identity_status": "erc8004_registered",
+  "erc8004_agent_id": "45967",
+  "erc8004_url": "https://8004scan.io/agents/base/45967",
   "engine": "Mycelium Engine",
   "agent_system": "Sentinel Cells"
 }

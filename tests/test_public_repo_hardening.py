@@ -7,8 +7,9 @@ def test_readme_has_public_repo_hardening_requirements():
     assert "BeezShield" in readme
     assert "Product/agent: `Sentinel Alpha`" in readme
     assert "Verified production payment proof" in readme
-    assert "ERC-8004 planned / adapter stub" in readme
-    assert "not yet registered" in readme
+    assert "ERC-8004 Identity" in readme
+    assert "Agent ID: `45967`" in readme
+    assert "https://8004scan.io/agents/base/45967" in readme
     assert "placeholders" in readme
     assert "python3 scripts/public_smoke_test.py" in readme
     assert "Never commit `.env`" in readme

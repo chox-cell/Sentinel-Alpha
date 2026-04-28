@@ -82,6 +82,7 @@ Signals:
 - Agentic Market Submission Pack v1.7 active
 - Real Identity ERC-8004 Planning Pack v1.8 active
 - ERC-8004 Adapter Stub v1.9 active
+- ERC-8004 Registration Proof Pack v2.6 active
 - Deploy Pack v2.1 active
 - Public Deployment Checklist v2.2 active
 - Public Repo Hardening Pack v2.4 active
