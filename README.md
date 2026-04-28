@@ -47,6 +47,14 @@ Pricing tiers (USDC):
 - `premium`: `0.10`
 - `priority`: `0.15`
 
+## Marketplace / Discovery
+
+- Agentic Market submission-ready metadata is published.
+- ERC-8004 registered on 8004scan (`Agent ID: 45967`).
+- API live: `https://api.beezshield.com/contracts/risk-score`
+- x402 enabled on Base Mainnet (`eip155:8453`)
+- Pricing lanes: `basic 0.02`, `executive 0.05`, `premium 0.10`, `priority 0.15` USDC
+
 ## Proof Points
 
 - Verified production payment proof: Real Base USDC payment verified

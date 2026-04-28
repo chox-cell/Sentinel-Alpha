@@ -83,6 +83,7 @@ Signals:
 - Real Identity ERC-8004 Planning Pack v1.8 active
 - ERC-8004 Adapter Stub v1.9 active
 - ERC-8004 Registration Proof Pack v2.6 active
+- Agentic Market Final Submission Pack v2.7 active
 - Deploy Pack v2.1 active
 - Public Deployment Checklist v2.2 active
 - Public Repo Hardening Pack v2.4 active
