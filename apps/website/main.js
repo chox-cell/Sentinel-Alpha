@@ -1,4 +1,25 @@
 document.addEventListener('DOMContentLoaded', () => {
+    // Theme Toggle Logic
+    const themeToggle = document.getElementById('themeToggle');
+    const html = document.documentElement;
+    
+    // Check local storage or system preference
+    const savedTheme = localStorage.getItem('theme');
+    const systemPrefersLight = window.matchMedia('(prefers-color-scheme: light)').matches;
+    
+    if (savedTheme) {
+        html.setAttribute('data-theme', savedTheme);
+    } else if (systemPrefersLight) {
+        html.setAttribute('data-theme', 'light');
+    }
+    
+    themeToggle.addEventListener('click', () => {
+        const currentTheme = html.getAttribute('data-theme');
+        const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+        html.setAttribute('data-theme', newTheme);
+        localStorage.setItem('theme', newTheme);
+    });
+
     // Set current year in footer
     const yearElement = document.getElementById('year');
     if (yearElement) {
@@ -65,6 +86,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const x = e.clientX / window.innerWidth;
             const y = e.clientY / window.innerHeight;
             
+            // Adjust based on theme slightly if needed
             hexGrid.style.transform = `translate(${x * 10 - 5}px, ${y * 10 - 5}px)`;
         });
     }

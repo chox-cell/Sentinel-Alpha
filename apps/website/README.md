@@ -4,8 +4,8 @@ This is the static frontend for the BeezShield umbrella brand and Sentinel Alpha
 
 ## Tech Stack
 - HTML5
-- Vanilla CSS (Custom design system, flexbox/grid layouts)
-- Vanilla JavaScript (Micro-animations, smooth scrolling)
+- Vanilla CSS (Custom design system, flexbox/grid layouts, light/dark mode)
+- Vanilla JavaScript (Micro-animations, smooth scrolling, theme persistence)
 - **No build step required.**
 
 ## Local Development
@@ -52,7 +52,7 @@ Since this is a pure static site (HTML/CSS/JS), it can be deployed instantly on 
 ## Modifying Content
 - All content and markup is in `index.html`.
 - Styles and tokens (colors, fonts, etc.) are in `styles.css`.
-- Interactivity (animations, smooth scroll) is in `main.js`. 
+- Interactivity (animations, smooth scroll, theme toggle) is in `main.js`. 
 
 ## Note on Architecture
 This site purposely avoids heavy frameworks to optimize for speed, trust, and machine-native credibility. No complex state or hydration is used.
