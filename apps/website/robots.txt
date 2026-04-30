@@ -1,21 +1,16 @@
 User-agent: *
 Allow: /
+Sitemap: https://beezshield.com/sitemap.xml
 
+# Specialized AI Agents
 User-agent: GPTBot
 Allow: /
 
-User-agent: OAI-SearchBot
-Allow: /
-
-User-agent: ClaudeBot
+User-agent: ChatGPT-User
 Allow: /
 
 User-agent: PerplexityBot
 Allow: /
 
-Disallow: /.git/
-Disallow: /.env
-Disallow: /private/
-Disallow: /internal/
-
-Sitemap: https://beezshield.com/sitemap.xml
+User-agent: ClaudeBot
+Allow: /
