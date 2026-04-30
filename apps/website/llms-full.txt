@@ -1,15 +1,16 @@
 BeezShield / Sentinel Alpha - Full Agent Discovery Profile
 
-Product Explanation
-BeezShield is the umbrella brand for machine trust infrastructure. Sentinel Alpha is the live product agent focused on execution fidelity for autonomous systems. It provides a deterministic risk decision layer for bots, DeFi agents, autonomous wallets, and builders integrating autonomous execution flows.
-
-Sentinel Alpha runs on Base and is discoverable via ERC-8004:
-https://8004scan.io/agents/base/45967
+Full Product Explanation
+BeezShield is the umbrella brand for machine trust infrastructure. Sentinel Alpha is the live product agent focused on execution fidelity for autonomous systems. It provides deterministic risk signals that help bots and agents decide whether to proceed, reduce exposure, review, or stop execution.
 
 Live links:
 - Website: https://beezshield.com
 - API: https://api.beezshield.com/contracts/risk-score
+- ERC-8004: https://8004scan.io/agents/base/45967
 - GitHub: https://github.com/chox-cell/Sentinel-Alpha
+
+Risk Intelligence
+Sentinel Alpha includes public risk intelligence artifacts and demo feed examples to help builders evaluate signal structure. Demo feed content is illustrative unless a live scanner is enabled.
 
 API Request Example
 POST https://api.beezshield.com/contracts/risk-score
@@ -43,24 +44,24 @@ API Response Example
 }
 
 Use Cases
-1) Bot pre-execution risk gate
-- Apply Sentinel Alpha as a hard gate before broadcast or execution.
+1) bot pre-execution risk gate
+- Apply Sentinel Alpha before autonomous execution.
 
 2) DeFi agent safety
-- Validate contracts and execution context before position changes.
+- Validate contract behavior and execution context in policy loops.
 
-3) Contract screening
-- Screen newly discovered contracts for fast policy decisions.
+3) contract screening
+- Screen newly observed contracts for machine policy routing.
 
-4) Execution policy decision
-- Convert risk response into automated block/reduce/allow/review behavior.
+4) execution policy decision
+- Convert response into block/reduce/review/allow/exit behavior.
 
 Integration Notes
 - Network: Base Mainnet (eip155:8453)
 - Payment method: x402
 - Lanes (USDC): basic 0.02, executive 0.05, premium 0.10, priority 0.15
 - Identity proof: ERC-8004 Agent ID 45967
-- Designed for machine-native consumers (bots/agents)
+- No claim of live MCP or A2A support
 
 Marketplace Copy
 Sentinel Alpha is BeezShield's execution fidelity layer for autonomous agents. It delivers deterministic pre-execution risk decisions through a production API, supports x402 payments on Base, and publishes public ERC-8004 identity proof on 8004scan.
@@ -70,6 +71,7 @@ Sentinel Alpha is live on Base with x402 support and ERC-8004 identity. Builders
 
 Docs Links
 - Distribution launch: https://github.com/chox-cell/Sentinel-Alpha/blob/main/docs/16_launch/DISTRIBUTION_LAUNCH_PACK.md
-- Outreach copy: https://github.com/chox-cell/Sentinel-Alpha/blob/main/docs/16_launch/OUTREACH_COPY.md
-- Launch checklist: https://github.com/chox-cell/Sentinel-Alpha/blob/main/docs/16_launch/LAUNCH_CHECKLIST.md
-- Agentic market listing: https://github.com/chox-cell/Sentinel-Alpha/blob/main/docs/14_distribution/AGENTIC_MARKET_LISTING.md
+- Clean distribution engine: https://github.com/chox-cell/Sentinel-Alpha/blob/main/docs/16_launch/CLEAN_DISTRIBUTION_ENGINE.md
+- Risk feed strategy: https://github.com/chox-cell/Sentinel-Alpha/blob/main/docs/16_launch/RISK_FEED_STRATEGY.md
+- Clean outreach copy: https://github.com/chox-cell/Sentinel-Alpha/blob/main/docs/16_launch/CLEAN_OUTREACH_COPY.md
+- Revenue playbook: https://github.com/chox-cell/Sentinel-Alpha/blob/main/docs/16_launch/REVENUE_PLAYBOOK.md

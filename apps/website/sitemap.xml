@@ -10,4 +10,29 @@
     <lastmod>2026-04-30</lastmod>
     <priority>0.8</priority>
   </url>
+  <url>
+    <loc>https://beezshield.com/risk-feed.html</loc>
+    <lastmod>2026-04-30</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://beezshield.com/llms.txt</loc>
+    <lastmod>2026-04-30</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://beezshield.com/llms-full.txt</loc>
+    <lastmod>2026-04-30</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://beezshield.com/.well-known/agent.json</loc>
+    <lastmod>2026-04-30</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://beezshield.com/.well-known/x402.json</loc>
+    <lastmod>2026-04-30</lastmod>
+    <priority>0.7</priority>
+  </url>
 </urlset>

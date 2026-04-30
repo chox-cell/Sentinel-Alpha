@@ -85,6 +85,7 @@ Signals:
 - ERC-8004 Registration Proof Pack v2.6 active
 - Agentic Market Final Submission Pack v2.7 active
 - Distribution Launch Pack v2.9 active
+- Clean Distribution Engine v2.9 active
 - Deploy Pack v2.1 active
 - Public Deployment Checklist v2.2 active
 - Public Repo Hardening Pack v2.4 active

@@ -1,0 +1,57 @@
+[
+  {
+    "address": "0x000000000000000000000000000000000000dEa1",
+    "chain": "base",
+    "score": 18,
+    "threat_class": "suspicious_permission_pattern_demo",
+    "action": "BLOCK",
+    "emergency_signal": true,
+    "observed_at": "2026-04-30T08:00:00Z",
+    "source": "demo",
+    "disclaimer": "demo sample, not accusation"
+  },
+  {
+    "address": "0x000000000000000000000000000000000000dEa2",
+    "chain": "base",
+    "score": 31,
+    "threat_class": "liquidity_risk_demo",
+    "action": "REDUCE",
+    "emergency_signal": false,
+    "observed_at": "2026-04-30T08:15:00Z",
+    "source": "demo",
+    "disclaimer": "demo sample, not accusation"
+  },
+  {
+    "address": "0x000000000000000000000000000000000000dEa3",
+    "chain": "base",
+    "score": 42,
+    "threat_class": "owner_privilege_concentration_demo",
+    "action": "REVIEW",
+    "emergency_signal": false,
+    "observed_at": "2026-04-30T08:30:00Z",
+    "source": "demo",
+    "disclaimer": "demo sample, not accusation"
+  },
+  {
+    "address": "0x000000000000000000000000000000000000dEa4",
+    "chain": "base",
+    "score": 57,
+    "threat_class": "new_contract_behavior_demo",
+    "action": "REVIEW",
+    "emergency_signal": false,
+    "observed_at": "2026-04-30T08:45:00Z",
+    "source": "demo",
+    "disclaimer": "demo sample, not accusation"
+  },
+  {
+    "address": "0x000000000000000000000000000000000000dEa5",
+    "chain": "base",
+    "score": 76,
+    "threat_class": "critical_execution_anomaly_demo",
+    "action": "EXIT_NOW",
+    "emergency_signal": true,
+    "observed_at": "2026-04-30T09:00:00Z",
+    "source": "demo",
+    "disclaimer": "demo sample, not accusation"
+  }
+]

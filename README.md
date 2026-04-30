@@ -63,6 +63,17 @@ Pricing tiers (USDC):
 - x402 enabled on Base Mainnet (`eip155:8453`)
 - Pricing lanes: `basic 0.02`, `executive 0.05`, `premium 0.10`, `priority 0.15` USDC
 
+## Clean Distribution Engine
+
+- Public risk intelligence: publish useful machine-readable signals and integration evidence.
+- Demo risk feed: safe illustrative feed at `apps/website/risk-feed.html` and `data/demo-risk-feed.json`.
+- Agent discovery assets: `llms.txt`, `llms-full.txt`, and `.well-known` metadata.
+- Policy: no coercive outreach or fear-selling language.
+- Links:
+  - Website: `https://beezshield.com`
+  - API: `https://api.beezshield.com/contracts/risk-score`
+  - ERC-8004: `https://8004scan.io/agents/base/45967`
+
 ## Proof Points
 
 - Verified production payment proof: Real Base USDC payment verified
