@@ -3,218 +3,353 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BeezShield | Secure Agent Infrastructure</title>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;800&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+    <title>BeezShield | Pre-execution Decision Engine</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+    
     <script src="https://unpkg.com/lucide@latest"></script>
+
     <style>
-        :root {
-            --bg: #000000;
-            --accent: #f59e0b;
-            --glass: rgba(15, 15, 15, 0.9);
-            --border: rgba(245, 158, 11, 0.3);
-        }
+        :root { --bg:#000000; --accent:#f59e0b; --accent-glow:rgba(245,158,11,0.4); --glass:rgba(10,10,10,0.95); --border:rgba(245,158,11,0.3); --text:#ffffff; --text-dim:#94a3b8; }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-
-        body {
-            background: var(--bg);
-            color: #fff;
+        html, body {
+            background: #000 !important;
+            color: #fff !important;
+            margin: 0; padding: 0;
             font-family: 'Outfit', sans-serif;
             overflow-x: hidden;
             width: 100%;
         }
 
-        /* --- THE GRID (INTERNAL) --- */
-        .hive-bg {
-            position: fixed;
-            inset: 0;
-            z-index: 1;
-            background-image: url("data:image/svg+xml,%3Csvg width='60' height='104' viewBox='0 0 60 104' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M30 0l30 17.32v34.64L30 69.28 0 51.96V17.32L30 0z' fill='none' stroke='%23f59e0b' stroke-width='1.5' stroke-opacity='0.2'/%3E%3C/svg%3E");
-            background-size: 60px 104px;
-            transform: perspective(1000px) rotateX(60deg) scale(2);
-            opacity: 0.5;
-            pointer-events: none;
+        .hive-bg { position: fixed; inset: 0; z-index: 1; background: #000; overflow: hidden; pointer-events: none; }
+        .hive-grid {
+            position: absolute; width: 400%; height: 400%; top: -150%; left: -150%;
+            background-image: url("data:image/svg+xml,%3Csvg width='80' height='138' viewBox='0 0 80 138' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M40 0l40 23.09v46.18L40 92.36 0 69.27V23.09L40 0z' fill='none' stroke='%23f59e0b' stroke-width='1.5' stroke-opacity='0.25'/%3E%3C/svg%3E");
+            background-size: 80px 138px; transform: perspective(1000px) rotateX(60deg); opacity: 0.6;
         }
 
-        /* --- LAYOUT --- */
-        .container {
-            position: relative;
-            z-index: 10;
-            max-width: 1100px;
-            margin: 0 auto;
-            padding: 8rem 2rem;
-            display: grid;
-            grid-template-columns: repeat(12, 1fr);
-            gap: 2rem;
-        }
+        .container { position: relative; z-index: 100; max-width: 1220px; margin: 0 auto; padding: 6rem 2rem; display: grid; grid-template-columns: repeat(12, 1fr); gap: 1.25rem; }
+        .glass { background: var(--glass); backdrop-filter: blur(25px); border: 1px solid var(--border); border-radius: 20px; padding: 2.5rem; box-shadow: 0 20px 60px rgba(0,0,0,1); }
+        
+        .mono { font-family: 'JetBrains Mono', monospace; font-size: 0.7rem; color: var(--accent); letter-spacing: 0.2em; }
+        h1 { font-size: 3.35rem; font-weight: 800; line-height: 0.95; margin-bottom: 1.25rem; color: #fff; }
+        
+        .btn { padding: 1rem 2rem; border-radius: 100px; font-weight: 800; text-transform: uppercase; text-decoration: none; display: inline-flex; align-items: center; gap: 0.75rem; transition: 0.3s; border: none; cursor: pointer; }
+        .btn-primary { background: var(--accent); color: #000; box-shadow: 0 0 30px var(--accent-glow); }
+        .btn-outline { background: rgba(255,255,255,0.05); color: #fff; border: 1px solid var(--border); }
 
-        .glass-panel {
-            background: var(--glass);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border: 1px solid var(--border);
-            border-radius: 16px;
-            padding: 2.5rem;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.8);
-        }
+        /* RADAR SYSTEM */
+        .radar-box { width: 160px; height: 160px; border: 1px solid var(--border); border-radius: 50%; position: relative; margin: 0 auto 1.5rem; overflow: hidden; background: rgba(0,0,0,0.5); }
+        .radar-sweep { position: absolute; top: 50%; left: 50%; width: 100%; height: 100%; background: conic-gradient(from 0deg, var(--accent) 0%, transparent 90deg); transform-origin: 0 0; animation: sweep 4s linear infinite; opacity: 0.6; }
+        @keyframes sweep { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
 
-        /* --- CONSTRAIN ALL ICONS --- */
-        svg, .lucide {
-            width: 24px !important;
-            height: 24px !important;
-            display: inline-block;
-            vertical-align: middle;
-        }
+        input { width: 100%; background: rgba(0,0,0,0.5); border: 1px solid var(--border); padding: 1rem; color: #fff; border-radius: 10px; font-family: inherit; outline: none; }
+        input:focus { border-color: var(--accent); }
 
-        .hero-icon {
-            width: 80px !important;
-            height: 80px !important;
-            color: var(--accent);
-            margin-bottom: 2rem;
-        }
-
-        /* --- RADAR --- */
-        .radar-box {
-            width: 160px;
-            height: 160px;
-            border: 2px solid var(--border);
-            border-radius: 50%;
-            position: relative;
-            margin: 0 auto 1.5rem;
-            overflow: hidden;
-            background: rgba(0,0,0,0.5);
-        }
-
-        .radar-sweep {
-            position: absolute;
-            top: 50%; left: 50%;
-            width: 100%; height: 100%;
-            background: conic-gradient(from 0deg, var(--accent) 0%, transparent 90deg);
-            transform-origin: 0 0;
-            animation: sweep 3s linear infinite;
-            opacity: 0.6;
-        }
-
-        @keyframes sweep {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(360deg); }
-        }
-
-        /* --- TYPOGRAPHY --- */
-        h1 {
-            font-size: 3.5rem;
-            font-weight: 800;
-            line-height: 0.9;
-            margin-bottom: 1rem;
-        }
-
-        .mono { font-family: 'JetBrains Mono', monospace; font-size: 0.7rem; }
-
-        .btn {
-            padding: 1rem 2rem;
-            border-radius: 100px;
-            font-weight: 800;
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
-            cursor: pointer;
-            border: none;
-            text-decoration: none;
-            display: inline-block;
-        }
-
-        .btn-primary {
-            background: var(--accent);
-            color: #000;
-            box-shadow: 0 0 20px var(--accent-glow);
-        }
-
-        .btn-ghost {
-            background: rgba(255,255,255,0.1);
-            color: #fff;
-            margin-left: 1rem;
-        }
-
-        /* --- RESPONSIVE --- */
-        @media (max-width: 900px) {
-            .container { grid-template-columns: 1fr; }
-            .hero-panel { grid-column: span 1 !important; }
-        }
+        select { width: 100%; background: rgba(0,0,0,0.5); border: 1px solid var(--border); padding: 1rem; color: #fff; border-radius: 10px; font-family: inherit; outline: none; }
+        .result-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:0.8rem; }
+        .result-card { background: rgba(245,158,11,0.05); border: 1px solid rgba(245,158,11,0.2); border-radius: 10px; padding: 0.8rem; }
+        .signals-list { margin:0.4rem 0 0; padding-left: 1.2rem; color: #d1d5db; font-size: 0.9rem; }
+        .scanning { animation: pulse 1s ease-in-out infinite; color: var(--accent); }
+        @keyframes pulse { 0%,100% { opacity: 0.35; } 50% { opacity: 1; } }
+        .snippet { background:#000; border:1px solid var(--border); border-radius:10px; padding:0.8rem; font-family:'JetBrains Mono', monospace; white-space:pre-wrap; font-size:0.75rem; color:#d1d5db; }
+        .live-item { font-family:'JetBrains Mono', monospace; font-size:0.72rem; background:#000; border:1px solid rgba(245,158,11,0.2); border-radius:10px; padding:0.55rem; margin-bottom:0.5rem; color:#d1d5db; }
+        .small-btn { padding: 0.7rem 1rem; font-size: 0.75rem; }
+        @media (max-width: 980px) { .container { grid-template-columns: 1fr; } .glass { grid-column: span 1 !important; } .result-grid { grid-template-columns: 1fr; } }
     </style>
 </head>
 <body>
-    <div class="hive-bg"></div>
+    <div class="hive-bg"><div class="hive-grid"></div></div>
+
+    <nav style="position: fixed; top: 1.5rem; left: 50%; transform: translateX(-50%); width: 90%; max-width: 1200px; z-index: 1000; background: rgba(0,0,0,0.7); backdrop-filter: blur(20px); border: 1px solid var(--border); border-radius: 100px; padding: 0.75rem 2rem; display: flex; align-items: center; justify-content: space-between;">
+        <div style="display: flex; align-items: center; gap: 0.75rem; color: var(--accent);">
+            <i data-lucide="shield-alert"></i>
+            <span class="mono" style="font-weight: 800; font-size: 0.9rem;">BEEZ_SHIELD</span>
+        </div>
+        <div style="display: flex; gap: 2rem;" class="mono">
+            <a href="index.html" style="color: #fff; text-decoration: none;">OVERVIEW</a>
+            <a href="demo.html" style="color: var(--text-dim); text-decoration: none;">LIVE_DEMO</a>
+        </div>
+    </nav>
 
     <div class="container">
         <!-- Hero -->
-        <div class="glass-panel hero-panel" style="grid-column: span 12; text-align: center;">
-            <i data-lucide="shield-alert" class="hero-icon"></i>
-            <h1 class="mono" style="color: var(--accent); margin-bottom: 2rem;">BEEZ_SHIELD</h1>
-            <h1>Machine Trust Infrastructure</h1>
-            <p style="color: #888; font-size: 1.1rem; margin-bottom: 3rem; max-width: 600px; margin-left: auto; margin-right: auto;">
-                Execution fidelity layer for autonomous agents. Forensic scanning and risk intelligence on Base Mainnet.
+        <div class="glass" style="grid-column: span 8;">
+            <span class="mono">// SECURITY_OPERATIONS_CENTER</span>
+            <h1>Pre-execution decision engine for agents.</h1>
+            <p style="color: var(--text-dim); font-size: 1.1rem; line-height: 1.6; margin-bottom: 2.5rem; max-width: 550px;">
+                Sentinel Alpha turns uncertain on-chain execution into machine-readable decisions before your bot acts.
             </p>
-            <div>
+            <div style="display: flex; gap: 1rem;">
                 <a href="#lab" class="btn btn-primary">Start_Investigation</a>
-                <a href="demo.html" class="btn btn-ghost">View_Demo</a>
+                <a href="demo.html" class="btn btn-outline">Generate_API_Preview</a>
             </div>
         </div>
 
         <!-- Radar -->
-        <div class="glass-panel" style="grid-column: span 6; text-align: center;">
+        <div class="glass" style="grid-column: span 4; text-align: center;">
             <div class="radar-box">
                 <div class="radar-sweep"></div>
                 <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); opacity: 0.3;">
-                    <i data-lucide="crosshair" style="width: 40px !important; height: 40px !important;"></i>
+                    <i data-lucide="crosshair" style="width: 40px; height: 40px; color: var(--accent);"></i>
                 </div>
             </div>
-            <span class="mono" style="color: var(--accent);">SCANNER_ACTIVE: SECURE</span>
+            <span class="mono">ACTIVE_SCANNER: ONLINE</span>
         </div>
 
-        <!-- Metrics -->
-        <div class="glass-panel" style="grid-column: span 6;">
-            <h3 class="mono" style="color: var(--accent); margin-bottom: 1.5rem;">// SYSTEM_METRICS</h3>
-            <div class="mono" style="font-size: 0.85rem;">
-                <div style="display: flex; justify-content: space-between; margin-bottom: 1rem;">
-                    <span style="color: #666;">TOTAL_SCANS:</span>
-                    <span>1,284,930</span>
+        <!-- Interactive Scan Engine -->
+        <div class="glass" id="lab" style="grid-column: span 12;">
+            <div style="display: flex; justify-content: space-between; margin-bottom: 2.5rem;">
+                <div>
+                    <span class="mono">// FORENSIC_LAB_V3.0</span>
+                    <h2 style="font-size: 2.2rem; font-weight: 800; margin-top: 0.5rem;">Execution Investigation</h2>
                 </div>
-                <div style="display: flex; justify-content: space-between; margin-bottom: 1rem;">
-                    <span style="color: #666;">AVG_LATENCY:</span>
-                    <span>42ms</span>
-                </div>
-                <div style="display: flex; justify-content: space-between;">
-                    <span style="color: #666;">THREATS_BLOCKED:</span>
-                    <span style="color: #ef4444;">12,402</span>
+                <div class="mono" style="text-align: right; color: var(--text-dim);">
+                    AUTH_LEVEL: L4_SECRET<br>
+                    ID: <span style="color: var(--accent);">#45967</span>
                 </div>
             </div>
-        </div>
 
-        <div class="glass-panel" style="grid-column: span 12;">
-            <h3 class="mono" style="color: var(--accent); margin-bottom: 1rem;">// PUBLIC_RISK_INTELLIGENCE</h3>
-            <p style="color: #a3a3a3; margin-bottom: 1rem;">
-                Sentinel Alpha publishes machine-readable risk signals for autonomous builders. Demo feed cards below are illustrative unless a live scanner is enabled.
-            </p>
-            <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1rem; margin-bottom: 1.25rem;">
-                <div style="border:1px solid var(--border); border-radius:10px; padding:0.75rem;">
-                    <div class="mono">0x0000...dEa1</div>
-                    <div class="mono" style="color:#999;">score:18 | action:BLOCK</div>
+            <div style="display: grid; grid-template-columns: 1fr 1.4fr 1fr; gap: 1.25rem;">
+                <div>
+                    <div style="margin-bottom: 1.5rem;">
+                        <label class="mono" style="font-size: 0.6rem; display: block; margin-bottom: 0.5rem;">TARGET_CONTRACT</label>
+                        <input type="text" id="targetAddr" value="0x1111111111111111111111111111111111111111">
+                    </div>
+                    <div style="margin-bottom: 1.5rem;">
+                        <label class="mono" style="font-size: 0.6rem; display: block; margin-bottom: 0.5rem;">LANE</label>
+                        <select id="scanLane">
+                            <option value="basic">basic</option>
+                            <option value="executive">executive</option>
+                            <option value="premium">premium</option>
+                            <option value="priority">priority</option>
+                        </select>
+                    </div>
+                    <button class="btn btn-primary" style="width: 100%;" id="startScan">
+                        <i data-lucide="search"></i>
+                        <span>Initialize_Scan</span>
+                    </button>
+
+                    <div id="scanStatus" style="margin-top:1rem;" class="mono">IDLE</div>
+                    <div id="challengeBox" style="display:none; margin-top:1rem; background:#000; border:1px solid var(--border); border-radius:10px; padding:0.8rem; color:#d1d5db;"></div>
+                    <div id="upgradeCta" style="display:none; margin-top:1rem; background: rgba(245,158,11,0.08); border:1px solid rgba(245,158,11,0.2); border-radius:10px; padding:0.8rem;">
+                        <strong>Upgrade to Priority Scan (0.15 USDC)</strong>
+                    </div>
                 </div>
-                <div style="border:1px solid var(--border); border-radius:10px; padding:0.75rem;">
-                    <div class="mono">0x0000...dEa2</div>
-                    <div class="mono" style="color:#999;">score:31 | action:REDUCE</div>
+
+                <div>
+                    <div class="result-grid">
+                        <div class="result-card"><div class="mono" style="font-size:0.55rem;">RISK SCORE</div><div id="riskScore" style="font-size:1.2rem; font-weight:800;">--</div></div>
+                        <div class="result-card"><div class="mono" style="font-size:0.55rem;">ACTION</div><div id="riskAction" style="font-size:1.2rem; font-weight:800;">--</div></div>
+                        <div class="result-card"><div class="mono" style="font-size:0.55rem;">CONFIDENCE</div><div id="riskConfidence" style="font-size:1.2rem; font-weight:800;">--</div></div>
+                        <div class="result-card"><div class="mono" style="font-size:0.55rem;">THREAT CLASS</div><div id="riskThreatClass" style="font-size:1.2rem; font-weight:800;">--</div></div>
+                    </div>
+                    <div class="result-card" style="margin-top:0.8rem;">
+                        <div class="mono" style="font-size:0.55rem;">SIGNALS</div>
+                        <ul id="signalsList" class="signals-list"><li>Awaiting scan result...</li></ul>
+                    </div>
+
+                    <div style="margin-top:0.8rem;">
+                        <button id="copyCurlBtn" class="btn btn-outline small-btn" style="display:none;">Copy cURL</button>
+                        <span id="copyCurlStatus" class="mono" style="margin-left:0.5rem; color:var(--text-dim);"></span>
+                    </div>
+
+                    <div class="result-card" style="margin-top:0.8rem;">
+                        <div class="mono" style="font-size:0.55rem;">Decision Contract</div>
+                        <p style="margin:0.4rem 0 0; color:#d1d5db; font-size:0.92rem;">
+                            `score` and `confidence` quantify risk certainty, `action` is the policy outcome, `emergency_signal` flags critical urgency, and `attestation` carries verifiable output proof.
+                        </p>
+                    </div>
                 </div>
-                <div style="border:1px solid var(--border); border-radius:10px; padding:0.75rem;">
-                    <div class="mono">0x0000...dEa5</div>
-                    <div class="mono" style="color:#999;">score:76 | action:EXIT_NOW</div>
+
+                <div>
+                    <div class="result-card">
+                        <div class="mono" style="font-size:0.55rem;">LIVE_ACTIVITY</div>
+                        <div id="liveActivityPanel" style="margin-top:0.6rem;"></div>
+                    </div>
+                    <div class="result-card" style="margin-top:0.8rem;">
+                        <div class="mono" style="font-size:0.55rem;">Add to your bot</div>
+                        <p style="margin:0.4rem 0; color:#d1d5db; font-size:0.9rem;">x402 payment note: include `X402-PAYMENT` with tx proof on every paid request.</p>
+                        <div class="snippet" id="tsSnippet">TypeScript snippet appears after first scan.</div>
+                        <div class="snippet" style="margin-top:0.55rem;" id="pySnippet">Python snippet appears after first scan.</div>
+                        <p style="margin:0.55rem 0 0; color:#d1d5db; font-size:0.85rem;">AgentKit integration: upcoming integration path for faster agent orchestration.</p>
+                    </div>
                 </div>
             </div>
-            <a href="https://api.beezshield.com/contracts/risk-score" target="_blank" class="btn btn-primary">View API</a>
-            <a href="https://github.com/chox-cell/Sentinel-Alpha" target="_blank" class="btn btn-ghost">Integrate Sentinel Alpha</a>
         </div>
     </div>
 
     <script>
         lucide.createIcons();
+
+        const startBtn = document.getElementById('startScan');
+        const targetInput = document.getElementById('targetAddr');
+        const laneSelect = document.getElementById('scanLane');
+        const scanStatus = document.getElementById('scanStatus');
+        const challengeBox = document.getElementById('challengeBox');
+        const riskScore = document.getElementById('riskScore');
+        const riskAction = document.getElementById('riskAction');
+        const riskConfidence = document.getElementById('riskConfidence');
+        const riskThreatClass = document.getElementById('riskThreatClass');
+        const signalsList = document.getElementById('signalsList');
+        const copyCurlBtn = document.getElementById('copyCurlBtn');
+        const copyCurlStatus = document.getElementById('copyCurlStatus');
+        const liveActivityPanel = document.getElementById('liveActivityPanel');
+        const upgradeCta = document.getElementById('upgradeCta');
+        const tsSnippet = document.getElementById('tsSnippet');
+        const pySnippet = document.getElementById('pySnippet');
+
+        const API_BASE = 'https://api.beezshield.com';
+        let lastCurl = '';
+        let liveIdx = 0;
+        const liveEvents = [
+            '0xab..19 | basic | action: REVIEW',
+            '0xc1..ef | premium | action: BLOCK',
+            '0x22..ca | executive | action: REDUCE',
+            '0x8d..02 | priority | action: ALLOW',
+            '0x90..71 | basic | action: REVIEW',
+        ];
+
+        function setStatus(text, scanning = false) {
+            scanStatus.textContent = text;
+            scanStatus.className = scanning ? 'mono scanning' : 'mono';
+        }
+
+        function appendLive() {
+            const el = document.createElement('div');
+            el.className = 'live-item';
+            el.textContent = new Date().toLocaleTimeString() + ' | ' + liveEvents[liveIdx % liveEvents.length];
+            liveActivityPanel.prepend(el);
+            while (liveActivityPanel.children.length > 6) {
+                liveActivityPanel.removeChild(liveActivityPanel.lastChild);
+            }
+            liveIdx += 1;
+        }
+
+        function inferThreatClass(result) {
+            if (typeof result.threat_class === 'string') return result.threat_class;
+            if (result.emergency_signal === true) return 'critical_emergency_signal';
+            if (typeof result.score === 'number') {
+                if (result.score < 25) return 'high_risk';
+                if (result.score < 50) return 'elevated_risk';
+                if (result.score < 75) return 'moderate_risk';
+                return 'lower_risk';
+            }
+            return 'unclassified';
+        }
+
+        function renderSignals(result) {
+            const items = Array.isArray(result.signals) && result.signals.length
+                ? result.signals.map((s) => typeof s === 'string' ? s : JSON.stringify(s))
+                : [
+                    'score:' + (result.score ?? 'n/a'),
+                    'confidence:' + (result.confidence ?? 'n/a'),
+                    'emergency_signal:' + (result.emergency_signal ?? 'n/a')
+                ];
+            signalsList.innerHTML = '';
+            items.forEach((item) => {
+                const li = document.createElement('li');
+                li.textContent = item;
+                signalsList.appendChild(li);
+            });
+        }
+
+        function buildCurl(address, lane) {
+            return `curl -X POST "https://api.beezshield.com/contracts/risk-score" \\
+  -H "Content-Type: application/json" \\
+  -H "X-SENTINEL-LANE: ${lane}" \\
+  -H "X402-PAYMENT: tx:YOUR_TX_HASH" \\
+  -d '{"contract_address":"${address}","chain":"base"}'`;
+        }
+
+        function updateSnippets(address, lane) {
+            tsSnippet.textContent = `import { SentinelAlphaClient } from "./sdk/typescript/client";
+
+const client = new SentinelAlphaClient("https://api.beezshield.com", "tx:YOUR_TX_HASH");
+const result = await client.scan("${address}", "base", "${lane}");
+console.log(result);`;
+
+            pySnippet.textContent = `from sdk.python.client import SentinelAlphaClient
+
+client = SentinelAlphaClient("https://api.beezshield.com", payment_header="tx:YOUR_TX_HASH")
+result = client.scan("${address}", chain="base", lane="${lane}")
+print(result)`;
+        }
+
+        copyCurlBtn.addEventListener('click', async () => {
+            if (!lastCurl) return;
+            try {
+                await navigator.clipboard.writeText(lastCurl);
+                copyCurlStatus.textContent = 'Copied.';
+            } catch (_) {
+                copyCurlStatus.textContent = 'Copy failed.';
+            }
+        });
+
+        async function runScan() {
+            const addr = targetInput.value.trim();
+            const lane = laneSelect.value;
+            if (!addr.startsWith('0x')) {
+                setStatus('INVALID_TARGET_ADDRESS', false);
+                return;
+            }
+            startBtn.disabled = true;
+            setStatus('SCANNING...', true);
+            copyCurlStatus.textContent = '';
+            challengeBox.style.display = 'none';
+            try {
+                const challengeRes = await fetch(`${API_BASE}/internal/x402/challenge?lane=${encodeURIComponent(lane)}`);
+                if (!challengeRes.ok) throw new Error('challenge_failed');
+                const challenge = await challengeRes.json();
+                challengeBox.style.display = 'block';
+                challengeBox.innerHTML = `<strong>Payment instructions (simulated)</strong><br>method: ${challenge.payment_method || 'x402'} | amount_usdc: ${challenge.amount_usdc || 'n/a'} | network: ${challenge.network || 'base'}<br>resource: ${challenge.resource || '/contracts/risk-score'}`;
+
+                await new Promise((r) => setTimeout(r, 700));
+
+                const riskRes = await fetch(`${API_BASE}/contracts/risk-score`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-SENTINEL-LANE': lane,
+                        'X402-PAYMENT': 'tx:' + 'a'.repeat(64),
+                    },
+                    body: JSON.stringify({
+                        contract_address: addr,
+                        chain: 'base',
+                    }),
+                });
+                if (!riskRes.ok) throw new Error('risk_score_failed');
+                const result = await riskRes.json();
+                riskScore.textContent = String(result.score ?? 'n/a');
+                riskAction.textContent = result.action || 'n/a';
+                riskConfidence.textContent = String(result.confidence ?? 'n/a');
+                riskThreatClass.textContent = inferThreatClass(result);
+                renderSignals(result);
+                updateSnippets(addr, lane);
+                lastCurl = buildCurl(addr, lane);
+                copyCurlBtn.style.display = 'inline-flex';
+                upgradeCta.style.display = 'block';
+                setStatus('SCAN_COMPLETE', false);
+            } catch (err) {
+                setStatus('SCAN_FAILED', false);
+            } finally {
+                startBtn.disabled = false;
+            }
+        }
+
+        startBtn.addEventListener('click', runScan);
+        appendLive();
+        setInterval(appendLive, 3000);
+
+        /* keep this for existing static icon refresh */
+        function refreshIcons() {
+            if (window.lucide && typeof window.lucide.createIcons === 'function') {
+                window.lucide.createIcons();
+            }
+        };
+        refreshIcons();
     </script>
 </body>
 </html>

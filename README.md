@@ -74,6 +74,17 @@ Pricing tiers (USDC):
   - API: `https://api.beezshield.com/contracts/risk-score`
   - ERC-8004: `https://8004scan.io/agents/base/45967`
 
+## Builder Handoff
+
+- The website scan UI now acts as a builder conversion funnel.
+- Flow: website scan -> Copy cURL -> SDK snippet -> AgentKit (upcoming integration).
+- Decision outputs for bot policy wiring:
+  - `score`
+  - `confidence`
+  - `action`
+  - `emergency_signal`
+  - `attestation`
+
 ## Proof Points
 
 - Verified production payment proof: Real Base USDC payment verified
