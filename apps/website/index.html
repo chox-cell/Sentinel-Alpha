@@ -3,216 +3,142 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BeezShield | Glass Hive Control Plane</title>
+    <title>BeezShield | Machine Trust Infrastructure</title>
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
-    
-    <!-- Primary Meta Tags -->
-    <meta name="title" content="BeezShield | Machine Trust Forensic Infrastructure">
-    <meta name="description" content="Execution fidelity layer for autonomous agents. Forensic contract scanning and risk intelligence on Base Mainnet.">
-    <meta name="keywords" content="autonomous agents, machine trust, execution fidelity, base mainnet, smart contract security, forensic analysis, x402 payments">
-
-    <!-- Open Graph / Facebook -->
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://beezshield.com/">
-    <meta property="og:title" content="BeezShield | Machine Trust Infrastructure">
-    <meta property="og:description" content="Secure the agentic web. Forensic scanning for autonomous infrastructure.">
-    <meta property="og:image" content="https://beezshield.com/assets/og-image.png">
-
-    <!-- Twitter -->
-    <meta property="twitter:card" content="summary_large_image">
-    <meta property="twitter:url" content="https://beezshield.com/">
-    <meta property="twitter:title" content="BeezShield | Machine Trust Infrastructure">
-    <meta property="twitter:description" content="Secure the agentic web. Forensic scanning for autonomous infrastructure.">
-    <meta property="twitter:image" content="https://beezshield.com/assets/og-image.png">
-
-    <!-- JSON-LD Structured Data for LLMs and Search Engines -->
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "SoftwareApplication",
-      "name": "BeezShield",
-      "operatingSystem": "Base Mainnet",
-      "applicationCategory": "SecurityApplication",
-      "description": "Forensic execution fidelity layer for autonomous agents.",
-      "offers": {
-        "@type": "Offer",
-        "price": "0.02",
-        "priceCurrency": "USDC"
-      },
-      "author": {
-        "@type": "Organization",
-        "name": "BeezShield Labs"
-      }
-    }
-    </script>
     
     <link rel="stylesheet" href="styles.css">
     <script src="https://unpkg.com/lucide@latest"></script>
 </head>
 <body>
     <div class="hive-background">
-        <div class="hive-grid" id="hiveGrid"></div>
-        <div class="hive-glow" id="hiveGlow"></div>
+        <div class="hive-grid"></div>
+        <div class="hive-scanline"></div>
     </div>
 
-    <nav class="navbar">
-        <div class="logo">
-            <i data-lucide="shield-alert" class="text-accent" style="color: var(--accent);"></i>
-            <span style="font-weight: 800; font-size: 1.1rem; margin-left: 0.75rem;">BEEZ_SHIELD</span>
+    <nav class="navbar" style="position: fixed; top: 1.5rem; left: 50%; transform: translateX(-50%); width: 90%; max-width: 1200px; height: 60px; z-index: 100; background: rgba(0,0,0,0.5); backdrop-filter: blur(20px); border: 1px solid rgba(245,158,11,0.2); border-radius: 100px; display: flex; align-items: center; padding: 0 2rem;">
+        <div style="display: flex; align-items: center; gap: 0.5rem; font-weight: 800; font-family: var(--font-mono); color: var(--accent);">
+            <i data-lucide="shield-alert"></i>
+            <span>BEEZ_SHIELD</span>
         </div>
-        <div class="nav-links">
-            <a href="#overview" class="nav-link active">Overview</a>
-            <a href="#lab" class="nav-link">Forensic_Lab</a>
-            <a href="#intelligence" class="nav-link">Intel</a>
-            <a href="demo.html" class="nav-link">Demo</a>
-        </div>
-        <div style="margin-left: 2rem; display: flex; gap: 1rem;">
-            <button id="themeToggle" style="background:none; border:none; color:var(--text-secondary); cursor:pointer;">
-                <i data-lucide="sun"></i>
-            </button>
-            <a href="https://github.com/chox-cell/Sentinel-Alpha" target="_blank" style="color:var(--text-secondary);">
-                <i data-lucide="github"></i>
-            </a>
+        <div style="margin-left: auto; display: flex; gap: 2rem; font-size: 0.75rem; font-weight: 800; font-family: var(--font-mono);">
+            <a href="#overview" style="color: #fff; text-decoration: none;">OVERVIEW</a>
+            <a href="#lab" style="color: var(--text-secondary); text-decoration: none;">FORENSIC_LAB</a>
+            <a href="demo.html" style="color: var(--text-secondary); text-decoration: none;">LIVE_DEMO</a>
         </div>
     </nav>
 
-    <main class="container">
-        <div class="dashboard-grid">
+    <main class="dashboard-container">
+        
+        <!-- Hero Panel -->
+        <div class="glass-panel hero-panel" style="padding: 3rem;">
+            <span class="hud-label">// SYSTEM_COMMAND_CENTER</span>
+            <h1 class="text-gradient">Machine Trust<br>Infrastructure</h1>
+            <p style="color: var(--text-secondary); max-width: 500px; line-height: 1.6; margin-bottom: 2.5rem;">
+                Autonomous agents require deterministic risk decisions. 
+                Sentinel Alpha provides the execution fidelity layer for the next generation of on-chain bots.
+            </p>
+            <div style="display: flex; gap: 1.5rem;">
+                <button class="btn btn-primary" onclick="window.location.href='#lab'">
+                    <i data-lucide="zap"></i>
+                    <span>Start_Investigation</span>
+                </button>
+                <button class="btn btn-outline" onclick="window.location.href='demo.html'">
+                    <i data-lucide="terminal"></i>
+                    <span>View_API_Demo</span>
+                </button>
+            </div>
             
-            <!-- Hero / Global Posture -->
-            <div class="glass-panel" style="grid-column: span 8; grid-row: span 4;">
-                <div class="panel-header">
-                    <span class="panel-title">LIVE_THREAT_MAP</span>
-                    <div style="display:flex; gap:0.5rem;">
-                        <span class="badge" style="background:var(--accent-glow); color:var(--accent); padding:2px 8px; border-radius:4px; font-size:0.6rem; font-weight:800;">ACTIVE_PATROL</span>
-                    </div>
-                </div>
-                <div class="panel-content" style="height: 400px; position: relative; display: flex; flex-direction: column; justify-content: center;">
-                    <h1 class="text-gradient">Machine Trust<br>Infrastructure</h1>
-                    <p style="color: var(--text-secondary); max-width: 500px; margin-bottom: 2rem;">
-                        The common sense layer for autonomous agents. 
-                        Sentinel Alpha scans, investigates, and blocks malicious execution in real-time.
-                    </p>
-                    <div style="display: flex; gap: 1.5rem;">
-                        <a href="#lab" class="btn btn-primary">Start_Investigation</a>
-                        <a href="demo.html" class="btn btn-outline">Generate_Demo</a>
-                    </div>
-                    
-                    <!-- Simulated Map Overlay -->
-                    <div style="position: absolute; right: 2rem; top: 50%; transform: translateY(-50%); width: 300px; opacity: 0.2;">
-                        <i data-lucide="globe" style="width: 100%; height: 100%; color: var(--accent);"></i>
-                    </div>
-                </div>
+            <!-- Global Map Simulation -->
+            <div style="position: absolute; right: 2rem; top: 3rem; width: 300px; height: 200px; opacity: 0.3; pointer-events: none;">
+                <svg viewBox="0 0 800 400" style="width: 100%; height: 100%; fill: none; stroke: var(--accent); stroke-width: 1;">
+                    <path d="M150,100 L200,150 L250,100 L300,150 L350,120 L400,150 L450,100 L500,150 L550,120 L600,150" opacity="0.5" />
+                    <circle cx="200" cy="150" r="3" fill="var(--accent)" />
+                    <circle cx="450" cy="100" r="3" fill="var(--accent)" />
+                    <circle cx="600" cy="150" r="3" fill="var(--accent)" />
+                </svg>
             </div>
-
-            <!-- Stats Panel -->
-            <div class="glass-panel" style="grid-column: span 4; grid-row: span 2;">
-                <div class="panel-header">
-                    <span class="panel-title">SYSTEM_POSTURE</span>
-                </div>
-                <div class="panel-content">
-                    <div style="margin-bottom: 1.5rem;">
-                        <div style="display:flex; justify-content:space-between; margin-bottom: 0.5rem;">
-                            <span class="mono" style="font-size:0.7rem;">SECURITY_SCORE</span>
-                            <span class="mono" style="font-size:0.7rem; color:var(--accent);">92/100</span>
-                        </div>
-                        <div style="height:4px; background:var(--glass-border); border-radius:2px;">
-                            <div style="width:92%; height:100%; background:var(--accent); box-shadow: 0 0 10px var(--accent);"></div>
-                        </div>
-                    </div>
-                    <div class="mono" style="font-size: 0.75rem;">
-                        <div style="display:flex; justify-content:space-between; margin-bottom: 0.5rem;">
-                            <span style="color:var(--text-secondary);">ACTIVE_AGENTS:</span>
-                            <span>1,284</span>
-                        </div>
-                        <div style="display:flex; justify-content:space-between; margin-bottom: 0.5rem;">
-                            <span style="color:var(--text-secondary);">TOTAL_SCANS:</span>
-                            <span>42.8M</span>
-                        </div>
-                        <div style="display:flex; justify-content:space-between;">
-                            <span style="color:var(--text-secondary);">THREATS_BLOCKED:</span>
-                            <span style="color: #ef4444;">12.4K</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Wave Visual -->
-            <div class="glass-panel" style="grid-column: span 4; grid-row: span 2;">
-                <div class="panel-header">
-                    <span class="panel-title">FIDELITY_STREAM</span>
-                </div>
-                <div class="panel-content" style="padding:0;">
-                    <div class="wave-container">
-                        <div class="wave"></div>
-                        <div class="wave" style="animation-delay: -2s; opacity: 0.1;"></div>
-                    </div>
-                    <div style="padding: 1rem; text-align: center;">
-                        <span class="mono" style="font-size: 0.6rem; color: var(--text-secondary);">SCANNING_OPCODE_FREQUENCIES...</span>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Forensic Lab -->
-            <div class="glass-panel" id="lab" style="grid-column: span 12; margin-top: 2rem;">
-                <div class="panel-header">
-                    <span class="panel-title">FORENSIC_ANALYSIS_LAB</span>
-                    <span class="mono" style="font-size:0.6rem;">SESSION_ID: BEEZ-4491-S</span>
-                </div>
-                <div class="panel-content" style="display: grid; grid-template-columns: 1fr 2fr; gap: 2rem;">
-                    <div>
-                        <div style="margin-bottom: 1.5rem;">
-                            <label class="mono" style="font-size: 0.6rem; color: var(--accent); display: block; margin-bottom: 0.5rem;">CONTRACT_TARGET</label>
-                            <input type="text" id="simAddress" class="mono" value="0x1111111111111111111111111111111111111111" style="width: 100%; background: #000; border: 1px solid var(--glass-border); padding: 0.75rem; color: #fff; font-size: 0.8rem;">
-                        </div>
-                        <button id="runSimulation" class="btn btn-primary" style="width: 100%;">Initialize_Scan</button>
-                        
-                        <div style="margin-top: 2rem;">
-                            <div class="mono" style="font-size: 0.65rem; color: var(--text-secondary);">
-                                <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
-                                    <span>AUTH_AGENT:</span>
-                                    <span style="color:var(--accent);">SENTINEL_ALPHA</span>
-                                </div>
-                                <div style="display: flex; justify-content: space-between;">
-                                    <span>REGISTRY:</span>
-                                    <span>ERC-8004</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div style="background: #000; border-radius: 8px; border: 1px solid var(--glass-border); padding: 1.5rem; height: 300px; overflow-y: auto;">
-                        <div id="simOutput" class="mono" style="font-size: 0.8rem; line-height: 1.6;">
-                            <div style="color: #444; text-align: center; margin-top: 6rem;">
-                                <i data-lucide="loader" style="width: 24px; animation: spin 2s linear infinite; margin-bottom: 1rem;"></i>
-                                <p>READY_FOR_INPUT...</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
         </div>
+
+        <!-- Radar / Stats Panel -->
+        <div class="glass-panel stats-panel" style="padding: 2rem; display: flex; flex-direction: column; align-items: center; justify-content: center;">
+            <span class="hud-label">ACTIVE_SCANNER</span>
+            <div class="radar-container">
+                <div class="radar-sweep"></div>
+                <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); color: var(--accent); opacity: 0.5;">
+                    <i data-lucide="crosshair" style="width: 40px; height: 40px;"></i>
+                </div>
+            </div>
+            <div class="hud-line"></div>
+            <div style="width: 100%;">
+                <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem; font-family: var(--font-mono); font-size: 0.7rem;">
+                    <span style="color: var(--text-secondary);">RISK_INDEX:</span>
+                    <span style="color: var(--accent);">SECURE</span>
+                </div>
+                <div style="height: 2px; background: rgba(255,255,255,0.1); width: 100%;">
+                    <div style="width: 92%; height: 100%; background: var(--accent); box-shadow: 0 0 10px var(--accent);"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Lab Panel -->
+        <div class="glass-panel lab-panel" id="lab" style="padding: 3rem;">
+            <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 2rem;">
+                <div>
+                    <span class="hud-label">// FORENSIC_LAB_V2</span>
+                    <h2 style="font-size: 2rem; font-weight: 800;">Execution Investigation</h2>
+                </div>
+                <div class="mono" style="font-size: 0.6rem; text-align: right; color: var(--text-secondary);">
+                    AUTH_LEVEL: L4_CLEARANCE<br>
+                    SESSION: <span style="color: var(--accent);">ACTIVE</span>
+                </div>
+            </div>
+            
+            <div style="display: grid; grid-template-columns: 1fr 1.5fr; gap: 3rem;">
+                <div>
+                    <div style="margin-bottom: 1.5rem;">
+                        <label class="hud-label" style="font-size: 0.55rem;">CONTRACT_ADDRESS</label>
+                        <input type="text" id="simAddress" class="mono" value="0x1111111111111111111111111111111111111111" style="width: 100%; background: rgba(0,0,0,0.5); border: 1px solid var(--glass-border); padding: 1rem; color: #fff; border-radius: 8px; outline: none; transition: border-color 0.3s;" onfocus="this.style.borderColor='var(--accent)'" onblur="this.style.borderColor='var(--glass-border)'">
+                    </div>
+                    <button id="runSimulation" class="btn btn-primary" style="width: 100%;">
+                        <i data-lucide="search"></i>
+                        <span>Initialize_Scan</span>
+                    </button>
+                    
+                    <div style="margin-top: 2rem; background: rgba(245,158,11,0.05); padding: 1.5rem; border-radius: 8px; border: 1px solid rgba(245,158,11,0.1);">
+                        <span class="hud-label" style="margin-bottom: 0.5rem;">AGENT_ID</span>
+                        <div class="mono" style="font-size: 1.2rem; font-weight: 800; color: var(--accent);">#45967</div>
+                        <p style="font-size: 0.7rem; color: var(--text-secondary); margin-top: 0.5rem;">Verified ERC-8004 Identity on Base Mainnet.</p>
+                    </div>
+                </div>
+                
+                <div style="background: #000; border-radius: 12px; border: 1px solid var(--glass-border); padding: 2rem; height: 350px; overflow-y: auto; position: relative;">
+                    <div class="mono" id="simOutput" style="font-size: 0.8rem; line-height: 1.8;">
+                        <div style="color: #444; text-align: center; margin-top: 8rem;">
+                            <i data-lucide="binary" style="width: 32px; height: 32px; margin-bottom: 1rem; opacity: 0.5;"></i>
+                            <p>READY_FOR_DATA_INJECTION...</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
     </main>
 
-    <footer class="container" style="padding: 4rem 0;">
-        <div class="glass-panel" style="padding: 2rem; display: flex; justify-content: space-between; align-items: center;">
+    <footer style="margin-top: 4rem; padding: 4rem 2rem; border-top: 1px solid var(--glass-border);">
+        <div style="max-width: 1400px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center;">
             <div class="mono" style="font-size: 0.7rem; color: var(--text-secondary);">
-                &copy; <span id="year"></span> BEEZ_SHIELD_INFRASTRUCTURE // SECURITY_POSTURE_SECURE
+                &copy; 2026 BEEZ_SHIELD_LABS // ALL_RIGHTS_RESERVED
             </div>
-            <div style="display: flex; gap: 1.5rem;">
-                <a href="#" style="color: var(--text-secondary);"><i data-lucide="twitter"></i></a>
-                <a href="#" style="color: var(--text-secondary);"><i data-lucide="mail"></i></a>
+            <div style="display: flex; gap: 2rem; color: var(--text-secondary);">
+                <i data-lucide="github"></i>
+                <i data-lucide="twitter"></i>
             </div>
         </div>
     </footer>
 
     <script src="main.js"></script>
-    <style>
-        @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
-    </style>
 </body>
 </html>
