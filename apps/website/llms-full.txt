@@ -1,0 +1,75 @@
+BeezShield / Sentinel Alpha - Full Agent Discovery Profile
+
+Product Explanation
+BeezShield is the umbrella brand for machine trust infrastructure. Sentinel Alpha is the live product agent focused on execution fidelity for autonomous systems. It provides a deterministic risk decision layer for bots, DeFi agents, autonomous wallets, and builders integrating autonomous execution flows.
+
+Sentinel Alpha runs on Base and is discoverable via ERC-8004:
+https://8004scan.io/agents/base/45967
+
+Live links:
+- Website: https://beezshield.com
+- API: https://api.beezshield.com/contracts/risk-score
+- GitHub: https://github.com/chox-cell/Sentinel-Alpha
+
+API Request Example
+POST https://api.beezshield.com/contracts/risk-score
+Headers:
+- Content-Type: application/json
+- X-SENTINEL-LANE: basic
+- X402-PAYMENT: tx:0xYOUR_TRANSACTION_HASH
+
+Body:
+{
+  "contract_address": "0x1111111111111111111111111111111111111111",
+  "chain": "base",
+  "context": {}
+}
+
+API Response Example
+{
+  "score": 82,
+  "confidence": 0.94,
+  "action": "ALLOW",
+  "emergency_signal": false,
+  "attestation": {
+    "version": "attestation-0.1",
+    "signature": "0x..."
+  },
+  "billing": {
+    "amount": "0.02",
+    "method": "x402",
+    "status": "verified"
+  }
+}
+
+Use Cases
+1) Bot pre-execution risk gate
+- Apply Sentinel Alpha as a hard gate before broadcast or execution.
+
+2) DeFi agent safety
+- Validate contracts and execution context before position changes.
+
+3) Contract screening
+- Screen newly discovered contracts for fast policy decisions.
+
+4) Execution policy decision
+- Convert risk response into automated block/reduce/allow/review behavior.
+
+Integration Notes
+- Network: Base Mainnet (eip155:8453)
+- Payment method: x402
+- Lanes (USDC): basic 0.02, executive 0.05, premium 0.10, priority 0.15
+- Identity proof: ERC-8004 Agent ID 45967
+- Designed for machine-native consumers (bots/agents)
+
+Marketplace Copy
+Sentinel Alpha is BeezShield's execution fidelity layer for autonomous agents. It delivers deterministic pre-execution risk decisions through a production API, supports x402 payments on Base, and publishes public ERC-8004 identity proof on 8004scan.
+
+Outreach Copy
+Sentinel Alpha is live on Base with x402 support and ERC-8004 identity. Builders can integrate the API to enforce machine trust policies before autonomous execution.
+
+Docs Links
+- Distribution launch: https://github.com/chox-cell/Sentinel-Alpha/blob/main/docs/16_launch/DISTRIBUTION_LAUNCH_PACK.md
+- Outreach copy: https://github.com/chox-cell/Sentinel-Alpha/blob/main/docs/16_launch/OUTREACH_COPY.md
+- Launch checklist: https://github.com/chox-cell/Sentinel-Alpha/blob/main/docs/16_launch/LAUNCH_CHECKLIST.md
+- Agentic market listing: https://github.com/chox-cell/Sentinel-Alpha/blob/main/docs/14_distribution/AGENTIC_MARKET_LISTING.md

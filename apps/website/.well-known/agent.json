@@ -1,0 +1,26 @@
+{
+  "name": "Sentinel Alpha",
+  "umbrella_brand": "BeezShield",
+  "agent_id": "45967",
+  "network": "base",
+  "chain_id": 8453,
+  "erc8004_url": "https://8004scan.io/agents/base/45967",
+  "api_endpoint": "https://api.beezshield.com/contracts/risk-score",
+  "payment_method": "x402",
+  "pricing_lanes": {
+    "basic": "0.02",
+    "executive": "0.05",
+    "premium": "0.10",
+    "priority": "0.15"
+  },
+  "outputs": [
+    "score",
+    "confidence",
+    "action",
+    "emergency_signal",
+    "attestation"
+  ],
+  "status": "live",
+  "github_url": "https://github.com/chox-cell/Sentinel-Alpha",
+  "website_url": "https://beezshield.com"
+}

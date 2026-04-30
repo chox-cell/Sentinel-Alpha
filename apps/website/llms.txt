@@ -1,0 +1,30 @@
+BeezShield Overview
+BeezShield builds machine trust infrastructure for autonomous systems. Sentinel Alpha is the production product agent that provides execution fidelity decisions before a bot or agent acts on-chain.
+
+Sentinel Alpha
+Sentinel Alpha is a Base-native risk decision API for bots, DeFi agents, and autonomous wallets. It returns deterministic machine-readable outputs for pre-execution policy enforcement.
+
+Live Website
+https://beezshield.com
+
+Live API
+https://api.beezshield.com/contracts/risk-score
+
+ERC-8004 Profile
+https://8004scan.io/agents/base/45967
+
+GitHub
+https://github.com/chox-cell/Sentinel-Alpha
+
+x402 Pricing Lanes (USDC)
+- basic: 0.02
+- executive: 0.05
+- premium: 0.10
+- priority: 0.15
+
+Example cURL
+curl -X POST "https://api.beezshield.com/contracts/risk-score" \
+  -H "Content-Type: application/json" \
+  -H "X-SENTINEL-LANE: basic" \
+  -H "X402-PAYMENT: tx:0xYOUR_TRANSACTION_HASH" \
+  -d '{"contract_address":"0x1111111111111111111111111111111111111111","chain":"base","context":{}}'

@@ -1,0 +1,15 @@
+{
+  "service_name": "Sentinel Alpha",
+  "endpoint": "https://api.beezshield.com/contracts/risk-score",
+  "network": "eip155:8453",
+  "asset": "USDC",
+  "pricing_lanes": {
+    "basic": "0.02",
+    "executive": "0.05",
+    "premium": "0.10",
+    "priority": "0.15"
+  },
+  "payment_instructions_summary": "Submit an X402-PAYMENT header with tx:<hash> and optional X-SENTINEL-LANE for lane pricing.",
+  "challenge_endpoint": "https://api.beezshield.com/internal/x402/challenge?lane=basic",
+  "lanes_endpoint": "https://api.beezshield.com/internal/x402/lanes"
+}

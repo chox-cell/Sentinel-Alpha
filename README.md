@@ -19,6 +19,14 @@ Bots and autonomous agents need a deterministic risk gate before execution, but 
 - Product/agent: `Sentinel Alpha`
 - Umbrella brand: `BeezShield`
 
+## 🚀 Live Demo & Growth
+
+- **Forensic Lab Demo:** [beezshield.com/demo.html](https://beezshield.com/demo.html) (Developer Preview)
+- **Public Website:** [beezshield.com](https://beezshield.com)
+- **ERC-8004 Agent Identity:** [8004scan - Agent 45967](https://8004scan.io/agents/base/45967)
+- **API Endpoint:** `https://api.beezshield.com/contracts/risk-score`
+- **GitHub:** [chox-cell/Sentinel-Alpha](https://github.com/chox-cell/Sentinel-Alpha)
+
 ## ERC-8004 Identity
 
 - Sentinel Alpha is registered on 8004scan.

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>https://beezshield.com/</loc>
+  </url>
+  <url>
+    <loc>https://beezshield.com/llms.txt</loc>
+  </url>
+  <url>
+    <loc>https://beezshield.com/llms-full.txt</loc>
+  </url>
+  <url>
+    <loc>https://beezshield.com/.well-known/agent.json</loc>
+  </url>
+  <url>
+    <loc>https://beezshield.com/.well-known/x402.json</loc>
+  </url>
+</urlset>
