@@ -476,6 +476,18 @@ h1 {
 }
 .lane-item strong { font-size: 1.5rem; color: #fff; }
 
+/* SDK Preview */
+.sdk-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+    margin-top: 2rem;
+}
+.sdk-card {
+    border-left: 3px solid var(--accent);
+}
+.justify-center { justify-content: center; }
+
 /* Discovery */
 .discovery-links {
     display: flex;

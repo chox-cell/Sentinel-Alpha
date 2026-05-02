@@ -22,6 +22,15 @@ def test_beezshield_prime_website():
     assert "Copy cURL" in text_content
     assert "Add to your bot" in text_content
 
+    # SDK Preview section
+    assert "Build with Sentinel Alpha" in text_content
+    assert "@beezshield/sentinel" in text_content
+    assert "createSentinelClient()" in text_content
+    assert "scoreContract()" in text_content
+    assert "decideBeforeExecution()" in text_content
+    assert "Developer Preview Soon" in text_content
+    assert "coming next" in text_content.lower()
+
     # Prohibited claims
     assert "MCP live" not in text_content.lower()
     assert "A2A live" not in text_content.lower()
