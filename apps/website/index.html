@@ -341,7 +341,8 @@ const client = createSentinelClient({
 });
 
 const decision = await client.decideBeforeExecution({
-  contractAddress: "0x1111111111111111111111111111111111111111"
+  contract_address: "0x1111111111111111111111111111111111111111",
+  chain: "base",
 });
 
 if (!decision.shouldExecute) {
@@ -389,7 +390,10 @@ if result.get("action") == "BLOCK":
                         Sentinel Alpha SDK v3.7
                     </div>
                     <h2>Build with Sentinel Alpha</h2>
-                    <p class="text-muted">The Sentinel SDK is now in developer preview. Source available / npm publish pending.</p>
+                    <p class="text-muted">
+                        Sentinel TypeScript SDK (@beezshield/sentinel) is in developer preview. Source available in-repo; npm publish pending (package not published to npm registry yet).
+                        Coinbase AgentKit provider wiring is coming next — not live in this SDK.
+                    </p>
                 </div>
 
                 <div class="sdk-grid">

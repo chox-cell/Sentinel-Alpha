@@ -15,8 +15,13 @@ x402 Pricing Lanes (USDC)
 - premium: 0.10
 - priority: 0.15
 
+TypeScript SDK (developer preview)
+- Package name (planned): @beezshield/sentinel — source: repository path packages/sentinel-sdk
+- Not published to npm yet; npm publish pending
+- AgentKit / AgentKit provider integration: upcoming (not live in this SDK)
+
 Builder Handoff
-- Website scan -> Copy cURL -> Sentinel SDK -> AgentKit (upcoming)
+- Website scan -> Copy cURL -> @beezshield/sentinel snippets (in-repo) -> AgentKit (upcoming)
 
 Example curl
 curl -X POST "https://api.beezshield.com/contracts/risk-score" \
