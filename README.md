@@ -85,6 +85,12 @@ Pricing tiers (USDC):
   - `emergency_signal`
   - `attestation`
 
+## Swarm Intelligence UI
+
+- BeezShield website now renders a living trust network UI layer for Sentinel Alpha.
+- The swarm visual states track scan flow: idle, scanning, stable, elevated, and critical.
+- Positioning remains: **Pre-execution decision engine for agents**.
+
 ## Proof Points
 
 - Verified production payment proof: Real Base USDC payment verified

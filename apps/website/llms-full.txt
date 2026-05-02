@@ -8,6 +8,7 @@ Live links:
 - API: https://api.beezshield.com/contracts/risk-score
 - ERC-8004: https://8004scan.io/agents/base/45967
 - GitHub: https://github.com/chox-cell/Sentinel-Alpha
+- Risk Feed (demo): https://beezshield.com/risk-feed.html
 
 Risk Intelligence
 Sentinel Alpha includes public risk intelligence artifacts and demo feed examples to help builders evaluate signal structure. Demo feed content is illustrative unless a live scanner is enabled.
@@ -61,6 +62,7 @@ Integration Notes
 - Payment method: x402
 - Lanes (USDC): basic 0.02, executive 0.05, premium 0.10, priority 0.15
 - Identity proof: ERC-8004 Agent ID 45967
+- Builder handoff: website scan -> Copy cURL -> SDK snippet -> AgentKit (upcoming)
 - No claim of live MCP or A2A support
 
 Marketplace Copy
@@ -75,3 +77,4 @@ Docs Links
 - Risk feed strategy: https://github.com/chox-cell/Sentinel-Alpha/blob/main/docs/16_launch/RISK_FEED_STRATEGY.md
 - Clean outreach copy: https://github.com/chox-cell/Sentinel-Alpha/blob/main/docs/16_launch/CLEAN_OUTREACH_COPY.md
 - Revenue playbook: https://github.com/chox-cell/Sentinel-Alpha/blob/main/docs/16_launch/REVENUE_PLAYBOOK.md
+- Builder handoff pack: https://github.com/chox-cell/Sentinel-Alpha/blob/main/docs/16_launch/BUILDER_HANDOFF_PACK.md

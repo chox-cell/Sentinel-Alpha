@@ -1,23 +1,13 @@
 BeezShield Overview
-BeezShield is the umbrella brand for machine trust infrastructure. Sentinel Alpha is the live product agent that provides execution fidelity decisions before autonomous systems execute on-chain.
+BeezShield is the umbrella brand for Machine Trust Infrastructure.
+Sentinel Alpha is the product agent: a pre-execution decision engine for agents.
 
-Sentinel Alpha Description
-Sentinel Alpha is a Base-native risk intelligence API for LLM agents, bot builders, and x402 buyers. It returns machine-readable outputs for pre-execution policy decisions.
-
-Live Website
-https://beezshield.com
-
-Live API
-https://api.beezshield.com/contracts/risk-score
-
-ERC-8004 Profile
-https://8004scan.io/agents/base/45967
-
-GitHub
-https://github.com/chox-cell/Sentinel-Alpha
-
-Risk Intelligence
-Sentinel Alpha publishes public, machine-readable risk intelligence artifacts and demo feed examples. Demo feed content is illustrative unless a live scanner is enabled.
+Primary Links
+- Website: https://beezshield.com
+- API: https://api.beezshield.com/contracts/risk-score
+- ERC-8004: https://8004scan.io/agents/base/45967
+- GitHub: https://github.com/chox-cell/Sentinel-Alpha
+- Risk Feed (demo): https://beezshield.com/risk-feed.html
 
 x402 Pricing Lanes (USDC)
 - basic: 0.02
@@ -25,9 +15,12 @@ x402 Pricing Lanes (USDC)
 - premium: 0.10
 - priority: 0.15
 
+Builder Handoff
+- Website scan -> Copy cURL -> SDK snippets -> AgentKit (upcoming)
+
 Example curl
 curl -X POST "https://api.beezshield.com/contracts/risk-score" \
   -H "Content-Type: application/json" \
   -H "X-SENTINEL-LANE: basic" \
-  -H "X402-PAYMENT: tx:0xYOUR_TRANSACTION_HASH" \
-  -d '{"contract_address":"0x1111111111111111111111111111111111111111","chain":"base","context":{}}'
+  -H "X402-PAYMENT: tx:YOUR_TX_HASH" \
+  -d '{"contract_address":"0x1111111111111111111111111111111111111111","chain":"base"}'

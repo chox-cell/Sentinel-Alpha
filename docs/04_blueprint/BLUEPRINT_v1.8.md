@@ -86,6 +86,7 @@ Signals:
 - Agentic Market Final Submission Pack v2.7 active
 - Distribution Launch Pack v2.9 active
 - Clean Distribution Engine v2.9 active
+- Advanced Swarm Intelligence UI Layer v3.4 active
 - Deploy Pack v2.1 active
 - Public Deployment Checklist v2.2 active
 - Public Repo Hardening Pack v2.4 active
