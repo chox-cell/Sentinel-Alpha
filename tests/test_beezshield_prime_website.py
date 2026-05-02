@@ -28,8 +28,9 @@ def test_beezshield_prime_website():
     assert "createSentinelClient()" in text_content
     assert "scoreContract()" in text_content
     assert "decideBeforeExecution()" in text_content
-    assert "Developer Preview Soon" in text_content
-    assert "coming next" in text_content.lower()
+    assert "Sentinel Alpha SDK v3.7" in text_content
+    assert "Developer Preview" in text_content
+    assert "source available" in text_content.lower()
 
     # Prohibited claims
     assert "MCP live" not in text_content.lower()

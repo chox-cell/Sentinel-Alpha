@@ -16,7 +16,7 @@ x402 Pricing Lanes (USDC)
 - priority: 0.15
 
 Builder Handoff
-- Website scan -> Copy cURL -> SDK snippets -> AgentKit (upcoming)
+- Website scan -> Copy cURL -> Sentinel SDK -> AgentKit (upcoming)
 
 Example curl
 curl -X POST "https://api.beezshield.com/contracts/risk-score" \

@@ -62,7 +62,7 @@ Integration Notes
 - Payment method: x402
 - Lanes (USDC): basic 0.02, executive 0.05, premium 0.10, priority 0.15
 - Identity proof: ERC-8004 Agent ID 45967
-- Builder handoff: website scan -> Copy cURL -> SDK snippet -> AgentKit (upcoming)
+- Builder handoff: website scan -> Copy cURL -> Sentinel SDK -> AgentKit (upcoming)
 - No claim of live MCP or A2A support
 
 Marketplace Copy

@@ -335,5 +335,25 @@ document.addEventListener('DOMContentLoaded', () => {
                 });
             });
         }
+
+        const copyCurlSdkBtn = document.getElementById('copyCurlSdkBtn');
+        if (copyCurlSdkBtn) {
+            copyCurlSdkBtn.addEventListener('click', () => {
+                const sdkCurl = `curl -X POST "https://api.beezshield.com/contracts/risk-score" \\
+  -H "Content-Type: application/json" \\
+  -H "X-SENTINEL-LANE: basic" \\
+  -H "X402-PAYMENT: tx:YOUR_TX_HASH" \\
+  -d '{"contract_address":"0x1111111111111111111111111111111111111111","chain":"base"}'`;
+                navigator.clipboard.writeText(sdkCurl).then(() => {
+                    const originalText = copyCurlSdkBtn.innerHTML;
+                    copyCurlSdkBtn.innerHTML = 'Copied! <i data-lucide="check" class="icon-sm"></i>';
+                    if (window.lucide) lucide.createIcons();
+                    setTimeout(() => {
+                        copyCurlSdkBtn.innerHTML = originalText;
+                        if (window.lucide) lucide.createIcons();
+                    }, 2000);
+                });
+            });
+        }
     }
 });

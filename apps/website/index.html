@@ -334,27 +334,32 @@
                     </div>
                     
                     <div class="code-content" id="tab-ts" style="display:none;">
-<pre class="mono text-sm"><code>import { SentinelAlpha } from "@beezshield/sdk";
+<pre class="mono text-sm"><code>import { createSentinelClient } from "@beezshield/sentinel";
 
-const sentinel = new SentinelAlpha({
-  network: "base",
-  paymentTxHash: "tx:YOUR_TX_HASH"
+const client = createSentinelClient({
+  x402Payment: "tx:YOUR_TX_HASH"
 });
 
-const decision = await sentinel.score("0x...");
-if (decision.action === "BLOCK") {
+const decision = await client.decideBeforeExecution({
+  contractAddress: "0x1111111111111111111111111111111111111111"
+});
+
+if (!decision.shouldExecute) {
   agent.halt("Unsafe contract detected.");
 }</code></pre>
                     </div>
                     
                     <div class="code-content" id="tab-py" style="display:none;">
-<pre class="mono text-sm"><code>from beezshield import SentinelAlpha
+<pre class="mono text-sm"><code>from sdk.python.client import SentinelAlphaClient
 
-sentinel = SentinelAlpha(network="base", payment_hash="tx:...")
-decision = sentinel.score("0x...")
+client = SentinelAlphaClient(
+    base_url="https://api.beezshield.com",
+    payment_header="tx:YOUR_TX_HASH"
+)
 
-if decision.action == "BLOCK":
-    raise SecurityException("Contract execution blocked by policy")</code></pre>
+result = client.scan("0x1111111111111111111111111111111111111111")
+if result.get("action") == "BLOCK":
+    raise Exception("Sentinel Alpha blocked execution.")</code></pre>
                     </div>
                 </div>
                 
@@ -378,19 +383,24 @@ if decision.action == "BLOCK":
                         <span class="pulse-dot" style="background: var(--text-muted); box-shadow: none;"></span>
                         <span class="mono text-xs">Developer Preview Soon</span>
                     </div>
+                <div class="section-header">
+                    <div class="badge mb-4">
+                        <span class="pulse-dot"></span>
+                        Sentinel Alpha SDK v3.7
+                    </div>
                     <h2>Build with Sentinel Alpha</h2>
-                    <p class="text-muted">A tiny SDK is coming next for agent builders who need pre-execution contract decisions.</p>
+                    <p class="text-muted">The Sentinel SDK is now in developer preview. Source available / npm publish pending.</p>
                 </div>
 
                 <div class="sdk-grid">
                     <div class="card sdk-card">
-                        <h3 class="mono text-sm mb-4">Planned Package</h3>
+                        <h3 class="mono text-sm mb-4">Developer Preview</h3>
                         <div class="mono text-lg mb-2">@beezshield/sentinel</div>
                         <p class="text-muted text-sm">Lightweight, zero-dependency client for Base Mainnet.</p>
                     </div>
                     
                     <div class="card sdk-card">
-                        <h3 class="mono text-sm mb-4">Planned Functions</h3>
+                        <h3 class="mono text-sm mb-4">Core Functions</h3>
                         <ul class="mono text-xs status-list">
                             <li style="display: flex; justify-content: space-between;">createSentinelClient()</li>
                             <li style="display: flex; justify-content: space-between;">scoreContract()</li>
@@ -401,7 +411,7 @@ if decision.action == "BLOCK":
 
                 <div class="cta-group mt-8" style="justify-content: center;">
                     <button class="btn btn-outline btn-sm" id="copyCurlSdkBtn">Copy cURL</button>
-                    <button class="btn btn-primary btn-sm">Watch SDK</button>
+                    <a href="https://github.com/chox-cell/Sentinel-Alpha" target="_blank" class="btn btn-primary btn-sm">Get SDK Source</a>
                     <a href="https://github.com/chox-cell/Sentinel-Alpha" target="_blank" class="btn btn-secondary btn-sm">View GitHub</a>
                 </div>
             </div>
