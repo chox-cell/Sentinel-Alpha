@@ -355,5 +355,23 @@ document.addEventListener('DOMContentLoaded', () => {
                 });
             });
         }
+
+        // Generic copy buttons for tabs
+        const copyBtns = document.querySelectorAll('.copy-btn');
+        copyBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const targetId = btn.dataset.target;
+                const codeBlock = document.querySelector(`#${targetId} code`);
+                if (codeBlock) {
+                    navigator.clipboard.writeText(codeBlock.innerText).then(() => {
+                        const originalText = btn.textContent;
+                        btn.textContent = 'Copied!';
+                        setTimeout(() => {
+                            btn.textContent = originalText;
+                        }, 2000);
+                    });
+                }
+            });
+        });
     }
 });

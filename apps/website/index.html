@@ -326,32 +326,33 @@
                     </div>
                     
                     <div class="code-content active" id="tab-curl">
-<pre class="mono text-sm"><code>curl -X POST "https://api.beezshield.com/contracts/risk-score" \
+                        <pre class="mono text-sm"><code>curl -X POST "https://api.beezshield.com/contracts/risk-score" \
   -H "Content-Type: application/json" \
   -H "X-SENTINEL-LANE: basic" \
   -H "X402-PAYMENT: tx:YOUR_TX_HASH" \
   -d '{"contract_address":"0x...","chain":"base"}'</code></pre>
+                        <button class="btn btn-outline btn-xs copy-btn" data-target="tab-curl">Copy</button>
                     </div>
                     
                     <div class="code-content" id="tab-ts" style="display:none;">
-<pre class="mono text-sm"><code>import { createSentinelClient } from "@beezshield/sentinel";
+                        <pre class="mono text-sm"><code>import { createSentinelClient } from "@beezshield/sentinel";
 
 const client = createSentinelClient({
   x402Payment: "tx:YOUR_TX_HASH"
 });
 
 const decision = await client.decideBeforeExecution({
-  contract_address: "0x1111111111111111111111111111111111111111",
-  chain: "base",
+  contractAddress: "0x1111111111111111111111111111111111111111"
 });
 
 if (!decision.shouldExecute) {
   agent.halt("Unsafe contract detected.");
 }</code></pre>
+                        <button class="btn btn-outline btn-xs copy-btn" data-target="tab-ts">Copy</button>
                     </div>
                     
                     <div class="code-content" id="tab-py" style="display:none;">
-<pre class="mono text-sm"><code>from sdk.python.client import SentinelAlphaClient
+                        <pre class="mono text-sm"><code>from sdk.python.client import SentinelAlphaClient
 
 client = SentinelAlphaClient(
     base_url="https://api.beezshield.com",
@@ -361,6 +362,7 @@ client = SentinelAlphaClient(
 result = client.scan("0x1111111111111111111111111111111111111111")
 if result.get("action") == "BLOCK":
     raise Exception("Sentinel Alpha blocked execution.")</code></pre>
+                        <button class="btn btn-outline btn-xs copy-btn" data-target="tab-py">Copy</button>
                     </div>
                 </div>
                 
@@ -429,10 +431,10 @@ if result.get("action") == "BLOCK":
                     Sentinel Alpha is built for machine consumption. Discover our capabilities, pricing, and identity natively through standard protocols.
                 </p>
                 <div class="discovery-links mono text-sm">
-                    <a href="/.well-known/agent.json" class="d-link"><i data-lucide="file-json"></i> agent.json</a>
-                    <a href="/.well-known/x402.json" class="d-link"><i data-lucide="credit-card"></i> x402.json</a>
-                    <a href="/llms.txt" class="d-link"><i data-lucide="file-text"></i> llms.txt</a>
-                    <a href="/llms-full.txt" class="d-link"><i data-lucide="file-code"></i> llms-full.txt</a>
+                    <a href=".well-known/agent.json" class="d-link"><i data-lucide="file-json"></i> agent.json</a>
+                    <a href=".well-known/x402.json" class="d-link"><i data-lucide="credit-card"></i> x402.json</a>
+                    <a href="llms.txt" class="d-link"><i data-lucide="file-text"></i> llms.txt</a>
+                    <a href="llms-full.txt" class="d-link"><i data-lucide="file-code"></i> llms-full.txt</a>
                     <a href="https://8004scan.io/agents/base/45967" target="_blank" class="d-link"><i data-lucide="fingerprint"></i> 8004scan profile</a>
                 </div>
             </div>
@@ -451,7 +453,7 @@ if result.get("action") == "BLOCK":
                 <a href="https://api.beezshield.com/contracts/risk-score">API</a>
                 <a href="https://github.com/chox-cell/Sentinel-Alpha">GitHub</a>
                 <a href="https://8004scan.io/agents/base/45967">ERC-8004 Agent</a>
-                <a href="/risk-feed.html">Risk Feed</a>
+                <a href="risk-feed.html">Risk Feed</a>
                 <a href="#scan-preview">Demo</a>
             </div>
         </div>
