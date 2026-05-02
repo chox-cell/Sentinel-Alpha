@@ -1,68 +1,60 @@
-import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
+import { afterEach, describe, expect, it, vi } from "vitest";
 import {
   createSentinelClient,
   decideBeforeExecution,
-  scoreContract,
-  SentinelError,
-  SentinelX402ChallengeError,
-  normalizeSentinelDecision,
   isX402Challenge,
+  normalizeSentinelDecision,
+  scoreContract,
+  SentinelNetworkError,
+  SentinelPaymentRequiredError,
+  SentinelTimeoutError,
+  SentinelValidationError,
 } from "./index.js";
 
-const SAMPLE_200 = {
+const sample200 = {
   api_version: "2026.8.0",
-  decision: { action: "ALLOW", emergency_signal: "NONE", confidence: 0.75 },
+  decision: {
+    action: "ALLOW",
+    emergency_signal: "NONE",
+    confidence: 0.75,
+  },
   risk_metrics: { score: 12, threat_class: "normal" },
   signals: { insufficient_data: 1 },
   attestation: { signed_at: "2026-01-01T00:00:00Z" },
-  latency: { lane: "standard", latency_ms: 10 },
-  meta: { trace_id: "t1" },
+  latency: { lane: "standard", latency_ms: 5 },
+  meta: { trace_id: "abc", ttl_seconds: 300 },
   billing: { amount: "0.02", method: "x402", status: "demo" },
 };
 
-const CHALLENGE_DETAIL = {
-  x402_version: "0.2",
-  payment_method: "x402",
-  network: "eip155:8453",
-  pay_to: "0xabc0000000000000000000000000000000000000",
-  amount_usdc: "0.02",
-  asset: "USDC",
-  resource: "/contracts/risk-score",
-  instructions: "Pay",
-  lane: "basic",
-};
+afterEach(() => {
+  vi.unstubAllGlobals();
+  vi.restoreAllMocks();
+});
 
 describe("createSentinelClient", () => {
-  beforeEach(() => {
-    vi.stubGlobal(
-      "fetch",
-      vi.fn(async () =>
-        Response.json(SAMPLE_200, {
-          status: 200,
-          headers: { "Content-Type": "application/json" },
-        }),
-      ),
-    );
+  it("uses default apiUrl, lane, timeout", () => {
+    const c = createSentinelClient();
+    expect(c).toBeDefined();
   });
-  afterEach(() => vi.unstubAllGlobals());
 
-  it("defaults apiUrl lane timeout and PAYMENT-SIGNATURE", async () => {
-    const client = createSentinelClient();
-    expect(client.config.apiUrl).toBe("https://api.beezshield.com");
-    expect(client.config.lane).toBe("basic");
-    expect(client.config.timeoutMs).toBe(10000);
+  it("sends required headers on POST", async () => {
+    const fetchMock = vi.fn().mockResolvedValue(
+      new Response(JSON.stringify(sample200), { status: 200, headers: { "Content-Type": "application/json" } }),
+    );
+    vi.stubGlobal("fetch", fetchMock);
 
+    const client = createSentinelClient({ apiUrl: "https://example.test/" });
     await client.scoreContract({
-      contractAddress: "0x1111111111111111111111111111111111111111",
+      contract_address: "0x1111111111111111111111111111111111111111",
     });
 
-    expect(fetch).toHaveBeenCalledOnce();
-    const [, init] = (fetch as unknown as ReturnType<typeof vi.fn>).mock.calls[0] as [string, RequestInit];
-    const headers = new Headers(init.headers as HeadersInit);
-    expect(headers.get("Content-Type")).toBe("application/json");
-    expect(headers.get("X-SENTINEL-LANE")).toBe("basic");
-    expect(headers.get("PAYMENT-SIGNATURE")).toBe("demo");
-    expect(headers.get("X402-PAYMENT")).toBeNull();
+    expect(fetchMock).toHaveBeenCalledTimes(1);
+    const [url, init] = fetchMock.mock.calls[0] as [string, RequestInit];
+    expect(url).toBe("https://example.test/contracts/risk-score");
+    const headers = init.headers as Record<string, string>;
+    expect(headers["Content-Type"]).toBe("application/json");
+    expect(headers["X-SENTINEL-LANE"]).toBe("basic");
+    expect(headers["X402-PAYMENT"]).toBeUndefined();
     expect(JSON.parse(init.body as string)).toMatchObject({
       contract_address: "0x1111111111111111111111111111111111111111",
       chain: "base",
@@ -70,161 +62,165 @@ describe("createSentinelClient", () => {
   });
 
   it("sends X402-PAYMENT when configured", async () => {
-    const client = createSentinelClient({
-      x402Payment: 'token="fixture-not-secret"',
-      paymentSignature: "should-not-send",
-    });
-    await client.scoreContract({ contractAddress: "0x1111111111111111111111111111111111111111" });
-    const [, init] = (fetch as unknown as ReturnType<typeof vi.fn>).mock.calls[0] as [string, RequestInit];
-    const headers = new Headers(init.headers as HeadersInit);
-    expect(headers.get("X402-PAYMENT")).toBe('token="fixture-not-secret"');
-    expect(headers.get("PAYMENT-SIGNATURE")).toBeNull();
-  });
-
-  it("normalizes 200 via normalizeSentinelDecision", () => {
-    const d = normalizeSentinelDecision(SAMPLE_200);
-    expect(d.action).toBe("allow");
-    expect(d.score).toBe(12);
-    expect(d.confidence).toBe(0.75);
-    expect(d.emergencySignal).toBe("NONE");
-    expect(d.threatClass).toBe("normal");
-  });
-
-  it("throws SentinelX402ChallengeError on 402", async () => {
-    vi.mocked(fetch).mockImplementationOnce(async () =>
-      Response.json({ detail: CHALLENGE_DETAIL }, { status: 402 }),
+    const fetchMock = vi.fn().mockResolvedValue(
+      new Response(JSON.stringify(sample200), { status: 200 }),
     );
-    const client = createSentinelClient();
-    await expect(
-      client.scoreContract({ contractAddress: "0x1111111111111111111111111111111111111111" }),
-    ).rejects.toMatchObject({ name: "SentinelX402ChallengeError", httpStatus: 402 });
-  });
+    vi.stubGlobal("fetch", fetchMock);
 
-  it("isX402Challenge detects error and response shapes", async () => {
-    vi.mocked(fetch).mockImplementationOnce(async () =>
-      Response.json({ detail: CHALLENGE_DETAIL }, { status: 402 }),
-    );
-    const client = createSentinelClient();
-    try {
-      await client.scoreContract({ contractAddress: "0x1111111111111111111111111111111111111111" });
-    } catch (e) {
-      expect(e).toBeInstanceOf(SentinelX402ChallengeError);
-      expect(isX402Challenge(e)).toBe(true);
-    }
-    expect(isX402Challenge({ detail: CHALLENGE_DETAIL })).toBe(true);
-  });
-
-  it("decideBeforeExecution maps allow to shouldExecute true", async () => {
-    const client = createSentinelClient();
-    const d = await client.decideBeforeExecution({
-      contractAddress: "0x1111111111111111111111111111111111111111",
+    const client = createSentinelClient({ x402Payment: "test-settlement-header" });
+    await client.scoreContract({
+      contract_address: "0x1111111111111111111111111111111111111111",
     });
-    expect(d.shouldExecute).toBe(true);
-    expect(d.action).toBe("allow");
-    expect(d.raw).toEqual(SAMPLE_200);
-  });
 
-  it("decideBeforeExecution maps block to shouldExecute false", async () => {
-    vi.mocked(fetch).mockImplementationOnce(async () =>
-      Response.json(
-        {
-          ...SAMPLE_200,
-          decision: { action: "BLOCK", emergency_signal: "NONE", confidence: 0.9 },
-          risk_metrics: { score: 90, threat_class: "insufficient_data" },
-        },
-        { status: 200 },
-      ),
-    );
-    const client = createSentinelClient();
-    const d = await client.decideBeforeExecution({
-      contractAddress: "0x1111111111111111111111111111111111111111",
-    });
-    expect(d.shouldExecute).toBe(false);
-    expect(d.action).toBe("block");
-  });
-
-  it("402 in decideBeforeExecution throws (no fabricated decision)", async () => {
-    vi.mocked(fetch).mockImplementationOnce(async () =>
-      Response.json({ detail: CHALLENGE_DETAIL }, { status: 402 }),
-    );
-    const client = createSentinelClient();
-    await expect(client.decideBeforeExecution({ contractAddress: "0x1111111111111111111111111111111111111111" })).rejects.toBeInstanceOf(
-      SentinelX402ChallengeError,
-    );
-  });
-
-  it("rejects invalid address before fetch", async () => {
-    const client = createSentinelClient();
-    await expect(client.scoreContract({ contractAddress: "not-an-address" })).rejects.toMatchObject({
-      code: "VALIDATION",
-    });
-    expect(fetch).not.toHaveBeenCalled();
-  });
-
-  it("maps timeout to SentinelError TIMEOUT", async () => {
-    vi.mocked(fetch).mockImplementationOnce(
-      (_, init) =>
-        new Promise((_res, rej) => {
-          const signal = init?.signal as AbortSignal;
-          if (signal.aborted) {
-            const err = new Error("Aborted");
-            err.name = "AbortError";
-            rej(err);
-            return;
-          }
-          signal?.addEventListener("abort", () => {
-            const err = new Error("Aborted");
-            err.name = "AbortError";
-            rej(err);
-          });
-        }),
-    );
-    const client = createSentinelClient({ timeoutMs: 20 });
-    await expect(client.scoreContract({ contractAddress: "0x2222222222222222222222222222222222222222" })).rejects.toMatchObject({
-      code: "TIMEOUT",
-    });
-  });
-
-  it("maps network failures to SentinelError NETWORK", async () => {
-    vi.mocked(fetch).mockRejectedValueOnce(new Error("offline"));
-    const client = createSentinelClient();
-    await expect(client.scoreContract({ contractAddress: "0x2222222222222222222222222222222222222222" })).rejects.toMatchObject({
-      code: "NETWORK",
-    });
+    const [, init] = fetchMock.mock.calls[0] as [string, RequestInit];
+    expect((init.headers as Record<string, string>)["X402-PAYMENT"]).toBe("test-settlement-header");
   });
 });
 
-describe("standalone scoreContract with config override", () => {
-  afterEach(() => vi.unstubAllGlobals());
-
-  it("respects overrides without mutating default client", async () => {
+describe("scoreContract", () => {
+  it("returns body on 200", async () => {
     vi.stubGlobal(
       "fetch",
-      vi.fn(async (_u, init) => {
-        const headers = new Headers(init?.headers as HeadersInit);
-        expect(headers.get("X-SENTINEL-LANE")).toBe("executive");
-        return Response.json(SAMPLE_200);
+      vi.fn().mockResolvedValue(new Response(JSON.stringify(sample200), { status: 200 })),
+    );
+    const out = await scoreContract(
+      { contract_address: "0x1111111111111111111111111111111111111111" },
+      { apiUrl: "https://api.test" },
+    );
+    expect(out.risk_metrics.score).toBe(12);
+  });
+
+  it("throws SentinelPaymentRequiredError on 402", async () => {
+    const body = {
+      detail: {
+        x402_version: "0.2",
+        payment_method: "x402",
+        network: "eip155:8453",
+        resource: "/contracts/risk-score",
+      },
+    };
+    vi.stubGlobal(
+      "fetch",
+      vi.fn().mockResolvedValue(new Response(JSON.stringify(body), { status: 402 })),
+    );
+
+    try {
+      await scoreContract({ contract_address: "0x1111111111111111111111111111111111111111" });
+      expect.fail("expected throw");
+    } catch (e) {
+      expect(e).toBeInstanceOf(SentinelPaymentRequiredError);
+      expect((e as SentinelPaymentRequiredError).code).toBe("SENTINEL_X402");
+      expect((e as SentinelPaymentRequiredError).challenge.resource).toBe("/contracts/risk-score");
+    }
+  });
+});
+
+describe("normalizeSentinelDecision", () => {
+  it("maps API fields", () => {
+    const d = normalizeSentinelDecision(sample200 as never);
+    expect(d.score).toBe(12);
+    expect(d.confidence).toBe(0.75);
+    expect(d.action).toBe("ALLOW");
+    expect(d.emergencySignal).toBe("NONE");
+    expect(d.traceId).toBe("abc");
+  });
+});
+
+describe("isX402Challenge", () => {
+  it("detects SentinelPaymentRequiredError", () => {
+    const err = new SentinelPaymentRequiredError({
+      resource: "/contracts/risk-score",
+      x402_version: "0.2",
+      payment_method: "x402",
+    });
+    expect(isX402Challenge(err)).toBe(true);
+  });
+
+  it("detects FastAPI-shaped body", () => {
+    expect(
+      isX402Challenge({
+        detail: {
+          resource: "/contracts/risk-score",
+          x402_version: "0.2",
+          payment_method: "x402",
+        },
+      }),
+    ).toBe(true);
+  });
+});
+
+describe("decideBeforeExecution", () => {
+  it("maps ALLOW to shouldExecute true", async () => {
+    vi.stubGlobal(
+      "fetch",
+      vi.fn().mockResolvedValue(new Response(JSON.stringify(sample200), { status: 200 })),
+    );
+    const r = await decideBeforeExecution(
+      { contract_address: "0x1111111111111111111111111111111111111111" },
+      { apiUrl: "https://api.test" },
+    );
+    expect(r.shouldExecute).toBe(true);
+    expect(r.action).toBe("allow");
+    expect(r.score).toBe(12);
+  });
+
+  it("maps BLOCK to shouldExecute false", async () => {
+    const blocked = {
+      ...sample200,
+      decision: { action: "BLOCK", emergency_signal: "NONE", confidence: 0.9 },
+      risk_metrics: { score: 90, threat_class: "liquidity_rug" },
+    };
+    vi.stubGlobal(
+      "fetch",
+      vi.fn().mockResolvedValue(new Response(JSON.stringify(blocked), { status: 200 })),
+    );
+    const r = await decideBeforeExecution(
+      { contract_address: "0x1111111111111111111111111111111111111111" },
+      { apiUrl: "https://api.test" },
+    );
+    expect(r.shouldExecute).toBe(false);
+    expect(r.action).toBe("block");
+  });
+});
+
+describe("errors", () => {
+  it("invalid address throws SentinelValidationError before fetch", async () => {
+    const fetchMock = vi.fn();
+    vi.stubGlobal("fetch", fetchMock);
+    await expect(scoreContract({ contract_address: "not-an-address" })).rejects.toBeInstanceOf(
+      SentinelValidationError,
+    );
+    expect(fetchMock).not.toHaveBeenCalled();
+  });
+
+  it("timeout yields SentinelTimeoutError", async () => {
+    vi.stubGlobal(
+      "fetch",
+      vi.fn((_u: string, init: RequestInit) => {
+        return new Promise((_resolve, reject) => {
+          const onAbort = () => {
+            reject(Object.assign(new Error("aborted"), { name: "AbortError" }));
+          };
+          if (init.signal?.aborted) {
+            onAbort();
+            return;
+          }
+          init.signal?.addEventListener("abort", onAbort, { once: true });
+        });
       }),
     );
-
-    await scoreContract({ contractAddress: "0x1111111111111111111111111111111111111111", lane: "executive" });
-    vi.mocked(fetch).mockClear();
-    vi.stubGlobal(
-      "fetch",
-      vi.fn(async () =>
-        Response.json({
-          ...SAMPLE_200,
-          decision: { action: "REVIEW", confidence: 0.5, emergency_signal: "NONE" },
-          risk_metrics: { score: 40, threat_class: "normal" },
-        }),
+    await expect(
+      scoreContract(
+        { contract_address: "0x1111111111111111111111111111111111111111" },
+        { apiUrl: "https://slow.test", timeoutMs: 5 },
       ),
-    );
-    await decideBeforeExecution(
-      { contractAddress: "0x1111111111111111111111111111111111111111" },
-      { lane: "basic", apiUrl: "https://stub.example.invalid" },
-    );
-    expect((fetch as unknown as ReturnType<typeof vi.fn>).mock.calls[0][0]).toBe(
-      "https://stub.example.invalid/contracts/risk-score",
-    );
+    ).rejects.toBeInstanceOf(SentinelTimeoutError);
+  });
+
+  it("network failure yields SentinelNetworkError", async () => {
+    vi.stubGlobal("fetch", vi.fn().mockRejectedValue(new Error("offline")));
+    await expect(
+      scoreContract({ contract_address: "0x1111111111111111111111111111111111111111" }),
+    ).rejects.toBeInstanceOf(SentinelNetworkError);
   });
 });

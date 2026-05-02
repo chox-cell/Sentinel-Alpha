@@ -1,40 +1,43 @@
 {
   "name": "@beezshield/sentinel",
   "version": "0.1.0",
-  "private": false,
-  "description": "Minimal TypeScript client for Sentinel Alpha / BeezShield contract risk scoring (x402-aware).",
+  "description": "Minimal TypeScript client for Sentinel Alpha (BeezShield) risk decisions",
   "type": "module",
+  "sideEffects": false,
+  "engines": {
+    "node": ">=18"
+  },
   "main": "./dist/index.js",
+  "module": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
-      "import": "./dist/index.js"
+      "default": "./dist/index.js"
     }
   },
   "files": [
     "dist",
     "README.md"
   ],
-  "engines": {
-    "node": ">=18.18.0"
-  },
   "scripts": {
     "build": "tsc -p tsconfig.build.json",
-    "clean": "rm -rf dist",
-    "test": "vitest run",
-    "prepublishOnly": "npm run build"
+    "typecheck": "tsc -p tsconfig.json",
+    "test": "vitest run"
   },
   "keywords": [
     "beezshield",
     "sentinel",
-    "x402",
-    "risk-score"
+    "risk",
+    "x402"
   ],
   "license": "MIT",
+  "private": true,
+  "publishConfig": {
+    "access": "public"
+  },
   "devDependencies": {
-    "@types/node": "^22.10.2",
-    "typescript": "~5.7.2",
-    "vitest": "^3.0.5"
+    "typescript": "~5.6.3",
+    "vitest": "~2.1.9"
   }
 }

@@ -1,111 +1,109 @@
 # @beezshield/sentinel
 
-Minimal TypeScript client for **Sentinel Alpha** contract risk scoring over HTTPS, with typed **HTTP 402 x402 challenges** when payment is required.
+Minimal TypeScript SDK for Sentinel Alpha (**BeezShield**) — call `/contracts/risk-score`, normalize decisions, and handle **x402** payment challenges when no settlement header is supplied.
 
-## Publish status
+## Status / publishing
 
-**This package is not published to npm yet.** The npm name `@beezshield/sentinel` is the planned package name — **publish pending**.
+- **Planned package name:** `@beezshield/sentinel` — **`npm publish` is not done yet.** This package ships in-repo first (`packages/sentinel-sdk`).
+- The SDK does **not** perform automatic x402 settlement. You supply `x402Payment` when you already have one, or handle the **`402`** challenge yourself.
 
-Install locally from this repo after build:
+Install from the workspace (until published):
 
 ```bash
-cd packages/sentinel-sdk
-npm install
-npm run build
-npm pack   # produces a tarball for local installs
+npm install ./packages/sentinel-sdk
 ```
 
-Planned npm install once published:
+The following is the **canonical name after publish** (not live on npm today):
 
 ```bash
 npm install @beezshield/sentinel
 ```
 
-_(Do not assume the registry tarball exists until release is announced.)_
-
 ## Quick start
 
-```typescript
+```ts
 import {
   createSentinelClient,
-  SentinelX402ChallengeError,
   isX402Challenge,
+  SentinelPaymentRequiredError,
 } from "@beezshield/sentinel";
 
 const client = createSentinelClient({
-  apiUrl: "https://api.beezshield.com",
-  lane: "basic",
+  // apiUrl defaults to https://api.beezshield.com
+  // lane defaults to "basic"
+  // timeoutMs defaults to 10000
 });
 
 try {
-  const raw = await client.scoreContract({
-    contractAddress: "0x1111111111111111111111111111111111111111",
+  const result = await client.scoreContract({
+    contract_address: "0x1111111111111111111111111111111111111111",
     chain: "base",
-    context: { event_type: "new_deploy" },
   });
-  console.log(raw.risk_metrics.score);
+  console.log(result.risk_metrics.score);
 } catch (e) {
-  if (e instanceof SentinelX402ChallengeError) {
-    console.warn("Payment required:", e.challenge.amountUsdc, e.challenge.resource);
+  if (e instanceof SentinelPaymentRequiredError) {
+    console.log("x402 challenge:", e.challenge);
   }
   throw e;
 }
 ```
 
-Top-level helpers (defaults: production `apiUrl`, `lane: basic`, `timeoutMs: 10000`) are also exported:
+## x402 challenges
 
-```typescript
-import { scoreContract } from "@beezshield/sentinel";
+Without a valid `X402-PAYMENT` (or a dev-only `paymentHeader` you control), the API typically returns **HTTP 402**. The SDK throws `SentinelPaymentRequiredError` with a typed `challenge` parsed from the response body.
 
-await scoreContract({ contractAddress: "0x…", chain: "base" }, { lane: "executive" });
-```
+```ts
+import { isX402Challenge, SentinelPaymentRequiredError } from "@beezshield/sentinel";
 
-## Headers
-
-- Always sends `Content-Type: application/json` and **`X-SENTINEL-LANE`** (`basic` unless overridden).
-- Sends **`X402-PAYMENT`** only when `x402Payment` is set on the client (you supply a settled payload from your payment flow — **automatic settlement is not implemented**).
-- Otherwise sends **`PAYMENT-SIGNATURE`** (default `"demo"`; production typically responds with **HTTP 402** until a valid payment path is used).
-
-## Handling x402 (402 Payment Required)
-
-Successful paid traffic returns HTTP **200** with the risk payload. Without valid settlement:
-
-- `scoreContract` / `decideBeforeExecution` **throw** **`SentinelX402ChallengeError`** with a camelCase **`challenge`** (`x402Version`, `payTo`, `amountUsdc`, `resource`, etc.).
-
-Detect errors or opaque bodies with **`isX402Challenge`** when needed.
-
-Normalize success bodies with **`normalizeSentinelDecision`**.
-
-## Deciding before execution
-
-```typescript
-import { createSentinelClient, SentinelX402ChallengeError } from "@beezshield/sentinel";
-
-const client = createSentinelClient();
-
-try {
-  const d = await client.decideBeforeExecution({
-    contractAddress: "0x…",
-    chain: "base",
-  });
-
-  console.log(d.shouldExecute, d.action, d.score, d.confidence, d.emergencySignal);
-  // shouldExecute === true only when normalized action === "allow"
-} catch (e) {
-  if (e instanceof SentinelX402ChallengeError) {
-    // Explicit payment-required path — never fabricates a fake allow/block decision.
-    return;
+function handle(err: unknown) {
+  if (err instanceof SentinelPaymentRequiredError || isX402Challenge(err)) {
+    // Surface pay_to, amount_usdc, etc. from err.challenge when using SentinelPaymentRequiredError
+    return "payment_required";
   }
-  throw e;
 }
 ```
 
-Actions map from the API uppercase strings to lowercase enum-style values (`allow`, `review`, `block`, `reduce`, `exit_now`).
+## Decide before execution
 
-## AgentKit Provider
+Map the API decision to a simple execution gate (**not** legal/financial advice — your policy may differ later):
 
-An **official AgentKit provider for this SDK is not live yet**. Integrate manually with `fetch`/HTTP where needed until a packaged provider ships.
+```ts
+const gate = await client.decideBeforeExecution({
+  contract_address: "0x…",
+  chain: "base",
+});
+if (!gate.shouldExecute) {
+  // block or review flows
+}
+```
+
+- `ALLOW` → `shouldExecute: true`
+- `REVIEW`, `REDUCE` → `shouldExecute: false` / `action: "review"`
+- `BLOCK` or emergency `EXIT_NOW` → `shouldExecute: false` / `action: "block"`
+
+## Configuration
+
+| Field | Default | Notes |
+|-------|---------|--------|
+| `apiUrl` | `https://api.beezshield.com` | Trailing slashes stripped |
+| `lane` | `basic` | Sent as `X-SENTINEL-LANE` |
+| `timeoutMs` | `10000` | Abort via `AbortSignal` |
+| `x402Payment` | — | Set `X402-PAYMENT` when you have a settlement |
+| `paymentHeader` | — | Optional `PAYMENT-SIGNATURE` (e.g. local demo only) |
+
+## AgentKit
+
+**Coinbase AgentKit provider integration is not live in this package** — treat as a future extension; wire this client manually for now.
+
+## Build
+
+```bash
+cd packages/sentinel-sdk
+npm install
+npm run build
+npm test
+```
 
 ## License
 
-MIT (see repository root `LICENSE` where applicable).
+MIT

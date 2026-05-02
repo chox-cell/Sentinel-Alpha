@@ -1,24 +1,24 @@
 export type {
   DecideBeforeExecutionResult,
-  NormalizedSentinelAction,
-  ResolvedSentinelClientConfig,
   ScoreContractInput,
   SentinelClientConfig,
   SentinelDecision,
   SentinelRiskResponse,
   X402Challenge,
 } from "./types.js";
-
-export { SentinelError } from "./errors.js";
-export type { SentinelErrorCode } from "./errors.js";
-export { SentinelX402ChallengeError } from "./errors.js";
-
-export { normalizeSentinelDecision } from "./normalize.js";
-export { isX402Challenge } from "./x402.js";
-
+export type { SentinelClient } from "./client.js";
 export {
   createSentinelClient,
-  decideBeforeExecution,
   scoreContract,
+  decideBeforeExecution,
 } from "./client.js";
-export type { SentinelClient } from "./client.js";
+export {
+  SentinelError,
+  SentinelHttpError,
+  SentinelNetworkError,
+  SentinelPaymentRequiredError,
+  SentinelTimeoutError,
+  SentinelValidationError,
+} from "./errors.js";
+export { normalizeSentinelDecision, isX402Challenge, parseX402ChallengeFromBody } from "./normalize.js";
+export { isValidContractAddress, assertValidContractAddress } from "./validation.js";

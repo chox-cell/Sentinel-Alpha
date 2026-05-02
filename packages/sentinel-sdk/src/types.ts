@@ -1,90 +1,68 @@
-/** Client configuration (no secrets required for unpaid / challenge flows). */
 export type SentinelClientConfig = {
-  /** Base URL without trailing slash. Default: production API host. */
+  /** Base URL of the Sentinel Alpha API */
   apiUrl?: string;
-  /** Pricing lane header. Default: `basic`. */
+  /** Lane header (`X-SENTINEL-LANE`), default basic */
   lane?: string;
-  /** Request timeout in milliseconds. Default: `10000`. */
+  /** Request abort timeout */
   timeoutMs?: number;
-  /**
-   * Value for `PAYMENT-SIGNATURE` when not using a settled `X402-PAYMENT`.
-   * Default: `demo` (typically yields HTTP 402 until a real settlement header is supplied).
-   */
-  paymentSignature?: string;
-  /** Alias for `paymentSignature`. */
+  /** Optional PAYMENT-SIGNATURE header (e.g. demo only in dev) */
   paymentHeader?: string;
-  /** Settled x402 payload; when set, sent as `X402-PAYMENT` only (no automatic settlement). */
-  x402Payment?: string;
-};
-
-export type ResolvedSentinelClientConfig = {
-  apiUrl: string;
-  lane: string;
-  timeoutMs: number;
-  /** Used only when `x402Payment` is unset */
-  paymentSignature: string;
+  /** Optional X402-PAYMENT header when you have a valid settlement */
   x402Payment?: string;
 };
 
 export type ScoreContractInput = {
-  contractAddress: string;
+  contract_address: string;
   chain?: string;
   context?: Record<string, unknown> | null;
-  /** Overrides `config.lane` for this call. */
-  lane?: string;
 };
 
-/** Raw `/contracts/risk-score` success body (snake_case mirrors the API). */
+/** FastAPI 402 detail payload (shape may evolve) */
+export type X402Challenge = {
+  x402_version?: string;
+  payment_method?: string;
+  network?: string;
+  pay_to?: string;
+  amount_usdc?: string | number;
+  asset?: string;
+  resource?: string;
+  instructions?: string;
+  lane?: string;
+  [key: string]: unknown;
+};
+
 export type SentinelRiskResponse = {
   api_version: string;
   decision: {
     action: string;
-    confidence: number;
     emergency_signal: string;
+    confidence: number;
   };
   risk_metrics: {
     score: number;
     threat_class: string;
   };
-  signals: Record<string, number>;
+  signals: Record<string, number | string | boolean | null | undefined>;
   attestation: Record<string, unknown>;
-  latency: {
-    lane: string;
-    latency_ms: number;
-  };
+  latency: Record<string, unknown>;
   meta: Record<string, unknown>;
   billing: Record<string, unknown>;
 };
 
-export type NormalizedSentinelAction = "allow" | "review" | "block" | "reduce" | "exit_now";
-
 export type SentinelDecision = {
-  action: NormalizedSentinelAction;
   score: number;
   confidence: number;
+  action: string;
   emergencySignal: string;
   threatClass: string;
-  raw: SentinelRiskResponse;
+  traceId?: string;
 };
 
 export type DecideBeforeExecutionResult = {
   shouldExecute: boolean;
-  action: NormalizedSentinelAction;
+  action: "allow" | "review" | "block";
   score: number;
   confidence: number;
   emergencySignal: string;
   raw: SentinelRiskResponse;
-};
-
-/** Parsed x402 challenge (camelCase). */
-export type X402Challenge = {
-  x402Version: string;
-  paymentMethod: string;
-  network: string;
-  payTo: string;
-  amountUsdc: string;
-  asset: string;
-  resource: string;
-  instructions: string;
-  lane: string;
 };
