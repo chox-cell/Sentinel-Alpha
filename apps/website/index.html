@@ -3,353 +3,409 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BeezShield | Pre-execution Decision Engine</title>
+    <title>BeezShield | Pre-execution decision engine for agents</title>
+    <meta name="description" content="BeezShield delivers Machine Trust Infrastructure with Sentinel Alpha, a pre-execution decision engine for agents on Base with x402 lane pricing and ERC-8004 identity proof.">
+    <meta name="keywords" content="machine trust, autonomous agents, x402, ERC-8004, Base, risk scoring, pre-execution decision engine, agent security">
+    <link rel="canonical" href="https://beezshield.com">
     
+    <!-- OpenGraph -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://beezshield.com">
+    <meta property="og:title" content="BeezShield | Pre-execution decision engine for agents">
+    <meta property="og:description" content="BeezShield gives bots a pre-execution decision layer before they touch unsafe contracts. Integrate Sentinel Alpha today.">
+    <meta property="og:image" content="https://beezshield.com/og-image.png">
+    
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="BeezShield | Pre-execution decision engine for agents">
+    <meta name="twitter:description" content="Machine Trust Infrastructure for autonomous systems on Base.">
+    <meta name="twitter:image" content="https://beezshield.com/og-image.png">
+
+    <!-- JSON-LD -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "SoftwareApplication",
+      "name": "Sentinel Alpha by BeezShield",
+      "description": "Pre-execution decision engine for agents.",
+      "applicationCategory": "SecurityApplication",
+      "operatingSystem": "Web",
+      "url": "https://api.beezshield.com/contracts/risk-score",
+      "provider": {
+        "@type": "Organization",
+        "name": "BeezShield",
+        "url": "https://beezshield.com"
+      }
+    }
+    </script>
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
     
+    <link rel="stylesheet" href="styles.css">
     <script src="https://unpkg.com/lucide@latest"></script>
-
-    <style>
-        :root { --bg:#000000; --accent:#f59e0b; --accent-glow:rgba(245,158,11,0.4); --glass:rgba(10,10,10,0.95); --border:rgba(245,158,11,0.3); --text:#ffffff; --text-dim:#94a3b8; }
-
-        html, body {
-            background: #000 !important;
-            color: #fff !important;
-            margin: 0; padding: 0;
-            font-family: 'Outfit', sans-serif;
-            overflow-x: hidden;
-            width: 100%;
-        }
-
-        .hive-bg { position: fixed; inset: 0; z-index: 1; background: #000; overflow: hidden; pointer-events: none; }
-        .hive-grid {
-            position: absolute; width: 400%; height: 400%; top: -150%; left: -150%;
-            background-image: url("data:image/svg+xml,%3Csvg width='80' height='138' viewBox='0 0 80 138' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M40 0l40 23.09v46.18L40 92.36 0 69.27V23.09L40 0z' fill='none' stroke='%23f59e0b' stroke-width='1.5' stroke-opacity='0.25'/%3E%3C/svg%3E");
-            background-size: 80px 138px; transform: perspective(1000px) rotateX(60deg); opacity: 0.6;
-        }
-
-        .container { position: relative; z-index: 100; max-width: 1220px; margin: 0 auto; padding: 6rem 2rem; display: grid; grid-template-columns: repeat(12, 1fr); gap: 1.25rem; }
-        .glass { background: var(--glass); backdrop-filter: blur(25px); border: 1px solid var(--border); border-radius: 20px; padding: 2.5rem; box-shadow: 0 20px 60px rgba(0,0,0,1); }
-        
-        .mono { font-family: 'JetBrains Mono', monospace; font-size: 0.7rem; color: var(--accent); letter-spacing: 0.2em; }
-        h1 { font-size: 3.35rem; font-weight: 800; line-height: 0.95; margin-bottom: 1.25rem; color: #fff; }
-        
-        .btn { padding: 1rem 2rem; border-radius: 100px; font-weight: 800; text-transform: uppercase; text-decoration: none; display: inline-flex; align-items: center; gap: 0.75rem; transition: 0.3s; border: none; cursor: pointer; }
-        .btn-primary { background: var(--accent); color: #000; box-shadow: 0 0 30px var(--accent-glow); }
-        .btn-outline { background: rgba(255,255,255,0.05); color: #fff; border: 1px solid var(--border); }
-
-        /* RADAR SYSTEM */
-        .radar-box { width: 160px; height: 160px; border: 1px solid var(--border); border-radius: 50%; position: relative; margin: 0 auto 1.5rem; overflow: hidden; background: rgba(0,0,0,0.5); }
-        .radar-sweep { position: absolute; top: 50%; left: 50%; width: 100%; height: 100%; background: conic-gradient(from 0deg, var(--accent) 0%, transparent 90deg); transform-origin: 0 0; animation: sweep 4s linear infinite; opacity: 0.6; }
-        @keyframes sweep { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
-
-        input { width: 100%; background: rgba(0,0,0,0.5); border: 1px solid var(--border); padding: 1rem; color: #fff; border-radius: 10px; font-family: inherit; outline: none; }
-        input:focus { border-color: var(--accent); }
-
-        select { width: 100%; background: rgba(0,0,0,0.5); border: 1px solid var(--border); padding: 1rem; color: #fff; border-radius: 10px; font-family: inherit; outline: none; }
-        .result-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:0.8rem; }
-        .result-card { background: rgba(245,158,11,0.05); border: 1px solid rgba(245,158,11,0.2); border-radius: 10px; padding: 0.8rem; }
-        .signals-list { margin:0.4rem 0 0; padding-left: 1.2rem; color: #d1d5db; font-size: 0.9rem; }
-        .scanning { animation: pulse 1s ease-in-out infinite; color: var(--accent); }
-        @keyframes pulse { 0%,100% { opacity: 0.35; } 50% { opacity: 1; } }
-        .snippet { background:#000; border:1px solid var(--border); border-radius:10px; padding:0.8rem; font-family:'JetBrains Mono', monospace; white-space:pre-wrap; font-size:0.75rem; color:#d1d5db; }
-        .live-item { font-family:'JetBrains Mono', monospace; font-size:0.72rem; background:#000; border:1px solid rgba(245,158,11,0.2); border-radius:10px; padding:0.55rem; margin-bottom:0.5rem; color:#d1d5db; }
-        .small-btn { padding: 0.7rem 1rem; font-size: 0.75rem; }
-        @media (max-width: 980px) { .container { grid-template-columns: 1fr; } .glass { grid-column: span 1 !important; } .result-grid { grid-template-columns: 1fr; } }
-    </style>
 </head>
 <body>
-    <div class="hive-bg"><div class="hive-grid"></div></div>
+    <div class="bg-abstract" aria-hidden="true">
+        <canvas id="swarmCanvas"></canvas>
+    </div>
 
-    <nav style="position: fixed; top: 1.5rem; left: 50%; transform: translateX(-50%); width: 90%; max-width: 1200px; z-index: 1000; background: rgba(0,0,0,0.7); backdrop-filter: blur(20px); border: 1px solid var(--border); border-radius: 100px; padding: 0.75rem 2rem; display: flex; align-items: center; justify-content: space-between;">
-        <div style="display: flex; align-items: center; gap: 0.75rem; color: var(--accent);">
-            <i data-lucide="shield-alert"></i>
-            <span class="mono" style="font-weight: 800; font-size: 0.9rem;">BEEZ_SHIELD</span>
-        </div>
-        <div style="display: flex; gap: 2rem;" class="mono">
-            <a href="index.html" style="color: #fff; text-decoration: none;">OVERVIEW</a>
-            <a href="demo.html" style="color: var(--text-dim); text-decoration: none;">LIVE_DEMO</a>
+    <nav class="top-nav">
+        <div class="nav-container">
+            <div class="brand">
+                <i data-lucide="shield-check" class="brand-icon"></i>
+                <span class="brand-text">BeezShield</span>
+            </div>
+            <div class="nav-links">
+                <a href="#how-it-works">How It Works</a>
+                <a href="#scan-preview">Live API</a>
+                <a href="#builder">Developers</a>
+                <a href="#discovery">Agent Discovery</a>
+            </div>
         </div>
     </nav>
 
-    <div class="container">
-        <!-- Hero -->
-        <div class="glass" style="grid-column: span 8;">
-            <span class="mono">// SECURITY_OPERATIONS_CENTER</span>
-            <h1>Pre-execution decision engine for agents.</h1>
-            <p style="color: var(--text-dim); font-size: 1.1rem; line-height: 1.6; margin-bottom: 2.5rem; max-width: 550px;">
-                Sentinel Alpha turns uncertain on-chain execution into machine-readable decisions before your bot acts.
-            </p>
-            <div style="display: flex; gap: 1rem;">
-                <a href="#lab" class="btn btn-primary">Start_Investigation</a>
-                <a href="demo.html" class="btn btn-outline">Generate_API_Preview</a>
+    <main>
+        <!-- Hero Section -->
+        <section class="hero">
+            <div class="container hero-content">
+                <div class="hero-text">
+                    <div class="badge">
+                        <span class="pulse-dot"></span>
+                        <span class="mono text-sm">Sentinel Alpha is live on Base</span>
+                    </div>
+                    <h1>Machine Trust Infrastructure for Autonomous Agents</h1>
+                    <p class="subtitle">BeezShield gives bots a pre-execution decision layer before they touch unsafe contracts. <strong class="highlight">Your agent should not execute blind.</strong></p>
+                    
+                    <div class="cta-group">
+                        <a href="#scan-preview" class="btn btn-primary">Run Demo Scan</a>
+                        <a href="#builder" class="btn btn-secondary">Integrate Sentinel Alpha</a>
+                        <a href="https://8004scan.io/agents/base/45967" target="_blank" class="btn btn-outline">
+                            View ERC-8004 Identity <i data-lucide="arrow-up-right" class="icon-sm"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="hero-visual hive-visual" aria-label="Abstract representation of the Sentinel Alpha swarm network">
+                    <div class="swarm-layer swarm-state-stable"></div>
+                    <!-- The canvas will render the swarm here, but we also put a fallback SVG structural representation -->
+                    <svg viewBox="0 0 400 400" class="hive-svg">
+                        <defs>
+                            <linearGradient id="coreGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" stop-color="rgba(245, 158, 11, 0.8)" />
+                                <stop offset="100%" stop-color="rgba(245, 158, 11, 0.2)" />
+                            </linearGradient>
+                            <linearGradient id="nodeGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" stop-color="rgba(255, 255, 255, 0.6)" />
+                                <stop offset="100%" stop-color="rgba(255, 255, 255, 0.1)" />
+                            </linearGradient>
+                        </defs>
+                        
+                        <!-- Trust Links -->
+                        <g class="trust-links">
+                            <line x1="200" y1="200" x2="100" y2="100" stroke="rgba(245, 158, 11, 0.4)" stroke-width="2" stroke-dasharray="4 4">
+                                <animate attributeName="stroke-dashoffset" from="16" to="0" dur="2s" repeatCount="indefinite" />
+                            </line>
+                            <line x1="200" y1="200" x2="300" y2="100" stroke="rgba(245, 158, 11, 0.4)" stroke-width="2" stroke-dasharray="4 4">
+                                <animate attributeName="stroke-dashoffset" from="16" to="0" dur="2s" repeatCount="indefinite" />
+                            </line>
+                            <line x1="200" y1="200" x2="100" y2="300" stroke="rgba(245, 158, 11, 0.4)" stroke-width="2" stroke-dasharray="4 4">
+                                <animate attributeName="stroke-dashoffset" from="16" to="0" dur="2s" repeatCount="indefinite" />
+                            </line>
+                            <line x1="200" y1="200" x2="300" y2="300" stroke="rgba(245, 158, 11, 0.4)" stroke-width="2" stroke-dasharray="4 4">
+                                <animate attributeName="stroke-dashoffset" from="16" to="0" dur="2s" repeatCount="indefinite" />
+                            </line>
+                        </g>
+
+                        <!-- Orbital paths -->
+                        <circle cx="200" cy="200" r="120" fill="none" stroke="rgba(255,255,255,0.05)" stroke-width="1" stroke-dasharray="4 4" />
+                        <circle cx="200" cy="200" r="160" fill="none" stroke="rgba(255,255,255,0.05)" stroke-width="1" stroke-dasharray="4 4" />
+
+                        <!-- Central Alpha Node -->
+                        <polygon points="200,140 252,170 252,230 200,260 148,230 148,170" fill="url(#coreGrad)" stroke="#f59e0b" stroke-width="2" class="core-node" />
+                        <text x="200" y="200" text-anchor="middle" fill="#fff" class="mono" font-size="12">ALPHA</text>
+                        <text x="200" y="215" text-anchor="middle" fill="#f59e0b" class="mono" font-size="10">#45967</text>
+
+                        <!-- Scout -->
+                        <circle cx="100" cy="100" r="12" fill="url(#nodeGrad)" stroke="#fff" stroke-width="1" />
+                        <text x="100" y="125" text-anchor="middle" fill="#9ca3af" class="mono" font-size="9">Scout</text>
+
+                        <!-- Guard -->
+                        <circle cx="300" cy="100" r="16" fill="url(#nodeGrad)" stroke="#fff" stroke-width="1" />
+                        <text x="300" y="129" text-anchor="middle" fill="#9ca3af" class="mono" font-size="9">Guard</text>
+
+                        <!-- Verifier -->
+                        <circle cx="100" cy="300" r="14" fill="url(#nodeGrad)" stroke="#fff" stroke-width="1" />
+                        <text x="100" y="327" text-anchor="middle" fill="#9ca3af" class="mono" font-size="9">Verifier</text>
+
+                        <!-- Worker -->
+                        <circle cx="300" cy="300" r="10" fill="url(#nodeGrad)" stroke="#fff" stroke-width="1" />
+                        <text x="300" y="323" text-anchor="middle" fill="#9ca3af" class="mono" font-size="9">Worker</text>
+                    </svg>
+                </div>
+            </div>
+        </section>
+
+        <!-- Proof Strip -->
+        <section class="proof-strip">
+            <div class="container proof-container mono text-sm">
+                <div class="proof-item"><i data-lucide="activity"></i> Live API</div>
+                <div class="proof-item"><i data-lucide="fingerprint"></i> ERC-8004 #45967</div>
+                <div class="proof-item"><i data-lucide="coins"></i> x402 payments</div>
+                <div class="proof-item"><i data-lucide="layers"></i> Base Mainnet</div>
+                <div class="proof-item"><i data-lucide="github"></i> Public GitHub</div>
+            </div>
+        </section>
+
+        <!-- How It Works -->
+        <section id="how-it-works" class="section">
+            <div class="container">
+                <div class="section-header center">
+                    <h2>The Pre-Execution Loop</h2>
+                    <p class="text-muted">Three deterministic steps to secure agent operations.</p>
+                </div>
+                
+                <div class="steps-grid">
+                    <div class="step-card">
+                        <div class="step-icon"><i data-lucide="cpu"></i></div>
+                        <h3>1. Agent asks</h3>
+                        <p class="text-muted text-sm">Before interacting with a target contract, the bot submits the address to the Sentinel Alpha API.</p>
+                    </div>
+                    <div class="step-connector"></div>
+                    <div class="step-card">
+                        <div class="step-icon active"><i data-lucide="shield"></i></div>
+                        <h3>2. Sentinel scores</h3>
+                        <p class="text-muted text-sm">Our nodes analyze the contract, calculate a risk score, and return a cryptographic attestation.</p>
+                    </div>
+                    <div class="step-connector"></div>
+                    <div class="step-card">
+                        <div class="step-icon"><i data-lucide="check-circle"></i></div>
+                        <h3>3. Bot decides</h3>
+                        <p class="text-muted text-sm">The agent reads the machine-formatted action (PROCEED, REVIEW, BLOCK) and enforces policy.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Interactive Scan Preview -->
+        <section id="scan-preview" class="section bg-panel">
+            <div class="container">
+                <div class="section-header">
+                    <h2>Interactive Scan Preview</h2>
+                    <p class="text-muted">Test the Sentinel Alpha decision engine live.</p>
+                </div>
+
+                <div class="scan-layout">
+                    <!-- Config Panel -->
+                    <div class="card scan-config">
+                        <div class="form-group">
+                            <label class="mono text-xs">TARGET CONTRACT</label>
+                            <input type="text" id="targetAddr" class="mono input-premium" value="0x1111111111111111111111111111111111111111">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="mono text-xs">ROUTING LANE</label>
+                            <select id="scanLane" class="mono input-premium">
+                                <option value="basic">basic (0.02 USDC)</option>
+                                <option value="executive">executive (0.05 USDC)</option>
+                                <option value="premium">premium (0.10 USDC)</option>
+                                <option value="priority">priority (0.15 USDC)</option>
+                            </select>
+                        </div>
+                        
+                        <button id="startScan" class="btn btn-primary btn-block">Initialize Scan</button>
+                        
+                        <div id="scanStatus" class="mono text-sm status-text mt-4">IDLE</div>
+                        
+                        <div id="challengeBox" class="sim-box mono text-xs mt-4" aria-hidden="true" style="display:none;"></div>
+                    </div>
+
+                    <!-- Results Panel -->
+                    <div class="card scan-results">
+                        <div id="scanResultsContent">
+                            <div class="results-grid">
+                                <div class="metric-box">
+                                    <span class="mono text-xs text-muted">RISK SCORE</span>
+                                    <strong id="riskScore" class="metric-val">--</strong>
+                                </div>
+                                <div class="metric-box">
+                                    <span class="mono text-xs text-muted">ACTION</span>
+                                    <strong id="riskAction" class="metric-val">--</strong>
+                                </div>
+                                <div class="metric-box">
+                                    <span class="mono text-xs text-muted">CONFIDENCE</span>
+                                    <strong id="riskConfidence" class="metric-val">--</strong>
+                                </div>
+                                <div class="metric-box">
+                                    <span class="mono text-xs text-muted">THREAT CLASS</span>
+                                    <strong id="riskThreatClass" class="metric-val">--</strong>
+                                </div>
+                            </div>
+                            
+                            <div class="metric-row mt-4">
+                                <div class="metric-box full-width">
+                                    <span class="mono text-xs text-muted">EMERGENCY SIGNAL</span>
+                                    <span id="riskEmergency" class="mono text-sm">--</span>
+                                </div>
+                            </div>
+
+                            <div class="attestation-box mt-4">
+                                <span class="mono text-xs text-muted">ATTESTATION PREVIEW</span>
+                                <div id="riskAttestation" class="mono text-xs code-snippet truncate">--</div>
+                            </div>
+
+                            <div class="result-actions mt-6" style="display: none;" id="resultActions">
+                                <button id="copyCurlBtn" class="btn btn-outline btn-sm">Copy cURL <i data-lucide="copy" class="icon-sm"></i></button>
+                                <button class="btn btn-secondary btn-sm" id="upgradeLaneBtn">Upgrade to Priority</button>
+                                <a href="#builder" class="btn btn-primary btn-sm">Add to your bot</a>
+                            </div>
+                        </div>
+
+                        <!-- Fallback Panel -->
+                        <div id="scanFallback" class="fallback-panel" style="display: none;">
+                            <div class="fallback-icon"><i data-lucide="alert-circle"></i></div>
+                            <h3 class="mono">Decision unavailable</h3>
+                            <p class="text-muted text-sm mt-2 mb-4">The browser session could not complete the Sentinel request. You can still integrate server-side.</p>
+                            <div class="fallback-actions">
+                                <button id="fallbackCopyCurlBtn" class="btn btn-outline btn-sm">Copy cURL <i data-lucide="copy" class="icon-sm"></i></button>
+                                <a href="#builder" class="btn btn-primary btn-sm">Add to your bot</a>
+                                <button id="tryAgainBtn" class="btn btn-secondary btn-sm">Try Again</button>
+                            </div>
+                            <div class="mt-4 text-center">
+                                <a href="https://api.beezshield.com/contracts/risk-score" target="_blank" class="text-muted text-xs underline">Open API Endpoint <i data-lucide="external-link" class="icon-xs inline"></i></a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Hive Status -->
+                    <div class="card hive-status-card">
+                        <h3 class="mono text-sm mb-4"><i data-lucide="radio" class="icon-sm inline"></i> HIVE STATUS</h3>
+                        <div class="status-list mono text-xs">
+                            <div class="status-item">
+                                <span>Alpha Node:</span>
+                                <span class="text-green">Active</span>
+                            </div>
+                            <div class="status-item">
+                                <span>Network:</span>
+                                <span>Base Mainnet</span>
+                            </div>
+                            <div class="status-item">
+                                <span>Identity:</span>
+                                <span>ERC-8004 Registered</span>
+                            </div>
+                            <div class="status-item">
+                                <span>Payments:</span>
+                                <span>x402 Enabled</span>
+                            </div>
+                            <div class="status-item mt-2 pt-2 border-top">
+                                <span>Threat Level:</span>
+                                <span id="hiveThreatLevel" class="text-amber">Monitoring</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Builder Handoff -->
+        <section id="builder" class="section">
+            <div class="container">
+                <div class="section-header">
+                    <h2>Integrate in Minutes</h2>
+                    <p class="text-muted">Drop-in decision power for your autonomous systems.</p>
+                </div>
+
+                <div class="code-showcase">
+                    <div class="code-tabs">
+                        <button class="tab-btn active" data-tab="curl">cURL</button>
+                        <button class="tab-btn" data-tab="ts">TypeScript</button>
+                        <button class="tab-btn" data-tab="py">Python</button>
+                        <div class="tab-spacer"></div>
+                        <span class="mono text-xs text-muted pr-4">AgentKit integration: upcoming integration</span>
+                    </div>
+                    
+                    <div class="code-content active" id="tab-curl">
+<pre class="mono text-sm"><code>curl -X POST "https://api.beezshield.com/contracts/risk-score" \
+  -H "Content-Type: application/json" \
+  -H "X-SENTINEL-LANE: basic" \
+  -H "X402-PAYMENT: tx:YOUR_TX_HASH" \
+  -d '{"contract_address":"0x...","chain":"base"}'</code></pre>
+                    </div>
+                    
+                    <div class="code-content" id="tab-ts" style="display:none;">
+<pre class="mono text-sm"><code>import { SentinelAlpha } from "@beezshield/sdk";
+
+const sentinel = new SentinelAlpha({
+  network: "base",
+  paymentTxHash: "tx:YOUR_TX_HASH"
+});
+
+const decision = await sentinel.score("0x...");
+if (decision.action === "BLOCK") {
+  agent.halt("Unsafe contract detected.");
+}</code></pre>
+                    </div>
+                    
+                    <div class="code-content" id="tab-py" style="display:none;">
+<pre class="mono text-sm"><code>from beezshield import SentinelAlpha
+
+sentinel = SentinelAlpha(network="base", payment_hash="tx:...")
+decision = sentinel.score("0x...")
+
+if decision.action == "BLOCK":
+    raise SecurityException("Contract execution blocked by policy")</code></pre>
+                    </div>
+                </div>
+                
+                <div class="pricing-lanes mt-8">
+                    <h3 class="mono text-sm text-center mb-4 text-muted">X402 BASE USDC PRICING LANES</h3>
+                    <div class="lane-grid mono text-sm">
+                        <div class="lane-item"><span>basic</span> <strong>0.02</strong></div>
+                        <div class="lane-item"><span>executive</span> <strong>0.05</strong></div>
+                        <div class="lane-item"><span>premium</span> <strong>0.10</strong></div>
+                        <div class="lane-item"><span>priority</span> <strong>0.15</strong></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Discovery -->
+        <section id="discovery" class="section bg-panel">
+            <div class="container center">
+                <h2>Agent-readable by design</h2>
+                <p class="text-muted max-w-2xl mx-auto mb-8">
+                    Sentinel Alpha is built for machine consumption. Discover our capabilities, pricing, and identity natively through standard protocols.
+                </p>
+                <div class="discovery-links mono text-sm">
+                    <a href="/.well-known/agent.json" class="d-link"><i data-lucide="file-json"></i> agent.json</a>
+                    <a href="/.well-known/x402.json" class="d-link"><i data-lucide="credit-card"></i> x402.json</a>
+                    <a href="/llms.txt" class="d-link"><i data-lucide="file-text"></i> llms.txt</a>
+                    <a href="/llms-full.txt" class="d-link"><i data-lucide="file-code"></i> llms-full.txt</a>
+                    <a href="https://8004scan.io/agents/base/45967" target="_blank" class="d-link"><i data-lucide="fingerprint"></i> 8004scan profile</a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="site-footer">
+        <div class="container footer-content">
+            <div class="footer-brand">
+                <i data-lucide="shield-check"></i>
+                <span class="brand-text">BeezShield</span>
+                <p class="text-muted text-sm mt-2">Machine Trust Infrastructure</p>
+            </div>
+            <div class="footer-links text-sm">
+                <a href="https://beezshield.com">Website</a>
+                <a href="https://api.beezshield.com/contracts/risk-score">API</a>
+                <a href="https://github.com/chox-cell/Sentinel-Alpha">GitHub</a>
+                <a href="https://8004scan.io/agents/base/45967">ERC-8004 Agent</a>
+                <a href="/risk-feed.html">Risk Feed</a>
+                <a href="#scan-preview">Demo</a>
             </div>
         </div>
+    </footer>
 
-        <!-- Radar -->
-        <div class="glass" style="grid-column: span 4; text-align: center;">
-            <div class="radar-box">
-                <div class="radar-sweep"></div>
-                <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); opacity: 0.3;">
-                    <i data-lucide="crosshair" style="width: 40px; height: 40px; color: var(--accent);"></i>
-                </div>
-            </div>
-            <span class="mono">ACTIVE_SCANNER: ONLINE</span>
-        </div>
-
-        <!-- Interactive Scan Engine -->
-        <div class="glass" id="lab" style="grid-column: span 12;">
-            <div style="display: flex; justify-content: space-between; margin-bottom: 2.5rem;">
-                <div>
-                    <span class="mono">// FORENSIC_LAB_V3.0</span>
-                    <h2 style="font-size: 2.2rem; font-weight: 800; margin-top: 0.5rem;">Execution Investigation</h2>
-                </div>
-                <div class="mono" style="text-align: right; color: var(--text-dim);">
-                    AUTH_LEVEL: L4_SECRET<br>
-                    ID: <span style="color: var(--accent);">#45967</span>
-                </div>
-            </div>
-
-            <div style="display: grid; grid-template-columns: 1fr 1.4fr 1fr; gap: 1.25rem;">
-                <div>
-                    <div style="margin-bottom: 1.5rem;">
-                        <label class="mono" style="font-size: 0.6rem; display: block; margin-bottom: 0.5rem;">TARGET_CONTRACT</label>
-                        <input type="text" id="targetAddr" value="0x1111111111111111111111111111111111111111">
-                    </div>
-                    <div style="margin-bottom: 1.5rem;">
-                        <label class="mono" style="font-size: 0.6rem; display: block; margin-bottom: 0.5rem;">LANE</label>
-                        <select id="scanLane">
-                            <option value="basic">basic</option>
-                            <option value="executive">executive</option>
-                            <option value="premium">premium</option>
-                            <option value="priority">priority</option>
-                        </select>
-                    </div>
-                    <button class="btn btn-primary" style="width: 100%;" id="startScan">
-                        <i data-lucide="search"></i>
-                        <span>Initialize_Scan</span>
-                    </button>
-
-                    <div id="scanStatus" style="margin-top:1rem;" class="mono">IDLE</div>
-                    <div id="challengeBox" style="display:none; margin-top:1rem; background:#000; border:1px solid var(--border); border-radius:10px; padding:0.8rem; color:#d1d5db;"></div>
-                    <div id="upgradeCta" style="display:none; margin-top:1rem; background: rgba(245,158,11,0.08); border:1px solid rgba(245,158,11,0.2); border-radius:10px; padding:0.8rem;">
-                        <strong>Upgrade to Priority Scan (0.15 USDC)</strong>
-                    </div>
-                </div>
-
-                <div>
-                    <div class="result-grid">
-                        <div class="result-card"><div class="mono" style="font-size:0.55rem;">RISK SCORE</div><div id="riskScore" style="font-size:1.2rem; font-weight:800;">--</div></div>
-                        <div class="result-card"><div class="mono" style="font-size:0.55rem;">ACTION</div><div id="riskAction" style="font-size:1.2rem; font-weight:800;">--</div></div>
-                        <div class="result-card"><div class="mono" style="font-size:0.55rem;">CONFIDENCE</div><div id="riskConfidence" style="font-size:1.2rem; font-weight:800;">--</div></div>
-                        <div class="result-card"><div class="mono" style="font-size:0.55rem;">THREAT CLASS</div><div id="riskThreatClass" style="font-size:1.2rem; font-weight:800;">--</div></div>
-                    </div>
-                    <div class="result-card" style="margin-top:0.8rem;">
-                        <div class="mono" style="font-size:0.55rem;">SIGNALS</div>
-                        <ul id="signalsList" class="signals-list"><li>Awaiting scan result...</li></ul>
-                    </div>
-
-                    <div style="margin-top:0.8rem;">
-                        <button id="copyCurlBtn" class="btn btn-outline small-btn" style="display:none;">Copy cURL</button>
-                        <span id="copyCurlStatus" class="mono" style="margin-left:0.5rem; color:var(--text-dim);"></span>
-                    </div>
-
-                    <div class="result-card" style="margin-top:0.8rem;">
-                        <div class="mono" style="font-size:0.55rem;">Decision Contract</div>
-                        <p style="margin:0.4rem 0 0; color:#d1d5db; font-size:0.92rem;">
-                            `score` and `confidence` quantify risk certainty, `action` is the policy outcome, `emergency_signal` flags critical urgency, and `attestation` carries verifiable output proof.
-                        </p>
-                    </div>
-                </div>
-
-                <div>
-                    <div class="result-card">
-                        <div class="mono" style="font-size:0.55rem;">LIVE_ACTIVITY</div>
-                        <div id="liveActivityPanel" style="margin-top:0.6rem;"></div>
-                    </div>
-                    <div class="result-card" style="margin-top:0.8rem;">
-                        <div class="mono" style="font-size:0.55rem;">Add to your bot</div>
-                        <p style="margin:0.4rem 0; color:#d1d5db; font-size:0.9rem;">x402 payment note: include `X402-PAYMENT` with tx proof on every paid request.</p>
-                        <div class="snippet" id="tsSnippet">TypeScript snippet appears after first scan.</div>
-                        <div class="snippet" style="margin-top:0.55rem;" id="pySnippet">Python snippet appears after first scan.</div>
-                        <p style="margin:0.55rem 0 0; color:#d1d5db; font-size:0.85rem;">AgentKit integration: upcoming integration path for faster agent orchestration.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <script>
-        lucide.createIcons();
-
-        const startBtn = document.getElementById('startScan');
-        const targetInput = document.getElementById('targetAddr');
-        const laneSelect = document.getElementById('scanLane');
-        const scanStatus = document.getElementById('scanStatus');
-        const challengeBox = document.getElementById('challengeBox');
-        const riskScore = document.getElementById('riskScore');
-        const riskAction = document.getElementById('riskAction');
-        const riskConfidence = document.getElementById('riskConfidence');
-        const riskThreatClass = document.getElementById('riskThreatClass');
-        const signalsList = document.getElementById('signalsList');
-        const copyCurlBtn = document.getElementById('copyCurlBtn');
-        const copyCurlStatus = document.getElementById('copyCurlStatus');
-        const liveActivityPanel = document.getElementById('liveActivityPanel');
-        const upgradeCta = document.getElementById('upgradeCta');
-        const tsSnippet = document.getElementById('tsSnippet');
-        const pySnippet = document.getElementById('pySnippet');
-
-        const API_BASE = 'https://api.beezshield.com';
-        let lastCurl = '';
-        let liveIdx = 0;
-        const liveEvents = [
-            '0xab..19 | basic | action: REVIEW',
-            '0xc1..ef | premium | action: BLOCK',
-            '0x22..ca | executive | action: REDUCE',
-            '0x8d..02 | priority | action: ALLOW',
-            '0x90..71 | basic | action: REVIEW',
-        ];
-
-        function setStatus(text, scanning = false) {
-            scanStatus.textContent = text;
-            scanStatus.className = scanning ? 'mono scanning' : 'mono';
-        }
-
-        function appendLive() {
-            const el = document.createElement('div');
-            el.className = 'live-item';
-            el.textContent = new Date().toLocaleTimeString() + ' | ' + liveEvents[liveIdx % liveEvents.length];
-            liveActivityPanel.prepend(el);
-            while (liveActivityPanel.children.length > 6) {
-                liveActivityPanel.removeChild(liveActivityPanel.lastChild);
-            }
-            liveIdx += 1;
-        }
-
-        function inferThreatClass(result) {
-            if (typeof result.threat_class === 'string') return result.threat_class;
-            if (result.emergency_signal === true) return 'critical_emergency_signal';
-            if (typeof result.score === 'number') {
-                if (result.score < 25) return 'high_risk';
-                if (result.score < 50) return 'elevated_risk';
-                if (result.score < 75) return 'moderate_risk';
-                return 'lower_risk';
-            }
-            return 'unclassified';
-        }
-
-        function renderSignals(result) {
-            const items = Array.isArray(result.signals) && result.signals.length
-                ? result.signals.map((s) => typeof s === 'string' ? s : JSON.stringify(s))
-                : [
-                    'score:' + (result.score ?? 'n/a'),
-                    'confidence:' + (result.confidence ?? 'n/a'),
-                    'emergency_signal:' + (result.emergency_signal ?? 'n/a')
-                ];
-            signalsList.innerHTML = '';
-            items.forEach((item) => {
-                const li = document.createElement('li');
-                li.textContent = item;
-                signalsList.appendChild(li);
-            });
-        }
-
-        function buildCurl(address, lane) {
-            return `curl -X POST "https://api.beezshield.com/contracts/risk-score" \\
-  -H "Content-Type: application/json" \\
-  -H "X-SENTINEL-LANE: ${lane}" \\
-  -H "X402-PAYMENT: tx:YOUR_TX_HASH" \\
-  -d '{"contract_address":"${address}","chain":"base"}'`;
-        }
-
-        function updateSnippets(address, lane) {
-            tsSnippet.textContent = `import { SentinelAlphaClient } from "./sdk/typescript/client";
-
-const client = new SentinelAlphaClient("https://api.beezshield.com", "tx:YOUR_TX_HASH");
-const result = await client.scan("${address}", "base", "${lane}");
-console.log(result);`;
-
-            pySnippet.textContent = `from sdk.python.client import SentinelAlphaClient
-
-client = SentinelAlphaClient("https://api.beezshield.com", payment_header="tx:YOUR_TX_HASH")
-result = client.scan("${address}", chain="base", lane="${lane}")
-print(result)`;
-        }
-
-        copyCurlBtn.addEventListener('click', async () => {
-            if (!lastCurl) return;
-            try {
-                await navigator.clipboard.writeText(lastCurl);
-                copyCurlStatus.textContent = 'Copied.';
-            } catch (_) {
-                copyCurlStatus.textContent = 'Copy failed.';
-            }
-        });
-
-        async function runScan() {
-            const addr = targetInput.value.trim();
-            const lane = laneSelect.value;
-            if (!addr.startsWith('0x')) {
-                setStatus('INVALID_TARGET_ADDRESS', false);
-                return;
-            }
-            startBtn.disabled = true;
-            setStatus('SCANNING...', true);
-            copyCurlStatus.textContent = '';
-            challengeBox.style.display = 'none';
-            try {
-                const challengeRes = await fetch(`${API_BASE}/internal/x402/challenge?lane=${encodeURIComponent(lane)}`);
-                if (!challengeRes.ok) throw new Error('challenge_failed');
-                const challenge = await challengeRes.json();
-                challengeBox.style.display = 'block';
-                challengeBox.innerHTML = `<strong>Payment instructions (simulated)</strong><br>method: ${challenge.payment_method || 'x402'} | amount_usdc: ${challenge.amount_usdc || 'n/a'} | network: ${challenge.network || 'base'}<br>resource: ${challenge.resource || '/contracts/risk-score'}`;
-
-                await new Promise((r) => setTimeout(r, 700));
-
-                const riskRes = await fetch(`${API_BASE}/contracts/risk-score`, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'X-SENTINEL-LANE': lane,
-                        'X402-PAYMENT': 'tx:' + 'a'.repeat(64),
-                    },
-                    body: JSON.stringify({
-                        contract_address: addr,
-                        chain: 'base',
-                    }),
-                });
-                if (!riskRes.ok) throw new Error('risk_score_failed');
-                const result = await riskRes.json();
-                riskScore.textContent = String(result.score ?? 'n/a');
-                riskAction.textContent = result.action || 'n/a';
-                riskConfidence.textContent = String(result.confidence ?? 'n/a');
-                riskThreatClass.textContent = inferThreatClass(result);
-                renderSignals(result);
-                updateSnippets(addr, lane);
-                lastCurl = buildCurl(addr, lane);
-                copyCurlBtn.style.display = 'inline-flex';
-                upgradeCta.style.display = 'block';
-                setStatus('SCAN_COMPLETE', false);
-            } catch (err) {
-                setStatus('SCAN_FAILED', false);
-            } finally {
-                startBtn.disabled = false;
-            }
-        }
-
-        startBtn.addEventListener('click', runScan);
-        appendLive();
-        setInterval(appendLive, 3000);
-
-        /* keep this for existing static icon refresh */
-        function refreshIcons() {
-            if (window.lucide && typeof window.lucide.createIcons === 'function') {
-                window.lucide.createIcons();
-            }
-        };
-        refreshIcons();
-    </script>
+    <script src="main.js"></script>
 </body>
 </html>
