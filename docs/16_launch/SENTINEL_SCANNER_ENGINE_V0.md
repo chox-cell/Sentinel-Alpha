@@ -10,8 +10,9 @@ Sentinel Alpha now uses a scanner engine boundary (`services/scanner_engine`) as
 
 ## What Is Fallback
 - Viem and WhatsABI integrations are represented by readiness adapters only.
+- **Chain read adapter v0** (`chain_read_adapter.py`): JSON-RPC `eth_getCode` behind `BASE_RPC_URL`, gated by `SENTINEL_CHAIN_READ_ENABLED` (default off). Separate from payment RPC usage.
 - If providers/config are unavailable, risk evaluation does not crash and returns fallback decision flow.
-- `meta.fallback_mode` indicates adapter availability posture.
+- `meta.fallback_mode` and `meta.chain_read` summarize adapter/read posture (`chain_read_status`, `account_type`, `adapter_mode`, `contract_code_available`).
 
 ## What Is Not Live Yet
 - Full live bytecode intelligence through Viem reads.
@@ -19,7 +20,9 @@ Sentinel Alpha now uses a scanner engine boundary (`services/scanner_engine`) as
 - Production-grade chain data enrichment pipeline in the scanner boundary.
 
 ## Path To Viem/WhatsABI Integration
-1. Replace readiness adapters with real chain-read calls behind same interface.
-2. Map real contract read results into new/validated signals.
+1. Keep JSON-RPC/Viem-aligned boundaries in TS workers or reuse this adapter contract from SDKs where appropriate.
+2. Map additional read results into new/validated signals without changing `/contracts/risk-score` top-level keys.
 3. Keep endpoint compatibility while increasing confidence only when real data is available.
 4. Add adapter integration tests per network/provider failure mode.
+
+See `docs/16_launch/SENTINEL_CHAIN_READ_ADAPTER_V0.md` for chain-read specifics.

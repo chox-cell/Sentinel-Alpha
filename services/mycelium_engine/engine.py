@@ -2,6 +2,7 @@ from typing import Dict
 
 WEIGHTS = {
     "invalid_address": 100,
+    "zero_address": 100,
     "unverified_address_shape": 25,
     "new_deploy": 15,
     "first_liquidity": 20,
@@ -34,6 +35,8 @@ def compute_score(signals: Dict[str, int]) -> int:
 def compute_confidence(signals: Dict[str, int]) -> float:
     if signals.get("invalid_address"):
         return 0.95
+    if signals.get("zero_address"):
+        return 0.92
 
     evidence = 0
     evidence += signals.get("new_deploy", 0)
@@ -76,6 +79,8 @@ def decide(score: int, confidence: float, signals: Dict[str, int]) -> str:
 
 def classify_threat(signals: Dict[str, int]) -> str:
     if signals.get("invalid_address"):
+        return "invalid_contract_address"
+    if signals.get("zero_address"):
         return "invalid_contract_address"
     if signals.get("oracle_dislocation"):
         return "oracle_dislocation"

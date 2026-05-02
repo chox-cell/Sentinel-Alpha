@@ -73,7 +73,11 @@ def evaluate_contract_with_meta(contract_address: str, chain: str, context: dict
             "ttl_seconds": 300,
             "trace_id": trace_id,
             "scanner_engine_version": "sentinel-scanner-v0",
-            "fallback_mode": not (analysis["viem_adapter"]["configured"] and analysis["whatsabi_adapter"]["configured"]),
+            "chain_read": analysis["chain_read"],
+            "fallback_mode": (
+                not (analysis["viem_adapter"]["configured"] and analysis["whatsabi_adapter"]["configured"])
+                or analysis["chain_read"]["chain_read_status"] != "ok"
+            ),
         },
         "billing": {
             "amount": "0.02",

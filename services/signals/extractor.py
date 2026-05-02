@@ -37,6 +37,7 @@ def extract_signals(contract_address: str, chain: str, context: dict | None = No
 
     signals = {
         "invalid_address": 0,
+        "zero_address": 0,
         "unverified_address_shape": 0,
         "new_deploy": 0,
         "first_liquidity": 0,
@@ -52,6 +53,8 @@ def extract_signals(contract_address: str, chain: str, context: dict | None = No
 
     # Address-level truth
     if chain in {"base", "ethereum", "arbitrum", "optimism", "polygon", "monad"}:
+        if address == "0x0000000000000000000000000000000000000000":
+            signals["zero_address"] = 1
         if not valid_evm:
             signals["invalid_address"] = 1
             if evm_like:
@@ -106,6 +109,7 @@ def extract_signals(contract_address: str, chain: str, context: dict | None = No
         "bad_cluster",
         "shadow_link",
         "bad_bot_activity",
+        "zero_address",
     ]
 
     if sum(signals[k] for k in evidence_keys) == 0:
