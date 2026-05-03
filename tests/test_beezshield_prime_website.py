@@ -11,6 +11,10 @@ def test_beezshield_prime_website():
     soup = BeautifulSoup(html_content, "html.parser")
     text_content = soup.get_text()
 
+    assert "contractAddress" not in html_content, "Website must use snake_case contract_address for API payloads"
+    builder_copy = soup.select("#builder .copy-btn[data-target]")
+    assert sorted(b.get("data-target") for b in builder_copy) == ["tab-curl", "tab-py", "tab-ts"]
+
     # Required copy
     assert "Machine Trust Infrastructure for Autonomous Agents" in text_content
     assert "Pre-execution decision engine for agents" in text_content
