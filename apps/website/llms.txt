@@ -8,6 +8,11 @@ Primary Links
 - ERC-8004: https://8004scan.io/agents/base/45967
 - GitHub: https://github.com/chox-cell/Sentinel-Alpha
 - Risk Feed (demo): https://beezshield.com/risk-feed.html
+- Public Docs: https://beezshield.com/docs.html
+- Pricing: https://beezshield.com/pricing.html
+- Trust: https://beezshield.com/trust.html
+- About: https://beezshield.com/about.html
+- Changelog: https://beezshield.com/changelog.html
 
 x402 Pricing Lanes (USDC)
 - basic: 0.02

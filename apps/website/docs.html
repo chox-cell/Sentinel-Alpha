@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BeezShield Docs | Start with Sentinel Alpha</title>
+  <meta name="description" content="Start with Sentinel Alpha in 5 minutes using the npm SDK and AgentKit-style example.">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <main class="section">
+    <div class="container">
+      <h1>Start with Sentinel Alpha</h1>
+      <p class="subtitle">A practical path for builders to add a pre-execution risk gate without changing their stack.</p>
+
+      <h2>5-minute integration path</h2>
+      <ol class="text-muted">
+        <li>Install the SDK: <code>npm install @beezshield/sentinel</code></li>
+        <li>Create a client with <code>createSentinelClient()</code>.</li>
+        <li>Call <code>decideBeforeExecution({ contract_address, chain })</code>.</li>
+        <li>Execute only when <code>shouldExecute</code> is true.</li>
+        <li>Handle x402 payment challenges explicitly.</li>
+      </ol>
+
+      <div class="cta-group mt-6">
+        <a class="btn btn-primary" href="sdk.html">SDK Guide</a>
+        <a class="btn btn-secondary" href="agentkit.html">AgentKit-style Example</a>
+        <a class="btn btn-outline" href="x402.html">x402 Flow</a>
+      </div>
+    </div>
+  </main>
+</body>
+</html>

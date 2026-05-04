@@ -9,6 +9,14 @@ Live links:
 - ERC-8004: https://8004scan.io/agents/base/45967
 - GitHub: https://github.com/chox-cell/Sentinel-Alpha
 - Risk Feed (demo): https://beezshield.com/risk-feed.html
+- Docs: https://beezshield.com/docs.html
+- SDK Page: https://beezshield.com/sdk.html
+- AgentKit Page: https://beezshield.com/agentkit.html
+- x402 Page: https://beezshield.com/x402.html
+- Trust Page: https://beezshield.com/trust.html
+- Pricing Page: https://beezshield.com/pricing.html
+- About Page: https://beezshield.com/about.html
+- Changelog: https://beezshield.com/changelog.html
 
 Risk Intelligence
 Sentinel Alpha includes public risk intelligence artifacts and demo feed examples to help builders evaluate signal structure. Demo feed content is illustrative unless a live scanner is enabled.

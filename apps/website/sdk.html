@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BeezShield SDK | @beezshield/sentinel</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <main class="section">
+    <div class="container">
+      <h1>SDK: @beezshield/sentinel</h1>
+      <p class="text-muted">Current npm package version: <strong>0.1.0</strong></p>
+      <p><code>npm install @beezshield/sentinel</code></p>
+
+      <pre class="code-snippet"><code>import { createSentinelClient, SentinelPaymentRequiredError } from "@beezshield/sentinel";
+
+const client = createSentinelClient({ lane: "basic" });
+const decision = await client.decideBeforeExecution({
+  contract_address: "0x1111111111111111111111111111111111111111",
+  chain: "base",
+});
+
+if (decision.shouldExecute) {
+  // execute
+}
+</code></pre>
+
+      <h2>Payment challenge handling</h2>
+      <p class="text-muted">On unpaid requests, the SDK can raise <code>SentinelPaymentRequiredError</code> so your app can run an explicit payment path.</p>
+      <p class="text-muted">The SDK does not auto-settle x402 payments.</p>
+    </div>
+  </main>
+</body>
+</html>
