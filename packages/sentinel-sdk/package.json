@@ -1,7 +1,7 @@
 {
   "name": "@beezshield/sentinel",
   "version": "0.1.0",
-  "description": "Minimal TypeScript client for Sentinel Alpha (BeezShield) risk decisions",
+  "description": "Official BeezShield Sentinel Alpha TypeScript SDK for pre-execution smart-contract risk decisions",
   "type": "module",
   "sideEffects": false,
   "engines": {
@@ -18,7 +18,8 @@
   },
   "files": [
     "dist",
-    "README.md"
+    "README.md",
+    "LICENSE"
   ],
   "scripts": {
     "build": "tsc -p tsconfig.build.json",
@@ -28,8 +29,13 @@
   "keywords": [
     "beezshield",
     "sentinel",
-    "risk",
-    "x402"
+    "x402",
+    "ERC-8004",
+    "Base",
+    "autonomous agents",
+    "agent security",
+    "smart contract risk",
+    "pre-execution"
   ],
   "license": "MIT",
   "private": true,
@@ -39,5 +45,13 @@
   "devDependencies": {
     "typescript": "~5.6.3",
     "vitest": "~2.1.9"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/chox-cell/Sentinel-Alpha.git"
+  },
+  "homepage": "https://beezshield.com",
+  "bugs": {
+    "url": "https://github.com/chox-cell/Sentinel-Alpha/issues"
   }
 }
