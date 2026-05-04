@@ -18,7 +18,7 @@ x402 Pricing Lanes (USDC)
 TypeScript SDK (developer preview)
 - Package name: @beezshield/sentinel — version 0.1.0
 - npm status: published — install: npm install @beezshield/sentinel
-- AgentKit / AgentKit provider integration: upcoming (not live in this SDK)
+- AgentKit: AgentKit-style example available (official provider coming next)
 
 Builder Handoff
 - Website scan -> Copy cURL -> @beezshield/sentinel (npm) -> AgentKit (upcoming)

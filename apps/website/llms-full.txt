@@ -61,7 +61,7 @@ TypeScript SDK (developer preview)
 - Package name: @beezshield/sentinel — version 0.1.0 (published on npm)
 - Install: npm install @beezshield/sentinel
 - Does not perform automatic x402 settlement; supply X402-PAYMENT when you have one
-- Coinbase AgentKit / AgentKit provider: upcoming — not live in this SDK
+- AgentKit: AgentKit-style example available in examples/agentkit-sentinel (official provider coming next)
 
 Integration Notes
 - Network: Base Mainnet (eip155:8453)
