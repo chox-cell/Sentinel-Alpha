@@ -1,0 +1,17 @@
+{
+  "name": "agentkit-sentinel-example",
+  "private": true,
+  "version": "0.1.0",
+  "description": "AgentKit-style Sentinel integration example (non-official provider)",
+  "type": "module",
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "start": "node dist/index.js"
+  },
+  "dependencies": {
+    "@beezshield/sentinel": "^0.1.0"
+  },
+  "devDependencies": {
+    "typescript": "^5.6.3"
+  }
+}
