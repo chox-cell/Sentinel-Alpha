@@ -38,7 +38,7 @@
     "pre-execution"
   ],
   "license": "MIT",
-  "private": true,
+  "private": false,
   "publishConfig": {
     "access": "public"
   },
