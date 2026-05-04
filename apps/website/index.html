@@ -21,6 +21,9 @@
     <meta name="twitter:description" content="Machine Trust Infrastructure for autonomous systems on Base.">
     <meta name="twitter:image" content="https://beezshield.com/og-image.png">
 
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 32 32%22 fill=%22none%22><path d=%22M16 2L28 9V23L16 30L4 23V9L16 2Z%22 stroke=%22%23FFB000%22 stroke-width=%222.5%22/><path d=%22M16 10L21 13V19L16 22L11 19V13L16 10Z%22 fill=%22%23FFB000%22/></svg>">
+
     <!-- JSON-LD -->
     <script type="application/ld+json">
     {
@@ -54,14 +57,21 @@
     <nav class="top-nav">
         <div class="nav-container">
             <div class="brand">
-                <i data-lucide="shield-check" class="brand-icon"></i>
+                <svg width="24" height="24" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" class="brand-icon-svg">
+                    <path d="M16 2L28 9V23L16 30L4 23V9L16 2Z" stroke="#FFB000" stroke-width="2.5" stroke-linejoin="round"/>
+                    <path d="M16 10L21 13V19L16 22L11 19V13L16 10Z" fill="#FFB000">
+                        <animate attributeName="opacity" values="0.7;1;0.7" dur="3s" repeatCount="indefinite" />
+                    </path>
+                </svg>
                 <span class="brand-text">BeezShield</span>
             </div>
             <div class="nav-links">
-                <a href="#how-it-works">How It Works</a>
-                <a href="#scan-preview">Live API</a>
-                <a href="#builder">Developers</a>
-                <a href="#discovery">Agent Discovery</a>
+                <a href="docs.html">Docs</a>
+                <a href="pricing.html">Pricing</a>
+                <a href="trust.html">Trust</a>
+                <a href="about.html">About</a>
+                <a href="https://github.com/chox-cell/Sentinel-Alpha">GitHub</a>
+                <a href="https://www.npmjs.com/package/@beezshield/sentinel">npm SDK</a>
             </div>
         </div>
     </nav>
@@ -93,55 +103,81 @@
                     <svg viewBox="0 0 400 400" class="hive-svg">
                         <defs>
                             <linearGradient id="coreGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-                                <stop offset="0%" stop-color="rgba(245, 158, 11, 0.8)" />
-                                <stop offset="100%" stop-color="rgba(245, 158, 11, 0.2)" />
+                                <stop offset="0%" stop-color="rgba(255, 176, 0, 0.9)" />
+                                <stop offset="100%" stop-color="rgba(255, 176, 0, 0.3)" />
                             </linearGradient>
                             <linearGradient id="nodeGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-                                <stop offset="0%" stop-color="rgba(255, 255, 255, 0.6)" />
-                                <stop offset="100%" stop-color="rgba(255, 255, 255, 0.1)" />
+                                <stop offset="0%" stop-color="rgba(255, 255, 255, 0.4)" />
+                                <stop offset="100%" stop-color="rgba(255, 255, 255, 0.05)" />
                             </linearGradient>
+                            <filter id="glow">
+                                <feGaussianBlur stdDeviation="4" result="coloredBlur"/>
+                                <feMerge>
+                                    <feMergeNode in="coloredBlur"/>
+                                    <feMergeNode in="SourceGraphic"/>
+                                </feMerge>
+                            </filter>
                         </defs>
                         
+                        <!-- Trust Swarm Atmosphere -->
+                        <g opacity="0.3">
+                            <circle cx="200" cy="200" r="180" fill="none" stroke="rgba(255,176,0,0.05)" stroke-width="1" stroke-dasharray="2 10" />
+                            <circle cx="200" cy="200" r="140" fill="none" stroke="rgba(255,176,0,0.05)" stroke-width="1" stroke-dasharray="2 15" />
+                        </g>
+
                         <!-- Trust Links -->
                         <g class="trust-links">
-                            <line x1="200" y1="200" x2="100" y2="100" stroke="rgba(245, 158, 11, 0.4)" stroke-width="2" stroke-dasharray="4 4">
+                            <line x1="200" y1="200" x2="100" y2="100" stroke="rgba(255, 176, 0, 0.3)" stroke-width="1.5" stroke-dasharray="4 4">
                                 <animate attributeName="stroke-dashoffset" from="16" to="0" dur="2s" repeatCount="indefinite" />
                             </line>
-                            <line x1="200" y1="200" x2="300" y2="100" stroke="rgba(245, 158, 11, 0.4)" stroke-width="2" stroke-dasharray="4 4">
+                            <line x1="200" y1="200" x2="300" y2="100" stroke="rgba(255, 176, 0, 0.3)" stroke-width="1.5" stroke-dasharray="4 4">
                                 <animate attributeName="stroke-dashoffset" from="16" to="0" dur="2s" repeatCount="indefinite" />
                             </line>
-                            <line x1="200" y1="200" x2="100" y2="300" stroke="rgba(245, 158, 11, 0.4)" stroke-width="2" stroke-dasharray="4 4">
+                            <line x1="200" y1="200" x2="100" y2="300" stroke="rgba(255, 176, 0, 0.3)" stroke-width="1.5" stroke-dasharray="4 4">
                                 <animate attributeName="stroke-dashoffset" from="16" to="0" dur="2s" repeatCount="indefinite" />
                             </line>
-                            <line x1="200" y1="200" x2="300" y2="300" stroke="rgba(245, 158, 11, 0.4)" stroke-width="2" stroke-dasharray="4 4">
+                            <line x1="200" y1="200" x2="300" y2="300" stroke="rgba(255, 176, 0, 0.3)" stroke-width="1.5" stroke-dasharray="4 4">
                                 <animate attributeName="stroke-dashoffset" from="16" to="0" dur="2s" repeatCount="indefinite" />
                             </line>
                         </g>
 
                         <!-- Orbital paths -->
-                        <circle cx="200" cy="200" r="120" fill="none" stroke="rgba(255,255,255,0.05)" stroke-width="1" stroke-dasharray="4 4" />
-                        <circle cx="200" cy="200" r="160" fill="none" stroke="rgba(255,255,255,0.05)" stroke-width="1" stroke-dasharray="4 4" />
+                        <circle cx="200" cy="200" r="120" fill="none" stroke="rgba(255,255,255,0.03)" stroke-width="1" />
+                        <circle cx="200" cy="200" r="160" fill="none" stroke="rgba(255,255,255,0.03)" stroke-width="1" />
 
-                        <!-- Central Alpha Node -->
-                        <polygon points="200,140 252,170 252,230 200,260 148,230 148,170" fill="url(#coreGrad)" stroke="#f59e0b" stroke-width="2" class="core-node" />
-                        <text x="200" y="200" text-anchor="middle" fill="#fff" class="mono" font-size="12">ALPHA</text>
-                        <text x="200" y="215" text-anchor="middle" fill="#f59e0b" class="mono" font-size="10">#45967</text>
+                        <!-- Central Sentinel Alpha Node (The Brain) -->
+                        <g filter="url(#glow)">
+                            <polygon points="200,140 252,170 252,230 200,260 148,230 148,170" fill="url(#coreGrad)" stroke="#FFB000" stroke-width="2" class="core-node" />
+                            <path d="M200 160L235 180V220L200 240L165 220V180L200 160Z" fill="rgba(255,255,255,0.1)" />
+                        </g>
+                        <text x="200" y="200" text-anchor="middle" fill="#fff" class="mono" font-size="12" font-weight="700" letter-spacing="1">ALPHA</text>
+                        <text x="200" y="215" text-anchor="middle" fill="#FFB000" class="mono" font-size="10" opacity="0.8">#45967</text>
 
-                        <!-- Scout -->
-                        <circle cx="100" cy="100" r="12" fill="url(#nodeGrad)" stroke="#fff" stroke-width="1" />
-                        <text x="100" y="125" text-anchor="middle" fill="#9ca3af" class="mono" font-size="9">Scout</text>
+                        <!-- Agent Nodes (Refined Geometric Persona Marks) -->
+                        
+                        <!-- Scout (Diamond/Discovery) -->
+                        <g>
+                            <path d="M100 85L115 100L100 115L85 100L100 85Z" fill="url(#nodeGrad)" stroke="rgba(255,255,255,0.3)" stroke-width="1" />
+                            <text x="100" y="130" text-anchor="middle" fill="var(--text-muted)" class="mono" font-size="9">Scout</text>
+                        </g>
 
-                        <!-- Guard -->
-                        <circle cx="300" cy="100" r="16" fill="url(#nodeGrad)" stroke="#fff" stroke-width="1" />
-                        <text x="300" y="129" text-anchor="middle" fill="#9ca3af" class="mono" font-size="9">Guard</text>
+                        <!-- Guard (Square/Security) -->
+                        <g>
+                            <rect x="288" y="88" width="24" height="24" rx="4" fill="url(#nodeGrad)" stroke="rgba(255,255,255,0.3)" stroke-width="1" />
+                            <text x="300" y="130" text-anchor="middle" fill="var(--text-muted)" class="mono" font-size="9">Guard</text>
+                        </g>
 
-                        <!-- Verifier -->
-                        <circle cx="100" cy="300" r="14" fill="url(#nodeGrad)" stroke="#fff" stroke-width="1" />
-                        <text x="100" y="327" text-anchor="middle" fill="#9ca3af" class="mono" font-size="9">Verifier</text>
+                        <!-- Verifier (Hex/Trust) -->
+                        <g>
+                            <path d="M100 288L112 295V305L100 312L88 305V295L100 288Z" fill="url(#nodeGrad)" stroke="rgba(255,255,255,0.3)" stroke-width="1" />
+                            <text x="100" y="330" text-anchor="middle" fill="var(--text-muted)" class="mono" font-size="9">Verifier</text>
+                        </g>
 
-                        <!-- Worker -->
-                        <circle cx="300" cy="300" r="10" fill="url(#nodeGrad)" stroke="#fff" stroke-width="1" />
-                        <text x="300" y="323" text-anchor="middle" fill="#9ca3af" class="mono" font-size="9">Worker</text>
+                        <!-- Worker (Circle/Execution) -->
+                        <g>
+                            <circle cx="300" cy="300" r="10" fill="url(#nodeGrad)" stroke="rgba(255,255,255,0.3)" stroke-width="1" />
+                            <text x="300" y="330" text-anchor="middle" fill="var(--text-muted)" class="mono" font-size="9">Worker</text>
+                        </g>
                     </svg>
                 </div>
             </div>
@@ -447,17 +483,22 @@ if result.get("action") == "BLOCK":
     <footer class="site-footer">
         <div class="container footer-content">
             <div class="footer-brand">
-                <i data-lucide="shield-check"></i>
+                <svg width="24" height="24" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" class="brand-icon-svg">
+                    <path d="M16 2L28 9V23L16 30L4 23V9L16 2Z" stroke="#FFB000" stroke-width="2.5" stroke-linejoin="round"/>
+                    <path d="M16 10L21 13V19L16 22L11 19V13L16 10Z" fill="#FFB000">
+                        <animate attributeName="opacity" values="0.7;1;0.7" dur="3s" repeatCount="indefinite" />
+                    </path>
+                </svg>
                 <span class="brand-text">BeezShield</span>
                 <p class="text-muted text-sm mt-2">Machine Trust Infrastructure</p>
             </div>
             <div class="footer-links text-sm">
-                <a href="https://beezshield.com">Website</a>
-                <a href="https://api.beezshield.com/contracts/risk-score">API</a>
+                <a href="docs.html">Docs</a>
+                <a href="pricing.html">Pricing</a>
+                <a href="trust.html">Trust</a>
+                <a href="about.html">About</a>
                 <a href="https://github.com/chox-cell/Sentinel-Alpha">GitHub</a>
-                <a href="https://8004scan.io/agents/base/45967">ERC-8004 Agent</a>
-                <a href="risk-feed.html">Risk Feed</a>
-                <a href="#scan-preview">Demo</a>
+                <a href="https://www.npmjs.com/package/@beezshield/sentinel">npm SDK</a>
             </div>
         </div>
     </footer>

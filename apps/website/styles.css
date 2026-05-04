@@ -5,9 +5,9 @@
     --border-light: rgba(255, 255, 255, 0.1);
     --border-accent: rgba(245, 158, 11, 0.3);
     
-    --accent: #f59e0b; /* Amber/Gold for BeezShield */
-    --accent-hover: #d97706;
-    --accent-glow: rgba(245, 158, 11, 0.15);
+    --accent: #FFB000; /* Custom BeezShield Amber */
+    --accent-hover: #E69F00;
+    --accent-glow: rgba(255, 176, 0, 0.15);
     
     --text-main: #f9fafb;
     --text-muted: #9ca3af;
@@ -58,6 +58,29 @@ main {
 
 .center { text-align: center; }
 .mt-2 { margin-top: 0.5rem; }
+
+/* Brand Identity v4.1 */
+.brand-icon-svg {
+    filter: drop-shadow(0 0 8px var(--accent-glow));
+}
+.brand-text {
+    font-weight: 700;
+    letter-spacing: -0.02em;
+}
+
+.core-node {
+    filter: drop-shadow(0 0 15px var(--accent-glow));
+    transition: all 0.5s ease;
+}
+.core-node:hover {
+    filter: drop-shadow(0 0 25px var(--accent-glow));
+}
+
+.hive-svg text {
+    user-select: none;
+    pointer-events: none;
+}
+
 .mt-4 { margin-top: 1rem; }
 .mt-6 { margin-top: 1.5rem; }
 .mt-8 { margin-top: 2rem; }
