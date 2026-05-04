@@ -1,8 +1,12 @@
-# First 20 builder targets (v4.3)
+# First 20 builder targets (v4.4)
 
 Define **categories**, score prospects with a transparent rubric, then assign the top fits into **T01–T20** on `OUTREACH_TRACKER.md`.
 
-Do **not** list real repos or people here until independently verified—use external research and fill the tracker row-by-row.
+## Source verification required
+
+Every row moved off **— unassigned —** must pass **`TARGET_RESEARCH_METHOD.md`** verification (canonical URL, evidence, recency, source link in Notes). **Source verification required** before any real name or URL appears in the tracker.
+
+Do **not** list real repos or people in this file as a substitute for the tracker—research feeds **OUTREACH_TRACKER.md** row-by-row. Until research is done, **T01–T20** stay placeholders with status **not contacted** (do not fake **contacted** or **integrated**).
 
 ## Target categories
 
