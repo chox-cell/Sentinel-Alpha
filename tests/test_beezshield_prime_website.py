@@ -32,9 +32,12 @@ def test_beezshield_prime_website():
     assert "createSentinelClient()" in text_content
     assert "scoreContract()" in text_content
     assert "decideBeforeExecution()" in text_content
-    assert "Sentinel Alpha SDK v3.7" in text_content
+    assert "Sentinel Alpha SDK" in text_content
+    assert "available on npm" in text_content
+    assert "0.1.0" in text_content
+    assert "npm install @beezshield/sentinel" in text_content
+    assert "npm publish pending" not in text_content
     assert "Developer Preview" in text_content
-    assert "source available" in text_content.lower()
 
     # Prohibited claims
     assert "MCP live" not in text_content.lower()
