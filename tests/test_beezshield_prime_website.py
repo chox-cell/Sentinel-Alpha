@@ -38,6 +38,7 @@ def test_beezshield_prime_website():
     assert "npm install @beezshield/sentinel" in text_content
     assert "npm publish pending" not in text_content
     assert "Developer Preview" in text_content
+    assert "@beezshield/sentinel@0.1.0" not in html_content, "Cloudflare Email Obfuscation risk: do not use package@version format"
 
     # Prohibited claims
     assert "MCP live" not in text_content.lower()
