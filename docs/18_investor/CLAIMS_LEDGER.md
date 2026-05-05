@@ -4,6 +4,13 @@ Use this ledger to separate live facts from roadmap or source-dependent statemen
 
 | Claim | Status | Evidence/source | Public-safe wording |
 |---|---|---|---|
+| AI agents market grows from $7.84B (2025) to $52.62B (2030) | source-backed | Approved market report reference required in investor packet | "Agentic AI market estimates show strong growth; quote the exact source when presenting figures." |
+| 18% highly confident managing agent identities/security | needs source | Keep exact percentage gated on citation availability | "Confidence in managing agent identities/security appears limited; exact percentage requires verified source." |
+| Time-to-Trust 2026-2027 | thesis | Internal strategy framing, not empirical fact | "Time-to-Trust 2026-2027 is an internal thesis window, not a proven market fact." |
+| outcome-based 10-20% saved value fee model | risky/not-now | No replay-proof baseline and attribution standard yet | "Treat outcome-based saved-value pricing as exploratory and not current model." |
+| honeypot simulation live | forbidden | Conflicts with current runtime/provider truth | "Do not claim live honeypot simulation." |
+| simulation adapter boundary is live | live | v5.5 boundary implementation in scanner engine | "Simulation adapter boundary exists and defaults to not configured without live provider." |
+| official AgentKit provider | roadmap | Product roadmap item; not shipped | "Official AgentKit provider is roadmap, while AgentKit-style example is available now." |
 | Agentic AI market size is large and growing | needs source | Third-party reports required; source before external use | "Agentic AI markets are growing quickly; exact size depends on source methodology." |
 | 92% security concern in AI/agent adoption | needs source | No approved citation in repo yet | "Security concern is repeatedly reported as high; percentage claims require a verified source." |
 | x402 adoption is increasing | needs source | Ecosystem observation; requires source set for public use | "x402/payment-required API patterns are emerging; adoption is early-stage." |
