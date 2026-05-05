@@ -93,6 +93,7 @@ Status: **Done**
 - v7.1 Outreach Target Verification Pack (research-only, source-required structure)
 - v7.2 Verified Target Research Batch (public-source candidate rows; not contacted)
 - v7.3 Target-Specific Outreach Message Pack (drafts only; not contacted)
+- v7.4 Manual Outreach Execution Checklist (manual-send protocol only; no outreach sent)
 
 ## 5) Cost discipline
 
