@@ -91,6 +91,7 @@ Status: **Done**
 - v6.7 Provider Decision Gate (docs/test policy guardrail only; no provider activation)
 - v7.0 Outreach Batch 1 With Evidence
 - v7.1 Outreach Target Verification Pack (research-only, source-required structure)
+- v7.2 Verified Target Research Batch (public-source candidate rows; not contacted)
 
 ## 5) Cost discipline
 
