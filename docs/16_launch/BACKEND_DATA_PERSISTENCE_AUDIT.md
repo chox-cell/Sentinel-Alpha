@@ -174,6 +174,10 @@ No secrets are listed here; names only.
 - Add an explicit queue boundary for simulation/adapters (Redis queue or equivalent worker queue).
 - Add contract/asset signal cache with TTL + provenance fields for chain/source/ABI reads.
 
+### v6.3 local risk history planning alignment
+- v6.3 is currently docs/schema planning only, with no runtime DB dependency now.
+- See `docs/16_launch/SENTINEL_LOCAL_RISK_HISTORY_DB_PLAN.md` for proposed local Postgres-first table design and phased migration.
+
 ### Postpone until traffic warrants
 - Full analytics warehouse and complex BI.
 - Deep per-user account management in backend API (if still single endpoint product mode).

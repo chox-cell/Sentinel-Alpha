@@ -46,6 +46,7 @@
 - v5.6 explanation engine should not require extra paid infrastructure.
 - v5.7 chain support expansion may require explicit RPC budget planning.
 - v6 data-provider ladder should progress local/free-first before any paid provider activation.
+- v6.3 local risk history DB should start as local Postgres planning/optional rollout, with no managed DB default.
 
 ## 5) Forbidden actions
 

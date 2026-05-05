@@ -43,6 +43,7 @@ Status: **Done**
 - v5.10 risk engine release summary
 - v6.0 data provider strategy
 - v6.1 Local Bytecode Signal Analyzer
+- v6.2 ABI / Source Provider Adapter
 
 ## 3) Current risk engine stack
 
@@ -76,6 +77,7 @@ Status: **Done**
 - v6.1.1 Base Contract Fixture Dataset
 - v6.2 ABI / Source Provider Adapter
 - v6.3 Local Postgres Risk History Schema
+- v6.3 Local Risk History DB Plan (docs-only)
 - v6.4 Source/ABI Cache Layer
 - v6.5 Simulation Provider Adapter
 - v6.6 Evaluation Harness
