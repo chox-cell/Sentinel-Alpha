@@ -78,9 +78,10 @@ This stage is docs/schema planning only and does not enable runtime DB dependenc
 ## 6) Migration strategy
 
 - v6.3 docs/schema only.
-- v6.3.1 SQL migration file later.
+- v6.3.1 SQL schema file exists at `db/schema/local_risk_history_v1.sql`.
 - v6.3.2 write-through optional.
 - v6.3.3 dashboard/API analytics later.
+- migration execution is manual/future only.
 
 ## 7) Upgrade triggers
 
@@ -103,3 +104,4 @@ This stage is docs/schema planning only and does not enable runtime DB dependenc
 
 - `DATABASE_URL` is not required yet.
 - Supabase is postponed and not default in current runtime posture.
+- runtime DB writes are still disabled in current implementation.
