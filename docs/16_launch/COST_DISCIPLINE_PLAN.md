@@ -45,6 +45,7 @@
 - v5.5 simulation adapter should be interface-first; no paid provider until demand.
 - v5.6 explanation engine should not require extra paid infrastructure.
 - v5.7 chain support expansion may require explicit RPC budget planning.
+- v6 data-provider ladder should progress local/free-first before any paid provider activation.
 
 ## 5) Forbidden actions
 

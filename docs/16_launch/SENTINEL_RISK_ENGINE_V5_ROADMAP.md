@@ -29,6 +29,7 @@ Sentinel evolves from a generic contract risk-score endpoint into an asset + con
 - v5.5 simulation adapter stays interface-first; no paid provider until demand.
 - v5.6 explanation engine should not add paid infra.
 - v5.7 chain support expansion may require explicit RPC budget approval.
+- v6 provider rollout follows `SENTINEL_DATA_PROVIDER_STRATEGY.md` (local/free-first ladder).
 
 ## 3) Identity layer (ERC-8004)
 
