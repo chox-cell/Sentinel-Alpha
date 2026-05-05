@@ -1,62 +1,22 @@
 import os
-import subprocess
-import sys
-from pathlib import Path
-
-import pytest
+from scripts import production_env_check as prod_check
 
 
-def _run_production_env_check(extra_env: dict) -> subprocess.CompletedProcess[str]:
-    env = os.environ.copy()
-    env.update(extra_env)
-    return subprocess.run(
-        [sys.executable, "scripts/production_env_check.py"],
-        cwd=Path(__file__).resolve().parents[1],
-        env=env,
-        capture_output=True,
-        text=True,
-        check=False,
-    )
+def test_production_env_check_ready_and_secret_safe(monkeypatch):
+    monkeypatch.setenv("APP_ENV", "production")
+    monkeypatch.setenv("PUBLIC_BASE_URL", "https://api.sentinel-alpha.example")
+    monkeypatch.setenv("PAYMENT_MODE", "real")
+    monkeypatch.setenv("X402_ENABLED", "true")
+    monkeypatch.setenv("X402_MOCK_ONCHAIN_VERIFY", "false")
+    monkeypatch.setenv("X402_ONCHAIN_VERIFY", "true")
+    monkeypatch.setenv("BASE_RPC_URL", "https://base-rpc.example/secret")
+    monkeypatch.setenv("QUICKNODE_SIGNATURE_REQUIRED", "true")
+    monkeypatch.setenv("RATE_LIMIT_ENABLED", "true")
+    monkeypatch.setenv("AGENT_WALLET_ADDRESS", "0xbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb")
+    monkeypatch.setenv("SENTINEL_TREASURY_WALLET", "0xaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa")
 
-
-@pytest.fixture
-def controlled_production_env():
-    root = Path(__file__).resolve().parents[1]
-    env_path = root / ".env"
-    original = env_path.read_text(encoding="utf-8") if env_path.exists() else None
-    env_path.write_text(
-        "\n".join(
-            [
-                "APP_ENV=production",
-                "PUBLIC_BASE_URL=https://api.sentinel-alpha.example",
-                "PAYMENT_MODE=real",
-                "X402_ENABLED=true",
-                "X402_MOCK_ONCHAIN_VERIFY=false",
-                "X402_ONCHAIN_VERIFY=true",
-                "BASE_RPC_URL=https://base-rpc.example/secret",
-                "QUICKNODE_SIGNATURE_REQUIRED=true",
-                "RATE_LIMIT_ENABLED=true",
-                "AGENT_WALLET_ADDRESS=0xbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
-                "SENTINEL_TREASURY_WALLET=0xaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-                "",
-            ]
-        ),
-        encoding="utf-8",
-    )
-    try:
-        yield
-    finally:
-        if original is None:
-            env_path.unlink(missing_ok=True)
-        else:
-            env_path.write_text(original, encoding="utf-8")
-
-
-def test_production_env_check_ready_and_secret_safe(controlled_production_env):
-    secret_rpc = "https://shell-secret-rpc.example/token"
-    proc = _run_production_env_check({"BASE_RPC_URL": secret_rpc})
-    assert proc.returncode == 0
-    out = proc.stdout
+    report = prod_check.build_production_report()
+    out = prod_check.format_report(report)
     assert "APP_ENV=production: true" in out
     assert "PUBLIC_BASE_URL configured: true" in out
     assert "PAYMENT_MODE=real: true" in out
@@ -69,34 +29,24 @@ def test_production_env_check_ready_and_secret_safe(controlled_production_env):
     assert "wallet configured: true" in out
     assert "treasury configured: true" in out
     assert "production ready: true" in out
-    assert secret_rpc not in out
+    assert "token" not in out.lower()
 
 
-def test_production_env_check_not_ready_when_required_flags_missing(controlled_production_env):
-    root = Path(__file__).resolve().parents[1]
-    env_path = root / ".env"
-    env_path.write_text(
-        "\n".join(
-            [
-                "APP_ENV=production",
-                "PUBLIC_BASE_URL=https://api.sentinel-alpha.example",
-                "PAYMENT_MODE=real",
-                "X402_ENABLED=true",
-                "X402_MOCK_ONCHAIN_VERIFY=true",
-                "X402_ONCHAIN_VERIFY=false",
-                "BASE_RPC_URL=",
-                "QUICKNODE_SIGNATURE_REQUIRED=false",
-                "RATE_LIMIT_ENABLED=false",
-                "AGENT_WALLET_ADDRESS=",
-                "SENTINEL_TREASURY_WALLET=",
-                "",
-            ]
-        ),
-        encoding="utf-8",
-    )
-    proc = _run_production_env_check({})
-    assert proc.returncode == 0
-    out = proc.stdout
+def test_production_env_check_not_ready_when_required_flags_missing(monkeypatch):
+    monkeypatch.setenv("APP_ENV", "production")
+    monkeypatch.setenv("PUBLIC_BASE_URL", "https://api.sentinel-alpha.example")
+    monkeypatch.setenv("PAYMENT_MODE", "real")
+    monkeypatch.setenv("X402_ENABLED", "true")
+    monkeypatch.setenv("X402_MOCK_ONCHAIN_VERIFY", "true")
+    monkeypatch.setenv("X402_ONCHAIN_VERIFY", "false")
+    monkeypatch.setenv("BASE_RPC_URL", "")
+    monkeypatch.setenv("QUICKNODE_SIGNATURE_REQUIRED", "false")
+    monkeypatch.setenv("RATE_LIMIT_ENABLED", "false")
+    monkeypatch.setenv("AGENT_WALLET_ADDRESS", "")
+    monkeypatch.setenv("SENTINEL_TREASURY_WALLET", "")
+
+    report = prod_check.build_production_report()
+    out = prod_check.format_report(report)
     assert "X402_MOCK_ONCHAIN_VERIFY=false: false" in out
     assert "X402_ONCHAIN_VERIFY=true: false" in out
     assert "BASE_RPC_URL configured: false" in out

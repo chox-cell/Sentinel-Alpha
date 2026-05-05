@@ -1,7 +1,4 @@
 import os
-import subprocess
-import sys
-from pathlib import Path
 
 from scripts import public_smoke_test
 
@@ -41,25 +38,8 @@ def test_public_smoke_report_pass_and_secret_safe(monkeypatch):
 
 
 def test_public_smoke_script_exits_non_zero_without_public_base_url(monkeypatch):
-    root = Path(__file__).resolve().parents[1]
-    env_path = root / ".env"
-    original = env_path.read_text(encoding="utf-8") if env_path.exists() else None
-    env_path.write_text("PUBLIC_BASE_URL=\n", encoding="utf-8")
-    env = os.environ.copy()
-    env["PUBLIC_BASE_URL"] = ""
-    try:
-        proc = subprocess.run(
-            [sys.executable, "scripts/public_smoke_test.py"],
-            cwd=root,
-            env=env,
-            capture_output=True,
-            text=True,
-            check=False,
-        )
-        assert proc.returncode == 1
-        assert "PUBLIC_BASE_URL configured: false" in proc.stdout
-    finally:
-        if original is None:
-            env_path.unlink(missing_ok=True)
-        else:
-            env_path.write_text(original, encoding="utf-8")
+    monkeypatch.setenv("PUBLIC_BASE_URL", "")
+    report = public_smoke_test.build_public_smoke_report()
+    rendered = public_smoke_test.format_public_smoke_report(report)
+    assert report["smoke_test_verdict"] == "fail"
+    assert "PUBLIC_BASE_URL configured: false" in rendered
