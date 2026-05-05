@@ -16,5 +16,13 @@ Use this ledger to separate live facts from roadmap or source-dependent statemen
 | unknown identity creates 80% higher risk | needs source | No approved citation in repo yet | "Unknown identity may increase uncertainty; percentage uplift claims require verified source." |
 | simulation is a strength signal, not a guarantee | roadmap | v5 roadmap posture and claims discipline | "Simulation is an additional strength signal, not a guarantee of safe outcomes." |
 | mempool sentiment is roadmap | roadmap | v5.9 Mempool / MEV Signal Layer planning | "Mempool sentiment is roadmap; not a live production signal today." |
+| Google UCP announced/open standard | source-backed | External public announcement/doc set; retain citation in investor materials | "Google UCP is an open standard initiative for agentic commerce interoperability." |
+| AP2 signed mandates / verifiable authorization | source-backed | External AP2 documentation and architecture references | "AP2 uses signed mandates / verifiable authorization style controls." |
+| Peppol + Belgium B2B e-invoicing mandate (2026) | source-backed | Belgium 2026 mandate references + Peppol scope documentation | "Belgium B2B e-invoicing mandate started Jan 1, 2026; Peppol is document exchange-focused." |
+| Salesforce 119% agent creation growth in H1 2025 | source-backed | Salesforce published metric; keep attribution in investor docs | "Salesforce reported 119% agent creation growth in H1 2025 among early adopters." |
+| UCP universal adoption across B2B | unsupported | Overgeneralized and not validated for universal coverage | "UCP adoption is emerging and uneven; avoid universal claims." |
+| Peppol as default RFQ marketplace | unsupported | Conflicts with Peppol primary document-exchange positioning | "Peppol is primarily structured document exchange, not an open RFQ marketplace." |
+| Citi/JPM automatic agent financing | unsupported | No verified source supporting automatic financing claim | "Do not claim automatic bank funding of arbitrary agents." |
+| Global B2B arbitrage node as Sentinel core direction now | roadmap | Separate future product exploration, not current Sentinel execution roadmap | "Treat B2B deal scout/arbitrage as separate future concept, not current Sentinel core." |
 | Sentinel offers certainty of protection outcomes | forbidden | Conflicts with current product truth posture | "Sentinel provides risk signals to support decisions; outcomes are not guaranteed." |
 | SDK provides automatic settlement for x402 payments | forbidden | Conflicts with SDK behavior and trust docs | "Builders handle payment flow explicitly; SDK surfaces challenge/error handling." |
