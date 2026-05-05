@@ -112,6 +112,23 @@ def evaluate_contract_with_meta(contract_address: str, chain: str, context: dict
                     "fallback_mode": analysis["erc20"]["fallback_mode"],
                     "notes": analysis["erc20"]["notes"],
                 },
+                "nft_zora": {
+                    "nft_zora_analysis_status": analysis["nft_zora"]["nft_zora_analysis_status"],
+                    "erc721_candidate": analysis["nft_zora"]["erc721_candidate"],
+                    "erc1155_candidate": analysis["nft_zora"]["erc1155_candidate"],
+                    "zora_creator_coin_candidate": analysis["nft_zora"]["zora_creator_coin_candidate"],
+                    "creator_asset_context": analysis["nft_zora"]["creator_asset_context"],
+                    "transfer_restriction_possible": analysis["nft_zora"]["transfer_restriction_possible"],
+                    "operator_approval_risk": analysis["nft_zora"]["operator_approval_risk"],
+                    "mint_control_possible": analysis["nft_zora"]["mint_control_possible"],
+                    "metadata_mutability_possible": analysis["nft_zora"]["metadata_mutability_possible"],
+                    "royalty_admin_possible": analysis["nft_zora"]["royalty_admin_possible"],
+                    "collection_age_unknown": analysis["nft_zora"]["collection_age_unknown"],
+                    "zora_context_detected": analysis["nft_zora"]["zora_context_detected"],
+                    "confidence_impact": analysis["nft_zora"]["confidence_impact"],
+                    "fallback_mode": analysis["nft_zora"]["fallback_mode"],
+                    "notes": analysis["nft_zora"]["notes"],
+                },
             },
             "fallback_mode": (
                 not (analysis["viem_adapter"]["configured"] and analysis["whatsabi_adapter"]["configured"])

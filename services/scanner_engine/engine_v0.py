@@ -3,6 +3,7 @@ from services.mycelium_engine.engine import classify_threat, compute_confidence,
 from services.scanner_engine.adapters import get_viem_readiness, get_whatsabi_readiness
 from services.scanner_engine.asset_classification import classify_asset_type
 from services.scanner_engine.erc20_heuristics import analyze_erc20_risk
+from services.scanner_engine.nft_zora_heuristics import analyze_nft_zora_risk
 from services.scanner_engine.source_proxy_admin import analyze_source_proxy_admin
 from services.scanner_engine.chain_read_adapter import classify_account_type, get_chain_readiness
 from services.signals.extractor import extract_signals
@@ -91,8 +92,17 @@ def analyzeContractRisk(input_data: dict) -> dict:
         abi_result=abi_result,
         chain_read_result=chain_read,
     )
+    nft_zora = analyze_nft_zora_risk(
+        extracted["contract_address"],
+        chain,
+        asset_result=asset,
+        source_proxy_admin_result=source_proxy_admin,
+        abi_result=abi_result,
+        chain_read_result=chain_read,
+    )
     merged.update(source_proxy_admin.get("signal_flags", {}))
     merged.update(erc20.get("signal_flags", {}))
+    merged.update(nft_zora.get("signal_flags", {}))
 
     return {
         "contract_address": extracted["contract_address"],
@@ -101,6 +111,7 @@ def analyzeContractRisk(input_data: dict) -> dict:
         "asset": asset,
         "source_proxy_admin": source_proxy_admin,
         "erc20": erc20,
+        "nft_zora": nft_zora,
         "viem_adapter": get_viem_readiness(),
         "whatsabi_adapter": get_whatsabi_readiness(),
         "chain_read": chain_read,
