@@ -5,6 +5,7 @@ from services.scanner_engine.asset_classification import classify_asset_type
 from services.scanner_engine.chain_support import get_chain_support
 from services.scanner_engine.erc20_heuristics import analyze_erc20_risk
 from services.scanner_engine.intent_alignment import analyze_intent_alignment
+from services.scanner_engine.local_bytecode_analyzer import analyze_bytecode_signals
 from services.scanner_engine.mempool_mev_boundary import analyze_mempool_mev_risk
 from services.scanner_engine.nft_zora_heuristics import analyze_nft_zora_risk
 from services.scanner_engine.risk_explanation import build_risk_explanation
@@ -19,7 +20,7 @@ def normalizeContractAddress(address: str) -> str:
     return normalize_address(address)
 
 
-def _merge_chain_read_signals(signals: dict, contract_address: str, chain: str) -> tuple[dict, dict]:
+def _merge_chain_read_signals(signals: dict, contract_address: str, chain: str) -> tuple[dict, dict, str | None]:
     """Augment signals with chain-read heuristics; return (signals, chain_read meta block)."""
     readiness = get_chain_readiness(chain)
     classified = classify_account_type(contract_address, chain)
@@ -43,7 +44,7 @@ def _merge_chain_read_signals(signals: dict, contract_address: str, chain: str) 
         "adapter_mode": readiness["adapter_mode"],
         "contract_code_available": bool(out["contract_code_available"]),
     }
-    return out, chain_read
+    return out, chain_read, classified.get("code")
 
 
 def analyzeContractRisk(input_data: dict) -> dict:
@@ -62,6 +63,7 @@ def analyzeContractRisk(input_data: dict) -> dict:
     requested_action = context.get("requested_action") if isinstance(context.get("requested_action"), str) else None
     mempool_context = context.get("mempool_context") if isinstance(context.get("mempool_context"), dict) else {}
     mempool_config = context.get("mempool_config") if isinstance(context.get("mempool_config"), dict) else {}
+    explicit_bytecode = context.get("bytecode") if isinstance(context.get("bytecode"), str) else None
 
     extracted = extract_signals(contract_address, chain, context)
     signals = extracted["signals"]
@@ -79,8 +81,9 @@ def analyzeContractRisk(input_data: dict) -> dict:
             "adapter_mode": readiness["adapter_mode"],
             "contract_code_available": False,
         }
+        chain_read_code = None
     else:
-        merged, chain_read = _merge_chain_read_signals(signals, extracted["contract_address"], chain)
+        merged, chain_read, chain_read_code = _merge_chain_read_signals(signals, extracted["contract_address"], chain)
 
     asset = classify_asset_type(
         extracted["contract_address"],
@@ -125,6 +128,16 @@ def analyzeContractRisk(input_data: dict) -> dict:
     merged.update(erc20.get("signal_flags", {}))
     merged.update(nft_zora.get("signal_flags", {}))
     merged.update(simulation.get("signal_flags", {}))
+    bytecode_analysis = analyze_bytecode_signals(
+        address=extracted["contract_address"],
+        chain=chain,
+        bytecode=explicit_bytecode or chain_read_code,
+        chain_read_result={
+            **chain_read,
+            "bytecode": chain_read_code,
+        },
+    )
+    merged.update(bytecode_analysis.get("signal_flags", {}))
     chain_support = get_chain_support(chain)
     intent_alignment = analyze_intent_alignment(
         intent=intent_payload,
@@ -162,6 +175,7 @@ def analyzeContractRisk(input_data: dict) -> dict:
         "simulation": simulation,
         "intent_alignment": intent_alignment,
         "mempool_mev": mempool_mev,
+        "bytecode": bytecode_analysis,
         "viem_adapter": get_viem_readiness(),
         "whatsabi_adapter": get_whatsabi_readiness(),
         "chain_read": chain_read,
