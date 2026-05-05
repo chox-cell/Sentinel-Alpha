@@ -91,3 +91,11 @@ Do not use these claims in public or investor-facing material:
 - "covers every contract type"
 - "AgentKit provider live"
 - "automatic x402 settlement"
+
+## 7) v6.6 local evaluation harness note
+
+- v6.6 adds a local fixture evaluation harness over Base fixture contracts.
+- evaluation is local/offline only.
+- results are regression checks, not security guarantees.
+- evaluation does not prove honeypot detection.
+- evaluation does not prove full bytecode coverage.

@@ -77,3 +77,11 @@ Upgrade from free/local mode only when one or more triggers occur:
 - no live simulation claim.
 - no honeypot detection claim.
 - activation later requires explicit budget approval, provider selection, and dedicated tests.
+
+## 9) v6.6 local fixture evaluation harness posture
+
+- v6.6 adds local fixture evaluation harness over Base fixture dataset.
+- evaluation is local/offline only (no network/provider dependency).
+- results are regression checks, not security guarantees.
+- does not prove honeypot detection.
+- does not prove full bytecode coverage.

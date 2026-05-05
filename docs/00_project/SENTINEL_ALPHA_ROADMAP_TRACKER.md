@@ -83,7 +83,7 @@ Status: **Done**
 - v6.3.2 Disabled Risk History DB Adapter Boundary
 - v6.4 Source / ABI Cache Boundary
 - v6.5 Simulation Provider Adapter Boundary
-- v6.6 Evaluation Harness
+- v6.6 Evaluation Harness over Base fixtures (local/offline regression checks only)
 - v7.0 Outreach Batch 1
 
 ## 5) Cost discipline
