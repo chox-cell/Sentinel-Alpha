@@ -117,6 +117,18 @@ def evaluate_contract_with_meta(contract_address: str, chain: str, context: dict
                     "classification_basis": analysis["source_proxy_admin"]["classification_basis"],
                     "notes": analysis["source_proxy_admin"]["notes"],
                 },
+                "abi_source": {
+                    "source_provider_status": analysis["abi_source"]["source_provider_status"],
+                    "verified_source_status": analysis["abi_source"]["verified_source_status"],
+                    "abi_available": analysis["abi_source"]["abi_available"],
+                    "abi_function_names": analysis["abi_source"]["abi_function_names"],
+                    "abi_selector_count": analysis["abi_source"]["abi_selector_count"],
+                    "source_fetch_error_type": analysis["abi_source"]["source_fetch_error_type"],
+                    "provider_name": analysis["abi_source"]["provider_name"],
+                    "confidence_impact": analysis["abi_source"]["confidence_impact"],
+                    "fallback_mode": analysis["abi_source"]["fallback_mode"],
+                    "notes": analysis["abi_source"]["notes"],
+                },
                 "erc20": {
                     "erc20_analysis_status": analysis["erc20"]["erc20_analysis_status"],
                     "erc20_candidate": analysis["erc20"]["erc20_candidate"],

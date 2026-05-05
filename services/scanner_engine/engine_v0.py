@@ -1,6 +1,7 @@
 from services.attestation_layer.attestation import build_attestation as _build_attestation
 from services.mycelium_engine.engine import classify_threat, compute_confidence, compute_score, decide
 from services.scanner_engine.adapters import get_viem_readiness, get_whatsabi_readiness
+from services.scanner_engine.abi_source_adapter import analyze_abi_source_status
 from services.scanner_engine.asset_classification import classify_asset_type
 from services.scanner_engine.chain_support import get_chain_support
 from services.scanner_engine.erc20_heuristics import analyze_erc20_risk
@@ -57,6 +58,14 @@ def analyzeContractRisk(input_data: dict) -> dict:
     chain = (input_data.get("chain") or "base").strip().lower() or "base"
     context = input_data.get("context") if isinstance(input_data.get("context"), dict) else {}
     abi_result = context.get("abi_result") if isinstance(context.get("abi_result"), dict) else {}
+    provider_context = (
+        context.get("provider_context")
+        if isinstance(context.get("provider_context"), dict)
+        else context.get("abi_source_provider_context")
+        if isinstance(context.get("abi_source_provider_context"), dict)
+        else {}
+    )
+    abi_source_config = context.get("abi_source_config") if isinstance(context.get("abi_source_config"), dict) else {}
     simulation_request = context.get("simulation_request") if isinstance(context.get("simulation_request"), dict) else {}
     simulation_config = context.get("simulation_config") if isinstance(context.get("simulation_config"), dict) else {}
     intent_payload = context.get("intent") if isinstance(context.get("intent"), dict) else None
@@ -85,25 +94,42 @@ def analyzeContractRisk(input_data: dict) -> dict:
     else:
         merged, chain_read, chain_read_code = _merge_chain_read_signals(signals, extracted["contract_address"], chain)
 
+    abi_source = analyze_abi_source_status(
+        address=extracted["contract_address"],
+        chain=chain,
+        provider_context=provider_context,
+        config=abi_source_config,
+    )
+    enriched_abi_result = dict(abi_result)
+    if not enriched_abi_result and abi_source.get("provider_name") == "local_fixture":
+        # Local fixture ABI path allows deterministic testing without network/provider dependency.
+        enriched_abi_result = {
+            "available": abi_source.get("abi_available") is True,
+            "verified_source": abi_source.get("verified_source_status") == "verified",
+            "abi_available": abi_source.get("abi_available") is True,
+            "functions": list(abi_source.get("abi_function_names") or []),
+            "selectors": [],
+        }
+
     asset = classify_asset_type(
         extracted["contract_address"],
         chain,
         chain_read_result=chain_read,
-        abi_result=abi_result,
+        abi_result=enriched_abi_result,
     )
     source_proxy_admin = analyze_source_proxy_admin(
         extracted["contract_address"],
         chain,
         asset_result=asset,
         chain_read_result=chain_read,
-        abi_result=abi_result,
+        abi_result=enriched_abi_result,
     )
     erc20 = analyze_erc20_risk(
         extracted["contract_address"],
         chain,
         asset_result=asset,
         source_proxy_admin_result=source_proxy_admin,
-        abi_result=abi_result,
+        abi_result=enriched_abi_result,
         chain_read_result=chain_read,
     )
     nft_zora = analyze_nft_zora_risk(
@@ -111,7 +137,7 @@ def analyzeContractRisk(input_data: dict) -> dict:
         chain,
         asset_result=asset,
         source_proxy_admin_result=source_proxy_admin,
-        abi_result=abi_result,
+        abi_result=enriched_abi_result,
         chain_read_result=chain_read,
     )
     simulation = analyze_simulation_risk(
@@ -176,6 +202,7 @@ def analyzeContractRisk(input_data: dict) -> dict:
         "intent_alignment": intent_alignment,
         "mempool_mev": mempool_mev,
         "bytecode": bytecode_analysis,
+        "abi_source": abi_source,
         "viem_adapter": get_viem_readiness(),
         "whatsabi_adapter": get_whatsabi_readiness(),
         "chain_read": chain_read,
