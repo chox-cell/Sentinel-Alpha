@@ -129,6 +129,18 @@ def evaluate_contract_with_meta(contract_address: str, chain: str, context: dict
                     "fallback_mode": analysis["nft_zora"]["fallback_mode"],
                     "notes": analysis["nft_zora"]["notes"],
                 },
+                "simulation": {
+                    "simulation_available": analysis["simulation"]["simulation_available"],
+                    "simulation_mode": analysis["simulation"]["simulation_mode"],
+                    "buy_simulation_status": analysis["simulation"]["buy_simulation_status"],
+                    "sell_simulation_status": analysis["simulation"]["sell_simulation_status"],
+                    "call_simulation_status": analysis["simulation"]["call_simulation_status"],
+                    "honeypot_risk": analysis["simulation"]["honeypot_risk"],
+                    "simulation_error_type": analysis["simulation"]["simulation_error_type"],
+                    "confidence_impact": analysis["simulation"]["confidence_impact"],
+                    "fallback_mode": analysis["simulation"]["fallback_mode"],
+                    "notes": analysis["simulation"]["notes"],
+                },
             },
             "fallback_mode": (
                 not (analysis["viem_adapter"]["configured"] and analysis["whatsabi_adapter"]["configured"])
