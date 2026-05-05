@@ -4,6 +4,7 @@ from services.scanner_engine.adapters import get_viem_readiness, get_whatsabi_re
 from services.scanner_engine.asset_classification import classify_asset_type
 from services.scanner_engine.erc20_heuristics import analyze_erc20_risk
 from services.scanner_engine.nft_zora_heuristics import analyze_nft_zora_risk
+from services.scanner_engine.risk_explanation import build_risk_explanation
 from services.scanner_engine.simulation_boundary import analyze_simulation_risk
 from services.scanner_engine.source_proxy_admin import analyze_source_proxy_admin
 from services.scanner_engine.chain_read_adapter import classify_account_type, get_chain_readiness
@@ -160,4 +161,26 @@ def buildAttestation(decision: dict, contract_address: str, chain: str, trace_id
         score=decision["score"],
         action=decision["action"],
         trace_id=trace_id,
+    )
+
+
+def buildRiskExplanation(
+    decision=None,
+    asset_result=None,
+    source_proxy_admin_result=None,
+    erc20_result=None,
+    nft_zora_result=None,
+    simulation_result=None,
+    chain_read_result=None,
+    signals=None,
+) -> dict:
+    return build_risk_explanation(
+        decision=decision,
+        asset_result=asset_result,
+        source_proxy_admin_result=source_proxy_admin_result,
+        erc20_result=erc20_result,
+        nft_zora_result=nft_zora_result,
+        simulation_result=simulation_result,
+        chain_read_result=chain_read_result,
+        signals=signals,
     )

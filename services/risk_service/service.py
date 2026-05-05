@@ -7,6 +7,7 @@ from services.scanner_engine import (
     analyzeContractRisk,
     buildAttestation,
     buildRiskDecision,
+    buildRiskExplanation,
     normalizeContractAddress,
 )
 
@@ -50,6 +51,16 @@ def evaluate_contract_with_meta(contract_address: str, chain: str, context: dict
         contract_address=analysis["contract_address"],
         chain=analysis["chain"],
         trace_id=trace_id,
+    )
+    explanation = buildRiskExplanation(
+        decision=decision,
+        asset_result=analysis["asset"],
+        source_proxy_admin_result=analysis["source_proxy_admin"],
+        erc20_result=analysis["erc20"],
+        nft_zora_result=analysis["nft_zora"],
+        simulation_result=analysis["simulation"],
+        chain_read_result=analysis["chain_read"],
+        signals=signals,
     )
 
     response = {
@@ -142,6 +153,7 @@ def evaluate_contract_with_meta(contract_address: str, chain: str, context: dict
                     "notes": analysis["simulation"]["notes"],
                 },
             },
+            "security_explanation": explanation,
             "fallback_mode": (
                 not (analysis["viem_adapter"]["configured"] and analysis["whatsabi_adapter"]["configured"])
                 or analysis["chain_read"]["chain_read_status"] != "ok"
