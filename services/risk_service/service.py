@@ -95,7 +95,23 @@ def evaluate_contract_with_meta(contract_address: str, chain: str, context: dict
                     "fallback_mode": analysis["source_proxy_admin"]["fallback_mode"],
                     "classification_basis": analysis["source_proxy_admin"]["classification_basis"],
                     "notes": analysis["source_proxy_admin"]["notes"],
-                }
+                },
+                "erc20": {
+                    "erc20_analysis_status": analysis["erc20"]["erc20_analysis_status"],
+                    "erc20_candidate": analysis["erc20"]["erc20_candidate"],
+                    "transfer_tax_possible": analysis["erc20"]["transfer_tax_possible"],
+                    "blacklist_possible": analysis["erc20"]["blacklist_possible"],
+                    "pause_possible": analysis["erc20"]["pause_possible"],
+                    "max_tx_possible": analysis["erc20"]["max_tx_possible"],
+                    "max_wallet_possible": analysis["erc20"]["max_wallet_possible"],
+                    "mint_possible": analysis["erc20"]["mint_possible"],
+                    "owner_can_change_fees": analysis["erc20"]["owner_can_change_fees"],
+                    "sell_restriction_possible": analysis["erc20"]["sell_restriction_possible"],
+                    "honeypot_simulation_available": analysis["erc20"]["honeypot_simulation_available"],
+                    "confidence_impact": analysis["erc20"]["confidence_impact"],
+                    "fallback_mode": analysis["erc20"]["fallback_mode"],
+                    "notes": analysis["erc20"]["notes"],
+                },
             },
             "fallback_mode": (
                 not (analysis["viem_adapter"]["configured"] and analysis["whatsabi_adapter"]["configured"])
