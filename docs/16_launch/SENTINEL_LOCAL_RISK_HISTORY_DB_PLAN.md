@@ -106,3 +106,6 @@ This stage is docs/schema planning only and does not enable runtime DB dependenc
 - `DATABASE_URL` is not required yet.
 - Supabase is postponed and not default in current runtime posture.
 - runtime DB writes are still disabled in current implementation.
+- Source / ABI cache boundary is disabled by default.
+- managed Redis is postponed by default.
+- no secrets/API keys/raw headers are cached.

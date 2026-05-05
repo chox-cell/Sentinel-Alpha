@@ -46,8 +46,9 @@ Upgrade from free/local mode only when one or more triggers occur:
 - v6.1 local bytecode analyzer first
 - v6.2 ABI/source adapter
 - v6.3 local Postgres schema
-- v6.4 simulation provider adapter
-- v6.5 mempool feed adapter
+- v6.4 Source/ABI cache boundary (disabled by default)
+- v6.5 simulation provider adapter
+- v6.6 mempool feed adapter
 
 ## 6) Public-safe wording
 
@@ -56,3 +57,13 @@ Upgrade from free/local mode only when one or more triggers occur:
 - simulation adapter boundary
 - mempool readiness
 - no claim of live paid provider integration unless enabled
+
+## 7) v6.4 Source / ABI cache boundary posture
+
+- v6.4 adds Source / ABI Cache Boundary for future lookup deduplication.
+- cache is disabled by default.
+- Redis is not required by default.
+- DATABASE_URL is not required by default.
+- managed Redis remains postponed by default.
+- later cache backends can be local Redis or local Postgres only after explicit approval.
+- no secrets/API keys/raw headers are cached.
