@@ -5,6 +5,7 @@ from services.scanner_engine.asset_classification import classify_asset_type
 from services.scanner_engine.chain_support import get_chain_support
 from services.scanner_engine.erc20_heuristics import analyze_erc20_risk
 from services.scanner_engine.intent_alignment import analyze_intent_alignment
+from services.scanner_engine.mempool_mev_boundary import analyze_mempool_mev_risk
 from services.scanner_engine.nft_zora_heuristics import analyze_nft_zora_risk
 from services.scanner_engine.risk_explanation import build_risk_explanation
 from services.scanner_engine.simulation_boundary import analyze_simulation_risk
@@ -59,6 +60,8 @@ def analyzeContractRisk(input_data: dict) -> dict:
     simulation_config = context.get("simulation_config") if isinstance(context.get("simulation_config"), dict) else {}
     intent_payload = context.get("intent") if isinstance(context.get("intent"), dict) else None
     requested_action = context.get("requested_action") if isinstance(context.get("requested_action"), str) else None
+    mempool_context = context.get("mempool_context") if isinstance(context.get("mempool_context"), dict) else {}
+    mempool_config = context.get("mempool_config") if isinstance(context.get("mempool_config"), dict) else {}
 
     extracted = extract_signals(contract_address, chain, context)
     signals = extracted["signals"]
@@ -136,6 +139,16 @@ def analyzeContractRisk(input_data: dict) -> dict:
         chain_support_result=chain_support,
     )
     merged.update(intent_alignment.get("signal_flags", {}))
+    mempool_mev = analyze_mempool_mev_risk(
+        address=extracted["contract_address"],
+        chain=chain,
+        asset_result=asset,
+        intent_result=intent_alignment,
+        simulation_result=simulation,
+        mempool_context=mempool_context,
+        config=mempool_config,
+    )
+    merged.update(mempool_mev.get("signal_flags", {}))
 
     return {
         "contract_address": extracted["contract_address"],
@@ -148,6 +161,7 @@ def analyzeContractRisk(input_data: dict) -> dict:
         "nft_zora": nft_zora,
         "simulation": simulation,
         "intent_alignment": intent_alignment,
+        "mempool_mev": mempool_mev,
         "viem_adapter": get_viem_readiness(),
         "whatsabi_adapter": get_whatsabi_readiness(),
         "chain_read": chain_read,
