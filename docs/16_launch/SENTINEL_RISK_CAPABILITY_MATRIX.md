@@ -106,3 +106,10 @@ Do not use these claims in public or investor-facing material:
 - uses local ABI/function hints only; no network/provider calls.
 - outputs candidate-style signals (router_candidate/pool_candidate), not definitive protocol support claims.
 - does not claim complete DEX/router/pool coverage.
+
+## 9) v6.6.2 fixture evaluation report CLI note
+
+- v6.6.2 adds a local fixture evaluation report CLI.
+- report output is regression evidence only.
+- report output is not a safety/security guarantee.
+- report output is not public honeypot detection proof.
