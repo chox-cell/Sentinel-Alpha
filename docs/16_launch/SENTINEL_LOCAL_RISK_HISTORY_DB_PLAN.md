@@ -79,7 +79,8 @@ This stage is docs/schema planning only and does not enable runtime DB dependenc
 
 - v6.3 docs/schema only.
 - v6.3.1 SQL schema file exists at `db/schema/local_risk_history_v1.sql`.
-- v6.3.2 write-through optional.
+- v6.3.2 disabled adapter boundary exists in `services/risk_history/adapter.py` with runtime writes still off by default.
+- v6.3.2 write-through optional in a future gated stage.
 - v6.3.3 dashboard/API analytics later.
 - migration execution is manual/future only.
 

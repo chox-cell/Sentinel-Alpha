@@ -79,6 +79,7 @@ Status: **Done**
 - v6.3 Local Postgres Risk History Schema
 - v6.3 Local Risk History DB Plan (docs-only)
 - v6.3.1 Local Risk History SQL Schema (schema-only, manual/future execution)
+- v6.3.2 Disabled Risk History DB Adapter Boundary
 - v6.4 Source/ABI Cache Layer
 - v6.5 Simulation Provider Adapter
 - v6.6 Evaluation Harness
