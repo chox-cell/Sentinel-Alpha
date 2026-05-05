@@ -1,4 +1,6 @@
 from fastapi.testclient import TestClient
+import hashlib
+from pathlib import Path
 
 from apps.api.main import app
 from services.risk_service import service
@@ -115,3 +117,25 @@ def test_no_external_network_required_for_local_fixture_path(monkeypatch):
     assert abi_source["provider_name"] == "local_fixture"
     assert abi_source["abi_available"] is True
     assert "transfer" in abi_source["abi_function_names"]
+
+
+def test_env_file_unchanged_during_adapter_evaluation(monkeypatch):
+    env_path = Path(".env")
+    before = hashlib.sha256(env_path.read_bytes()).hexdigest() if env_path.exists() else "missing"
+
+    monkeypatch.setattr(service, "get_cache", lambda _key: None)
+    monkeypatch.setattr(service, "set_cache", lambda _key, _value, ttl=300: None)
+    _ = service.evaluate_contract(
+        "0x6666666666666666666666666666666666666666",
+        "base",
+        context={
+            "provider_context": {
+                "provider_name": "local_fixture",
+                "verified_source_status": "verified",
+                "abi": [{"type": "function", "name": "transfer"}],
+            }
+        },
+    )
+
+    after = hashlib.sha256(env_path.read_bytes()).hexdigest() if env_path.exists() else "missing"
+    assert before == after
