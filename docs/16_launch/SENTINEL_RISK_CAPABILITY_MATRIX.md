@@ -113,3 +113,11 @@ Do not use these claims in public or investor-facing material:
 - report output is regression evidence only.
 - report output is not a safety/security guarantee.
 - report output is not public honeypot detection proof.
+
+## 10) v6.6.3 local report artifact note
+
+- v6.6.3 generates local fixture evaluation report artifacts (JSON + Markdown).
+- artifact is internal regression evidence only.
+- artifact is not public safety proof.
+- artifact is not honeypot detection proof.
+- artifact is not full contract coverage proof.

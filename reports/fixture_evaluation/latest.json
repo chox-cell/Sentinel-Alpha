@@ -1,0 +1,378 @@
+{
+  "report_type": "fixture_evaluation",
+  "version": "v6.6.2",
+  "generated_at": "2026-05-05T12:11:31.463494+00:00",
+  "total_fixtures": 8,
+  "passed": 8,
+  "review": 0,
+  "coverage_by_fixture_type": {
+    "bytecode_opcode": 1,
+    "erc1155_like": 1,
+    "erc20_like": 1,
+    "erc721_like": 1,
+    "generic_contract": 1,
+    "pool_like": 1,
+    "proxy_like": 1,
+    "router_like": 1
+  },
+  "results": [
+    {
+      "fixture_name": "Known Bytecode Opcode Fixture",
+      "fixture_type": "bytecode_opcode",
+      "expected_signals": {
+        "delegatecall_present": true,
+        "selfdestruct_present": true,
+        "external_call_present": true,
+        "selector_candidate_present": true
+      },
+      "observed_signals": {
+        "asset_type": "generic_contract",
+        "erc20_candidate": "unknown",
+        "erc721_candidate": "unknown",
+        "erc1155_candidate": "unknown",
+        "proxy_candidate": false,
+        "proxy_pattern_possible": true,
+        "delegatecall_present": true,
+        "selfdestruct_present": true,
+        "external_call_present": true,
+        "selector_candidate_present": true,
+        "source_proxy_admin_unknown": true,
+        "transfer_tax_possible": "unknown",
+        "blacklist_possible": "unknown",
+        "mint_possible": "unknown",
+        "operator_approval_risk_possible": "unknown",
+        "router_candidate": "unknown",
+        "pool_candidate": "unknown",
+        "live_simulation_available": false,
+        "mempool_signal_available": false
+      },
+      "matched_signals": [
+        "delegatecall_present",
+        "selfdestruct_present",
+        "external_call_present",
+        "selector_candidate_present"
+      ],
+      "missing_expected_signals": [],
+      "unexpected_signals": [
+        "proxy_pattern_possible",
+        "source_proxy_admin_unknown"
+      ],
+      "evaluation_status": "pass",
+      "notes": [
+        "Local regression evaluation only; not a security guarantee.",
+        "Offline fixture-based result; no live provider/network dependency."
+      ]
+    },
+    {
+      "fixture_name": "Known ERC1155-like Contract Fixture",
+      "fixture_type": "erc1155_like",
+      "expected_signals": {
+        "erc1155_candidate": true
+      },
+      "observed_signals": {
+        "asset_type": "generic_contract",
+        "erc20_candidate": "unknown",
+        "erc721_candidate": true,
+        "erc1155_candidate": true,
+        "proxy_candidate": false,
+        "proxy_pattern_possible": true,
+        "delegatecall_present": true,
+        "selfdestruct_present": false,
+        "external_call_present": false,
+        "selector_candidate_present": true,
+        "source_proxy_admin_unknown": true,
+        "transfer_tax_possible": "unknown",
+        "blacklist_possible": "unknown",
+        "mint_possible": true,
+        "operator_approval_risk_possible": true,
+        "router_candidate": "unknown",
+        "pool_candidate": true,
+        "live_simulation_available": false,
+        "mempool_signal_available": false
+      },
+      "matched_signals": [
+        "erc1155_candidate"
+      ],
+      "missing_expected_signals": [],
+      "unexpected_signals": [
+        "erc721_candidate",
+        "proxy_pattern_possible",
+        "delegatecall_present",
+        "selector_candidate_present",
+        "source_proxy_admin_unknown",
+        "mint_possible",
+        "operator_approval_risk_possible",
+        "pool_candidate"
+      ],
+      "evaluation_status": "pass",
+      "notes": [
+        "Local regression evaluation only; not a security guarantee.",
+        "Offline fixture-based result; no live provider/network dependency."
+      ]
+    },
+    {
+      "fixture_name": "Known ERC20-like Contract Fixture",
+      "fixture_type": "erc20_like",
+      "expected_signals": {
+        "erc20_candidate": true,
+        "transfer_tax_possible": true,
+        "blacklist_possible": true,
+        "mint_possible": true
+      },
+      "observed_signals": {
+        "asset_type": "generic_contract",
+        "erc20_candidate": true,
+        "erc721_candidate": "unknown",
+        "erc1155_candidate": "unknown",
+        "proxy_candidate": false,
+        "proxy_pattern_possible": "unknown",
+        "delegatecall_present": false,
+        "selfdestruct_present": false,
+        "external_call_present": true,
+        "selector_candidate_present": true,
+        "source_proxy_admin_unknown": true,
+        "transfer_tax_possible": true,
+        "blacklist_possible": true,
+        "mint_possible": true,
+        "operator_approval_risk_possible": "unknown",
+        "router_candidate": "unknown",
+        "pool_candidate": true,
+        "live_simulation_available": false,
+        "mempool_signal_available": false
+      },
+      "matched_signals": [
+        "erc20_candidate",
+        "transfer_tax_possible",
+        "blacklist_possible",
+        "mint_possible"
+      ],
+      "missing_expected_signals": [],
+      "unexpected_signals": [
+        "external_call_present",
+        "selector_candidate_present",
+        "source_proxy_admin_unknown",
+        "pool_candidate"
+      ],
+      "evaluation_status": "pass",
+      "notes": [
+        "Local regression evaluation only; not a security guarantee.",
+        "Offline fixture-based result; no live provider/network dependency."
+      ]
+    },
+    {
+      "fixture_name": "Known ERC721-like Contract Fixture",
+      "fixture_type": "erc721_like",
+      "expected_signals": {
+        "erc721_candidate": true,
+        "operator_approval_risk_possible": true
+      },
+      "observed_signals": {
+        "asset_type": "generic_contract",
+        "erc20_candidate": "unknown",
+        "erc721_candidate": true,
+        "erc1155_candidate": true,
+        "proxy_candidate": false,
+        "proxy_pattern_possible": "unknown",
+        "delegatecall_present": false,
+        "selfdestruct_present": false,
+        "external_call_present": false,
+        "selector_candidate_present": true,
+        "source_proxy_admin_unknown": true,
+        "transfer_tax_possible": "unknown",
+        "blacklist_possible": "unknown",
+        "mint_possible": true,
+        "operator_approval_risk_possible": true,
+        "router_candidate": "unknown",
+        "pool_candidate": true,
+        "live_simulation_available": false,
+        "mempool_signal_available": false
+      },
+      "matched_signals": [
+        "erc721_candidate",
+        "operator_approval_risk_possible"
+      ],
+      "missing_expected_signals": [],
+      "unexpected_signals": [
+        "erc1155_candidate",
+        "selector_candidate_present",
+        "source_proxy_admin_unknown",
+        "mint_possible",
+        "pool_candidate"
+      ],
+      "evaluation_status": "pass",
+      "notes": [
+        "Local regression evaluation only; not a security guarantee.",
+        "Offline fixture-based result; no live provider/network dependency."
+      ]
+    },
+    {
+      "fixture_name": "Known Generic Contract Fixture",
+      "fixture_type": "generic_contract",
+      "expected_signals": {
+        "asset_type": "generic_contract",
+        "source_proxy_admin_unknown": true
+      },
+      "observed_signals": {
+        "asset_type": "generic_contract",
+        "erc20_candidate": "unknown",
+        "erc721_candidate": "unknown",
+        "erc1155_candidate": "unknown",
+        "proxy_candidate": false,
+        "proxy_pattern_possible": "unknown",
+        "delegatecall_present": false,
+        "selfdestruct_present": false,
+        "external_call_present": false,
+        "selector_candidate_present": false,
+        "source_proxy_admin_unknown": true,
+        "transfer_tax_possible": "unknown",
+        "blacklist_possible": "unknown",
+        "mint_possible": "unknown",
+        "operator_approval_risk_possible": "unknown",
+        "router_candidate": "unknown",
+        "pool_candidate": "unknown",
+        "live_simulation_available": false,
+        "mempool_signal_available": false
+      },
+      "matched_signals": [
+        "asset_type",
+        "source_proxy_admin_unknown"
+      ],
+      "missing_expected_signals": [],
+      "unexpected_signals": [],
+      "evaluation_status": "pass",
+      "notes": [
+        "Local regression evaluation only; not a security guarantee.",
+        "Offline fixture-based result; no live provider/network dependency."
+      ]
+    },
+    {
+      "fixture_name": "Known Pool-like Contract Fixture",
+      "fixture_type": "pool_like",
+      "expected_signals": {
+        "pool_candidate": true
+      },
+      "observed_signals": {
+        "asset_type": "pool_candidate",
+        "erc20_candidate": "unknown",
+        "erc721_candidate": "unknown",
+        "erc1155_candidate": "unknown",
+        "proxy_candidate": false,
+        "proxy_pattern_possible": "unknown",
+        "delegatecall_present": false,
+        "selfdestruct_present": true,
+        "external_call_present": true,
+        "selector_candidate_present": true,
+        "source_proxy_admin_unknown": true,
+        "transfer_tax_possible": "unknown",
+        "blacklist_possible": "unknown",
+        "mint_possible": "unknown",
+        "operator_approval_risk_possible": "unknown",
+        "router_candidate": "unknown",
+        "pool_candidate": true,
+        "live_simulation_available": false,
+        "mempool_signal_available": false
+      },
+      "matched_signals": [
+        "pool_candidate"
+      ],
+      "missing_expected_signals": [],
+      "unexpected_signals": [
+        "selfdestruct_present",
+        "external_call_present",
+        "selector_candidate_present",
+        "source_proxy_admin_unknown"
+      ],
+      "evaluation_status": "pass",
+      "notes": [
+        "Local regression evaluation only; not a security guarantee.",
+        "Offline fixture-based result; no live provider/network dependency."
+      ]
+    },
+    {
+      "fixture_name": "Known Proxy-like Contract Fixture",
+      "fixture_type": "proxy_like",
+      "expected_signals": {
+        "proxy_candidate": true,
+        "delegatecall_present": true
+      },
+      "observed_signals": {
+        "asset_type": "proxy_candidate",
+        "erc20_candidate": "unknown",
+        "erc721_candidate": "unknown",
+        "erc1155_candidate": "unknown",
+        "proxy_candidate": true,
+        "proxy_pattern_possible": true,
+        "delegatecall_present": true,
+        "selfdestruct_present": false,
+        "external_call_present": false,
+        "selector_candidate_present": true,
+        "source_proxy_admin_unknown": true,
+        "transfer_tax_possible": "unknown",
+        "blacklist_possible": "unknown",
+        "mint_possible": "unknown",
+        "operator_approval_risk_possible": "unknown",
+        "router_candidate": "unknown",
+        "pool_candidate": "unknown",
+        "live_simulation_available": false,
+        "mempool_signal_available": false
+      },
+      "matched_signals": [
+        "proxy_candidate",
+        "delegatecall_present"
+      ],
+      "missing_expected_signals": [],
+      "unexpected_signals": [
+        "proxy_pattern_possible",
+        "selector_candidate_present",
+        "source_proxy_admin_unknown"
+      ],
+      "evaluation_status": "pass",
+      "notes": [
+        "Local regression evaluation only; not a security guarantee.",
+        "Offline fixture-based result; no live provider/network dependency."
+      ]
+    },
+    {
+      "fixture_name": "Known Router-like Contract Fixture",
+      "fixture_type": "router_like",
+      "expected_signals": {
+        "router_candidate": true
+      },
+      "observed_signals": {
+        "asset_type": "router_candidate",
+        "erc20_candidate": "unknown",
+        "erc721_candidate": "unknown",
+        "erc1155_candidate": "unknown",
+        "proxy_candidate": false,
+        "proxy_pattern_possible": "unknown",
+        "delegatecall_present": false,
+        "selfdestruct_present": false,
+        "external_call_present": false,
+        "selector_candidate_present": true,
+        "source_proxy_admin_unknown": true,
+        "transfer_tax_possible": "unknown",
+        "blacklist_possible": "unknown",
+        "mint_possible": "unknown",
+        "operator_approval_risk_possible": "unknown",
+        "router_candidate": true,
+        "pool_candidate": "unknown",
+        "live_simulation_available": false,
+        "mempool_signal_available": false
+      },
+      "matched_signals": [
+        "router_candidate"
+      ],
+      "missing_expected_signals": [],
+      "unexpected_signals": [
+        "selector_candidate_present",
+        "source_proxy_admin_unknown"
+      ],
+      "evaluation_status": "pass",
+      "notes": [
+        "Local regression evaluation only; not a security guarantee.",
+        "Offline fixture-based result; no live provider/network dependency."
+      ]
+    }
+  ],
+  "disclaimer": "Local regression evaluation only; not a security guarantee."
+}
