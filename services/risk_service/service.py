@@ -85,6 +85,16 @@ def evaluate_contract_with_meta(contract_address: str, chain: str, context: dict
             "trace_id": trace_id,
             "scanner_engine_version": "sentinel-scanner-v0",
             "chain_read": analysis["chain_read"],
+            "chain_support": {
+                "chain": analysis["chain_support"]["chain"],
+                "support_status": analysis["chain_support"]["support_status"],
+                "network_family": analysis["chain_support"]["network_family"],
+                "risk_engine_support": analysis["chain_support"]["risk_engine_support"],
+                "chain_read_default": analysis["chain_support"]["chain_read_default"],
+                "paid_rpc_required": analysis["chain_support"]["paid_rpc_required"],
+                "confidence_impact": analysis["chain_support"]["confidence_impact"],
+                "notes": analysis["chain_support"]["notes"],
+            },
             "asset": {
                 "asset_type": analysis["asset"]["asset_type"],
                 "asset_confidence": analysis["asset"]["asset_confidence"],

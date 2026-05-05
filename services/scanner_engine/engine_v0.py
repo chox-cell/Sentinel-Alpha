@@ -2,6 +2,7 @@ from services.attestation_layer.attestation import build_attestation as _build_a
 from services.mycelium_engine.engine import classify_threat, compute_confidence, compute_score, decide
 from services.scanner_engine.adapters import get_viem_readiness, get_whatsabi_readiness
 from services.scanner_engine.asset_classification import classify_asset_type
+from services.scanner_engine.chain_support import get_chain_support
 from services.scanner_engine.erc20_heuristics import analyze_erc20_risk
 from services.scanner_engine.nft_zora_heuristics import analyze_nft_zora_risk
 from services.scanner_engine.risk_explanation import build_risk_explanation
@@ -118,11 +119,13 @@ def analyzeContractRisk(input_data: dict) -> dict:
     merged.update(erc20.get("signal_flags", {}))
     merged.update(nft_zora.get("signal_flags", {}))
     merged.update(simulation.get("signal_flags", {}))
+    chain_support = get_chain_support(chain)
 
     return {
         "contract_address": extracted["contract_address"],
         "chain": extracted["chain"],
         "signals": merged,
+        "chain_support": chain_support,
         "asset": asset,
         "source_proxy_admin": source_proxy_admin,
         "erc20": erc20,
