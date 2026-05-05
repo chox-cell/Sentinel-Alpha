@@ -2,6 +2,8 @@
 
 This strategy explains how Sentinel adds real data providers progressively while keeping pre-revenue cost discipline.
 
+Roadmap status source of truth: `docs/00_project/SENTINEL_ALPHA_ROADMAP_TRACKER.md`.
+
 ## 1) Data Ladder
 
 | Level | Stage | Purpose | Cost posture |
