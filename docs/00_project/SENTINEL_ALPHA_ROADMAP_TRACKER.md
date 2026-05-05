@@ -45,6 +45,7 @@ Status: **Done**
 - v6.1 Local Bytecode Signal Analyzer
 - v6.2 ABI / Source Provider Adapter
 - Public Guardian Doctrine pack (manifesto + llms + doctrine JSON)
+- v7.0 Outreach Batch 1 With Evidence (truthful templates and categories only)
 
 ## 3) Current risk engine stack
 
@@ -88,7 +89,7 @@ Status: **Done**
 - v6.6.2 Fixture Evaluation Report CLI (local regression report output)
 - v6.6.3 Local Evaluation Report Artifact (internal regression evidence)
 - v6.7 Provider Decision Gate (docs/test policy guardrail only; no provider activation)
-- v7.0 Outreach Batch 1
+- v7.0 Outreach Batch 1 With Evidence
 
 ## 5) Cost discipline
 
