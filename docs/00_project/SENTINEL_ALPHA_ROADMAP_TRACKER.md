@@ -44,6 +44,7 @@ Status: **Done**
 - v6.0 data provider strategy
 - v6.1 Local Bytecode Signal Analyzer
 - v6.2 ABI / Source Provider Adapter
+- Public Guardian Doctrine pack (manifesto + llms + doctrine JSON)
 
 ## 3) Current risk engine stack
 

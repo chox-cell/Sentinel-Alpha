@@ -1,0 +1,46 @@
+{
+  "brand": "BeezShield",
+  "doctrine": "BeezShield builds guardians, not traders.",
+  "live_product": "Sentinel Alpha",
+  "live_scope": [
+    "website",
+    "/contracts/risk-score API",
+    "x402-gated API",
+    "ERC-8004 identity",
+    "@beezshield/sentinel npm SDK",
+    "AgentKit-style example",
+    "local bytecode signal analyzer",
+    "ABI/source adapter boundary",
+    "risk explanations",
+    "chain support metadata"
+  ],
+  "boundary_only_scope": [
+    "simulation provider boundary (not configured)",
+    "mempool/MEV provider boundary (not configured)"
+  ],
+  "roadmap_scope": [
+    "Trust Object Model",
+    "UCP/AP2 commerce context",
+    "Ema-Bee future commerce safety gate concept"
+  ],
+  "forbidden_claims": [
+    "claims universal honeypot certainty",
+    "claims guaranteed anti-MEV outcomes",
+    "claims complete prompt-attack blocking",
+    "claims complete intent certainty",
+    "claims guaranteed safety outcomes",
+    "claims monopoly trust authority",
+    "claims profit-seeking B2B deal engine"
+  ],
+  "public_safe_claims": [
+    "Sentinel Alpha is a live pre-execution risk decision layer for onchain contracts and assets.",
+    "Some layers are live. Some are boundary-only. We say which is which.",
+    "Trust Object Model is roadmap only.",
+    "UCP/AP2 commerce context is roadmap only.",
+    "Ema-Bee is a future commerce safety gate concept, not an execution/profit-seeking commerce bot."
+  ],
+  "npm_package": "@beezshield/sentinel",
+  "api_endpoint": "/contracts/risk-score",
+  "erc8004_identity": "published",
+  "last_updated": "2026-05-05"
+}

@@ -4,6 +4,10 @@ Use this ledger to separate live facts from roadmap or source-dependent statemen
 
 | Claim | Status | Evidence/source | Public-safe wording |
 |---|---|---|---|
+| Public Manifesto created | live | `apps/website/manifesto.html` and doctrine JSON in website well-known path | "Public doctrine page and machine-readable doctrine file are live artifacts." |
+| UCP/AP2 integrated into Sentinel runtime today | roadmap | No runtime integration path enabled in scanner/risk service | "UCP/AP2 is roadmap context, not runtime integration." |
+| Trust Object Model is live runtime behavior | roadmap | Internal roadmap notes only; no runtime implementation | "Trust Object Model is roadmap only." |
+| Ema-Bee is live product behavior | roadmap | Future concept framing only in doctrine/roadmap notes | "Ema-Bee is a future concept only." |
 | AI agents market grows from $7.84B (2025) to $52.62B (2030) | source-backed | Approved market report reference required in investor packet | "Agentic AI market estimates show strong growth; quote the exact source when presenting figures." |
 | 18% highly confident managing agent identities/security | needs source | Keep exact percentage gated on citation availability | "Confidence in managing agent identities/security appears limited; exact percentage requires verified source." |
 | Time-to-Trust 2026-2027 | thesis | Internal strategy framing, not empirical fact | "Time-to-Trust 2026-2027 is an internal thesis window, not a proven market fact." |

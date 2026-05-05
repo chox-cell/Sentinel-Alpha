@@ -35,4 +35,14 @@
     <lastmod>2026-04-30</lastmod>
     <priority>0.7</priority>
   </url>
+  <url>
+    <loc>https://beezshield.com/manifesto.html</loc>
+    <lastmod>2026-05-05</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://beezshield.com/.well-known/beezshield-doctrine.json</loc>
+    <lastmod>2026-05-05</lastmod>
+    <priority>0.7</priority>
+  </url>
 </urlset>

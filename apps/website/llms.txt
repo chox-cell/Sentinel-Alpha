@@ -28,6 +28,14 @@ TypeScript SDK (developer preview)
 Builder Handoff
 - Website scan -> Copy cURL -> @beezshield/sentinel (npm) -> AgentKit (upcoming)
 
+Guardian Doctrine
+- BeezShield builds guardians, not traders.
+- Sentinel Alpha live scope: pre-execution risk decisions for onchain contracts/assets.
+- Trust Object Model is roadmap only.
+- UCP/AP2 commerce context is roadmap only.
+- Ema-Bee is a future commerce safety gate concept, not an execution/profit-seeking commerce bot.
+- No claims of live honeypot detection, MEV prevention, or prompt-injection prevention.
+
 Example curl
 curl -X POST "https://api.beezshield.com/contracts/risk-score" \
   -H "Content-Type: application/json" \

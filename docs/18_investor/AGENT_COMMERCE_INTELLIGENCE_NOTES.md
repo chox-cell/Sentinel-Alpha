@@ -57,3 +57,10 @@ This is roadmap only, not live runtime behavior.
 - Ema-Bee is a future commerce safety gate concept, not a B2B arbitrage/trading agent.
 - Do not mix it into Sentinel execution roadmap now.
 - First priority remains onchain/agent builder adoption.
+
+## 7) Public doctrine pack update
+
+- Public Manifesto created for truthful human/LLM/machine positioning.
+- UCP/AP2 are roadmap context, not runtime integration.
+- Trust Object Model is roadmap only.
+- Ema-Bee is a future concept only.

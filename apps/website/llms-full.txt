@@ -79,6 +79,18 @@ Integration Notes
 - Builder handoff: website scan -> Copy cURL -> @beezshield/sentinel (npm) -> AgentKit (upcoming)
 - No claim of live MCP or A2A support
 
+Guardian Doctrine
+- BeezShield builds guardians, not traders.
+- Autonomous agents should not execute blind.
+- Sentinel Alpha is a live pre-execution risk decision layer for onchain contracts and assets.
+- Some layers are live and some are boundary-only; public wording must state which is which.
+- Trust Object Model is roadmap only.
+- UCP/AP2 commerce context is roadmap only.
+- Ema-Bee is a future commerce safety gate concept, not an execution/profit-seeking commerce bot.
+- No claim of live honeypot detection.
+- No claim of MEV prevention.
+- No claim of prompt-injection prevention.
+
 Marketplace Copy
 Sentinel Alpha is BeezShield's execution fidelity layer for autonomous agents. It delivers deterministic pre-execution risk decisions through a production API, supports x402 payments on Base, and publishes public ERC-8004 identity proof on 8004scan.
 
