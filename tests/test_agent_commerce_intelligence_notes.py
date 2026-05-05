@@ -18,6 +18,10 @@ def test_agent_commerce_notes_required_content():
         "Peppol",
         "Salesforce",
         "B2B deal scout is a separate future product idea",
+        "BeezShield builds guardians, not traders.",
+        "BeezShield agents verify, score, explain, block, review, and attest before autonomous execution.",
+        "Sentinel Alpha protects onchain contract/asset execution.",
+        "Ema-Bee is a future commerce safety gate concept, not a B2B arbitrage/trading agent.",
         "contracts/assets first",
         "roadmap only",
     ]
@@ -32,6 +36,8 @@ def test_agent_commerce_notes_forbidden_phrases_absent():
         "Citi/JPM fund any agent",
         "Peppol gives internal RFQs",
         "pivot product focus",
+        "Ema-Bee is live",
+        "agents trade autonomously for profit",
     ]
     for token in forbidden:
         assert token not in text

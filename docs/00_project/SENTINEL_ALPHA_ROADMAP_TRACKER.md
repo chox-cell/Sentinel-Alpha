@@ -2,6 +2,14 @@
 
 This file is the single source of truth for Sentinel Alpha roadmap status, claims discipline, and operating constraints.
 
+## Product doctrine
+
+- BeezShield builds guardians, not traders.
+- BeezShield agents verify, score, explain, block, review, and attest before autonomous execution.
+- Sentinel Alpha protects onchain contract/asset execution.
+- Ema-Bee is a future commerce safety gate concept, not a B2B arbitrage/trading agent.
+- No product pivot: contracts/assets first.
+
 ## 1) Current live product
 
 - Website is live.

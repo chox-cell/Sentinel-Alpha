@@ -24,6 +24,9 @@ Agentic commerce increases the need for pre-execution trust/risk gates, especial
 
 Sentinel stays focused on:
 
+- BeezShield builds guardians, not traders.
+- BeezShield agents verify, score, explain, block, review, and attest before autonomous execution.
+- Sentinel Alpha protects onchain contract/asset execution.
 - pre-execution risk decision for autonomous agents
 - contracts/assets first
 - x402/ERC-8004/Base first
@@ -51,5 +54,6 @@ This is roadmap only, not live runtime behavior.
 ## 6) B2B deal scout note
 
 - B2B deal scout is a separate future product idea.
+- Ema-Bee is a future commerce safety gate concept, not a B2B arbitrage/trading agent.
 - Do not mix it into Sentinel execution roadmap now.
 - First priority remains onchain/agent builder adoption.

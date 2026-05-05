@@ -22,6 +22,10 @@ def test_roadmap_tracker_required_content():
         "no guaranteed protection",
         "no detects all honeypots",
         "no mev prevention",
+        "beezshield builds guardians, not traders.",
+        "sentinel alpha protects onchain contract/asset execution.",
+        "ema-bee is a future commerce safety gate concept, not a b2b arbitrage/trading agent.",
+        "no product pivot: contracts/assets first.",
     ]
     for token in required:
         assert token in text
