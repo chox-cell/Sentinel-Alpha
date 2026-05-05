@@ -84,5 +84,7 @@ Do not use these as positive product claims:
 - guaranteed protection
 - covers all contract types
 - prevents MEV
+- live simulation provider is active by default
+- prompt-injection prevention
 - AgentKit provider live
 - automatic x402 settlement

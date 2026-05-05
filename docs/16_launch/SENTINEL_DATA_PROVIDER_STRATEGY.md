@@ -67,3 +67,13 @@ Upgrade from free/local mode only when one or more triggers occur:
 - managed Redis remains postponed by default.
 - later cache backends can be local Redis or local Postgres only after explicit approval.
 - no secrets/API keys/raw headers are cached.
+
+## 8) v6.5 simulation provider adapter boundary posture
+
+- v6.5 adds simulation provider adapter boundary.
+- disabled by default.
+- no Tenderly or paid provider key is required by default.
+- no wallet/private key/signing is allowed in boundary mode.
+- no live simulation claim.
+- no honeypot detection claim.
+- activation later requires explicit budget approval, provider selection, and dedicated tests.

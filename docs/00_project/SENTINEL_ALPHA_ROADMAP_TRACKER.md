@@ -82,7 +82,7 @@ Status: **Done**
 - v6.3.1 Local Risk History SQL Schema (schema-only, manual/future execution)
 - v6.3.2 Disabled Risk History DB Adapter Boundary
 - v6.4 Source / ABI Cache Boundary
-- v6.5 Simulation Provider Adapter
+- v6.5 Simulation Provider Adapter Boundary
 - v6.6 Evaluation Harness
 - v7.0 Outreach Batch 1
 
