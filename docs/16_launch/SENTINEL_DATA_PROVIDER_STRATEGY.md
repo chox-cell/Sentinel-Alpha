@@ -85,3 +85,11 @@ Upgrade from free/local mode only when one or more triggers occur:
 - results are regression checks, not security guarantees.
 - does not prove honeypot detection.
 - does not prove full bytecode coverage.
+
+## 10) v6.7 provider decision gate posture
+
+- v6.7 adds strict provider activation policy guardrails.
+- policy is documented in `docs/16_launch/SENTINEL_PROVIDER_DECISION_GATE.md`.
+- no provider is activated by this step.
+- default remains no paid providers.
+- activation requires explicit founder approval, cost estimates, fallback tests, and rollback readiness.

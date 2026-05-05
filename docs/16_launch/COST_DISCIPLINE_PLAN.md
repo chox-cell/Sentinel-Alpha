@@ -55,3 +55,11 @@
 - Do not store secrets in repo.
 - Do not enable costly chain reads by default.
 - Do not introduce simulation paid calls without a budget gate.
+
+## 6) v6.7 provider decision gate alignment
+
+- v6.7 introduces a provider decision gate policy for future activations.
+- pre-revenue target remains <= $10/mo.
+- default remains no paid providers.
+- paid provider activation requires explicit founder approval and documented monthly cost.
+- activation must include tested fallback behavior, timeout handling, and rollback plan.

@@ -87,6 +87,7 @@ Status: **Done**
 - v6.6.1 Router / Pool Candidate Heuristics (local-only candidate hints)
 - v6.6.2 Fixture Evaluation Report CLI (local regression report output)
 - v6.6.3 Local Evaluation Report Artifact (internal regression evidence)
+- v6.7 Provider Decision Gate (docs/test policy guardrail only; no provider activation)
 - v7.0 Outreach Batch 1
 
 ## 5) Cost discipline
