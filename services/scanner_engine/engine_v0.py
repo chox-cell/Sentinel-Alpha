@@ -2,6 +2,7 @@ from services.attestation_layer.attestation import build_attestation as _build_a
 from services.mycelium_engine.engine import classify_threat, compute_confidence, compute_score, decide
 from services.scanner_engine.adapters import get_viem_readiness, get_whatsabi_readiness
 from services.scanner_engine.asset_classification import classify_asset_type
+from services.scanner_engine.source_proxy_admin import analyze_source_proxy_admin
 from services.scanner_engine.chain_read_adapter import classify_account_type, get_chain_readiness
 from services.signals.extractor import extract_signals
 from services.signals.validators import normalize_address
@@ -73,12 +74,21 @@ def analyzeContractRisk(input_data: dict) -> dict:
         chain_read_result=chain_read,
         abi_result=None,
     )
+    source_proxy_admin = analyze_source_proxy_admin(
+        extracted["contract_address"],
+        chain,
+        asset_result=asset,
+        chain_read_result=chain_read,
+        abi_result=None,
+    )
+    merged.update(source_proxy_admin.get("signal_flags", {}))
 
     return {
         "contract_address": extracted["contract_address"],
         "chain": extracted["chain"],
         "signals": merged,
         "asset": asset,
+        "source_proxy_admin": source_proxy_admin,
         "viem_adapter": get_viem_readiness(),
         "whatsabi_adapter": get_whatsabi_readiness(),
         "chain_read": chain_read,

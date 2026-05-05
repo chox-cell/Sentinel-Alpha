@@ -83,6 +83,20 @@ def evaluate_contract_with_meta(contract_address: str, chain: str, context: dict
                 "notes": analysis["asset"]["notes"],
                 "signals": analysis["asset"]["signals"],
             },
+            "security_signals": {
+                "source_proxy_admin": {
+                    "verified_source_status": analysis["source_proxy_admin"]["verified_source_status"],
+                    "abi_available": analysis["source_proxy_admin"]["abi_available"],
+                    "proxy_detected": analysis["source_proxy_admin"]["proxy_detected"],
+                    "implementation_address": analysis["source_proxy_admin"]["implementation_address"],
+                    "owner_admin_permissions": analysis["source_proxy_admin"]["owner_admin_permissions"],
+                    "privileged_controls": analysis["source_proxy_admin"]["privileged_controls"],
+                    "confidence_impact": analysis["source_proxy_admin"]["confidence_impact"],
+                    "fallback_mode": analysis["source_proxy_admin"]["fallback_mode"],
+                    "classification_basis": analysis["source_proxy_admin"]["classification_basis"],
+                    "notes": analysis["source_proxy_admin"]["notes"],
+                }
+            },
             "fallback_mode": (
                 not (analysis["viem_adapter"]["configured"] and analysis["whatsabi_adapter"]["configured"])
                 or analysis["chain_read"]["chain_read_status"] != "ok"
