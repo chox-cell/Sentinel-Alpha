@@ -99,3 +99,10 @@ Do not use these claims in public or investor-facing material:
 - results are regression checks, not security guarantees.
 - evaluation does not prove honeypot detection.
 - evaluation does not prove full bytecode coverage.
+
+## 8) v6.6.1 router/pool candidate heuristic note
+
+- v6.6.1 adds conservative local router/pool candidate heuristics.
+- uses local ABI/function hints only; no network/provider calls.
+- outputs candidate-style signals (router_candidate/pool_candidate), not definitive protocol support claims.
+- does not claim complete DEX/router/pool coverage.

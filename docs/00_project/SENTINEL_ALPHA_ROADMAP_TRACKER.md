@@ -84,6 +84,7 @@ Status: **Done**
 - v6.4 Source / ABI Cache Boundary
 - v6.5 Simulation Provider Adapter Boundary
 - v6.6 Evaluation Harness over Base fixtures (local/offline regression checks only)
+- v6.6.1 Router / Pool Candidate Heuristics (local-only candidate hints)
 - v7.0 Outreach Batch 1
 
 ## 5) Cost discipline

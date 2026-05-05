@@ -10,6 +10,7 @@ from services.scanner_engine.erc20_heuristics import analyze_erc20_risk
 from services.scanner_engine.local_bytecode_analyzer import analyze_bytecode_signals
 from services.scanner_engine.mempool_mev_boundary import analyze_mempool_mev_risk
 from services.scanner_engine.nft_zora_heuristics import analyze_nft_zora_risk
+from services.scanner_engine.router_pool_heuristics import analyze_router_pool_risk
 from services.scanner_engine.simulation_provider_adapter import run_simulation_provider
 from services.scanner_engine.source_proxy_admin import analyze_source_proxy_admin
 
@@ -47,6 +48,7 @@ def _flatten_observed_signals(result: dict) -> dict:
     erc20 = result["erc20"]
     nft = result["nft_zora"]
     bytecode = result["bytecode"]
+    router_pool = result["router_pool"]
     sim_provider = result["simulation_provider"]
     mempool = result["mempool_mev"]
 
@@ -68,6 +70,8 @@ def _flatten_observed_signals(result: dict) -> dict:
     flat["blacklist_possible"] = erc20.get("blacklist_possible")
     flat["mint_possible"] = erc20.get("mint_possible")
     flat["operator_approval_risk_possible"] = nft.get("operator_approval_risk")
+    flat["router_candidate"] = router_pool.get("router_candidate")
+    flat["pool_candidate"] = router_pool.get("pool_candidate")
     flat["live_simulation_available"] = sim_provider.get("live_simulation_available")
     flat["mempool_signal_available"] = mempool.get("mempool_signal_available")
     return flat
@@ -130,6 +134,14 @@ def evaluate_fixture(fixture):
         bytecode=bytecode,
         chain_read_result=chain_read,
     )
+    router_pool = analyze_router_pool_risk(
+        address=address,
+        chain=chain,
+        asset_result=asset,
+        abi_result=merged_abi,
+        bytecode_result=bytecode_analysis,
+        source_proxy_admin_result=source_proxy_admin,
+    )
     simulation_provider = run_simulation_provider(
         {"chain": chain, "address": address, "action": "evaluate_fixture"},
         provider_backend=None,
@@ -150,6 +162,7 @@ def evaluate_fixture(fixture):
             "erc20": erc20,
             "nft_zora": nft_zora,
             "bytecode": bytecode_analysis,
+            "router_pool": router_pool,
             "simulation_provider": simulation_provider,
             "mempool_mev": mempool_mev,
         }
