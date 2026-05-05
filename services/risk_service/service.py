@@ -74,6 +74,15 @@ def evaluate_contract_with_meta(contract_address: str, chain: str, context: dict
             "trace_id": trace_id,
             "scanner_engine_version": "sentinel-scanner-v0",
             "chain_read": analysis["chain_read"],
+            "asset": {
+                "asset_type": analysis["asset"]["asset_type"],
+                "asset_confidence": analysis["asset"]["asset_confidence"],
+                "classification_basis": analysis["asset"]["classification_basis"],
+                "fallback_mode": analysis["asset"]["fallback_mode"],
+                "unsupported_asset_type": analysis["asset"]["unsupported_asset_type"],
+                "notes": analysis["asset"]["notes"],
+                "signals": analysis["asset"]["signals"],
+            },
             "fallback_mode": (
                 not (analysis["viem_adapter"]["configured"] and analysis["whatsabi_adapter"]["configured"])
                 or analysis["chain_read"]["chain_read_status"] != "ok"
