@@ -1,0 +1,29 @@
+{
+  "name": "Known ERC20-like Contract Fixture",
+  "chain": "base",
+  "fixture_type": "erc20_like",
+  "address": "0x2222222222222222222222222222222222222222",
+  "source_status": "fixture",
+  "abi_result": {
+    "available": true,
+    "functions": [
+      "totalSupply",
+      "balanceOf",
+      "transfer",
+      "approve",
+      "mint",
+      "setTaxFee",
+      "blacklist",
+      "pause"
+    ],
+    "selectors": []
+  },
+  "bytecode": "0x600063a9059cbb60006340c10f19f3",
+  "expected_signals": {
+    "erc20_candidate": true,
+    "transfer_tax_possible": true,
+    "blacklist_possible": true,
+    "mint_possible": true
+  },
+  "notes": "Local ABI-hint fixture; candidates only, not definitive behavior proof."
+}

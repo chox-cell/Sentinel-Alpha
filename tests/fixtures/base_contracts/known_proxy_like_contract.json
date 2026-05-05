@@ -1,0 +1,24 @@
+{
+  "name": "Known Proxy-like Contract Fixture",
+  "chain": "base",
+  "fixture_type": "proxy_like",
+  "address": "0x5555555555555555555555555555555555555555",
+  "source_status": "fixture",
+  "abi_result": {
+    "available": true,
+    "is_proxy": true,
+    "functions": [
+      "implementation",
+      "upgradeTo"
+    ],
+    "selectors": [
+      "0x3659cfe6"
+    ]
+  },
+  "bytecode": "0x6000f4600063f851a440f3",
+  "expected_signals": {
+    "proxy_candidate": true,
+    "delegatecall_present": true
+  },
+  "notes": "Proxy-like fixture; proxy pattern possible only, not definitive maliciousness."
+}

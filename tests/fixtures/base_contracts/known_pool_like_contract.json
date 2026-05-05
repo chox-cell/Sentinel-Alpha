@@ -1,0 +1,22 @@
+{
+  "name": "Known Pool-like Contract Fixture",
+  "chain": "base",
+  "fixture_type": "pool_like",
+  "address": "0x7777777777777777777777777777777777777777",
+  "source_status": "fixture",
+  "abi_result": {
+    "available": true,
+    "is_pool": true,
+    "functions": [
+      "getReserves",
+      "swap",
+      "sync"
+    ],
+    "selectors": []
+  },
+  "bytecode": "0x6000630902f1ac600063022c0d9ff3",
+  "expected_signals": {
+    "pool_candidate": true
+  },
+  "notes": "Pool-like fixture for local classification path tests only."
+}

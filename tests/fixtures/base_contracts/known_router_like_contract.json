@@ -1,0 +1,22 @@
+{
+  "name": "Known Router-like Contract Fixture",
+  "chain": "base",
+  "fixture_type": "router_like",
+  "address": "0x6666666666666666666666666666666666666666",
+  "source_status": "fixture",
+  "abi_result": {
+    "available": true,
+    "is_router": true,
+    "functions": [
+      "swapExactTokensForTokens",
+      "swapExactETHForTokens",
+      "getAmountsOut"
+    ],
+    "selectors": []
+  },
+  "bytecode": "0x60006338ed1739600063f305d719f3",
+  "expected_signals": {
+    "router_candidate": true
+  },
+  "notes": "Router-like fixture for local candidate tagging only."
+}

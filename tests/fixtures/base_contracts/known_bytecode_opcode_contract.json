@@ -1,0 +1,20 @@
+{
+  "name": "Known Bytecode Opcode Fixture",
+  "chain": "base",
+  "fixture_type": "bytecode_opcode",
+  "address": "0x8888888888888888888888888888888888888888",
+  "source_status": "fixture",
+  "abi_result": {
+    "available": false,
+    "functions": [],
+    "selectors": []
+  },
+  "bytecode": "0x6000f16000f46000ff600063a9059cbbf3",
+  "expected_signals": {
+    "delegatecall_present": true,
+    "selfdestruct_present": true,
+    "external_call_present": true,
+    "selector_candidate_present": true
+  },
+  "notes": "Opcode fixture for local signal extraction; opcode presence does not prove harmful behavior."
+}

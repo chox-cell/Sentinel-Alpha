@@ -1,0 +1,24 @@
+{
+  "name": "Known ERC721-like Contract Fixture",
+  "chain": "base",
+  "fixture_type": "erc721_like",
+  "address": "0x3333333333333333333333333333333333333333",
+  "source_status": "fixture",
+  "abi_result": {
+    "available": true,
+    "functions": [
+      "ownerOf",
+      "safeTransferFrom",
+      "setApprovalForAll",
+      "tokenURI",
+      "mint"
+    ],
+    "selectors": []
+  },
+  "bytecode": "0x6000636352211e60006342842e0ef3",
+  "expected_signals": {
+    "erc721_candidate": true,
+    "operator_approval_risk_possible": true
+  },
+  "notes": "ERC721-like fixture for local pattern checks only."
+}

@@ -1,0 +1,23 @@
+{
+  "name": "Known ERC1155-like Contract Fixture",
+  "chain": "base",
+  "fixture_type": "erc1155_like",
+  "address": "0x4444444444444444444444444444444444444444",
+  "source_status": "fixture",
+  "abi_result": {
+    "available": true,
+    "functions": [
+      "safeBatchTransferFrom",
+      "balanceOfBatch",
+      "setApprovalForAll",
+      "uri",
+      "mint"
+    ],
+    "selectors": []
+  },
+  "bytecode": "0x6000632eb2c2d66000634e1273f4f3",
+  "expected_signals": {
+    "erc1155_candidate": true
+  },
+  "notes": "ERC1155-like fixture for local deterministic candidate detection."
+}
