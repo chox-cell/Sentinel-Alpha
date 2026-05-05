@@ -12,5 +12,9 @@ Use this ledger to separate live facts from roadmap or source-dependent statemen
 | AgentKit-style example is available | live | `examples/agentkit-sentinel` in repository | "An AgentKit-style example is available in-repo." |
 | official provider coming next | roadmap | Internal roadmap docs | "Official provider coming next." |
 | Sandbox simulation workers | roadmap | Internal roadmap planning | "Sandbox simulation workers are on the roadmap (not live)." |
+| 47.1% of active agents are monitored | needs source | No approved citation in repo yet | "Observed monitoring penetration claims require verified external source before publication." |
+| unknown identity creates 80% higher risk | needs source | No approved citation in repo yet | "Unknown identity may increase uncertainty; percentage uplift claims require verified source." |
+| simulation is a strength signal, not a guarantee | roadmap | v5 roadmap posture and claims discipline | "Simulation is an additional strength signal, not a guarantee of safe outcomes." |
+| mempool sentiment is roadmap | roadmap | v5.9 Mempool / MEV Signal Layer planning | "Mempool sentiment is roadmap; not a live production signal today." |
 | Sentinel offers certainty of protection outcomes | forbidden | Conflicts with current product truth posture | "Sentinel provides risk signals to support decisions; outcomes are not guaranteed." |
 | SDK provides automatic settlement for x402 payments | forbidden | Conflicts with SDK behavior and trust docs | "Builders handle payment flow explicitly; SDK surfaces challenge/error handling." |
