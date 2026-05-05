@@ -162,6 +162,17 @@ def evaluate_contract_with_meta(contract_address: str, chain: str, context: dict
                     "fallback_mode": analysis["simulation"]["fallback_mode"],
                     "notes": analysis["simulation"]["notes"],
                 },
+                "intent_alignment": {
+                    "intent_alignment_status": analysis["intent_alignment"]["intent_alignment_status"],
+                    "intent_category": analysis["intent_alignment"]["intent_category"],
+                    "requested_action": analysis["intent_alignment"]["requested_action"],
+                    "unexpected_capability_detected": analysis["intent_alignment"]["unexpected_capability_detected"],
+                    "suspicious_reason": analysis["intent_alignment"]["suspicious_reason"],
+                    "policy_recommendation": analysis["intent_alignment"]["policy_recommendation"],
+                    "confidence_impact": analysis["intent_alignment"]["confidence_impact"],
+                    "fallback_mode": analysis["intent_alignment"]["fallback_mode"],
+                    "notes": analysis["intent_alignment"]["notes"],
+                },
             },
             "security_explanation": explanation,
             "fallback_mode": (

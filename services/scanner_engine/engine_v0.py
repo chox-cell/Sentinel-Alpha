@@ -4,6 +4,7 @@ from services.scanner_engine.adapters import get_viem_readiness, get_whatsabi_re
 from services.scanner_engine.asset_classification import classify_asset_type
 from services.scanner_engine.chain_support import get_chain_support
 from services.scanner_engine.erc20_heuristics import analyze_erc20_risk
+from services.scanner_engine.intent_alignment import analyze_intent_alignment
 from services.scanner_engine.nft_zora_heuristics import analyze_nft_zora_risk
 from services.scanner_engine.risk_explanation import build_risk_explanation
 from services.scanner_engine.simulation_boundary import analyze_simulation_risk
@@ -56,6 +57,8 @@ def analyzeContractRisk(input_data: dict) -> dict:
     abi_result = context.get("abi_result") if isinstance(context.get("abi_result"), dict) else {}
     simulation_request = context.get("simulation_request") if isinstance(context.get("simulation_request"), dict) else {}
     simulation_config = context.get("simulation_config") if isinstance(context.get("simulation_config"), dict) else {}
+    intent_payload = context.get("intent") if isinstance(context.get("intent"), dict) else None
+    requested_action = context.get("requested_action") if isinstance(context.get("requested_action"), str) else None
 
     extracted = extract_signals(contract_address, chain, context)
     signals = extracted["signals"]
@@ -120,6 +123,19 @@ def analyzeContractRisk(input_data: dict) -> dict:
     merged.update(nft_zora.get("signal_flags", {}))
     merged.update(simulation.get("signal_flags", {}))
     chain_support = get_chain_support(chain)
+    intent_alignment = analyze_intent_alignment(
+        intent=intent_payload,
+        requested_action=requested_action,
+        address=extracted["contract_address"],
+        chain=chain,
+        asset_result=asset,
+        source_proxy_admin_result=source_proxy_admin,
+        erc20_result=erc20,
+        nft_zora_result=nft_zora,
+        simulation_result=simulation,
+        chain_support_result=chain_support,
+    )
+    merged.update(intent_alignment.get("signal_flags", {}))
 
     return {
         "contract_address": extracted["contract_address"],
@@ -131,6 +147,7 @@ def analyzeContractRisk(input_data: dict) -> dict:
         "erc20": erc20,
         "nft_zora": nft_zora,
         "simulation": simulation,
+        "intent_alignment": intent_alignment,
         "viem_adapter": get_viem_readiness(),
         "whatsabi_adapter": get_whatsabi_readiness(),
         "chain_read": chain_read,
