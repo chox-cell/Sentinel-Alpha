@@ -96,6 +96,7 @@ Status: **Done**
 - v7.4 Manual Outreach Execution Checklist (manual-send protocol only; no outreach sent)
 - v7.5 Integration PR Draft Pack (x402/AgentKit/eliza docs-only; not submitted)
 - v7.6 Local Upstream PR Patch Sketches (docs/examples only; not submitted)
+- v8.0 AgentKit Sentinel Action Provider Prototype (local prototype only; not official provider)
 - Agent commerce vision truth-filter update (UCP/AP2/Trust Object remain roadmap context)
 
 ## 5) Cost discipline
