@@ -52,7 +52,11 @@ Track the first **20** builder targets. Replace placeholder rows **T01–T20** w
 - status: contacted
 - response_status: pending
 - next_follow_up_date: 2026-05-12
-- note: message used evidence-only wording and no safety guarantee claims
+- community_responder: giskard09 (community / adjacent builder; not confirmed AgentKit maintainer)
+- community_project_mentioned: Mycelium Trails
+- community_demo_url: https://argentum.rgiskard.xyz/trails/demo
+- community_signal: pre/post loop interest (Sentinel pre-check -> AgentKit action -> Mycelium Trails post-action record)
+- note: message used evidence-only wording and no safety guarantee claims; Mycelium Trails appears complementary post-execution accountability, not competing; no official AgentKit acceptance, no integration claim, and no partnership claim.
 
 - target: Coinbase AgentKit
 - source_url: https://github.com/coinbase/agentkit
