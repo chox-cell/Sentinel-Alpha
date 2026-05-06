@@ -15,6 +15,7 @@ Define a local Action Provider-style prototype for Sentinel risk checks in Agent
 - Official Coinbase AgentKit provider is not live.
 - This prototype is not submitted upstream.
 - This prototype is not runtime-integrated in Coinbase AgentKit.
+- Local demo script is example-only policy assistance, not wallet execution/signing.
 
 ## allow/review/block mapping
 
@@ -38,3 +39,4 @@ Current tracking issue URL: https://github.com/coinbase/agentkit/issues/1168
 - no live simulation claim
 - no honeypot detection claim
 - no guaranteed protection claim
+- no provider key or CDP key requirement for demo sketch usage

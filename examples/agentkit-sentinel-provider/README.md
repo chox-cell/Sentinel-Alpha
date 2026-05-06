@@ -34,9 +34,22 @@ const result = await sentinelRiskCheckAction({
 console.log(result.action, result.reason);
 ```
 
+## Run local demo
+
+```bash
+cd examples/agentkit-sentinel-provider
+npm install
+npm run demo
+```
+
+Demo output is policy assistance (`allow` / `review` / `block`) only.
+
 ## Notes
 
 - AgentKit-style example available in this repo.
 - official provider coming next.
 - local fixture evaluation: 8 fixtures / 8 passed / 0 review.
 - regression evidence only, not a security guarantee.
+- demo is local/example only.
+- no wallet action is executed.
+- no transaction is signed.
