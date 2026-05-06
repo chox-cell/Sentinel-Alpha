@@ -37,3 +37,5 @@ It is not an official AgentKit integration and not a Mycelium Trails integration
 - Mycelium Trails demo URL was externally mentioned by responder:
   https://argentum.rgiskard.xyz/trails/demo
 - Mention is context only and not an integrated dependency claim.
+- Composability reference draft:
+  `docs/17_growth/COMPOSABILITY_REFERENCE_DRAFT.md`
