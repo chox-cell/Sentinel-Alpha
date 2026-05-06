@@ -26,6 +26,9 @@ The prototype action function calls Sentinel `decideBeforeExecution(...)` and ma
 - `block`
 
 It returns a structured response with `notSecurityGuarantee: true`.
+An illustrative local sample output fixture is included under
+`examples/agentkit-sentinel-provider/examples/sample-output.json`.
+This fixture is sample-only and not live scan proof.
 
 ## Upstream path later
 

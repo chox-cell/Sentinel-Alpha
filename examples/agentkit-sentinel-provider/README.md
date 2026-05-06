@@ -44,6 +44,24 @@ npm run demo
 
 Demo output is policy assistance (`allow` / `review` / `block`) only.
 
+## Sample output fixture
+
+Sample output fixture path:
+
+`examples/sample-output.json`
+
+This sample output is illustrative only.
+It is not live scan proof.
+It is not a security guarantee.
+
+Output shape includes:
+
+- `action`
+- `reason`
+- `confidence`
+- `explanation`
+- `notSecurityGuarantee`
+
 ## Notes
 
 - AgentKit-style example available in this repo.

@@ -1,0 +1,14 @@
+{
+  "action": "review",
+  "reason": "Conservative sample: confidence is not high enough for automatic allow path.",
+  "confidence": "medium",
+  "explanation": [
+    "Sample fixture output for local demo documentation.",
+    "Policy guidance is allow/review/block, not execution certainty.",
+    "Use review path when context is incomplete."
+  ],
+  "notSecurityGuarantee": true,
+  "contract_address": "0x1111111111111111111111111111111111111111",
+  "chain": "base",
+  "sampleOnly": true
+}

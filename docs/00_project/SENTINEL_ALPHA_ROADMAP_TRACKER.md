@@ -99,6 +99,7 @@ Status: **Done**
 - v8.0 AgentKit Sentinel Action Provider Prototype (local prototype only; not official provider)
 - v8.1 Pre/Post Agent Action Loop Reference Pattern (architecture sketch only; no integrations claimed)
 - v8.2 Local AgentKit Sentinel Demo Script (local/test-only policy assistance demo)
+- v8.3 AgentKit Demo Output Fixture (deterministic sample output; illustrative only)
 - Agent commerce vision truth-filter update (UCP/AP2/Trust Object remain roadmap context)
 
 ## 5) Cost discipline
