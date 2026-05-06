@@ -72,6 +72,29 @@ Track the first **20** builder targets. Replace placeholder rows **T01–T20** w
 - demo_commit: 7c2190f
 - demo_path: examples/agentkit-sentinel-provider
 - demo_script: npm run demo
+- community_composability_alignment:
+  - responder_username: giskard09
+  - responder_role: community / adjacent builder
+  - responder_project: Mycelium Trails / argentum-core
+  - responder_not_confirmed_agentkit_maintainer: true
+  - responder_not_confirmed_x402_maintainer: true
+  - external_repo: https://github.com/giskard09/argentum-core
+  - external_doc_path: feat/mycelium-trails/docs/MYCELIUM_TRAILS_REFERENCE.md
+  - external_draft_url: https://github.com/giskard09/argentum-core/blob/feat/mycelium-trails/docs/MYCELIUM_TRAILS_REFERENCE.md
+  - signal_type: mutual documentation alignment / community composability signal
+  - observed_alignment:
+    - sentinel_decision_ref accepted as optional back-reference
+    - audit independence preserved between pre-decision and post-action records
+    - external Mycelium Trails reference draft complements COMPOSABILITY_REFERENCE_DRAFT.md
+    - end-to-end pattern confirmed as complete from both sides (Sentinel pre-check -> x402 payment authorization -> AgentKit action -> Mycelium Trails post-action record)
+    - same documentation boundaries confirmed on their side
+  - boundaries:
+    - documentation-only alignment
+    - not partnership
+    - not official integration
+    - not official AgentKit response
+    - not official x402 response
+    - not a security guarantee
 - note: message used evidence-only wording and no safety guarantee claims; demo is local-only, not official provider, no wallet execution/signing, and not a security guarantee.
 
 - target: elizaOS / eliza

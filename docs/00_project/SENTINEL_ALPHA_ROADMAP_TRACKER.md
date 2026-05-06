@@ -130,7 +130,7 @@ Status: **Done**
 - current HEAD: `97b39e3`
 - outreach targets: 20 planned (T01-T20 structure)
 - builders contacted: 3 verified (x402 Foundation / x402, Coinbase AgentKit, elizaOS / eliza issue outreach logged)
-- community/adjacent outreach signals: 1 observed (AgentKit thread; no official acceptance)
+- community/adjacent outreach signals: 2 observed (AgentKit thread + mutual Sentinel/Mycelium documentation alignment; no official AgentKit/x402 acceptance)
 - outreach follow-ups sent: 1 verified (AgentKit local demo follow-up comment)
 - SDK installs reported: not tracked yet (add when reliable source exists)
 - integrations started: 0 verified (no integration proof from outreach issue closures)
