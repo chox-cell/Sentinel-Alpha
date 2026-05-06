@@ -66,7 +66,13 @@ Track the first **20** builder targets. Replace placeholder rows **T01–T20** w
 - status: contacted
 - response_status: pending
 - next_follow_up_date: 2026-05-12
-- note: message used evidence-only wording and no safety guarantee claims
+- comment_type: local demo follow-up
+- follow_up_sent_at: 2026-05-06
+- follow_up_channel: GitHub Issue Comment
+- demo_commit: 7c2190f
+- demo_path: examples/agentkit-sentinel-provider
+- demo_script: npm run demo
+- note: message used evidence-only wording and no safety guarantee claims; demo is local-only, not official provider, no wallet execution/signing, and not a security guarantee.
 
 - target: elizaOS / eliza
 - source_url: https://github.com/elizaOS/eliza
