@@ -102,6 +102,7 @@ Status: **Done**
 - v8.3 AgentKit Demo Output Fixture (deterministic sample output; illustrative only)
 - v8.4 AgentKit Mini Landing Doc (two-minute prototype summary)
 - v8.5 Composability Reference Draft (reference architecture only; no integrations/partnership claims)
+- v8.5 Sentinel / Mycelium Composability alignment update (external community draft alignment; docs-only)
 - Agent commerce vision truth-filter update (UCP/AP2/Trust Object remain roadmap context)
 
 ## 5) Cost discipline

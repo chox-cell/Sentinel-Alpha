@@ -1,60 +1,89 @@
-# Composability Reference Draft: Pre-Decision, Payment Authorization, Execution, and Post-Action Proof
+# Sentinel + x402 + AgentKit + Mycelium Trails — Composability Reference Draft
 
 ## 1) Purpose
 
 Reference architecture only.
 No partnership claim and no integration claim.
 
-## 2) Layer responsibilities
+## 2) External reference
 
-- Sentinel Alpha: pre-execution risk decision / allow-review-block policy assistance
-- x402: machine-payable API / payment authorization context
+External community draft URL:
+https://github.com/giskard09/argentum-core/blob/feat/mycelium-trails/docs/MYCELIUM_TRAILS_REFERENCE.md
+
+This is an external community draft, not dependency wiring for Sentinel runtime.
+
+## 3) Naming note
+
+- Canonical product name is Sentinel Alpha / BeezShield.
+- “Sentinel” is acceptable as short architecture name.
+- Do not use AgentShield as our product name.
+
+## 4) Layer responsibilities
+
+- Sentinel Alpha / BeezShield: pre-execution risk decision / allow-review-block policy assistance
+- x402 / Lightning: machine-payable API / payment authorization context
 - AgentKit-style execution layer: action execution after policy permits
 - Mycelium Trails-style post-action layer: signed accountability record after execution
 
-## 3) Temporal boundary
+## 5) Temporal boundary
 
 - before execution: should this agent act?
 - during request/payment: is access/payment authorized?
 - execution: perform action
 - after execution: what happened and can it be verified?
 
-## 4) Audit independence
+## 6) Audit independence
 
-Pre-decision and post-action proof should remain independent layers:
+Pre-decision and post-action proof should remain independent layers.
+Sentinel should not be both the pre-decision engine and the post-action accountability writer.
 
 - Sentinel pre-decision evaluates whether an action should proceed.
 - Post-action trail records what happened after execution.
 - Independent layers reduce circular self-attestation risk and improve auditability.
 
-## 5) Example flow
+## 7) Reference flow
 
-Sentinel pre-check -> x402 payment authorization -> AgentKit action -> post-action trail record
+Sentinel pre-check -> x402 payment authorization -> AgentKit action -> Mycelium Trails post-action record
 
-## 6) Sentinel-side example
+## 8) Sentinel-side decision shape
 
 - contract_address
+- chain
 - action: allow/review/block
 - reason
 - confidence
+- explanation
 - notSecurityGuarantee: true
-- sample output reference:
-  `examples/agentkit-sentinel-provider/examples/sample-output.json`
+- optional sentinel_decision_ref
 
-## 7) Placeholder trail-side schema
+Reference sample output:
+`examples/agentkit-sentinel-provider/examples/sample-output.json`
 
-Community-suggested / external trail-side example:
+## 9) Trail-side schema alignment
 
+Community-suggested / external trail-side example fields:
+
+- trail_id
 - agent_id
-- action
+- service
+- operation
+- action_ref
 - payment_hash
-- claims
 - timestamp
-- signature
+- signature_ref
+- claims
+- success
 
-This is schema context only and does not claim Mycelium integration is live.
+Field notes:
 
-## 8) Non-goals
+- action_ref: cross-surface linking key
+- payment_hash: payment/settlement reference
+- sentinel_decision_ref: optional pre-decision payload/hash reference
+- claims: runtime context observed after execution
+
+This is schema context only and does not claim Mycelium integration.
+
+## 10) Non-goals
 
 - no partnership claim
 - no official integration claim
@@ -63,7 +92,10 @@ This is schema context only and does not claim Mycelium integration is live.
 - no Mycelium integration claim
 - no security guarantee
 - no live simulation claim
+- no wallet execution claim
+- no signing claim
 
-## 9) Open collaboration note
+## 11) Open collaboration note
 
 This draft can be refined if the external trail-side builder wants to contribute schema/example details.
+Any cross-reference remains documentation-only unless future explicit agreement happens.

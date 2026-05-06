@@ -39,3 +39,4 @@ It is not an official AgentKit integration and not a Mycelium Trails integration
 - Mention is context only and not an integrated dependency claim.
 - Composability reference draft:
   `docs/17_growth/COMPOSABILITY_REFERENCE_DRAFT.md`
+- The composability draft is documentation-only and does not imply partnership/integration.
