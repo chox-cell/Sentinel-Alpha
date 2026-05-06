@@ -34,6 +34,8 @@ This fixture is sample-only and not live scan proof.
 
 If maintainers request it, this prototype can be converted into a tiny docs/example PR.
 Current tracking issue URL: https://github.com/coinbase/agentkit/issues/1168
+Quick maintainer-facing summary is available at
+`docs/17_growth/AGENTKIT_SENTINEL_MINI_LANDING.md`.
 
 ## Safety constraints
 

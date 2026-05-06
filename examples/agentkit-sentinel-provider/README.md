@@ -71,3 +71,9 @@ Output shape includes:
 - demo is local/example only.
 - no wallet action is executed.
 - no transaction is signed.
+
+## Mini landing doc
+
+See:
+
+`docs/17_growth/AGENTKIT_SENTINEL_MINI_LANDING.md`
