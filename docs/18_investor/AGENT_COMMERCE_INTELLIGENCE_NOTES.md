@@ -64,3 +64,23 @@ This is roadmap only, not live runtime behavior.
 - UCP/AP2 are roadmap context, not runtime integration.
 - Trust Object Model is roadmap only.
 - Ema-Bee is a future concept only.
+
+## 8) Useful vision retained
+
+- agentic commerce increases need for pre-execution trust gates.
+- autonomous agents need policy layers before contracts/assets/payments/tools.
+- BeezShield builds guardians, not traders.
+- Sentinel Alpha starts with onchain contract/asset execution safety.
+- Trust Objects are future commerce safety roadmap.
+- UCP/AP2 are roadmap commerce context only.
+
+## 9) Unsafe claim corrections
+
+| Unsafe claim | Safe wording |
+|---|---|
+| Prompt injection defense | future middleware/intent-boundary context; not live prevention claim |
+| Honeypot detection | simulation/heuristic roadmap; no detection guarantee |
+| Central Bank of Trust | guardian layer for autonomous execution |
+| tax every autonomous action | usage-based risk decision pricing |
+| UCP/AP2 native integration | roadmap context, not runtime integration |
+| global reputation registry | ERC-8004 identity live; broader reputation/validation roadmap |
