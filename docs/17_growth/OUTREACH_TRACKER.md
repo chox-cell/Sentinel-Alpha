@@ -53,3 +53,23 @@ Track the first **20** builder targets. Replace placeholder rows **T01–T20** w
 - response_status: pending
 - next_follow_up_date: 2026-05-12
 - note: message used evidence-only wording and no safety guarantee claims
+
+- target: Coinbase AgentKit
+- source_url: https://github.com/coinbase/agentkit
+- channel: GitHub Issue
+- issue_url: https://github.com/coinbase/agentkit/issues/1168
+- sent_at: 2026-05-05
+- status: contacted
+- response_status: pending
+- next_follow_up_date: 2026-05-12
+- note: message used evidence-only wording and no safety guarantee claims
+
+- target: elizaOS / eliza
+- source_url: https://github.com/elizaOS/eliza
+- channel: GitHub Issue
+- issue_url: https://github.com/elizaOS/eliza/issues/7396
+- sent_at: 2026-05-05
+- status: contacted
+- response_status: pending
+- next_follow_up_date: 2026-05-12
+- note: message used evidence-only wording and no safety guarantee claims
