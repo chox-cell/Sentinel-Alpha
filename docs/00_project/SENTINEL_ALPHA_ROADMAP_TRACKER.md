@@ -123,4 +123,4 @@ Status: **Done**
 - outreach targets: 20 planned (T01-T20 structure)
 - builders contacted: 3 verified (x402 Foundation / x402, Coinbase AgentKit, elizaOS / eliza issue outreach logged)
 - SDK installs reported: not tracked yet (add when reliable source exists)
-- integrations started: not tracked yet (add when verified)
+- integrations started: 0 verified (no integration proof from outreach issue closures)

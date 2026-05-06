@@ -70,6 +70,6 @@ Track the first **20** builder targets. Replace placeholder rows **T01–T20** w
 - issue_url: https://github.com/elizaOS/eliza/issues/7396
 - sent_at: 2026-05-05
 - status: contacted
-- response_status: pending
-- next_follow_up_date: 2026-05-12
-- note: message used evidence-only wording and no safety guarantee claims
+- response_status: closed (completed)
+- next_follow_up_date: hold
+- note: message used evidence-only wording and no safety guarantee claims; issue closed as completed by lalalune with labels bug, security; no written acceptance/rejection observed; visibility signal only, not integration or partnership.
