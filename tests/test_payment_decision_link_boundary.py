@@ -10,6 +10,7 @@ SAMPLE = Path("examples/agentkit-sentinel-provider/examples/sample-output.json")
 DOC_RECEIPT = Path("docs/16_launch/SENTINEL_DECISION_RECEIPT.md")
 DOC_TRUST_LOOP = Path("docs/17_growth/AGENT_TRUST_LOOP_REFERENCE.md")
 DOC_COMPOSABILITY = Path("docs/17_growth/COMPOSABILITY_REFERENCE_DRAFT.md")
+CLAIMS_LEDGER = Path("docs/18_investor/CLAIMS_LEDGER.md")
 
 
 def _load(path: Path, name: str):
@@ -123,6 +124,9 @@ def test_sample_docs_and_service_alignment():
     assert "payment_decision_link_ref" in sample
     assert sample["automatic_settlement_claimed"] is False
 
+    service_text = SERVICE.read_text(encoding="utf-8")
+    assert "\"payment_decision_link_status\"" in service_text
+
     text = DOC_RECEIPT.read_text(encoding="utf-8").lower()
     assert "no automatic x402 settlement claim" in text
     assert "not persisted by default" in text
@@ -133,6 +137,9 @@ def test_sample_docs_and_service_alignment():
 
     assert "payment_decision_link_ref" in DOC_TRUST_LOOP.read_text(encoding="utf-8")
     assert "payment_decision_link_ref" in DOC_COMPOSABILITY.read_text(encoding="utf-8")
+    ledger = CLAIMS_LEDGER.read_text(encoding="utf-8").lower()
+    assert "payment_decision_link_ref boundary exists locally" in ledger
+    assert "do not claim that payment-decision link metadata performs settlement execution" in ledger
 
 
 def test_forbidden_phrases_absent_with_negation_exception():

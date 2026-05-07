@@ -12,6 +12,7 @@ from services.scanner_engine import (
 )
 from services.scanner_engine.decision_receipt import build_decision_receipt
 from services.scanner_engine.decision_receipt_store import get_decision_receipt_store_status
+from services.scanner_engine.payment_decision_link import get_payment_decision_link_status
 
 def evaluate_contract(contract_address: str, chain: str, context: dict | None = None) -> dict:
     result = evaluate_contract_with_meta(contract_address, chain, context)
@@ -254,6 +255,11 @@ def evaluate_contract_with_meta(contract_address: str, chain: str, context: dict
                 },
             ),
             "decision_receipt_store": get_decision_receipt_store_status(),
+            "payment_decision_link_status": {
+                key: value
+                for key, value in get_payment_decision_link_status().items()
+                if key != "private_key_required"
+            },
             "fallback_mode": (
                 not (analysis["viem_adapter"]["configured"] and analysis["whatsabi_adapter"]["configured"])
                 or analysis["chain_read"]["chain_read_status"] != "ok"
