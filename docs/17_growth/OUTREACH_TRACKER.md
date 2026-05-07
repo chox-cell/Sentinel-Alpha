@@ -117,6 +117,23 @@ Track the first **20** builder targets. Replace placeholder rows **T01–T20** w
       - three fixture trails reported as anchored on Arbitrum One and Base mainnet with public verifiability context
       - explicit offer to contribute the Mycelium section to the Agent Trust Loop reference doc
       - boundaries repeated: no partnership claim, no official integration claim, composability pattern only
+    - concrete_mycelium_section_content_received:
+      - section_target_doc: docs/17_growth/AGENT_TRUST_LOOP_REFERENCE.md
+      - section_title: Mycelium Trails-style Post-Action Section — External Community Contribution
+      - trailrecord_fields_shared:
+        - trail_id
+        - agent_id
+        - action_ref
+        - payment_hash
+        - service
+        - operation
+        - success
+        - anchors.arbitrum.chain_id/block/tx_hash
+        - anchors.base.chain_id/block/tx_hash
+        - timestamp
+      - action_ref_algorithm: SHA-256(agent_id:action_type:scope:timestamp)
+      - verification_endpoint_shape: GET https://argentum.rgiskard.xyz/trails/verify?payment_hash=<hex>
+      - verification_surface_note: public endpoint with anchors on Arbitrum One and Base mainnet; treated as external/community verification surface
     - classification: Mycelium Trails community documentation contribution signal (documentation-only)
     - boundaries:
       - not partnership

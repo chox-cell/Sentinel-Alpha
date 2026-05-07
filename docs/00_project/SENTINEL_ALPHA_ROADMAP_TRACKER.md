@@ -104,6 +104,7 @@ Status: **Done**
 - v8.5 Composability Reference Draft (reference architecture only; no integrations/partnership claims)
 - v8.5 Sentinel / Mycelium Composability alignment update (external community draft alignment; docs-only)
 - v8.6 Agent Trust Loop Reference Pattern (ATCP/Sentinel/x402/AgentKit/Mycelium composability map; docs-only)
+- v8.7 Mycelium section contribution update (external community-contributed post-action section in Agent Trust Loop doc; docs-only)
 - v9.0 Sentinel Decision Receipt Boundary (local deterministic decision receipt object; no persistence/integration activation)
 - v9.1 Local Decision Receipt Store Boundary (disabled-by-default sanitized store boundary; no DB/Redis/filesystem writes by default)
 - v9.2 x402 Payment Decision Link Boundary (local deterministic link object; no automatic settlement and no external integration activation)

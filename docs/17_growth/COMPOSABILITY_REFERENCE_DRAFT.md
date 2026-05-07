@@ -104,3 +104,8 @@ This is schema context only and does not claim Mycelium integration.
 
 This draft can be refined if the external trail-side builder wants to contribute schema/example details.
 Any cross-reference remains documentation-only unless future explicit agreement happens.
+
+See `docs/17_growth/AGENT_TRUST_LOOP_REFERENCE.md` section:
+`Mycelium Trails-style Post-Action Section — External Community Contribution`
+for contributed TrailRecord schema context and verification surface notes.
+This remains documentation-only composability guidance with no partnership or official integration claim.
