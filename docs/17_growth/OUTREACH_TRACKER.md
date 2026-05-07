@@ -95,6 +95,36 @@ Track the first **20** builder targets. Replace placeholder rows **T01–T20** w
     - not official AgentKit response
     - not official x402 response
     - not a security guarantee
+  - mycelium_contribution_signal:
+    - responder_username: giskard09
+    - responder_role: community / adjacent builder
+    - responder_project: Mycelium Trails / argentum-core
+    - responder_not_confirmed_agentkit_maintainer: true
+    - responder_not_confirmed_x402_maintainer: true
+    - responder_not_confirmed_stripe_maintainer: true
+    - external_doc_path: feat/mycelium-trails/docs/MYCELIUM_TRAILS_REFERENCE.md
+    - related_external_issue: https://github.com/stripe/ai/issues/356
+    - related_contributors_mentioned:
+      - aeoess
+      - jagmarques
+    - anchors_mentioned:
+      - Arbitrum One
+      - Base mainnet
+    - observed_summary:
+      - layered framing holds with distinct layer questions and no coupling requirement
+      - TrailRecords occupy the post-action slot in their reference framing
+      - action_ref links APS receipt, asqav wire format, and on-chain record in their fixture
+      - three fixture trails reported as anchored on Arbitrum One and Base mainnet with public verifiability context
+      - explicit offer to contribute the Mycelium section to the Agent Trust Loop reference doc
+      - boundaries repeated: no partnership claim, no official integration claim, composability pattern only
+    - classification: Mycelium Trails community documentation contribution signal (documentation-only)
+    - boundaries:
+      - not partnership
+      - not official integration
+      - not official AgentKit response
+      - not official x402 response
+      - not Stripe endorsement
+      - not a security guarantee
 - note: message used evidence-only wording and no safety guarantee claims; demo is local-only, not official provider, no wallet execution/signing, and not a security guarantee.
 
 - target: elizaOS / eliza
