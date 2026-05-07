@@ -61,6 +61,15 @@ These references are deterministic for equivalent sanitized inputs and remain lo
 - No official integration claim.
 - No partnership claim.
 
+## 6.1) Local Decision Receipt Store boundary (v9.1)
+
+- A disabled-by-default local Decision Receipt Store boundary is available for future local history usage.
+- Default behavior remains `not_persisted` with no DB requirement, no Redis requirement, and no filesystem requirement.
+- No default write is performed; write status remains `not_run` unless an explicit in-memory test backend is passed.
+- Future local storage mode is limited to sanitized receipt records only.
+- No raw contract addresses or raw secrets are allowed in store records.
+- No raw secrets are allowed in store records.
+
 ## 7) Safety boundaries
 
 - Not a security guarantee.
@@ -72,3 +81,5 @@ These references are deterministic for equivalent sanitized inputs and remain lo
 
 In future documentation-only reference patterns, `sentinel_decision_ref` and `action_ref` can be linked to post-action trail fields such as `action_ref`, `payment_hash`, `claims`, and optional `trace_id`/`receipt_id`.
 This note is composability context only and does not assert any official live integration.
+
+The local store boundary prepares `sentinel_decision_ref` auditability context without enabling runtime DB writes or managed service activation.

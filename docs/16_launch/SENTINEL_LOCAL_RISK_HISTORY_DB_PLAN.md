@@ -82,6 +82,7 @@ This stage is docs/schema planning only and does not enable runtime DB dependenc
 - v6.3.2 disabled adapter boundary exists in `services/risk_history/adapter.py` with runtime writes still off by default.
 - v6.3.2 write-through optional in a future gated stage.
 - v6.3.3 dashboard/API analytics later.
+- v9.1 disabled Decision Receipt Store boundary exists in `services/scanner_engine/decision_receipt_store.py` for sanitized receipt history prep.
 - migration execution is manual/future only.
 
 ## 7) Upgrade triggers
@@ -106,6 +107,8 @@ This stage is docs/schema planning only and does not enable runtime DB dependenc
 - `DATABASE_URL` is not required yet.
 - Supabase is postponed and not default in current runtime posture.
 - runtime DB writes are still disabled in current implementation.
+- Decision receipts are not persisted by default; v9.1 store boundary remains disabled-by-default.
+- No raw contract addresses or raw secrets are allowed in receipt storage records.
 - Source / ABI cache boundary is disabled by default.
 - managed Redis is postponed by default.
 - no secrets/API keys/raw headers are cached.

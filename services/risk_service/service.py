@@ -11,6 +11,7 @@ from services.scanner_engine import (
     normalizeContractAddress,
 )
 from services.scanner_engine.decision_receipt import build_decision_receipt
+from services.scanner_engine.decision_receipt_store import get_decision_receipt_store_status
 
 def evaluate_contract(contract_address: str, chain: str, context: dict | None = None) -> dict:
     result = evaluate_contract_with_meta(contract_address, chain, context)
@@ -252,6 +253,7 @@ def evaluate_contract_with_meta(contract_address: str, chain: str, context: dict
                     "receipt_version": "v1",
                 },
             ),
+            "decision_receipt_store": get_decision_receipt_store_status(),
             "fallback_mode": (
                 not (analysis["viem_adapter"]["configured"] and analysis["whatsabi_adapter"]["configured"])
                 or analysis["chain_read"]["chain_read_status"] != "ok"
