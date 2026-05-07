@@ -103,6 +103,7 @@ Status: **Done**
 - v8.4 AgentKit Mini Landing Doc (two-minute prototype summary)
 - v8.5 Composability Reference Draft (reference architecture only; no integrations/partnership claims)
 - v8.5 Sentinel / Mycelium Composability alignment update (external community draft alignment; docs-only)
+- v8.6 Agent Trust Loop Reference Pattern (ATCP/Sentinel/x402/AgentKit/Mycelium composability map; docs-only)
 - Agent commerce vision truth-filter update (UCP/AP2/Trust Object remain roadmap context)
 
 ## 5) Cost discipline
@@ -130,7 +131,7 @@ Status: **Done**
 - current HEAD: `97b39e3`
 - outreach targets: 20 planned (T01-T20 structure)
 - builders contacted: 3 verified (x402 Foundation / x402, Coinbase AgentKit, elizaOS / eliza issue outreach logged)
-- community/adjacent outreach signals: 2 observed (AgentKit thread + mutual Sentinel/Mycelium documentation alignment; no official AgentKit/x402 acceptance)
+- community/adjacent outreach signals: 3 observed (AgentKit thread + Sentinel/Mycelium documentation alignment + ATCP boundary-layer discussion signal; no official AgentKit/x402/Mycelium/ATCP acceptance)
 - outreach follow-ups sent: 1 verified (AgentKit local demo follow-up comment)
 - SDK installs reported: not tracked yet (add when reliable source exists)
 - integrations started: 0 verified (no integration proof from outreach issue closures)

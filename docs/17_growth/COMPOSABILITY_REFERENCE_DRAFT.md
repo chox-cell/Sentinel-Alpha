@@ -20,6 +20,7 @@ This is an external community draft, not dependency wiring for Sentinel runtime.
 
 ## 4) Layer responsibilities
 
+- ATCP-style tool pre-flight layer (community signal context): tool/API boundary policy checks before contract-level risk checks
 - Sentinel Alpha / BeezShield: pre-execution risk decision / allow-review-block policy assistance
 - x402 / Lightning: machine-payable API / payment authorization context
 - AgentKit-style execution layer: action execution after policy permits
@@ -43,7 +44,7 @@ Sentinel should not be both the pre-decision engine and the post-action accounta
 
 ## 7) Reference flow
 
-Sentinel pre-check -> x402 payment authorization -> AgentKit action -> Mycelium Trails post-action record
+ATCP tool pre-flight -> Sentinel pre-check -> x402 payment authorization -> AgentKit action -> Mycelium Trails post-action record
 
 ## 8) Sentinel-side decision shape
 
@@ -80,6 +81,7 @@ Field notes:
 - payment_hash: payment/settlement reference
 - sentinel_decision_ref: optional pre-decision payload/hash reference
 - claims: runtime context observed after execution
+- trace_id or receipt_id: optional tool-boundary receipt reference
 
 This is schema context only and does not claim Mycelium integration.
 
@@ -90,6 +92,7 @@ This is schema context only and does not claim Mycelium integration.
 - no official AgentKit provider claim
 - no official x402 integration claim
 - no Mycelium integration claim
+- no ATCP integration claim
 - no security guarantee
 - no live simulation claim
 - no wallet execution claim
