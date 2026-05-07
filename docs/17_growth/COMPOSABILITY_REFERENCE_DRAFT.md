@@ -48,13 +48,14 @@ ATCP tool pre-flight -> Sentinel pre-check -> x402 payment authorization -> Agen
 
 ## 8) Sentinel-side decision shape
 
-- contract_address
+- contract_address (runtime input)
 - chain
 - action: allow/review/block
 - reason
 - confidence
 - explanation
 - notSecurityGuarantee: true
+- local Decision Receipt boundary object (docs/16_launch/SENTINEL_DECISION_RECEIPT.md)
 - optional sentinel_decision_ref
 
 Reference sample output:
@@ -79,7 +80,7 @@ Field notes:
 
 - action_ref: cross-surface linking key
 - payment_hash: payment/settlement reference
-- sentinel_decision_ref: optional pre-decision payload/hash reference
+- sentinel_decision_ref: optional pre-decision payload/hash reference from the local deterministic Decision Receipt boundary object
 - claims: runtime context observed after execution
 - trace_id or receipt_id: optional tool-boundary receipt reference
 

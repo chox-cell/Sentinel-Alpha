@@ -104,6 +104,7 @@ Status: **Done**
 - v8.5 Composability Reference Draft (reference architecture only; no integrations/partnership claims)
 - v8.5 Sentinel / Mycelium Composability alignment update (external community draft alignment; docs-only)
 - v8.6 Agent Trust Loop Reference Pattern (ATCP/Sentinel/x402/AgentKit/Mycelium composability map; docs-only)
+- v9.0 Sentinel Decision Receipt Boundary (local deterministic decision receipt object; no persistence/integration activation)
 - Agent commerce vision truth-filter update (UCP/AP2/Trust Object remain roadmap context)
 
 ## 5) Cost discipline

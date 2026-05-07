@@ -8,6 +8,8 @@
     "Use review path when context is incomplete."
   ],
   "notSecurityGuarantee": true,
+  "sentinel_decision_ref": "6fced8b43e5f6c67f5b57cf6d1ddf7d2c68f6f727d6f5a6f11f22f25cf84a3e6",
+  "action_ref": "e1a70f112f7407d4124d46f867f6b8ec8d5ef8cbde8dbe37d627ca2a9802de4d",
   "contract_address": "0x1111111111111111111111111111111111111111",
   "chain": "base",
   "sampleOnly": true

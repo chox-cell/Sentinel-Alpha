@@ -10,6 +10,7 @@ from services.scanner_engine import (
     buildRiskExplanation,
     normalizeContractAddress,
 )
+from services.scanner_engine.decision_receipt import build_decision_receipt
 
 def evaluate_contract(contract_address: str, chain: str, context: dict | None = None) -> dict:
     result = evaluate_contract_with_meta(contract_address, chain, context)
@@ -215,6 +216,42 @@ def evaluate_contract_with_meta(contract_address: str, chain: str, context: dict
                 },
             },
             "security_explanation": explanation,
+            "decision_receipt": build_decision_receipt(
+                response={
+                    "decision": {
+                        "action": action,
+                        "confidence": confidence,
+                    },
+                    "risk_metrics": {
+                        "score": score,
+                    },
+                    "signals": signals,
+                    "meta": {
+                        "security_explanation": explanation,
+                    },
+                    "attestation": attestation,
+                },
+                request_context={
+                    "contract_address": analysis["contract_address"],
+                    "chain": analysis["chain"],
+                    "requested_action": (
+                        context.get("requested_action")
+                        if isinstance(context, dict) and isinstance(context.get("requested_action"), str)
+                        else "unknown"
+                    ),
+                    "intent": (
+                        context.get("intent")
+                        if isinstance(context, dict) and isinstance(context.get("intent"), dict)
+                        else None
+                    ),
+                    "policy_version": "sentinel-policy-v0",
+                    "trace_id": trace_id,
+                    "created_at": attestation.get("signed_at"),
+                },
+                config={
+                    "receipt_version": "v1",
+                },
+            ),
             "fallback_mode": (
                 not (analysis["viem_adapter"]["configured"] and analysis["whatsabi_adapter"]["configured"])
                 or analysis["chain_read"]["chain_read_status"] != "ok"

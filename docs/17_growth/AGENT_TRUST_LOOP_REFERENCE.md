@@ -26,7 +26,7 @@ ATCP tool pre-flight
 ## 4) Field alignment
 
 - action_ref: cross-surface linking key
-- sentinel_decision_ref: optional pre-decision payload/hash reference
+- sentinel_decision_ref: optional pre-decision payload/hash reference, produced from a local Sentinel Decision Receipt boundary object
 - payment_hash: payment/settlement reference
 - claims: runtime/post-action context
 - trace_id or receipt_id: optional tool-boundary receipt reference
@@ -53,6 +53,7 @@ Each layer should remain independently verifiable.
 ## 7) Current status
 
 - Sentinel prototype exists locally.
+- Sentinel Decision Receipt boundary exists locally for deterministic `sentinel_decision_ref` / `action_ref` references.
 - Mycelium Trails external draft exists.
 - ATCP signal is community discussion only.
 - No official integration exists.
