@@ -70,6 +70,15 @@ These references are deterministic for equivalent sanitized inputs and remain lo
 - No raw contract addresses or raw secrets are allowed in store records.
 - No raw secrets are allowed in store records.
 
+## 6.2) x402 Payment Decision Link boundary (v9.2)
+
+- A local deterministic payment-decision link boundary can connect `sentinel_decision_ref` / `action_ref` with optional `payment_request_id` and `payment_hash`.
+- The link object is boundary-only and not persisted by default.
+- No raw payment headers, signatures, bearer tokens, private keys, seed phrases, or wallet keys are included.
+- No automatic x402 settlement claim.
+- No official x402 integration claim.
+- `payment_decision_link_ref` is deterministic (SHA-256 over sanitized canonical linking payload).
+
 ## 7) Safety boundaries
 
 - Not a security guarantee.

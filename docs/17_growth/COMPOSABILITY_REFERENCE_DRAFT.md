@@ -79,6 +79,7 @@ Community-suggested / external trail-side example fields:
 Field notes:
 
 - action_ref: cross-surface linking key
+- payment_decision_link_ref: optional bridge reference between Sentinel pre-decision and payment authorization context
 - payment_hash: payment/settlement reference
 - sentinel_decision_ref: optional pre-decision payload/hash reference from the local deterministic Decision Receipt boundary object
 - claims: runtime context observed after execution

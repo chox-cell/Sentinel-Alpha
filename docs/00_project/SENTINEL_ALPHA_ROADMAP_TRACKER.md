@@ -106,6 +106,7 @@ Status: **Done**
 - v8.6 Agent Trust Loop Reference Pattern (ATCP/Sentinel/x402/AgentKit/Mycelium composability map; docs-only)
 - v9.0 Sentinel Decision Receipt Boundary (local deterministic decision receipt object; no persistence/integration activation)
 - v9.1 Local Decision Receipt Store Boundary (disabled-by-default sanitized store boundary; no DB/Redis/filesystem writes by default)
+- v9.2 x402 Payment Decision Link Boundary (local deterministic link object; no automatic settlement and no external integration activation)
 - Agent commerce vision truth-filter update (UCP/AP2/Trust Object remain roadmap context)
 
 ## 5) Cost discipline

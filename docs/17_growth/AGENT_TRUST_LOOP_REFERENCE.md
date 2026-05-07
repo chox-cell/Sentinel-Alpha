@@ -27,6 +27,7 @@ ATCP tool pre-flight
 
 - action_ref: cross-surface linking key
 - sentinel_decision_ref: optional pre-decision payload/hash reference, produced from a local Sentinel Decision Receipt boundary object
+- payment_decision_link_ref: optional bridge reference linking pre-decision context to payment authorization context
 - payment_hash: payment/settlement reference
 - claims: runtime/post-action context
 - trace_id or receipt_id: optional tool-boundary receipt reference
