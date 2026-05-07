@@ -78,6 +78,8 @@ These references are deterministic for equivalent sanitized inputs and remain lo
 - No automatic x402 settlement claim.
 - No official x402 integration claim.
 - `payment_decision_link_ref` is deterministic (SHA-256 over sanitized canonical linking payload).
+- The local AgentKit demo and sample fixture include this minimum shape for reference only:
+  `sentinel_decision_ref` -> `action_ref` -> `payment_decision_link_ref`.
 
 ## 7) Safety boundaries
 

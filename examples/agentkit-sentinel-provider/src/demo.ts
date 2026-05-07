@@ -14,6 +14,13 @@ async function runDemo() {
     confidence: result.confidence,
     explanation: result.explanation,
     notSecurityGuarantee: result.notSecurityGuarantee,
+    sentinel_decision_ref: result.sentinel_decision_ref,
+    action_ref: result.action_ref,
+    payment_decision_link_ref: result.payment_decision_link_ref,
+    payment_protocol: result.payment_protocol ?? "x402",
+    payment_status: result.payment_status ?? "unknown",
+    automatic_settlement_claimed: result.automatic_settlement_claimed ?? false,
+    demoOnly: result.demoOnly ?? true,
   };
 
   console.log(JSON.stringify(sanitized, null, 2));

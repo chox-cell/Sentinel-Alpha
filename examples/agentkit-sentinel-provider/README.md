@@ -61,6 +61,28 @@ Output shape includes:
 - `confidence`
 - `explanation`
 - `notSecurityGuarantee`
+- `sentinel_decision_ref`
+- `action_ref`
+- `payment_decision_link_ref`
+- `payment_protocol`
+- `payment_status`
+- `automatic_settlement_claimed`
+- `sampleOnly`
+
+## Minimum Verifiable Loop Output
+
+This local demo now shows a minimum verifiable loop output shape:
+
+- Sentinel decision policy result (`allow` / `review` / `block`)
+- Decision receipt references (`sentinel_decision_ref`, `action_ref`)
+- Payment decision link reference (`payment_decision_link_ref`) with optional payment context markers
+
+Boundaries:
+
+- no real x402 settlement is performed by this demo
+- no wallet execution/signing
+- not a security guarantee
+- local example only
 
 ## Notes
 

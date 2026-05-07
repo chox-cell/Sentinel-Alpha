@@ -56,6 +56,7 @@ Each layer should remain independently verifiable.
 - Sentinel prototype exists locally.
 - Sentinel Decision Receipt boundary exists locally for deterministic `sentinel_decision_ref` / `action_ref` references.
 - Sentinel Decision Receipt Store boundary exists as disabled-by-default local history preparation (sanitized-only, not persisted by default).
+- v9.3 local AgentKit demo now shows example-only output shape for Decision Receipt + Payment Decision Link references.
 - Mycelium Trails external draft exists.
 - ATCP signal is community discussion only.
 - No official integration exists.

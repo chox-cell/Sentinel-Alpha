@@ -29,6 +29,9 @@ It returns a structured response with `notSecurityGuarantee: true`.
 An illustrative local sample output fixture is included under
 `examples/agentkit-sentinel-provider/examples/sample-output.json`.
 This fixture is sample-only and not live scan proof.
+The local demo output now also includes Decision Receipt / payment link references:
+`sentinel_decision_ref`, `action_ref`, and `payment_decision_link_ref`
+with `automatic_settlement_claimed: false` for boundary clarity.
 
 ## Upstream path later
 

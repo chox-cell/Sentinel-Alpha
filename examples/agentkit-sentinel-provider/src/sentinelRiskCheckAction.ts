@@ -1,4 +1,5 @@
 import { createSentinelClient } from "@beezshield/sentinel";
+import { createHash } from "node:crypto";
 
 import type { SentinelRiskCheckInput, SentinelRiskCheckResult } from "./types.js";
 
@@ -35,6 +36,40 @@ export async function sentinelRiskCheckAction(input: SentinelRiskCheckInput): Pr
   const explanation =
     "Pre-execution risk decision mapped to allow/review/block policy assistance. Not a security guarantee.";
 
+  const chainForRef = String(chain || "base").toLowerCase();
+  const requestedActionForRef = String(input.requested_action || "unknown").toLowerCase();
+  const intentForRef = typeof input.intent === "string" ? input.intent : JSON.stringify(input.intent ?? "unknown");
+  const contractHash = createHash("sha256").update(String(input.contract_address).toLowerCase()).digest("hex");
+  const intentHash = createHash("sha256").update(intentForRef).digest("hex");
+  const actionRefPayload = JSON.stringify({
+    chain: chainForRef,
+    contract_address_hash: contractHash,
+    requested_action: requestedActionForRef,
+    intent_hash: intentHash,
+  });
+  const action_ref = createHash("sha256").update(actionRefPayload).digest("hex");
+  const sentinel_decision_ref = createHash("sha256")
+    .update(
+      JSON.stringify({
+        action_ref,
+        decision_action: action,
+        confidence,
+      })
+    )
+    .digest("hex");
+  const payment_decision_link_ref = createHash("sha256")
+    .update(
+      JSON.stringify({
+        sentinel_decision_ref,
+        action_ref,
+        payment_request_id: "demo-payment-request",
+        payment_hash: null,
+        payment_protocol: "x402",
+        payment_status: "unknown",
+      })
+    )
+    .digest("hex");
+
   return {
     action,
     reason,
@@ -42,5 +77,12 @@ export async function sentinelRiskCheckAction(input: SentinelRiskCheckInput): Pr
     sentinelDecision: decision,
     explanation,
     notSecurityGuarantee: true,
+    sentinel_decision_ref,
+    action_ref,
+    payment_decision_link_ref,
+    payment_protocol: "x402",
+    payment_status: "unknown",
+    automatic_settlement_claimed: false,
+    demoOnly: true,
   };
 }
