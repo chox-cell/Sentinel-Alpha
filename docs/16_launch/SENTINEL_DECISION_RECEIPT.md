@@ -80,6 +80,7 @@ These references are deterministic for equivalent sanitized inputs and remain lo
 - `payment_decision_link_ref` is deterministic (SHA-256 over sanitized canonical linking payload).
 - The local AgentKit demo and sample fixture include this minimum shape for reference only:
   `sentinel_decision_ref` -> `action_ref` -> `payment_decision_link_ref`.
+- Decision receipt fields can also appear in local trust-loop sample reports for documentation-only composability examples.
 
 ## 7) Safety boundaries
 

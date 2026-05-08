@@ -135,6 +135,12 @@ Track the first **20** builder targets. Replace placeholder rows **T01–T20** w
       - verification_endpoint_shape: GET https://argentum.rgiskard.xyz/trails/verify?payment_hash=<hex>
       - verification_surface_note: public endpoint with anchors on Arbitrum One and Base mainnet; treated as external/community verification surface
     - classification: Mycelium Trails community documentation contribution signal (documentation-only)
+    - review_feedback_and_verification_offer:
+      - reviewer: giskard09
+      - feedback: Mycelium layer responsibility, schema, action_ref algorithm, anchor fields, and independence framing were reviewed as accurate
+      - fixture_request: Trust Loop Report fixture requested as useful
+      - verification_offer: willing to verify Mycelium-side fields against the live verify endpoint shape once fixture exists
+      - collaboration_type: documentation-only community collaboration signal
     - boundaries:
       - not partnership
       - not official integration

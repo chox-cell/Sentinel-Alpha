@@ -1,0 +1,87 @@
+{
+  "report_type": "minimum_verifiable_trust_loop",
+  "version": "v9.4",
+  "sampleOnly": true,
+  "documentationOnly": true,
+  "notSecurityGuarantee": true,
+  "partnership_claimed": false,
+  "integration_claimed": false,
+  "official_endorsement_claimed": false,
+  "created_at": "2026-05-08T10:00:00Z",
+  "flow": {
+    "tool_preflight": {
+      "layer": "ATCP-style tool pre-flight",
+      "status": "placeholder",
+      "trace_id": "demo-tool-trace",
+      "receipt_id": "demo-tool-receipt",
+      "https_required": true,
+      "host_policy": "allowlist_required",
+      "auth_expectation": "required_if_tool_requires_auth",
+      "destructive_operation": false,
+      "external_integration_status": "not_integrated"
+    },
+    "sentinel_precheck": {
+      "layer": "Sentinel Alpha / BeezShield",
+      "decision_action": "review",
+      "sentinel_decision_ref": "6fced8b43e5f6c67f5b57cf6d1ddf7d2c68f6f727d6f5a6f11f22f25cf84a3e6",
+      "action_ref": "e1a70f112f7407d4124d46f867f6b8ec8d5ef8cbde8dbe37d627ca2a9802de4d",
+      "contract_address_hash": "b569321de72d0af89c2fb48a484de3fc9343f31600ae1f3e13d633cb48cbf816",
+      "confidence": "medium",
+      "notSecurityGuarantee": true,
+      "persistence_status": "not_persisted",
+      "external_integration_status": "not_integrated"
+    },
+    "payment_authorization": {
+      "layer": "x402 / Lightning payment authorization context",
+      "payment_decision_link_ref": "4ea1623eaee75db61f89f4cafe7f13f7e5ae16ad95e2fca0c16f6534382f7b6a",
+      "payment_protocol": "x402",
+      "payment_status": "unknown",
+      "payment_hash": null,
+      "automatic_settlement_claimed": false,
+      "external_integration_status": "not_integrated"
+    },
+    "execution": {
+      "layer": "AgentKit-style execution placeholder",
+      "execution_status": "not_executed",
+      "wallet_execution": false,
+      "transaction_signed": false,
+      "external_integration_status": "not_integrated"
+    },
+    "post_action_trail": {
+      "layer": "Mycelium Trails-style post-action record",
+      "contribution_source": "external/community section from giskard09",
+      "trail_id": "demo-trail-id",
+      "agent_id": "demo-agent",
+      "action_ref": "e1a70f112f7407d4124d46f867f6b8ec8d5ef8cbde8dbe37d627ca2a9802de4d",
+      "payment_hash": null,
+      "service": "demo-service",
+      "operation": "demo-operation",
+      "success": true,
+      "anchors": {
+        "arbitrum": {
+          "chain_id": 42161,
+          "block": 123456789,
+          "tx_hash": "0xaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+        },
+        "base": {
+          "chain_id": 8453,
+          "block": 234567890,
+          "tx_hash": "0xbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+        }
+      },
+      "verification_endpoint_shape": "GET https://argentum.rgiskard.xyz/trails/verify?payment_hash=<hex>",
+      "external_integration_status": "not_integrated",
+      "not_a_dependency": true
+    }
+  },
+  "disclaimers": [
+    "no partnership claim",
+    "no official integration claim",
+    "no Stripe/Coinbase/x402-foundation affiliation claim",
+    "no security guarantee",
+    "not audited; community-built infrastructure",
+    "composability pattern only",
+    "local sample only",
+    "no automatic x402 settlement"
+  ]
+}

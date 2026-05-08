@@ -109,3 +109,9 @@ See `docs/17_growth/AGENT_TRUST_LOOP_REFERENCE.md` section:
 `Mycelium Trails-style Post-Action Section — External Community Contribution`
 for contributed TrailRecord schema context and verification surface notes.
 This remains documentation-only composability guidance with no partnership or official integration claim.
+
+Sample trust loop report fixture (docs-only) is available at:
+`reports/trust_loop/minimum_verifiable_loop.sample.json`
+and
+`reports/trust_loop/minimum_verifiable_loop.sample.md`.
+These are local sample artifacts and do not indicate live integrations or partnerships.

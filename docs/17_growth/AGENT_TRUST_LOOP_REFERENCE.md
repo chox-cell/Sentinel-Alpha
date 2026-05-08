@@ -130,3 +130,12 @@ Each layer should remain independently verifiable.
 - no security guarantee
 - not audited; community-built infrastructure
 - composability pattern only
+
+## 10) Sample trust loop fixture (v9.4)
+
+Local documentation-only sample fixture is available at:
+
+- `reports/trust_loop/minimum_verifiable_loop.sample.json`
+- `reports/trust_loop/minimum_verifiable_loop.sample.md`
+
+This fixture shows the minimum verifiable loop shape (tool pre-flight placeholder -> Sentinel decision receipt context -> payment decision link context -> execution placeholder -> post-action trail placeholder) without live calls, wallet execution/signing, DB writes, partnership claims, or integration claims.
