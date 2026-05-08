@@ -130,3 +130,11 @@ Forbidden:
 - Failure modes must force fallback mode and confidence reduction behavior.
 - This does not enable live provider integration.
 - No API keys required for fake backend contract tests.
+
+## 13) v9.8 disabled wiring skeleton
+
+- A disabled-by-default ABI/source provider wiring skeleton exists for future activation readiness.
+- Skeleton status/config wiring can report `disabled`, `not_configured`, `unsupported_provider`, or `adapter_ready`.
+- Live provider calls remain disabled in skeleton mode.
+- No API keys are required by default.
+- Future activation still requires explicit founder approval and a completed decision record.

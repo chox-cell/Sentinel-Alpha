@@ -101,3 +101,9 @@ Upgrade from free/local mode only when one or more triggers occur:
 - this is gate/planning only; no live provider activation.
 - no paid providers by default remains unchanged.
 - real provider activation must pass fake backend contract tests first.
+
+## 12) ABI/source wiring skeleton posture (v9.8)
+
+- v9.8 adds disabled-by-default provider wiring skeleton/status for ABI/source lookup.
+- this is additive skeleton wiring only; live provider calls remain disabled.
+- runtime defaults remain unchanged and no API key is required by default.

@@ -19,6 +19,8 @@ It is a policy guardrail, not provider activation itself.
 
 - ABI/source provider activation plan (first candidate category):
   `docs/16_launch/ABI_SOURCE_PROVIDER_ACTIVATION_PLAN.md`
+- ABI/source disabled wiring skeleton step (pre-activation readiness):
+  `services/scanner_engine/abi_source_provider_config.py`
 - ABI/source provider
 - RPC/chain-read provider
 - simulation provider

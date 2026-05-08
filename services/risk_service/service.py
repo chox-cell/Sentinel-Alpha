@@ -128,6 +128,11 @@ def evaluate_contract_with_meta(contract_address: str, chain: str, context: dict
                     "abi_selector_count": analysis["abi_source"]["abi_selector_count"],
                     "source_fetch_error_type": analysis["abi_source"]["source_fetch_error_type"],
                     "provider_name": analysis["abi_source"]["provider_name"],
+                    "provider_runtime_status": {
+                        key: value
+                        for key, value in (analysis["abi_source"].get("provider_runtime_status") or {}).items()
+                        if key not in {"api_key_required", "private_key_required"}
+                    },
                     "confidence_impact": analysis["abi_source"]["confidence_impact"],
                     "fallback_mode": analysis["abi_source"]["fallback_mode"],
                     "notes": analysis["abi_source"]["notes"],

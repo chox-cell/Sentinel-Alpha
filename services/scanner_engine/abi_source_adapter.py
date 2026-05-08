@@ -1,6 +1,10 @@
 from __future__ import annotations
 
 from services.signals.validators import normalize_address
+from services.scanner_engine.abi_source_provider_config import (
+    get_abi_source_provider_config,
+    get_abi_source_provider_runtime_status,
+)
 
 SUPPORTED_CHAINS = {"base", "ethereum", "arbitrum", "optimism", "polygon", "zora"}
 
@@ -119,6 +123,8 @@ def analyze_abi_source_status(
 
     notes: list[str] = []
     source_fetch_error_type = None
+    provider_config = get_abi_source_provider_config(env=None, overrides=config)
+    provider_runtime_status = get_abi_source_provider_runtime_status(provider_config)
 
     enabled = config.get("enabled")
     if enabled in {False, 0, "0", "false", "False", "off", "OFF"}:
@@ -132,6 +138,7 @@ def analyze_abi_source_status(
             "provider_name": "none",
             "confidence_impact": "low_confidence_due_to_unavailable_source",
             "fallback_mode": True,
+            "provider_runtime_status": provider_runtime_status,
             "notes": [
                 "ABI/source provider is disabled by configuration.",
                 "No live verified-source lookup is performed by default.",
@@ -143,7 +150,9 @@ def analyze_abi_source_status(
     fake_backend_enabled = bool(provider_context.get("fake_backend")) or provider_name == "fake_backend"
     fake_backend_scenario = provider_context.get("scenario") or config.get("fake_backend_scenario")
     if fake_backend_enabled:
-        return _fake_backend_result(str(fake_backend_scenario or "invalid_response"))
+        out = _fake_backend_result(str(fake_backend_scenario or "invalid_response"))
+        out["provider_runtime_status"] = provider_runtime_status
+        return out
 
     if provider_name == "local_fixture":
         verified_status = str(provider_context.get("verified_source_status") or "unknown").strip().lower()
@@ -165,6 +174,7 @@ def analyze_abi_source_status(
             "provider_name": "local_fixture",
             "confidence_impact": "none" if abi_available else "low_confidence_due_to_unavailable_source",
             "fallback_mode": not abi_available,
+            "provider_runtime_status": provider_runtime_status,
             "notes": notes,
         }
 
@@ -180,9 +190,60 @@ def analyze_abi_source_status(
             "provider_name": "none",
             "confidence_impact": "low_confidence_due_to_unavailable_source",
             "fallback_mode": True,
+            "provider_runtime_status": provider_runtime_status,
             "notes": [
                 f"Unsupported chain for current ABI/source adapter boundary: {_chain}.",
                 "ABI/source provider is not configured by default.",
+            ],
+        }
+
+    provider_mode = str(provider_runtime_status.get("provider_mode") or "disabled")
+    if provider_mode in {"disabled", "not_configured", "unsupported_provider"}:
+        fetch_error = "unsupported_provider" if provider_mode == "unsupported_provider" else "not_configured"
+        mode_note = (
+            "ABI/source provider wiring skeleton is disabled by default."
+            if provider_mode == "disabled"
+            else "ABI/source provider wiring skeleton is enabled but provider name is missing."
+            if provider_mode == "not_configured"
+            else "ABI/source provider wiring skeleton has unsupported provider name."
+        )
+        return {
+            "source_provider_status": provider_mode,
+            "verified_source_status": "unknown",
+            "abi_available": "unknown",
+            "abi_function_names": [],
+            "abi_selector_count": 0,
+            "source_fetch_error_type": fetch_error,
+            "provider_name": provider_runtime_status.get("provider_name") or "none",
+            "confidence_impact": "low_confidence_due_to_unavailable_source",
+            "fallback_mode": True,
+            "provider_runtime_status": provider_runtime_status,
+            "notes": [
+                mode_note,
+                "ABI/source provider is not configured by default.",
+                "No live provider call is performed in skeleton mode.",
+                "No API key is required by default.",
+                "No full ABI coverage is claimed.",
+            ],
+        }
+
+    if provider_mode == "adapter_ready":
+        return {
+            "source_provider_status": "adapter_ready",
+            "verified_source_status": "unknown",
+            "abi_available": "unknown",
+            "abi_function_names": [],
+            "abi_selector_count": 0,
+            "source_fetch_error_type": "not_activated",
+            "provider_name": provider_runtime_status.get("provider_name"),
+            "confidence_impact": "low_confidence_due_to_unavailable_source",
+            "fallback_mode": True,
+            "provider_runtime_status": provider_runtime_status,
+            "notes": [
+                "ABI/source provider wiring skeleton is ready but live lookup is not activated.",
+                "No network call is performed in skeleton mode.",
+                "No API key is required by default.",
+                "No guaranteed source verification is claimed.",
             ],
         }
 
@@ -196,6 +257,7 @@ def analyze_abi_source_status(
         "provider_name": "none",
         "confidence_impact": "low_confidence_due_to_unavailable_source",
         "fallback_mode": True,
+        "provider_runtime_status": provider_runtime_status,
         "notes": [
             "ABI/source provider is not configured by default.",
             "No live verified-source lookup is performed unless explicitly configured.",
