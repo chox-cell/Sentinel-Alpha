@@ -100,3 +100,4 @@ Upgrade from free/local mode only when one or more triggers occur:
   `docs/16_launch/ABI_SOURCE_PROVIDER_ACTIVATION_PLAN.md`.
 - this is gate/planning only; no live provider activation.
 - no paid providers by default remains unchanged.
+- real provider activation must pass fake backend contract tests first.

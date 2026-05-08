@@ -112,6 +112,7 @@ Status: **Done**
 - v9.4 Trust Loop Report Fixture (local sample artifact for minimum verifiable loop shape; docs-only)
 - v9.5 Trust Loop Field Alignment v1 (documentation-only owner/purpose/privacy/integration status map)
 - v9.6 ABI/Source Provider Activation Plan v1 (gate/planning only; no provider activation or runtime default change)
+- v9.7 ABI/Source Provider Contract Tests with Fake Backend (test-only contract scenarios; no live provider activation)
 - Agent commerce vision truth-filter update (UCP/AP2/Trust Object remain roadmap context)
 
 ## 5) Cost discipline

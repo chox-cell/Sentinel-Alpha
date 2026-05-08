@@ -114,3 +114,19 @@ Forbidden:
 - approved_by
 - approved_at
 - rollback_owner
+
+## 12) v9.7 fake backend contract tests
+
+- Before any real provider activation, ABI/source boundary behavior must pass fake backend contract tests.
+- Fake backend scenarios validate success and failure behavior without live providers, API keys, network calls, or paid plans.
+- Required fake backend scenarios:
+  - `success_verified_source`
+  - `success_abi_only`
+  - `timeout`
+  - `rate_limited`
+  - `invalid_response`
+  - `provider_down`
+  - `unsupported_chain`
+- Failure modes must force fallback mode and confidence reduction behavior.
+- This does not enable live provider integration.
+- No API keys required for fake backend contract tests.

@@ -20,6 +20,88 @@ def _safe_function_names(abi_value: object) -> list[str]:
     return names
 
 
+def _fake_backend_result(scenario: str) -> dict:
+    scenario = str(scenario or "").strip().lower()
+    if scenario == "success_verified_source":
+        names = ["transfer", "approve", "balanceOf"]
+        return {
+            "source_provider_status": "adapter_ready",
+            "verified_source_status": "verified",
+            "abi_available": True,
+            "abi_function_names": names,
+            "abi_selector_count": len(names),
+            "source_fetch_error_type": None,
+            "provider_name": "fake_backend",
+            "confidence_impact": "none",
+            "fallback_mode": False,
+            "notes": [
+                "Fake backend contract test scenario: success_verified_source.",
+                "No external provider call was performed.",
+                "No full ABI coverage is claimed.",
+            ],
+        }
+
+    if scenario == "success_abi_only":
+        names = ["transfer", "totalSupply"]
+        return {
+            "source_provider_status": "adapter_ready",
+            "verified_source_status": "unverified",
+            "abi_available": True,
+            "abi_function_names": names,
+            "abi_selector_count": len(names),
+            "source_fetch_error_type": None,
+            "provider_name": "fake_backend",
+            "confidence_impact": "neutral",
+            "fallback_mode": False,
+            "notes": [
+                "Fake backend contract test scenario: success_abi_only.",
+                "No external provider call was performed.",
+                "No full verified-source coverage is claimed.",
+            ],
+        }
+
+    error_map = {
+        "timeout": "timeout",
+        "rate_limited": "rate_limited",
+        "invalid_response": "invalid_response",
+        "provider_down": "provider_down",
+        "unsupported_chain": "unsupported_chain",
+    }
+    if scenario in error_map:
+        return {
+            "source_provider_status": "not_configured",
+            "verified_source_status": "unknown",
+            "abi_available": "unknown",
+            "abi_function_names": [],
+            "abi_selector_count": 0,
+            "source_fetch_error_type": error_map[scenario],
+            "provider_name": "fake_backend",
+            "confidence_impact": "low_confidence_due_to_unavailable_source",
+            "fallback_mode": True,
+            "notes": [
+                f"Fake backend contract test scenario: {scenario}.",
+                "No external provider call was performed.",
+                "Fallback mode is expected for unavailable provider context.",
+            ],
+        }
+
+    return {
+        "source_provider_status": "not_configured",
+        "verified_source_status": "unknown",
+        "abi_available": "unknown",
+        "abi_function_names": [],
+        "abi_selector_count": 0,
+        "source_fetch_error_type": "invalid_response",
+        "provider_name": "fake_backend",
+        "confidence_impact": "low_confidence_due_to_unavailable_source",
+        "fallback_mode": True,
+        "notes": [
+            "Fake backend scenario was not recognized.",
+            "No external provider call was performed.",
+        ],
+    }
+
+
 def analyze_abi_source_status(
     address=None,
     chain=None,
@@ -58,6 +140,11 @@ def analyze_abi_source_status(
         }
 
     provider_name = str(provider_context.get("provider_name") or "none").strip().lower() or "none"
+    fake_backend_enabled = bool(provider_context.get("fake_backend")) or provider_name == "fake_backend"
+    fake_backend_scenario = provider_context.get("scenario") or config.get("fake_backend_scenario")
+    if fake_backend_enabled:
+        return _fake_backend_result(str(fake_backend_scenario or "invalid_response"))
+
     if provider_name == "local_fixture":
         verified_status = str(provider_context.get("verified_source_status") or "unknown").strip().lower()
         if verified_status not in {"verified", "unverified", "unavailable", "unknown"}:
