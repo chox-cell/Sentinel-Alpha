@@ -141,6 +141,24 @@ Track the first **20** builder targets. Replace placeholder rows **T01–T20** w
       - fixture_request: Trust Loop Report fixture requested as useful
       - verification_offer: willing to verify Mycelium-side fields against the live verify endpoint shape once fixture exists
       - collaboration_type: documentation-only community collaboration signal
+    - mycelium_field_validation_signal:
+      - reviewer: giskard09
+      - validation_scope: Trust Loop Report fixture post_action_trail section
+      - validated_fields:
+        - trail_id
+        - agent_id
+        - action_ref
+        - payment_hash
+        - service
+        - operation
+        - success
+        - anchors.arbitrum.chain_id/block/tx_hash
+        - anchors.base.chain_id/block/tx_hash
+        - verification_endpoint_shape
+      - sample_note: payment_hash null is correct for documentation-only sample
+      - live_flow_note: payment_hash is cross-surface key linking payment authorization context to post_action_trail
+      - outcome_note: independently verifiable loop without trusting either side
+      - signal_classification: external/community field validation signal only
     - boundaries:
       - not partnership
       - not official integration

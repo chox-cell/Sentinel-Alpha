@@ -30,6 +30,13 @@ Field alignment reference:
 - `payment_hash`: payment/settlement surface reference when available (null in this sample).
 - `trace_id` / `receipt_id`: optional tool-boundary references from pre-flight context.
 
+## External/community field validation signal
+
+- Mycelium-side `post_action_trail` field shape was externally/community validated by `giskard09` against their live verify endpoint shape.
+- This is not partnership or official integration.
+- `payment_hash` is null in this sample because this is documentation-only.
+- In a live flow, `payment_hash` links payment authorization context to `post_action_trail`.
+
 ## Boundaries
 
 - sample only

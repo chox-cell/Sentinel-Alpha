@@ -121,6 +121,9 @@ Each layer should remain independently verifiable.
 - `sentinel_decision_ref`: optional pre-decision reference; Mycelium may reference boundary fields but does not validate Sentinel authorization logic.
 - `payment_hash`: settlement/payment surface reference.
 - `claims`: runtime/post-action context if available.
+- External/community field validation signal received from `giskard09` confirms post-action field shape alignment against Mycelium verify endpoint shape.
+- `payment_hash` may be null in documentation-only samples; in live flows it acts as cross-surface payment-to-trail linkage.
+- This remains documentation-only/composability-only (no partnership and no official integration claim).
 
 ### Disclaimers
 
