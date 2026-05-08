@@ -17,6 +17,8 @@ It is a policy guardrail, not provider activation itself.
 
 ## 3) Provider categories
 
+- ABI/source provider activation plan (first candidate category):
+  `docs/16_launch/ABI_SOURCE_PROVIDER_ACTIVATION_PLAN.md`
 - ABI/source provider
 - RPC/chain-read provider
 - simulation provider

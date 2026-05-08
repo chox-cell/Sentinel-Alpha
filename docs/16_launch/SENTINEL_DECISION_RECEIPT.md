@@ -95,3 +95,6 @@ In future documentation-only reference patterns, `sentinel_decision_ref` and `ac
 This note is composability context only and does not assert any official live integration.
 
 The local store boundary prepares `sentinel_decision_ref` auditability context without enabling runtime DB writes or managed service activation.
+
+Related provider-gate planning for future ABI/source activation is documented in:
+`docs/16_launch/ABI_SOURCE_PROVIDER_ACTIVATION_PLAN.md`.

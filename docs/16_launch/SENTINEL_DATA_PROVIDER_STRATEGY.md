@@ -93,3 +93,10 @@ Upgrade from free/local mode only when one or more triggers occur:
 - no provider is activated by this step.
 - default remains no paid providers.
 - activation requires explicit founder approval, cost estimates, fallback tests, and rollback readiness.
+
+## 11) ABI/source activation plan posture (v9.6)
+
+- ABI/source activation planning is documented in
+  `docs/16_launch/ABI_SOURCE_PROVIDER_ACTIVATION_PLAN.md`.
+- this is gate/planning only; no live provider activation.
+- no paid providers by default remains unchanged.
