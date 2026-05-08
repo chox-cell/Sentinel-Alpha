@@ -138,3 +138,11 @@ Forbidden:
 - Live provider calls remain disabled in skeleton mode.
 - No API keys are required by default.
 - Future activation still requires explicit founder approval and a completed decision record.
+
+## 14) v9.9 provider config audit and `.env.example` placeholders
+
+- ABI/source placeholders are present in `.env.example` only.
+- Placeholders are config names only and keep provider disabled by default.
+- `.env` must never be modified by tests or documentation-only tasks.
+- Real provider keys are optional/future-only and not required now.
+- Real provider keys must remain in local `.env` or a secret manager only and must never be committed.

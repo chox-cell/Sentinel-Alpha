@@ -9,6 +9,8 @@ This policy protects local secret state and prevents accidental env leakage/muta
 - Tests must never commit `.env`.
 - Runtime and scripts must not print secret values.
 - `.env.example` is the only env template that may be edited for config names/placeholders.
+- `.env.example` may contain placeholders; `.env` must contain local secrets only and must never be mutated by tests.
+- Real provider keys stay in local `.env` or secret manager only; never commit provider keys to repo.
 
 ## Test design rules
 

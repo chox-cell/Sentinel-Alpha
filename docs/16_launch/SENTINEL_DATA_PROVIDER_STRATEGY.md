@@ -107,3 +107,9 @@ Upgrade from free/local mode only when one or more triggers occur:
 - v9.8 adds disabled-by-default provider wiring skeleton/status for ABI/source lookup.
 - this is additive skeleton wiring only; live provider calls remain disabled.
 - runtime defaults remain unchanged and no API key is required by default.
+
+## 13) ABI/source `.env.example` placeholder audit posture (v9.9)
+
+- v9.9 adds ABI/source placeholders in `.env.example` with provider disabled by default.
+- placeholders are config-only and do not enable provider activation.
+- keys are optional/future-only and not required now.

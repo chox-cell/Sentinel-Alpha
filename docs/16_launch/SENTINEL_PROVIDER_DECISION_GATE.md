@@ -40,6 +40,7 @@ A provider may only be activated if all are true:
 - timeout/error handling tested
 - no secrets in repo
 - `.env.example` only includes empty placeholders
+- placeholder presence in `.env.example` plus explicit founder approval before any real `.env` values are used
 - tests prove `.env` unchanged
 - public claims updated conservatively
 - rollback plan exists
