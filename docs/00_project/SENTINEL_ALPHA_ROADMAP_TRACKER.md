@@ -110,6 +110,7 @@ Status: **Done**
 - v9.2 x402 Payment Decision Link Boundary (local deterministic link object; no automatic settlement and no external integration activation)
 - v9.3 AgentKit Demo Receipt + Payment Link Output (local/example-only minimum loop shape)
 - v9.4 Trust Loop Report Fixture (local sample artifact for minimum verifiable loop shape; docs-only)
+- v9.5 Trust Loop Field Alignment v1 (documentation-only owner/purpose/privacy/integration status map)
 - Agent commerce vision truth-filter update (UCP/AP2/Trust Object remain roadmap context)
 
 ## 5) Cost discipline

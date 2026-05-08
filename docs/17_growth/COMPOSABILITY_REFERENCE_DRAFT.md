@@ -115,3 +115,6 @@ Sample trust loop report fixture (docs-only) is available at:
 and
 `reports/trust_loop/minimum_verifiable_loop.sample.md`.
 These are local sample artifacts and do not indicate live integrations or partnerships.
+Field alignment reference for ownership/meaning/privacy defaults:
+`docs/17_growth/TRUST_LOOP_FIELD_ALIGNMENT_V1.md`.
+This remains documentation-only composability guidance with no partnership or official integration claim.

@@ -11,6 +11,9 @@ ATCP-style tool pre-flight placeholder
 Reference:
 `docs/17_growth/AGENT_TRUST_LOOP_REFERENCE.md`
 
+Field alignment reference:
+`docs/17_growth/TRUST_LOOP_FIELD_ALIGNMENT_V1.md`
+
 ## Flow summary
 
 - **Tool pre-flight**: placeholder receipt context (`trace_id`, `receipt_id`) for tool-boundary policy shape.

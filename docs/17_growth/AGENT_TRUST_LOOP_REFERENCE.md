@@ -139,3 +139,6 @@ Local documentation-only sample fixture is available at:
 - `reports/trust_loop/minimum_verifiable_loop.sample.md`
 
 This fixture shows the minimum verifiable loop shape (tool pre-flight placeholder -> Sentinel decision receipt context -> payment decision link context -> execution placeholder -> post-action trail placeholder) without live calls, wallet execution/signing, DB writes, partnership claims, or integration claims.
+
+Field-by-field ownership and privacy posture are documented at:
+`docs/17_growth/TRUST_LOOP_FIELD_ALIGNMENT_V1.md`.
