@@ -177,3 +177,8 @@ Forbidden:
 - `docs/16_launch/ABI_SOURCE_PROVIDER_TRIAL_RUNBOOK.md` is required reading before any live trial or activation that would perform outbound ABI/source lookups.
 - The runbook is operational documentation only; it does not enable providers or execute shell commands by itself.
 - Founder approval gate items in the runbook must be satisfied in addition to the trial plan, dataset, and result schema gates.
+
+## 20) v10.6 ABI/source provider trial approval record posture
+
+- `docs/16_launch/ABI_SOURCE_PROVIDER_TRIAL_APPROVAL_RECORD.md` records `approval_status: not_approved` until founder workflow updates it; verbatim phrase therein is prerequisite before sanctioned live lookups.
+- No activation path may cite prepared scaffolding alone—authorization record gate must be reconciled manually by humans.

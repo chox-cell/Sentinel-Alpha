@@ -71,6 +71,7 @@ Use exactly one of:
 
 - Before any approved trial: all dataset targets remain represented with `lookup_status: not_run` until evidence exists.
 - `lookup_status: dry_run_not_executed` documents a local dry-run plan only; it is **not trial evidence** and does not mean a live lookup ran.
+- Before promoting any row beyond `lookup_status: not_run` / dry-run scaffolding, confirm `docs/16_launch/ABI_SOURCE_PROVIDER_TRIAL_APPROVAL_RECORD.md` reflects sanctioned authorization alongside `docs/16_launch/ABI_SOURCE_PROVIDER_TRIAL_RUNBOOK.md`.
 - Before recording real execution rows after a sanctioned trial, satisfy `docs/16_launch/ABI_SOURCE_PROVIDER_TRIAL_RUNBOOK.md` (founder approval and operational checklist).
 - After a future approved trial: record only sanitized status and metadata per this schema.
 - Never promote public product claims from a single successful row.
@@ -131,6 +132,7 @@ Public copy policy reminder: include no full ABI coverage claim; does not promis
 
 - `docs/16_launch/ABI_SOURCE_PROVIDER_TRIAL_DATASET.md`
 - `docs/16_launch/ABI_SOURCE_PROVIDER_TRIAL_PLAN.md`
+- `docs/16_launch/ABI_SOURCE_PROVIDER_TRIAL_APPROVAL_RECORD.md`
 - `docs/16_launch/ABI_SOURCE_PROVIDER_TRIAL_RUNBOOK.md`
 - `docs/16_launch/ABI_SOURCE_PROVIDER_ACTIVATION_PLAN.md`
 - `docs/18_investor/CLAIMS_LEDGER.md`

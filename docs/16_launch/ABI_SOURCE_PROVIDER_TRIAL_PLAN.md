@@ -29,6 +29,7 @@ Rationale summary:
 
 ## 5) Trial scope
 
+- Before executing a live trial, acknowledge `docs/16_launch/ABI_SOURCE_PROVIDER_TRIAL_APPROVAL_RECORD.md` (currently `approval_status: not_approved`; founder verbatim phrase documented there required before sanctioning).
 - Before executing a live trial, satisfy the founder approval gate and operational checklist in `docs/16_launch/ABI_SOURCE_PROVIDER_TRIAL_RUNBOOK.md` (docs-only gate; trial not performed by this file).
 - Before executing a live trial, align the in-scope contract list with `docs/16_launch/ABI_SOURCE_PROVIDER_TRIAL_DATASET.md` (or a founder-approved successor). The dataset doc is planning-only and does not enable providers.
 - At most 5 known Base-chain contract addresses (fixture-known or explicitly approved list).
@@ -127,6 +128,6 @@ Policy reminder for public copy: include **no full ABI coverage** claim (no univ
 - Dry-run output does **not** prove explorer availability or comprehensive ABI reach; it **does not** satisfy trial success criteria alone.
 - Dry-run adapter rows are **not trial evidence**; evidence must still follow `ABI_SOURCE_PROVIDER_TRIAL_RESULT_SCHEMA.md` after an approved execution.
 
-Cross-references: `docs/16_launch/ABI_SOURCE_PROVIDER_TRIAL_RUNBOOK.md`, `docs/16_launch/ABI_SOURCE_PROVIDER_TRIAL_DATASET.md`, `docs/16_launch/ABI_SOURCE_PROVIDER_TRIAL_RESULT_SCHEMA.md`, `docs/16_launch/ABI_SOURCE_PROVIDER_ACTIVATION_PLAN.md`, `docs/16_launch/SENTINEL_PROVIDER_DECISION_GATE.md`, `docs/16_launch/SENTINEL_DATA_PROVIDER_STRATEGY.md`, `docs/18_investor/CLAIMS_LEDGER.md`.
+Cross-references: `docs/16_launch/ABI_SOURCE_PROVIDER_TRIAL_APPROVAL_RECORD.md`, `docs/16_launch/ABI_SOURCE_PROVIDER_TRIAL_RUNBOOK.md`, `docs/16_launch/ABI_SOURCE_PROVIDER_TRIAL_DATASET.md`, `docs/16_launch/ABI_SOURCE_PROVIDER_TRIAL_RESULT_SCHEMA.md`, `docs/16_launch/ABI_SOURCE_PROVIDER_ACTIVATION_PLAN.md`, `docs/16_launch/SENTINEL_PROVIDER_DECISION_GATE.md`, `docs/16_launch/SENTINEL_DATA_PROVIDER_STRATEGY.md`, `docs/18_investor/CLAIMS_LEDGER.md`.
 
 This plan does not activate live integration, does not assert full ABI completeness, and does not promise verified source for arbitrary contracts.

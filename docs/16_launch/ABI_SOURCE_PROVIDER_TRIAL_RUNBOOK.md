@@ -17,9 +17,11 @@ Operational checklist for a future controlled live ABI/source provider trial. Th
 
 ## 4) Founder approval gate
 
+Authorization posture is anchored in `docs/16_launch/ABI_SOURCE_PROVIDER_TRIAL_APPROVAL_RECORD.md` (currently **`not_approved`**). Before any sanctioned live ABI/source trial window begins, founder must articulate the verbatim phrase mandated in that file (currently **"green light live provider trial"**). This runbook supplements that artifact; neither file executes network calls itself.
+
 A live trial cannot run until all of the following are explicitly true and recorded:
 
-- founder approval: explicit yes (written decision).
+- founder approval: explicit yes (written decision), including reproduction of the required phrase gate from the approval record.
 - provider selected: Sourcify or Blockscout preferred for first trial.
 - max target count confirmed: <= 5 (aligned with dataset/trial plan).
 - max request count confirmed (hard cap for the run window).
@@ -130,6 +132,7 @@ Forbidden public implications (avoid these exact marketing phrases):
 
 ## 12) Cross-references
 
+- `docs/16_launch/ABI_SOURCE_PROVIDER_TRIAL_APPROVAL_RECORD.md`
 - `docs/16_launch/ABI_SOURCE_PROVIDER_TRIAL_PLAN.md`
 - `docs/16_launch/ABI_SOURCE_PROVIDER_TRIAL_DATASET.md`
 - `docs/16_launch/ABI_SOURCE_PROVIDER_TRIAL_RESULT_SCHEMA.md`
