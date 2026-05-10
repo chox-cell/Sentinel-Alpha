@@ -54,6 +54,7 @@ Record these as the expected local gate checks before any approved live attempt.
 
 ## 7) Post-run evidence checklist
 
+- Future real result files should follow the **shape** of the static sample bundle `reports/provider_trials/abi_source_trial_results.sample.json` (field names, sanitization posture) while replacing placeholder values with sanctioned, sanitized trial facts only after a run. The sample file itself remains `not_run` and is **not evidence** of execution.
 - .env hash after run: record `env_hash_after` using the same hash command as pre-run; compare to `env_hash_before` for unexpected drift.
 - git status clean or only expected documentation/evidence files changed.
 - result rows sanitized; no raw provider bodies unless a separate explicit exception is approved.

@@ -84,6 +84,7 @@ Before any live trial execution (future; not performed by this document):
 
 ## 9) Cross-references
 
+- `reports/provider_trials/abi_source_trial_results.sample.json` / `.md` (static sanitized evidence **shape** only; all rows `not_run`; not trial evidence)
 - `docs/16_launch/ABI_SOURCE_PROVIDER_TRIAL_PLAN.md`
 - `docs/16_launch/ABI_SOURCE_PROVIDER_TRIAL_RUNBOOK.md` (review before replacing placeholders or executing any live lookups)
 - `docs/16_launch/ABI_SOURCE_PROVIDER_TRIAL_RESULT_SCHEMA.md` (required format before recording trial evidence; dry-run skeleton output is **not trial evidence** on its own)

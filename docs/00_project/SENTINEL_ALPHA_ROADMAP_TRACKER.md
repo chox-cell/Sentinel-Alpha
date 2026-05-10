@@ -120,6 +120,7 @@ Status: **Done**
 - v10.2 ABI/Source Provider Trial Result Schema (docs-only sanitized evidence shape; trial not run; provider not activated)
 - v10.3 Sourcify / Blockscout Dry-Run Adapter Skeleton (no HTTP by default; dry_run_only gated; defaults unchanged)
 - v10.4 ABI/Source Provider Trial Runbook + Founder Approval Gate (docs-only operational checklist; trial not run; defaults unchanged)
+- v10.5 ABI/Source Trial Evidence Placeholder (`not_run` static sample bundle; no live activation)
 - Agent commerce vision truth-filter update (UCP/AP2/Trust Object remain roadmap context)
 
 ## 5) Cost discipline

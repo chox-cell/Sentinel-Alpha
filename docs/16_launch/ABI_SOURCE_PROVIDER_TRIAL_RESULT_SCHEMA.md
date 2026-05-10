@@ -79,7 +79,14 @@ Use exactly one of:
 
 ## 8) Sample result rows (pre-trial placeholders)
 
-Five placeholder rows aligned to dataset ids `T01`–`T05`. Values show the mandatory pre-trial posture only.
+Bundled evidence-shape sample (static, sanitized, **not trial evidence**):
+
+- `reports/provider_trials/abi_source_trial_results.sample.json`
+- `reports/provider_trials/abi_source_trial_results.sample.md`
+
+These artifacts illustrate the full report wrapper and five `not_run` rows; they do not imply a live trial or provider activation.
+
+Five inline placeholder rows aligned to dataset ids `T01`–`T05`. Values show the mandatory pre-trial posture only.
 
 ```json
 [
