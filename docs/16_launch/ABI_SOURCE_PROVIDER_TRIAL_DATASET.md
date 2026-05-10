@@ -57,6 +57,7 @@ Before any live trial execution (future; not performed by this document):
 
 ## 7) Success/failure evidence
 
+- Before recording any trial evidence, use the field set and privacy rules in `docs/16_launch/ABI_SOURCE_PROVIDER_TRIAL_RESULT_SCHEMA.md` (sanitized rows only).
 - Record response status codes or adapter outcomes only after a future trial runs and evidence exists.
 - Record provider error type on failure (timeout, rate limit, invalid payload, provider down) using adapter vocabulary.
 - Record fallback behavior observed (e.g., unknown status, confidence impact).
@@ -84,6 +85,7 @@ Before any live trial execution (future; not performed by this document):
 ## 9) Cross-references
 
 - `docs/16_launch/ABI_SOURCE_PROVIDER_TRIAL_PLAN.md`
+- `docs/16_launch/ABI_SOURCE_PROVIDER_TRIAL_RESULT_SCHEMA.md` (required format before recording trial evidence)
 - `docs/16_launch/ABI_SOURCE_PROVIDER_ACTIVATION_PLAN.md`
 - `docs/18_investor/CLAIMS_LEDGER.md`
 

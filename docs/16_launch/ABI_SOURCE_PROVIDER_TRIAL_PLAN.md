@@ -38,6 +38,7 @@ Rationale summary:
 - **No persistence by default** (no receipt store activation, no cache persistence, no DB writes for trial outputs).
 - **No user-facing guarantee claims** tied to trial results.
 - Fallback to unknown on failure (provider down, rate limit, timeout, invalid payload), with conservative confidence impact.
+- After a trial executes, recorded evidence must conform to `docs/16_launch/ABI_SOURCE_PROVIDER_TRIAL_RESULT_SCHEMA.md` (sanitized fields, no raw secrets).
 
 ## 6) Trial success criteria
 
@@ -116,6 +117,6 @@ Use this template before enabling any live trial:
 
 Policy reminder for public copy: include **no full ABI coverage** claim (no universal ABI completeness).
 
-Cross-references: `docs/16_launch/ABI_SOURCE_PROVIDER_TRIAL_DATASET.md`, `docs/16_launch/ABI_SOURCE_PROVIDER_ACTIVATION_PLAN.md`, `docs/16_launch/SENTINEL_PROVIDER_DECISION_GATE.md`, `docs/16_launch/SENTINEL_DATA_PROVIDER_STRATEGY.md`, `docs/18_investor/CLAIMS_LEDGER.md`.
+Cross-references: `docs/16_launch/ABI_SOURCE_PROVIDER_TRIAL_DATASET.md`, `docs/16_launch/ABI_SOURCE_PROVIDER_TRIAL_RESULT_SCHEMA.md`, `docs/16_launch/ABI_SOURCE_PROVIDER_ACTIVATION_PLAN.md`, `docs/16_launch/SENTINEL_PROVIDER_DECISION_GATE.md`, `docs/16_launch/SENTINEL_DATA_PROVIDER_STRATEGY.md`, `docs/18_investor/CLAIMS_LEDGER.md`.
 
 This plan does not activate live integration, does not assert full ABI completeness, and does not promise verified source for arbitrary contracts.

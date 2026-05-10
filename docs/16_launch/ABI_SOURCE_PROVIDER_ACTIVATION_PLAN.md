@@ -159,3 +159,9 @@ Forbidden:
 - Before executing a live ABI/source provider trial, the candidate contract table must be maintained in `docs/16_launch/ABI_SOURCE_PROVIDER_TRIAL_DATASET.md` (or founder-approved successor).
 - The dataset document is planning-only; it does not perform lookups, enable providers, or assert production address correctness for placeholders.
 - This requirement is additive to v10.0 trial plan gates (approval, decision record, rollback, tests).
+
+## 17) v10.2 ABI/source trial result schema requirement
+
+- Trial evidence (when produced) must follow `docs/16_launch/ABI_SOURCE_PROVIDER_TRIAL_RESULT_SCHEMA.md` for field names, `lookup_status` vocabulary, and privacy rules.
+- The schema document is planning-only; it does not run trials or enable providers.
+- Live provider activation remains blocked until trial plan, dataset, decision record, and sanitized evidence posture are satisfied; the schema alone does not activate anything.
