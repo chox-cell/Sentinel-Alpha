@@ -26,6 +26,18 @@ def get_abi_source_provider_config(env=None, overrides=None):
     )
     provider_name = str(provider_name_raw or "").strip().lower() or None
 
+    dry_run_raw = override_map.get(
+        "SENTINEL_ABI_SOURCE_DRY_RUN_ONLY",
+        env_map.get("SENTINEL_ABI_SOURCE_DRY_RUN_ONLY"),
+    )
+    dry_run_only = _to_bool(dry_run_raw)
+
+    blockscout_raw = override_map.get(
+        "BLOCKSCOUT_BASE_URL",
+        env_map.get("BLOCKSCOUT_BASE_URL"),
+    )
+    blockscout_base_url = str(blockscout_raw or "").strip()
+
     timeout_raw = override_map.get(
         "SENTINEL_ABI_SOURCE_PROVIDER_TIMEOUT_MS",
         env_map.get("SENTINEL_ABI_SOURCE_PROVIDER_TIMEOUT_MS", 3000),
@@ -49,6 +61,8 @@ def get_abi_source_provider_config(env=None, overrides=None):
         "provider_enabled": provider_enabled,
         "provider_name": provider_name,
         "provider_mode": provider_mode,
+        "dry_run_only": dry_run_only,
+        "blockscout_base_url": blockscout_base_url,
         "api_key_required": False,
         "network_calls_enabled": False,
         "timeout_ms": timeout_ms,
@@ -63,6 +77,7 @@ def get_abi_source_provider_runtime_status(config=None):
         "provider_enabled": bool(cfg.get("provider_enabled")),
         "provider_name": cfg.get("provider_name"),
         "provider_mode": cfg.get("provider_mode", "disabled"),
+        "dry_run_only": bool(cfg.get("dry_run_only", False)),
         "network_calls_enabled": bool(cfg.get("network_calls_enabled", False)),
         "api_key_required": bool(cfg.get("api_key_required", False)),
         "timeout_ms": int(cfg.get("timeout_ms", 3000)),

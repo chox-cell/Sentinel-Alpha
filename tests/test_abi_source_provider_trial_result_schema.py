@@ -33,6 +33,7 @@ RESULT_FIELDS = [
 
 LOOKUP_STATUSES = [
     "not_run",
+    "dry_run_not_executed",
     "success",
     "timeout",
     "rate_limited",

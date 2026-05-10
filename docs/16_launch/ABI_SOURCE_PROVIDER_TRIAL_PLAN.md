@@ -117,6 +117,15 @@ Use this template before enabling any live trial:
 
 Policy reminder for public copy: include **no full ABI coverage** claim (no universal ABI completeness).
 
+## 12) v10.3 Sourcify / Blockscout dry-run provider skeleton
+
+- A code-level dry-run skeleton exists under `services/scanner_engine/abi_source_dry_run_provider.py`; it performs no HTTP requests and leaves default runtime disables unchanged.
+- Sourcify template (documentation only): `https://repo.sourcify.dev/contracts/full_match/{chain_id}/{address}/metadata.json` — not called unless a future sanctioned integration explicitly enables networking outside this skeleton scope.
+- Blockscout template placeholder: `{blockscout_base_url}/api/v2/smart-contracts/{address}` — not called by dry-run defaults.
+- Base maps to chain id **8453** for template documentation only inside the dry-run plan object.
+- Dry-run output does **not** prove explorer availability or comprehensive ABI reach; it **does not** satisfy trial success criteria alone.
+- Dry-run adapter rows are **not trial evidence**; evidence must still follow `ABI_SOURCE_PROVIDER_TRIAL_RESULT_SCHEMA.md` after an approved execution.
+
 Cross-references: `docs/16_launch/ABI_SOURCE_PROVIDER_TRIAL_DATASET.md`, `docs/16_launch/ABI_SOURCE_PROVIDER_TRIAL_RESULT_SCHEMA.md`, `docs/16_launch/ABI_SOURCE_PROVIDER_ACTIVATION_PLAN.md`, `docs/16_launch/SENTINEL_PROVIDER_DECISION_GATE.md`, `docs/16_launch/SENTINEL_DATA_PROVIDER_STRATEGY.md`, `docs/18_investor/CLAIMS_LEDGER.md`.
 
 This plan does not activate live integration, does not assert full ABI completeness, and does not promise verified source for arbitrary contracts.

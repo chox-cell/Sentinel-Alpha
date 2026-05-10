@@ -47,6 +47,7 @@ Each trial outcome row records the following fields:
 Use exactly one of:
 
 - `not_run`
+- `dry_run_not_executed` (dry-run skeleton / planning-only; **not trial evidence** on its own)
 - `success`
 - `timeout`
 - `rate_limited`
@@ -69,6 +70,7 @@ Use exactly one of:
 ## 7) Evidence recording rules
 
 - Before any approved trial: all dataset targets remain represented with `lookup_status: not_run` until evidence exists.
+- `lookup_status: dry_run_not_executed` documents a local dry-run plan only; it is **not trial evidence** and does not mean a live lookup ran.
 - After a future approved trial: record only sanitized status and metadata per this schema.
 - Never promote public product claims from a single successful row.
 - Failures must preserve conservative fallback behavior in runtime (per adapter design).

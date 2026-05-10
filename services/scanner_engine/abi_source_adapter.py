@@ -1,6 +1,11 @@
 from __future__ import annotations
 
 from services.signals.validators import normalize_address
+from services.scanner_engine.abi_source_dry_run_provider import (
+    dry_run_abi_source_lookup,
+    hash_contract_address_for_plan,
+    should_use_dry_run_skeleton,
+)
 from services.scanner_engine.abi_source_provider_config import (
     get_abi_source_provider_config,
     get_abi_source_provider_runtime_status,
@@ -228,6 +233,35 @@ def analyze_abi_source_status(
         }
 
     if provider_mode == "adapter_ready":
+        if should_use_dry_run_skeleton(provider_config):
+            addr_hash = hash_contract_address_for_plan(_address)
+            dry = dry_run_abi_source_lookup(
+                provider_runtime_status.get("provider_name"),
+                _chain,
+                contract_address_hash=addr_hash,
+                config=provider_config,
+            )
+            dry_notes = list(dry.get("notes") or [])
+            return {
+                "source_provider_status": "adapter_ready",
+                "verified_source_status": dry.get("verified_source_status"),
+                "abi_available": dry.get("abi_available"),
+                "abi_function_names": list(dry.get("abi_function_names_sample") or []),
+                "abi_selector_count": int(dry.get("abi_function_count") or 0),
+                "source_fetch_error_type": dry.get("source_fetch_error_type"),
+                "provider_name": provider_runtime_status.get("provider_name"),
+                "confidence_impact": dry.get("confidence_impact"),
+                "fallback_mode": bool(dry.get("fallback_mode", True)),
+                "provider_runtime_status": provider_runtime_status,
+                "dry_run_lookup": dry,
+                "notes": [
+                    "ABI/source provider dry-run skeleton (Sourcify or Blockscout) is active.",
+                    "Endpoint templates are documentation only and are not called.",
+                    "No trial evidence is produced by dry-run rows alone.",
+                    *dry_notes,
+                ],
+            }
+
         return {
             "source_provider_status": "adapter_ready",
             "verified_source_status": "unknown",

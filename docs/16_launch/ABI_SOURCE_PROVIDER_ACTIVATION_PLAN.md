@@ -165,3 +165,9 @@ Forbidden:
 - Trial evidence (when produced) must follow `docs/16_launch/ABI_SOURCE_PROVIDER_TRIAL_RESULT_SCHEMA.md` for field names, `lookup_status` vocabulary, and privacy rules.
 - The schema document is planning-only; it does not run trials or enable providers.
 - Live provider activation remains blocked until trial plan, dataset, decision record, and sanitized evidence posture are satisfied; the schema alone does not activate anything.
+
+## 18) v10.3 Sourcify / Blockscout dry-run adapter skeleton posture
+
+- `services/scanner_engine/abi_source_dry_run_provider.py` adds a dry-run-only plan object for Sourcify and Blockscout with **network_call_planned: false** under default gates.
+- Endpoint URL strings are templates for future planning; they are **not called** by the dry-run path.
+- Live provider activation still requires explicit approval, decision record, and non-dry-run evidence collection; the dry-run skeleton does not replace a trial.

@@ -85,7 +85,7 @@ Before any live trial execution (future; not performed by this document):
 ## 9) Cross-references
 
 - `docs/16_launch/ABI_SOURCE_PROVIDER_TRIAL_PLAN.md`
-- `docs/16_launch/ABI_SOURCE_PROVIDER_TRIAL_RESULT_SCHEMA.md` (required format before recording trial evidence)
+- `docs/16_launch/ABI_SOURCE_PROVIDER_TRIAL_RESULT_SCHEMA.md` (required format before recording trial evidence; dry-run skeleton output is **not trial evidence** on its own)
 - `docs/16_launch/ABI_SOURCE_PROVIDER_ACTIVATION_PLAN.md`
 - `docs/18_investor/CLAIMS_LEDGER.md`
 
