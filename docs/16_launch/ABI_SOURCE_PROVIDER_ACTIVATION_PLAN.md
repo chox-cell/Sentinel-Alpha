@@ -171,3 +171,9 @@ Forbidden:
 - `services/scanner_engine/abi_source_dry_run_provider.py` adds a dry-run-only plan object for Sourcify and Blockscout with **network_call_planned: false** under default gates.
 - Endpoint URL strings are templates for future planning; they are **not called** by the dry-run path.
 - Live provider activation still requires explicit approval, decision record, and non-dry-run evidence collection; the dry-run skeleton does not replace a trial.
+
+## 19) v10.4 ABI/source provider trial runbook posture
+
+- `docs/16_launch/ABI_SOURCE_PROVIDER_TRIAL_RUNBOOK.md` is required reading before any live trial or activation that would perform outbound ABI/source lookups.
+- The runbook is operational documentation only; it does not enable providers or execute shell commands by itself.
+- Founder approval gate items in the runbook must be satisfied in addition to the trial plan, dataset, and result schema gates.

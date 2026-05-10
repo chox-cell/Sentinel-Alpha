@@ -29,7 +29,7 @@ Defines candidate contract categories and placeholder records for a future contr
 
 ## 5) Trial target table
 
-Exactly five placeholder targets. Replace with approved public fixtures only after founder approval and alignment with `docs/16_launch/ABI_SOURCE_PROVIDER_TRIAL_PLAN.md`. Addresses below are explicit non-production placeholders (repeating hex digit patterns).
+Exactly five placeholder targets. Replace with approved public fixtures only after founder approval, the operational gate in `docs/16_launch/ABI_SOURCE_PROVIDER_TRIAL_RUNBOOK.md`, and alignment with `docs/16_launch/ABI_SOURCE_PROVIDER_TRIAL_PLAN.md`. Addresses below are explicit non-production placeholders (repeating hex digit patterns).
 
 | trial_id | chain | category | contract_address | source_status_before_trial | expected_lookup_goal | risk_notes | trial_status |
 | --- | --- | --- | --- | --- | --- | --- | --- |
@@ -85,6 +85,7 @@ Before any live trial execution (future; not performed by this document):
 ## 9) Cross-references
 
 - `docs/16_launch/ABI_SOURCE_PROVIDER_TRIAL_PLAN.md`
+- `docs/16_launch/ABI_SOURCE_PROVIDER_TRIAL_RUNBOOK.md` (review before replacing placeholders or executing any live lookups)
 - `docs/16_launch/ABI_SOURCE_PROVIDER_TRIAL_RESULT_SCHEMA.md` (required format before recording trial evidence; dry-run skeleton output is **not trial evidence** on its own)
 - `docs/16_launch/ABI_SOURCE_PROVIDER_ACTIVATION_PLAN.md`
 - `docs/18_investor/CLAIMS_LEDGER.md`
