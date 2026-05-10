@@ -29,6 +29,7 @@ Rationale summary:
 
 ## 5) Trial scope
 
+- Before executing a live trial, align the in-scope contract list with `docs/16_launch/ABI_SOURCE_PROVIDER_TRIAL_DATASET.md` (or a founder-approved successor). The dataset doc is planning-only and does not enable providers.
 - At most 5 known Base-chain contract addresses (fixture-known or explicitly approved list).
 - Read-only lookup only (no writes, no mutations, no submissions).
 - Request timeout **≤** configured `SENTINEL_ABI_SOURCE_PROVIDER_TIMEOUT_MS` (default placeholder in `.env.example`; not increased by this plan).
@@ -115,6 +116,6 @@ Use this template before enabling any live trial:
 
 Policy reminder for public copy: include **no full ABI coverage** claim (no universal ABI completeness).
 
-Cross-references: `docs/16_launch/ABI_SOURCE_PROVIDER_ACTIVATION_PLAN.md`, `docs/16_launch/SENTINEL_PROVIDER_DECISION_GATE.md`, `docs/16_launch/SENTINEL_DATA_PROVIDER_STRATEGY.md`, `docs/18_investor/CLAIMS_LEDGER.md`.
+Cross-references: `docs/16_launch/ABI_SOURCE_PROVIDER_TRIAL_DATASET.md`, `docs/16_launch/ABI_SOURCE_PROVIDER_ACTIVATION_PLAN.md`, `docs/16_launch/SENTINEL_PROVIDER_DECISION_GATE.md`, `docs/16_launch/SENTINEL_DATA_PROVIDER_STRATEGY.md`, `docs/18_investor/CLAIMS_LEDGER.md`.
 
 This plan does not activate live integration, does not assert full ABI completeness, and does not promise verified source for arbitrary contracts.

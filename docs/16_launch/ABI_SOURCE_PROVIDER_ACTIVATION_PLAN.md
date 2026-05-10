@@ -153,3 +153,9 @@ Forbidden:
 - The trial plan is docs/gate planning only and does **not** enable providers by itself.
 - A live trial still requires explicit founder approval, a completed decision record, rollback owner, recorded test evidence, and conservative public claims.
 - No API keys are required for repository defaults; `.env.example` remains placeholders-only in-repo.
+
+## 16) v10.1 known Base contracts trial dataset requirement
+
+- Before executing a live ABI/source provider trial, the candidate contract table must be maintained in `docs/16_launch/ABI_SOURCE_PROVIDER_TRIAL_DATASET.md` (or founder-approved successor).
+- The dataset document is planning-only; it does not perform lookups, enable providers, or assert production address correctness for placeholders.
+- This requirement is additive to v10.0 trial plan gates (approval, decision record, rollback, tests).
