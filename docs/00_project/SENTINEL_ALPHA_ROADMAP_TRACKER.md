@@ -115,6 +115,7 @@ Status: **Done**
 - v9.7 ABI/Source Provider Contract Tests with Fake Backend (test-only contract scenarios; no live provider activation)
 - v9.8 Disabled ABI/Source Provider Wiring Skeleton (disabled-by-default wiring/status skeleton; no live provider calls)
 - v9.9 Provider Config Audit and `.env.example` Placeholders (config/doc/test-only; provider remains disabled by default)
+- v10.0 Controlled Free ABI/Source Provider Trial Plan (docs/test-only gate; controlled trial planned; live provider not enabled by default)
 - Agent commerce vision truth-filter update (UCP/AP2/Trust Object remain roadmap context)
 
 ## 5) Cost discipline

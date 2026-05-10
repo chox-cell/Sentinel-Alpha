@@ -146,3 +146,10 @@ Forbidden:
 - `.env` must never be modified by tests or documentation-only tasks.
 - Real provider keys are optional/future-only and not required now.
 - Real provider keys must remain in local `.env` or a secret manager only and must never be committed.
+
+## 15) v10.0 controlled free ABI/source provider trial plan requirement
+
+- Before any **live** ABI/source provider activation, read and satisfy `docs/16_launch/ABI_SOURCE_PROVIDER_TRIAL_PLAN.md`.
+- The trial plan is docs/gate planning only and does **not** enable providers by itself.
+- A live trial still requires explicit founder approval, a completed decision record, rollback owner, recorded test evidence, and conservative public claims.
+- No API keys are required for repository defaults; `.env.example` remains placeholders-only in-repo.

@@ -19,6 +19,8 @@ It is a policy guardrail, not provider activation itself.
 
 - ABI/source provider activation plan (first candidate category):
   `docs/16_launch/ABI_SOURCE_PROVIDER_ACTIVATION_PLAN.md`
+- ABI/source controlled free trial plan (required before any live provider trial):
+  `docs/16_launch/ABI_SOURCE_PROVIDER_TRIAL_PLAN.md`
 - ABI/source disabled wiring skeleton step (pre-activation readiness):
   `services/scanner_engine/abi_source_provider_config.py`
 - ABI/source provider
@@ -44,6 +46,7 @@ A provider may only be activated if all are true:
 - tests prove `.env` unchanged
 - public claims updated conservatively
 - rollback plan exists
+- for a **live** ABI/source provider trial: the trial plan in `ABI_SOURCE_PROVIDER_TRIAL_PLAN.md` is reviewed and a **decision record** is completed (scope, limits, rollback owner, test evidence) before enabling flags or running external lookups
 
 ## 5) Budget triggers
 

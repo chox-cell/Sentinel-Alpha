@@ -113,3 +113,9 @@ Upgrade from free/local mode only when one or more triggers occur:
 - v9.9 adds ABI/source placeholders in `.env.example` with provider disabled by default.
 - placeholders are config-only and do not enable provider activation.
 - keys are optional/future-only and not required now.
+
+## 14) ABI/source controlled free trial plan posture (v10.0)
+
+- v10.0 adds `docs/16_launch/ABI_SOURCE_PROVIDER_TRIAL_PLAN.md` as the controlled free-trial gate artifact (docs-only; **not active** until separately approved).
+- trial scope, limits, success/failure criteria, rollback, and public claim controls are defined there; runtime defaults stay unchanged from this doc step.
+- live provider trial requires that trial plan plus a completed decision record and explicit founder approval (see `SENTINEL_PROVIDER_DECISION_GATE.md`).
