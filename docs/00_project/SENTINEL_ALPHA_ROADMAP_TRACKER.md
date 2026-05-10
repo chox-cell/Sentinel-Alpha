@@ -122,6 +122,7 @@ Status: **Done**
 - v10.4 ABI/Source Provider Trial Runbook + Founder Approval Gate (docs-only operational checklist; trial not run; defaults unchanged)
 - v10.5 ABI/Source Trial Evidence Placeholder (`not_run` static sample bundle; no live activation)
 - v10.6 ABI/Source Provider Trial Approval Record — Not Approved (explicit hold + founder phrase gate; no runtime change)
+- v11.0 Sentinel Alpha Technical Status Report (SSOT snapshot; docs-only; no runtime activation)
 - Agent commerce vision truth-filter update (UCP/AP2/Trust Object remain roadmap context)
 
 ## 5) Cost discipline
@@ -144,7 +145,7 @@ Status: **Done**
 
 ## 7) Metrics
 
-- tests passed count: 360
+- tests passed count: 611 (baseline at v11.0 status report authoring; re-run `pytest -q` for current)
 - npm package version: `@beezshield/sentinel@0.1.0`
 - current HEAD: `97b39e3`
 - outreach targets: 20 planned (T01-T20 structure)
