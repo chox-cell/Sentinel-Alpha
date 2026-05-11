@@ -12,6 +12,7 @@ Define how future ABI/source provider trial results will be recorded after an ap
 - No network call performed by this document.
 - No API key required to author or use this schema as a template.
 - No DB write performed by publishing this schema.
+- Founder phrase has been recorded in the approval record, but result rows remain `not_run` until actual runbook execution records sanitized evidence.
 
 ## 4) Result object fields
 
@@ -69,7 +70,7 @@ Use exactly one of:
 
 ## 7) Evidence recording rules
 
-- Before any approved trial: all dataset targets remain represented with `lookup_status: not_run` until evidence exists.
+- Before actual runbook execution: all dataset targets remain represented with `lookup_status: not_run` until evidence exists.
 - `lookup_status: dry_run_not_executed` documents a local dry-run plan only; it is **not trial evidence** and does not mean a live lookup ran.
 - Before promoting any row beyond `lookup_status: not_run` / dry-run scaffolding, confirm `docs/16_launch/ABI_SOURCE_PROVIDER_TRIAL_APPROVAL_RECORD.md` reflects sanctioned authorization alongside `docs/16_launch/ABI_SOURCE_PROVIDER_TRIAL_RUNBOOK.md`.
 - Before recording real execution rows after a sanctioned trial, satisfy `docs/16_launch/ABI_SOURCE_PROVIDER_TRIAL_RUNBOOK.md` (founder approval and operational checklist).
@@ -85,7 +86,7 @@ Bundled evidence-shape sample (static, sanitized, **not trial evidence**):
 - `reports/provider_trials/abi_source_trial_results.sample.json`
 - `reports/provider_trials/abi_source_trial_results.sample.md`
 
-These artifacts illustrate the full report wrapper and five `not_run` rows; they do not imply a live trial or provider activation.
+These artifacts illustrate the full report wrapper and five `not_run` rows; they do not imply a live trial or provider activation. The rows remain `not_run` after founder phrase recording and only change after actual runbook execution produces sanitized evidence.
 
 Five inline placeholder rows aligned to dataset ids `T01`–`T05`. Values show the mandatory pre-trial posture only.
 

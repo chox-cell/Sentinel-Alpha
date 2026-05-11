@@ -8,9 +8,9 @@ This file is **sample only** and **documentation-only**. It does not record a co
 - **no raw responses stored** at report level (`raw_responses_stored: false`); rows use `raw_response_stored: false`.
 - **no secret material observed** — report and rows use `secret_material_observed: false`.
 
-This Markdown twin remains **`not_run`** until organizational authorization catches up (`docs/16_launch/ABI_SOURCE_PROVIDER_TRIAL_APPROVAL_RECORD.md` currently documents `approval_status: not_approved`).
+This Markdown twin remains **`not_run`** even though `docs/16_launch/ABI_SOURCE_PROVIDER_TRIAL_APPROVAL_RECORD.md` now records the founder phrase. Live execution still requires sourced target review, env hash capture, and runbook execution.
 
-`contract_address_hash` values are SHA-256 hashes of the non-production placeholder addresses from `ABI_SOURCE_PROVIDER_TRIAL_DATASET.md`, for shape illustration only. This is **not** evidence of live provider lookup.
+`contract_address_hash` values are SHA-256 hashes of the public candidate addresses from `ABI_SOURCE_PROVIDER_TRIAL_DATASET.md`, for shape illustration only. Raw addresses are not stored in this sample evidence file. This is **not** evidence of live provider lookup.
 
 ## References
 

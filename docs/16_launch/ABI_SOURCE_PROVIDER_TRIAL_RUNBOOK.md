@@ -14,14 +14,17 @@ Operational checklist for a future controlled live ABI/source provider trial. Th
 - Dry-run skeleton exists (`abi_source_dry_run_provider.py`).
 - Result schema exists (`ABI_SOURCE_PROVIDER_TRIAL_RESULT_SCHEMA.md`).
 - Dataset exists (`ABI_SOURCE_PROVIDER_TRIAL_DATASET.md`).
+- Founder phrase received: "green light live provider trial".
+- Live execution still requires sourced target review, env hash capture, and this runbook's execution step.
 
 ## 4) Founder approval gate
 
-Authorization posture is anchored in `docs/16_launch/ABI_SOURCE_PROVIDER_TRIAL_APPROVAL_RECORD.md` (currently **`not_approved`**). Before any sanctioned live ABI/source trial window begins, founder must articulate the verbatim phrase mandated in that file (currently **"green light live provider trial"**). This runbook supplements that artifact; neither file executes network calls itself.
+Authorization posture is anchored in `docs/16_launch/ABI_SOURCE_PROVIDER_TRIAL_APPROVAL_RECORD.md` (currently **`approved_pending_real_target_validation`**). Founder has articulated the verbatim phrase mandated in that file: **"green light live provider trial"**. This runbook supplements that artifact; neither file executes network calls itself.
 
 A live trial cannot run until all of the following are explicitly true and recorded:
 
-- founder approval: explicit yes (written decision), including reproduction of the required phrase gate from the approval record.
+- founder phrase recorded: explicit yes (written decision), including reproduction of the required phrase gate from the approval record.
+- sourced target review complete: public Base contract candidates accepted, with no placeholder target in the execution list.
 - provider selected: Sourcify or Blockscout preferred for first trial.
 - max target count confirmed: <= 5 (aligned with dataset/trial plan).
 - max request count confirmed (hard cap for the run window).
@@ -46,8 +49,8 @@ Record these as the expected local gate checks before any approved live attempt.
 
 ## 6) Trial execution outline (documentation only)
 
-- Choose provider (Sourcify or Blockscout preferred) per approval.
-- Choose 1 to 5 targets from the dataset (or founder-approved replacement list).
+- Choose provider (Sourcify or Blockscout preferred) per approval record and target review.
+- Choose 1 to 5 targets from the sourced dataset (or a reviewed replacement list).
 - Enable provider only for a controlled local run after approval (never from this doc).
 - Run read-only lookups only; respect max requests and timeout.
 - Record sanitized result rows only per the result schema.
