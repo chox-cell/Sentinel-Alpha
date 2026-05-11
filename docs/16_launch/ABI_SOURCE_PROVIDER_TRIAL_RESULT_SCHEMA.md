@@ -12,7 +12,9 @@ Define how future ABI/source provider trial results will be recorded after an ap
 - No network call performed by this document.
 - No API key required to author or use this schema as a template.
 - No DB write performed by publishing this schema.
-- Founder phrase has been recorded in the approval record, but result rows remain `not_run` until actual runbook execution records sanitized evidence.
+- Founder phrase has been recorded in the approval record.
+- v10.8A attempted evidence exists at `reports/provider_trials/abi_source_trial_results.v10.8.attempted.json` with `trial_completed_successfully: false`.
+- Successful trial completion requires usable provider metadata and a separate successful evidence artifact.
 
 ## 4) Result object fields
 
@@ -101,7 +103,14 @@ Five inline placeholder rows aligned to dataset ids `T01`–`T05`. Values show t
 
 ```
 
-## 9) Success/failure interpretation
+## 9) Attempted-trial interpretation
+
+- `trial_attempted: true` with `trial_completed_successfully: false` records a bounded read-only attempt only.
+- `abort_reason: network_error_all_rows` means every attempted row returned `lookup_status: error` with `source_fetch_error_type: network_error`.
+- Attempted evidence does not prove ABI coverage, source verification, or production provider activation.
+- Failures preserve conservative fallback behavior in runtime.
+
+## 10) Success/failure interpretation
 
 - A single successful lookup shows the provider path can work for that target only; it does not prove comprehensive ABI availability across Base or all contracts.
 - It does not prove assurance of third-party source verification for arbitrary addresses.
@@ -110,7 +119,7 @@ Five inline placeholder rows aligned to dataset ids `T01`–`T05`. Values show t
 
 Public copy policy reminder: include no full ABI coverage claim; does not promise verified source for arbitrary contracts.
 
-## 10) Public claim controls
+## 11) Public claim controls
 
 **Allowed**
 
@@ -129,7 +138,7 @@ Public copy policy reminder: include no full ABI coverage claim; does not promis
 - MEV suppression claims from this schema scope.
 - Claims that external production simulation workloads were executed via this schema step.
 
-## 11) Cross-references
+## 12) Cross-references
 
 - `docs/16_launch/ABI_SOURCE_PROVIDER_TRIAL_DATASET.md`
 - `docs/16_launch/ABI_SOURCE_PROVIDER_TRIAL_PLAN.md`

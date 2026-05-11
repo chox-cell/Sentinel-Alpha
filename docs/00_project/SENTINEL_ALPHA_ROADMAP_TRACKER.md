@@ -123,6 +123,7 @@ Status: **Done**
 - v10.5 ABI/Source Trial Evidence Placeholder (`not_run` static sample bundle; no live activation)
 - v10.6 ABI/Source Provider Trial Approval Record — Not Approved (explicit hold + founder phrase gate; no runtime change)
 - v10.7 Founder Approval Recorded + Real Public Base Trial Targets (founder phrase received; sourced target candidates prepared; trial not run; provider not active)
+- v10.8A Record Aborted Sourcify Trial Attempt Due to Network Error (attempted read-only evidence only; all rows network_error; provider remains disabled)
 - v11.0 Sentinel Alpha Technical Status Report (SSOT snapshot; docs-only; no runtime activation)
 - Agent commerce vision truth-filter update (UCP/AP2/Trust Object remain roadmap context)
 

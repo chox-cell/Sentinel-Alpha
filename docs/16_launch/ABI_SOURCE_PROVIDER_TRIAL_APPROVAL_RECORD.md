@@ -5,23 +5,24 @@
 Documented posture (canonical for public-truth posture at file publication time):
 
 ```
-approval_status: approved_pending_real_target_validation
+approval_status: attempted_network_failed_provider_disabled
 founder_phrase_observed: true
 founder_phrase: "green light live provider trial"
-trial_run: false
+trial_run: attempted
+trial_completed_successfully: false
 provider_active: false
-live_calls_performed: false
+live_calls_performed: true
+usable_provider_metadata_received: false
 api_keys_required: false
 paid_calls_allowed: false
 approved_by: "Chox"
 approved_at: 2026-05-11
 notes:
-  - approval phrase received
-  - live provider trial is still blocked until real public Base targets replace placeholders
-  - provider remains disabled until runbook execution step
+  - controlled read-only attempt made; all rows network_error
+  - provider remains disabled; rerun requires confirmed network path
 ```
 
-Historical note: v10.6 recorded the prior hold posture as `approval_status: not_approved`; v10.7 records the founder phrase while keeping live execution blocked pending target review and runbook execution.
+Historical note: v10.6 recorded the prior hold posture as `approval_status: not_approved`; v10.7 recorded `approval_status: approved_pending_real_target_validation` with `trial_run: false`, `live_calls_performed: false`, and `provider_active: false` before the v10.8A attempted Sourcify run.
 
 ## 3) Required founder phrase
 
@@ -35,7 +36,8 @@ This phrase is an approval signal only. It does not run the trial, activate a pr
 
 - Provider disabled by default: `SENTINEL_ABI_SOURCE_PROVIDER_ENABLED=false` remains the documented default posture for repository guidance.
 - No provider name is selected for outbound lookup in defaults.
-- No live provider calls and no unsolicited network lookups are authorized by this record.
+- No production runtime provider activation is authorized by this record.
+- The v10.8A attempted Sourcify run recorded read-only call attempts only; no usable provider metadata was received.
 - No DB writes and no mandatory persistence stem from this document.
 - ABI/source scanner wiring stays disabled or not_configured until a separately documented posture change tied to authorization.
 - Live provider execution remains blocked until sourced public Base targets are reviewed and the runbook execution step is deliberately performed.
@@ -47,7 +49,8 @@ This phrase is an approval signal only. It does not run the trial, activate a pr
 - disabled ABI/source wiring skeleton
 - `.env.example` placeholders (names only)
 - controlled trial plan
-- trial dataset (real public Base target candidates prepared; trial not run)
+- trial dataset (real public Base target candidates prepared)
+- attempted Sourcify trial evidence (`reports/provider_trials/abi_source_trial_results.v10.8.attempted.json`)
 - trial result schema
 - Sourcify/Blockscout dry-run skeleton
 - operational runbook
@@ -90,8 +93,9 @@ Coordinate with `ABI_SOURCE_PROVIDER_TRIAL_RUNBOOK.md` before any live execution
 Allowed public statements reflecting this file today:
 
 - A provider trial **authorization record artifact** exists internally.
-- The founder approval phrase has been recorded (`approval_status`: approved_pending_real_target_validation).
-- The controlled live ABI/source trial has not run and provider execution remains blocked until runbook execution.
+- The founder approval phrase has been recorded.
+- A controlled read-only Sourcify attempt was recorded as `approval_status: attempted_network_failed_provider_disabled`.
+- No usable provider metadata was received and the production runtime provider remains disabled.
 - Providers remain disabled by documented defaults.
 
 Forbidden public shorthand (marketing or social copy) implying any of:

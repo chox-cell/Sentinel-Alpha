@@ -15,7 +15,8 @@ Operational checklist for a future controlled live ABI/source provider trial. Th
 - Result schema exists (`ABI_SOURCE_PROVIDER_TRIAL_RESULT_SCHEMA.md`).
 - Dataset exists (`ABI_SOURCE_PROVIDER_TRIAL_DATASET.md`).
 - Founder phrase received: "green light live provider trial".
-- Live execution still requires sourced target review, env hash capture, and this runbook's execution step.
+- v10.8A recorded a read-only Sourcify attempt with `network_error` on all rows; usable metadata was not received.
+- Live execution still requires sourced target review, env hash capture, confirmed network path, and this runbook's execution step.
 
 ## 4) Founder approval gate
 
@@ -133,7 +134,15 @@ Forbidden public implications (avoid these exact marketing phrases):
 - Outcome narratives that imply assured user safety beyond evidence.
 - Implication that paid production provider endpoints are enabled by default after the trial.
 
-## 12) Cross-references
+## 12) v10.8A Network-failed attempt handling
+
+- A `network_error` attempt is valid attempted-trial evidence when sanitized and bounded.
+- Do not inflate claims from failed network rows.
+- Rerun only from a confirmed network path, such as a VPS, and only under this runbook.
+- Preserve the sanitized attempted report at `reports/provider_trials/abi_source_trial_results.v10.8.attempted.json`.
+- Keep the production runtime provider disabled by default after the attempt.
+
+## 13) Cross-references
 
 - `docs/16_launch/ABI_SOURCE_PROVIDER_TRIAL_APPROVAL_RECORD.md`
 - `docs/16_launch/ABI_SOURCE_PROVIDER_TRIAL_PLAN.md`
