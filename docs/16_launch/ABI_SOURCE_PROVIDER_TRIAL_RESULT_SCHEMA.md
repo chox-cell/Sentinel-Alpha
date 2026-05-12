@@ -15,6 +15,7 @@ Define how future ABI/source provider trial results will be recorded after an ap
 - Founder phrase has been recorded in the approval record.
 - v10.8A attempted evidence exists at `reports/provider_trials/abi_source_trial_results.v10.8.attempted.json` with `trial_completed_successfully: false`.
 - Successful trial completion requires usable provider metadata and a separate successful evidence artifact.
+- VPS Sourcify connectivity preflight status is not trial evidence.
 
 ## 4) Result object fields
 

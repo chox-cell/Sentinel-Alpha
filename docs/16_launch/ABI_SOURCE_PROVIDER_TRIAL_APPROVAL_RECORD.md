@@ -20,6 +20,7 @@ approved_at: 2026-05-11
 notes:
   - controlled read-only attempt made; all rows network_error
   - provider remains disabled; rerun requires confirmed network path
+  - future rerun requires VPS preflight and exact phrase: "green light rerun Sourcify trial from VPS"
 ```
 
 Historical note: v10.6 recorded the prior hold posture as `approval_status: not_approved`; v10.7 recorded `approval_status: approved_pending_real_target_validation` with `trial_run: false`, `live_calls_performed: false`, and `provider_active: false` before the v10.8A attempted Sourcify run.
@@ -51,6 +52,7 @@ This phrase is an approval signal only. It does not run the trial, activate a pr
 - controlled trial plan
 - trial dataset (real public Base target candidates prepared)
 - attempted Sourcify trial evidence (`reports/provider_trials/abi_source_trial_results.v10.8.attempted.json`)
+- VPS Sourcify connectivity preflight plan (`ABI_SOURCE_PROVIDER_VPS_CONNECTIVITY_PREFLIGHT.md`)
 - trial result schema
 - Sourcify/Blockscout dry-run skeleton
 - operational runbook
@@ -72,7 +74,8 @@ Although the founder phrase has been received, the following remain **out of sco
 
 Coordinate with `ABI_SOURCE_PROVIDER_TRIAL_RUNBOOK.md` before any live execution:
 
-- founder authorization phrase reproduced in written approval (received: "green light live provider trial")
+- VPS Sourcify connectivity preflight completed with `reachable` status before any rerun
+- founder rerun phrase recorded: "green light rerun Sourcify trial from VPS"
 - provider selected (preferred: Sourcify or Blockscout)
 - targets ≤ 5 and requests capped (≤ policy)
 - env hash-before captured
@@ -109,6 +112,7 @@ Forbidden public shorthand (marketing or social copy) implying any of:
 
 ## 10) Cross references
 
+- `docs/16_launch/ABI_SOURCE_PROVIDER_VPS_CONNECTIVITY_PREFLIGHT.md`
 - `docs/16_launch/ABI_SOURCE_PROVIDER_TRIAL_RUNBOOK.md`
 - `docs/16_launch/ABI_SOURCE_PROVIDER_TRIAL_PLAN.md`
 - `docs/16_launch/ABI_SOURCE_PROVIDER_TRIAL_RESULT_SCHEMA.md`

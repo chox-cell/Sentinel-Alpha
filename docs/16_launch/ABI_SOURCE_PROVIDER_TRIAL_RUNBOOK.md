@@ -16,7 +16,8 @@ Operational checklist for a future controlled live ABI/source provider trial. Th
 - Dataset exists (`ABI_SOURCE_PROVIDER_TRIAL_DATASET.md`).
 - Founder phrase received: "green light live provider trial".
 - v10.8A recorded a read-only Sourcify attempt with `network_error` on all rows; usable metadata was not received.
-- Live execution still requires sourced target review, env hash capture, confirmed network path, and this runbook's execution step.
+- VPS Sourcify connectivity preflight is planned and not run yet.
+- Live execution still requires sourced target review, env hash capture, confirmed network path, VPS preflight, and this runbook's execution step.
 
 ## 4) Founder approval gate
 
@@ -25,6 +26,8 @@ Authorization posture is anchored in `docs/16_launch/ABI_SOURCE_PROVIDER_TRIAL_A
 A live trial cannot run until all of the following are explicitly true and recorded:
 
 - founder phrase recorded: explicit yes (written decision), including reproduction of the required phrase gate from the approval record.
+- VPS preflight completed with `reachable` status per `ABI_SOURCE_PROVIDER_VPS_CONNECTIVITY_PREFLIGHT.md`.
+- founder rerun phrase recorded for any post-v10.8A rerun: "green light rerun Sourcify trial from VPS".
 - sourced target review complete: public Base contract candidates accepted, with no placeholder target in the execution list.
 - provider selected: Sourcify or Blockscout preferred for first trial.
 - max target count confirmed: <= 5 (aligned with dataset/trial plan).
@@ -142,8 +145,17 @@ Forbidden public implications (avoid these exact marketing phrases):
 - Preserve the sanitized attempted report at `reports/provider_trials/abi_source_trial_results.v10.8.attempted.json`.
 - Keep the production runtime provider disabled by default after the attempt.
 
-## 13) Cross-references
+## 13) v10.9 VPS Sourcify connectivity preflight
 
+- After v10.8A `network_error_all_rows`, require `docs/16_launch/ABI_SOURCE_PROVIDER_VPS_CONNECTIVITY_PREFLIGHT.md` before any controlled trial rerun.
+- Preflight is connectivity-only; max 1 Sourcify endpoint check; no dataset-wide trial.
+- Record only sanitized reachability status; no raw provider response body.
+- A controlled rerun requires founder phrase: "green light rerun Sourcify trial from VPS".
+- Keep the production runtime provider disabled by default before and after preflight.
+
+## 14) Cross-references
+
+- `docs/16_launch/ABI_SOURCE_PROVIDER_VPS_CONNECTIVITY_PREFLIGHT.md`
 - `docs/16_launch/ABI_SOURCE_PROVIDER_TRIAL_APPROVAL_RECORD.md`
 - `docs/16_launch/ABI_SOURCE_PROVIDER_TRIAL_PLAN.md`
 - `docs/16_launch/ABI_SOURCE_PROVIDER_TRIAL_DATASET.md`
