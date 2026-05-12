@@ -92,7 +92,7 @@ Sentinel Alpha **does not** claim any of the following unless separately evidenc
 
 ## 9) Next recommended steps (roadmap pointers)
 
-- **v11.1** — Public-safe executive summary derived from this report (short-form builders/investors).
+- **v11.1** — Public-safe executive summary: `docs/17_growth/SENTINEL_ALPHA_PUBLIC_TECHNICAL_SUMMARY.md`.
 - **v11.2** — Known gaps and risk register (internal candid assessment).
 - **v11.3** — Provider trial decision review when/if founder authorization moves beyond `not_approved`.
 - **Live ABI/source trial** only after explicit founder phrase and runbook execution — see Section 10.
@@ -107,4 +107,4 @@ This phrase sits alongside (not replacing) runbook checklists, caps, hashing, ro
 
 ---
 
-*This report is documentation only. It does not change runtime flags, mutate `.env`, deploy services, or assert new integrations.*
+*This report is documentation only. It does not change runtime flags, mutate `.env`, deploy services, or assert new integrations. For a shorter public-safe shareable summary, see `docs/17_growth/SENTINEL_ALPHA_PUBLIC_TECHNICAL_SUMMARY.md`.*

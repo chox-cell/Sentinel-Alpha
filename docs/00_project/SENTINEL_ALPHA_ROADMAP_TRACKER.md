@@ -126,6 +126,7 @@ Status: **Done**
 - v10.8A Record Aborted Sourcify Trial Attempt Due to Network Error (attempted read-only evidence only; all rows network_error; provider remains disabled)
 - v10.9 VPS Sourcify Connectivity Preflight Plan (docs/test-only; preflight not run; no provider rerun)
 - v11.0 Sentinel Alpha Technical Status Report (SSOT snapshot; docs-only; no runtime activation)
+- v11.1 Public-Safe Sentinel Alpha Technical Summary (public-safe shareable summary; no runtime activation)
 - Agent commerce vision truth-filter update (UCP/AP2/Trust Object remain roadmap context)
 
 ## 5) Cost discipline
