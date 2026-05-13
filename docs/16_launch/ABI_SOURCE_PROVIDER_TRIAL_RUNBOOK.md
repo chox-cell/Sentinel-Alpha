@@ -148,6 +148,7 @@ Forbidden public implications (avoid these exact marketing phrases):
 ## 13) v10.9 VPS Sourcify connectivity preflight
 
 - After v10.8A `network_error_all_rows`, require `docs/16_launch/ABI_SOURCE_PROVIDER_VPS_CONNECTIVITY_PREFLIGHT.md` before any controlled trial rerun.
+- After v11.2 `reachable_http_404`, require `docs/16_launch/SOURCIFY_ENDPOINT_CORRECTION_PLAN.md` before metadata endpoint validation or any trial rerun.
 - Preflight is connectivity-only; max 1 Sourcify endpoint check; no dataset-wide trial.
 - Record only sanitized reachability status; no raw provider response body.
 - A controlled rerun requires founder phrase: "green light rerun Sourcify trial from VPS".
@@ -155,6 +156,7 @@ Forbidden public implications (avoid these exact marketing phrases):
 
 ## 14) Cross-references
 
+- `docs/16_launch/SOURCIFY_ENDPOINT_CORRECTION_PLAN.md`
 - `docs/16_launch/ABI_SOURCE_PROVIDER_VPS_CONNECTIVITY_PREFLIGHT.md`
 - `reports/provider_trials/sourcify_vps_preflight.v11.2.json`
 - `docs/16_launch/ABI_SOURCE_PROVIDER_TRIAL_APPROVAL_RECORD.md`

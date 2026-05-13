@@ -12,6 +12,7 @@ Defines candidate contract categories and sourced public Base address records fo
 - Provider remains disabled by default in shipping configuration.
 - Max 5 trial targets for the controlled trial scope (see trial plan).
 - Dataset rows remain `trial_status: not_run` in this table; v10.8A attempted outcomes are recorded separately in `reports/provider_trials/abi_source_trial_results.v10.8.attempted.json`.
+- Dataset-wide scripted lookups against all five rows remain blocked until endpoint validation succeeds on one representative target per `SOURCIFY_ENDPOINT_CORRECTION_PLAN.md`.
 
 ## 4) Dataset selection rules
 

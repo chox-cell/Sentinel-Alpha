@@ -35,6 +35,7 @@ provider_active: false
 notes:
   - preflight completed; rerun not approved
   - trial rerun still requires exact phrase: "green light rerun Sourcify trial from VPS"
+  - rerun blocked pending endpoint validation per SOURCIFY_ENDPOINT_CORRECTION_PLAN.md
 ```
 
 Historical note: v10.6 recorded the prior hold posture as `approval_status: not_approved`; v10.7 recorded `approval_status: approved_pending_real_target_validation` with `trial_run: false`, `live_calls_performed: false`, and `provider_active: false` before the v10.8A attempted Sourcify run.

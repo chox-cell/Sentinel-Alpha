@@ -16,6 +16,7 @@ Define how future ABI/source provider trial results will be recorded after an ap
 - v10.8A attempted evidence exists at `reports/provider_trials/abi_source_trial_results.v10.8.attempted.json` with `trial_completed_successfully: false`.
 - Successful trial completion requires usable provider metadata and a separate successful evidence artifact.
 - VPS Sourcify connectivity preflight status is not trial evidence.
+- Endpoint validation is not trial evidence on its own (see `SOURCIFY_ENDPOINT_CORRECTION_PLAN.md`).
 
 ## 4) Result object fields
 
