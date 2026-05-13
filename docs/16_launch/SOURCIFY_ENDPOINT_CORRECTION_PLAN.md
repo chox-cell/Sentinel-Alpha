@@ -8,6 +8,7 @@ Plan how to correct the Sourcify endpoint strategy before any controlled trial r
 
 - v10.8A local attempt: 5 requests attempted, all network_error, no usable metadata.
 - v11.2 VPS preflight: one request, reachable true, HTTP 404, no usable metadata.
+- v11.4 one-target endpoint validation: one request for T01 via full_match template; see `reports/provider_trials/sourcify_endpoint_validation.v11.4.json` (endpoint validation only; not a trial rerun).
 - Provider remains disabled.
 - Trial rerun has not happened.
 
@@ -90,12 +91,25 @@ Forbidden public shorthand (avoid implying):
 - assured user protection claims
 - production provider activation claims
 
-## 10) Cross-references
+## 10) Operator execution notes
+
+Regenerate `reports/provider_trials/sourcify_endpoint_validation.v11.4.json` from the approved VPS host when TLS or network errors reflect a non-VPS automation environment.
+
+## 11) v11.4 recorded one-target validation (sanitized evidence)
+
+Artifact: `reports/provider_trials/sourcify_endpoint_validation.v11.4.json` (Markdown twin: `reports/provider_trials/sourcify_endpoint_validation.v11.4.md`).
+
+This records **one** metadata endpoint check for **T01** only. It is endpoint validation only: it is **not** a five-target provider trial rerun, **not** dataset-wide lookup evidence, and **not** proof of ABI coverage. A full controlled trial rerun remains blocked until the separate founder phrase **"green light rerun Sourcify trial from VPS"** plus runbook gates.
+
+If the recorded attempt shows TLS or network errors, treat it as environment-specific until a canonical VPS re-run produces reachability evidence.
+
+## 12) Cross-references
 
 - `docs/16_launch/ABI_SOURCE_PROVIDER_VPS_CONNECTIVITY_PREFLIGHT.md`
 - `reports/provider_trials/sourcify_vps_preflight.v11.2.json`
 - `docs/16_launch/ABI_SOURCE_PROVIDER_TRIAL_RUNBOOK.md`
 - `docs/16_launch/ABI_SOURCE_PROVIDER_TRIAL_APPROVAL_RECORD.md`
+- `reports/provider_trials/sourcify_endpoint_validation.v11.4.json`
 - `docs/16_launch/ABI_SOURCE_PROVIDER_TRIAL_DATASET.md`
 
 This endpoint correction plan does not perform network calls, mutate runtime flags, modify `.env`, or execute a provider trial.

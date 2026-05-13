@@ -17,6 +17,7 @@ Operational checklist for a future controlled live ABI/source provider trial. Th
 - Founder phrase received: "green light live provider trial".
 - v10.8A recorded a read-only Sourcify attempt with `network_error` on all rows; usable metadata was not received.
 - v11.2 manual VPS Sourcify connectivity preflight recorded as `reachable_http_404` (connectivity evidence only; see `reports/provider_trials/sourcify_vps_preflight.v11.2.json`).
+- v11.4 one-target Sourcify endpoint validation evidence exists at `reports/provider_trials/sourcify_endpoint_validation.v11.4.json` (endpoint validation only; not a trial rerun; trial rerun still blocked).
 - Live execution still requires sourced target review, env hash capture, confirmed network path, and this runbook's execution step. A controlled trial rerun still requires the separate founder phrase **"green light rerun Sourcify trial from VPS"** even after a successful connectivity preflight.
 
 ## 4) Founder approval gate
@@ -149,6 +150,7 @@ Forbidden public implications (avoid these exact marketing phrases):
 
 - After v10.8A `network_error_all_rows`, require `docs/16_launch/ABI_SOURCE_PROVIDER_VPS_CONNECTIVITY_PREFLIGHT.md` before any controlled trial rerun.
 - After v11.2 `reachable_http_404`, require `docs/16_launch/SOURCIFY_ENDPOINT_CORRECTION_PLAN.md` before metadata endpoint validation or any trial rerun.
+- v11.4 one-target endpoint validation is recorded separately; it is not a five-target trial rerun and does not activate runtime provider wiring.
 - Preflight is connectivity-only; max 1 Sourcify endpoint check; no dataset-wide trial.
 - Record only sanitized reachability status; no raw provider response body.
 - A controlled rerun requires founder phrase: "green light rerun Sourcify trial from VPS".
@@ -156,6 +158,7 @@ Forbidden public implications (avoid these exact marketing phrases):
 
 ## 14) Cross-references
 
+- `reports/provider_trials/sourcify_endpoint_validation.v11.4.json`
 - `docs/16_launch/SOURCIFY_ENDPOINT_CORRECTION_PLAN.md`
 - `docs/16_launch/ABI_SOURCE_PROVIDER_VPS_CONNECTIVITY_PREFLIGHT.md`
 - `reports/provider_trials/sourcify_vps_preflight.v11.2.json`

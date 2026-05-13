@@ -38,6 +38,20 @@ notes:
   - rerun blocked pending endpoint validation per SOURCIFY_ENDPOINT_CORRECTION_PLAN.md
 ```
 
+v11.4 VPS Sourcify endpoint validation only (separate founder approval; one target, one GET):
+
+```
+v11.4_endpoint_validation_phrase_observed: true
+v11.4_endpoint_validation_phrase: "green light VPS Sourcify endpoint validation only"
+v11.4_endpoint_validation_run: true
+trial_rerun: false
+trial_rerun_still_blocked: true
+provider_active: false
+notes:
+  - one-target endpoint validation recorded; not a full trial rerun
+  - trial rerun still blocked until phrase: "green light rerun Sourcify trial from VPS"
+```
+
 Historical note: v10.6 recorded the prior hold posture as `approval_status: not_approved`; v10.7 recorded `approval_status: approved_pending_real_target_validation` with `trial_run: false`, `live_calls_performed: false`, and `provider_active: false` before the v10.8A attempted Sourcify run.
 
 ## 3) Required founder phrase
