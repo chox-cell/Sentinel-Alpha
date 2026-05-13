@@ -20,7 +20,8 @@ def test_preflight_doc_exists_and_records_v10_8a_posture():
     assert "all five rows returned network_error" in lower
     assert "no usable metadata was received" in lower
     assert "provider remains disabled" in lower
-    assert "vps preflight not run yet" in lower
+    assert "v11.2" in lower
+    assert "reachable_http_404" in lower
     assert "max 1 sourcify endpoint check" in lower
     assert "no raw provider response committed" in lower
     assert '"green light rerun sourcify trial from vps"' in lower
@@ -48,10 +49,12 @@ def test_linked_docs_reference_vps_preflight_and_rerun_phrase():
     ledger = CLAIMS_LEDGER.read_text(encoding="utf-8").lower()
 
     assert "abi_source_provider_vps_connectivity_preflight.md" in runbook
+    assert "sourcify_vps_preflight.v11.2.json" in runbook
     assert "green light rerun sourcify trial from vps" in approval
     assert "preflight status is not trial evidence" in schema
     assert "vps sourcify connectivity preflight" in ledger
-    assert "planned / not run" in ledger
+    assert "vps sourcify connectivity preflight result" in ledger
+    assert "completed / reachable_http_404 / no trial rerun" in ledger
 
 
 def test_preflight_docs_forbid_unsafe_positive_phrases():

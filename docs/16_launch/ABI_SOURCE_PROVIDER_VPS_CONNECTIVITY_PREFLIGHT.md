@@ -11,7 +11,7 @@ Define a safe preflight checklist for checking whether the VPS can reach Sourcif
 - No usable metadata was received.
 - Provider remains disabled.
 - Trial completion remains false.
-- VPS preflight not run yet.
+- v11.2 manual VPS Sourcify connectivity preflight completed (one check only; not a trial rerun).
 
 ## 4) Preflight scope
 
@@ -102,3 +102,14 @@ Forbidden:
 - `reports/provider_trials/abi_source_trial_results.v10.8.attempted.json`
 
 This preflight plan does not run trials, activate providers, perform network calls from repository automation, or modify `.env`.
+
+## 11) v11.2 recorded VPS result (sanitized evidence)
+
+Recorded artifact: `reports/provider_trials/sourcify_vps_preflight.v11.2.json` (Markdown twin: `reports/provider_trials/sourcify_vps_preflight.v11.2.md`).
+
+- `preflight_result: reachable_http_404`
+- `reachable: true`
+- `http_status: 404`
+- `error_type: http_error`
+
+Interpretation: the VPS reached Sourcify and received an HTTP response. A 404 on the health-style path still demonstrates HTTP reachability; it does **not** prove usable ABI/source metadata, source verification, or trial success. No raw response body was stored. No dataset-wide lookup was performed. Provider runtime remains disabled. A controlled trial rerun still requires the separate founder phrase **"green light rerun Sourcify trial from VPS"** plus runbook gates.

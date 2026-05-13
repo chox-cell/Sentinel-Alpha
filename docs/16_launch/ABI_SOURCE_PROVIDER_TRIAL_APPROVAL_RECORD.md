@@ -23,6 +23,20 @@ notes:
   - future rerun requires VPS preflight and exact phrase: "green light rerun Sourcify trial from VPS"
 ```
 
+v11.2 VPS preflight only (separate founder approval; connectivity check only):
+
+```
+v11.2_preflight_phrase_observed: true
+v11.2_preflight_phrase: "green light VPS Sourcify preflight only"
+v11.2_preflight_run: true
+v11.2_preflight_result: reachable_http_404
+trial_rerun: false
+provider_active: false
+notes:
+  - preflight completed; rerun not approved
+  - trial rerun still requires exact phrase: "green light rerun Sourcify trial from VPS"
+```
+
 Historical note: v10.6 recorded the prior hold posture as `approval_status: not_approved`; v10.7 recorded `approval_status: approved_pending_real_target_validation` with `trial_run: false`, `live_calls_performed: false`, and `provider_active: false` before the v10.8A attempted Sourcify run.
 
 ## 3) Required founder phrase
@@ -53,6 +67,7 @@ This phrase is an approval signal only. It does not run the trial, activate a pr
 - trial dataset (real public Base target candidates prepared)
 - attempted Sourcify trial evidence (`reports/provider_trials/abi_source_trial_results.v10.8.attempted.json`)
 - VPS Sourcify connectivity preflight plan (`ABI_SOURCE_PROVIDER_VPS_CONNECTIVITY_PREFLIGHT.md`)
+- v11.2 VPS Sourcify connectivity preflight evidence (`reports/provider_trials/sourcify_vps_preflight.v11.2.json`)
 - trial result schema
 - Sourcify/Blockscout dry-run skeleton
 - operational runbook
