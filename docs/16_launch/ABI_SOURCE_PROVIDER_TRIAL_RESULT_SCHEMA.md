@@ -18,6 +18,7 @@ Define how future ABI/source provider trial results will be recorded after an ap
 - VPS Sourcify connectivity preflight status is not trial evidence.
 - Endpoint validation is not trial evidence on its own (see `SOURCIFY_ENDPOINT_CORRECTION_PLAN.md`).
 - v11.4 one-target endpoint validation artifacts are not trial evidence of ABI coverage or a completed provider trial.
+- Endpoint validation **failures** (for example TLS errors, timeouts, or non-usable metadata outcomes) are **not** provider trial evidence; see `docs/16_launch/SOURCIFY_ENDPOINT_VALIDATION_STATUS.md` (v11.5 consolidation).
 
 ## 4) Result object fields
 

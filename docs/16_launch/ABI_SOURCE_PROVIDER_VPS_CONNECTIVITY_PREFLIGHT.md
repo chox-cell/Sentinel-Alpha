@@ -96,6 +96,7 @@ Forbidden:
 
 ## 10) Cross-references
 
+- `docs/16_launch/SOURCIFY_ENDPOINT_VALIDATION_STATUS.md`
 - `docs/16_launch/ABI_SOURCE_PROVIDER_TRIAL_RUNBOOK.md`
 - `docs/16_launch/ABI_SOURCE_PROVIDER_TRIAL_APPROVAL_RECORD.md`
 - `docs/16_launch/ABI_SOURCE_PROVIDER_TRIAL_RESULT_SCHEMA.md`
@@ -115,3 +116,7 @@ Recorded artifact: `reports/provider_trials/sourcify_vps_preflight.v11.2.json` (
 Interpretation: the VPS reached Sourcify and received an HTTP response. A 404 on the health-style path still demonstrates HTTP reachability; it does **not** prove usable ABI/source metadata, source verification, or trial success. No raw response body was stored. No dataset-wide lookup was performed. Provider runtime remains disabled. A controlled trial rerun still requires the separate founder phrase **"green light rerun Sourcify trial from VPS"** plus runbook gates.
 
 After `reachable_http_404`, follow `docs/16_launch/SOURCIFY_ENDPOINT_CORRECTION_PLAN.md` before attempting metadata endpoint validation or any trial rerun.
+
+## 12) v11.5 consolidated validation posture
+
+See `docs/16_launch/SOURCIFY_ENDPOINT_VALIDATION_STATUS.md` for a single consolidated read of connectivity vs metadata-path outcomes, block conditions, and allowed founder phrases. That status note is docs-only and does not add new network calls.

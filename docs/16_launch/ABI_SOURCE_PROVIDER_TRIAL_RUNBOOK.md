@@ -18,7 +18,9 @@ Operational checklist for a future controlled live ABI/source provider trial. Th
 - v10.8A recorded a read-only Sourcify attempt with `network_error` on all rows; usable metadata was not received.
 - v11.2 manual VPS Sourcify connectivity preflight recorded as `reachable_http_404` (connectivity evidence only; see `reports/provider_trials/sourcify_vps_preflight.v11.2.json`).
 - v11.4 one-target Sourcify endpoint validation evidence exists at `reports/provider_trials/sourcify_endpoint_validation.v11.4.json` (endpoint validation only; not a trial rerun; trial rerun still blocked).
-- Live execution still requires sourced target review, env hash capture, confirmed network path, and this runbook's execution step. A controlled trial rerun still requires the separate founder phrase **"green light rerun Sourcify trial from VPS"** even after a successful connectivity preflight.
+- v11.5 consolidated endpoint validation status: `docs/16_launch/SOURCIFY_ENDPOINT_VALIDATION_STATUS.md` (no new network run).
+- **Full five-target trial remains blocked** until **usable metadata** is observed from a successful endpoint-validation evidence path (per that status note and the correction plan). **Full trial remains blocked** until that gate clears. Connectivity preflight alone does not clear this gate.
+- Live execution still requires sourced target review, env hash capture, confirmed network path, and this runbook's execution step. A controlled trial rerun still requires the separate founder phrase **"green light rerun Sourcify trial from VPS"** even after a successful connectivity preflight, and only after endpoint validation succeeds as recorded in the approval record and schema discipline.
 
 ## 4) Founder approval gate
 

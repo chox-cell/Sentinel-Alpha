@@ -52,6 +52,18 @@ notes:
   - trial rerun still blocked until phrase: "green light rerun Sourcify trial from VPS"
 ```
 
+v11.5 endpoint validation status consolidation (docs/test-only; no new network run):
+
+```
+v11.5_endpoint_validation_status_consolidation: true
+endpoint_validation_status: unresolved
+usable_metadata_received: false
+full_trial_blocked: true
+notes:
+  - see docs/16_launch/SOURCIFY_ENDPOINT_VALIDATION_STATUS.md
+  - metadata path has not returned usable metadata; full five-target trial remains blocked
+```
+
 Historical note: v10.6 recorded the prior hold posture as `approval_status: not_approved`; v10.7 recorded `approval_status: approved_pending_real_target_validation` with `trial_run: false`, `live_calls_performed: false`, and `provider_active: false` before the v10.8A attempted Sourcify run.
 
 ## 3) Required founder phrase

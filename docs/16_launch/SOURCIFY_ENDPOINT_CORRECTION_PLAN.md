@@ -6,9 +6,11 @@ Plan how to correct the Sourcify endpoint strategy before any controlled trial r
 
 ## 3) Current evidence
 
+Consolidated posture (no new network run): `docs/16_launch/SOURCIFY_ENDPOINT_VALIDATION_STATUS.md` (v11.5).
+
 - v10.8A local attempt: 5 requests attempted, all network_error, no usable metadata.
 - v11.2 VPS preflight: one request, reachable true, HTTP 404, no usable metadata.
-- v11.4 one-target endpoint validation: one request for T01 via full_match template; see `reports/provider_trials/sourcify_endpoint_validation.v11.4.json` (endpoint validation only; not a trial rerun).
+- v11.4 one-target endpoint validation: one request for T01 via full_match template; see `reports/provider_trials/sourcify_endpoint_validation.v11.4.json` (endpoint validation only; not a trial rerun). Recorded outcome included `tls_error` with `reachable: false`; **endpoint validation therefore remains unresolved** until canonical retry or different evidence succeeds.
 - Provider remains disabled.
 - Trial rerun has not happened.
 
@@ -105,6 +107,7 @@ If the recorded attempt shows TLS or network errors, treat it as environment-spe
 
 ## 12) Cross-references
 
+- `docs/16_launch/SOURCIFY_ENDPOINT_VALIDATION_STATUS.md`
 - `docs/16_launch/ABI_SOURCE_PROVIDER_VPS_CONNECTIVITY_PREFLIGHT.md`
 - `reports/provider_trials/sourcify_vps_preflight.v11.2.json`
 - `docs/16_launch/ABI_SOURCE_PROVIDER_TRIAL_RUNBOOK.md`

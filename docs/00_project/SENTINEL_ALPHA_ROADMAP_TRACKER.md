@@ -130,6 +130,7 @@ Status: **Done**
 - v11.2 VPS Sourcify Connectivity Preflight Result (manual one-shot reachability record; HTTP 404; not trial rerun; provider remains disabled)
 - v11.3 Sourcify Endpoint Correction Plan (docs/test-only; no network calls; endpoint strategy before rerun)
 - v11.4 VPS Sourcify Endpoint Validation — One Target Only (one GET for T01; endpoint validation artifact; not trial rerun; provider remains disabled)
+- v11.5 Sourcify Endpoint Validation Failure Consolidation (docs/test-only status note; no new network; full trial remains blocked until usable metadata)
 - Agent commerce vision truth-filter update (UCP/AP2/Trust Object remain roadmap context)
 
 ## 5) Cost discipline
