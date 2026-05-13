@@ -34,6 +34,7 @@ Review the ABI/source provider path after **unresolved** Sourcify endpoint valid
 ### Option B — Prepare Blockscout endpoint validation path
 
 - **Docs/test-only** preparation first (plan, gates, schema alignment).
+- **Next preparation step:** `docs/16_launch/BLOCKSCOUT_BASE_ENDPOINT_SOURCE_PACK.md` (v11.8; candidate URL sourcing before validation).
 - **One endpoint** candidate when validation is eventually approved.
 - **One target** only for the first validation attempt.
 - **No API keys** by default (unless a later explicitly approved path requires them).
@@ -94,5 +95,6 @@ Review the ABI/source provider path after **unresolved** Sourcify endpoint valid
 - `docs/16_launch/ABI_SOURCE_PROVIDER_TRIAL_PLAN.md`
 - `docs/16_launch/SENTINEL_DATA_PROVIDER_STRATEGY.md`
 - `docs/16_launch/BLOCKSCOUT_ENDPOINT_VALIDATION_PLAN.md` (v11.7; prepared next path after unresolved Sourcify validation; **not run** from this pivot doc)
+- `docs/16_launch/BLOCKSCOUT_BASE_ENDPOINT_SOURCE_PACK.md` (v11.8; Base endpoint source pack; selection pending)
 
 This file does not run trials, activate providers, or perform network calls.

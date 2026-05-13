@@ -36,6 +36,11 @@ For **Base**, a candidate **`blockscout_base_url`** must be **reviewed and appro
 - **No live value** is required to author or store **this** plan.
 - **No real endpoint** is selected or endorsed **in this task** unless already documented elsewhere under the same safety rules.
 
+## 5a) Endpoint source pack and selection gate
+
+- **Candidate base URLs** for Base must be collected and reviewed using `docs/16_launch/BLOCKSCOUT_BASE_ENDPOINT_SOURCE_PACK.md` (v11.8 source pack; docs/test only).
+- **Blockscout endpoint validation is blocked** until **exactly one** candidate is **selected** for validation (steward replaces placeholder `REQUIRED_SOURCE_URL` values with reviewed `source_url` entries and marks **only one** row `selected_for_validation: true` in a future approved revision of that pack or a successor artifact — **not** done in the v11.8 pack revision).
+
 ## 6) Future required phrase
 
 A future **one-target, one-endpoint** Blockscout **endpoint validation** run on an approved VPS requires the founder to say **exactly**:
@@ -118,6 +123,7 @@ A **full five-target** provider trial remains **blocked** until:
 
 ## 12) Cross-references
 
+- `docs/16_launch/BLOCKSCOUT_BASE_ENDPOINT_SOURCE_PACK.md`
 - `docs/16_launch/ABI_SOURCE_PROVIDER_PIVOT_REVIEW.md`
 - `docs/16_launch/ABI_SOURCE_PROVIDER_TRIAL_RUNBOOK.md`
 - `docs/16_launch/ABI_SOURCE_PROVIDER_TRIAL_APPROVAL_RECORD.md`

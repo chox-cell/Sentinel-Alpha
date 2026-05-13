@@ -83,6 +83,16 @@ notes:
   - see docs/16_launch/BLOCKSCOUT_ENDPOINT_VALIDATION_PLAN.md
 ```
 
+v11.8 Blockscout Base endpoint source pack (docs/test-only; no network; no endpoint selected):
+
+```
+v11.8_blockscout_base_endpoint_source_pack: true
+blockscout_source_pack_status: prepared / endpoint not selected
+provider_remains_disabled: true
+notes:
+  - see docs/16_launch/BLOCKSCOUT_BASE_ENDPOINT_SOURCE_PACK.md
+```
+
 Historical note: v10.6 recorded the prior hold posture as `approval_status: not_approved`; v10.7 recorded `approval_status: approved_pending_real_target_validation` with `trial_run: false`, `live_calls_performed: false`, and `provider_active: false` before the v10.8A attempted Sourcify run.
 
 ## 3) Required founder phrase

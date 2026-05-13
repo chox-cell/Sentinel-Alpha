@@ -133,6 +133,7 @@ Status: **Done**
 - v11.5 Sourcify Endpoint Validation Failure Consolidation (docs/test-only status note; no new network; full trial remains blocked until usable metadata)
 - v11.6 ABI/Source Provider Pivot Review (docs/test-only; Sourcify unresolved; Blockscout prep vs retry options; no provider activation)
 - v11.7 Blockscout Endpoint Validation Plan (docs/test-only; one-target path planned; no network; no provider activation)
+- v11.8 Blockscout Base Endpoint Source Pack (docs/test-only; candidate URL slots; no selection; no network)
 - Agent commerce vision truth-filter update (UCP/AP2/Trust Object remain roadmap context)
 
 ## 5) Cost discipline

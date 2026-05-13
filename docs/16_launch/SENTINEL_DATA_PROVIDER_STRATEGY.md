@@ -131,3 +131,9 @@ Upgrade from free/local mode only when one or more triggers occur:
 - v11.7 adds `docs/16_launch/BLOCKSCOUT_ENDPOINT_VALIDATION_PLAN.md` as a docs/test-only plan for a future one-target Blockscout endpoint validation path.
 - this step does not call Blockscout, enable runtime providers, or require API keys.
 - full trial and dataset-wide lookup remain blocked until separate gates in that plan and the trial runbook are satisfied.
+
+## 17) v11.8 Blockscout Base endpoint source pack posture
+
+- v11.8 adds `docs/16_launch/BLOCKSCOUT_BASE_ENDPOINT_SOURCE_PACK.md` as a docs/test-only source pack for Base Blockscout-compatible endpoint candidates.
+- no network calls, provider activation, or runtime base URL selection are performed by publishing this note.
+- endpoint validation remains blocked until one candidate is selected per the source pack and validation plan gates.
