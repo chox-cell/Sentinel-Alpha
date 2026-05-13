@@ -64,6 +64,15 @@ notes:
   - metadata path has not returned usable metadata; full five-target trial remains blocked
 ```
 
+v11.6 ABI/source provider pivot review (docs/test-only; no network; no provider activation):
+
+```
+v11.6_provider_pivot_review: true
+provider_pivot_status: review_prepared / no new provider selected
+notes:
+  - see docs/16_launch/ABI_SOURCE_PROVIDER_PIVOT_REVIEW.md
+```
+
 Historical note: v10.6 recorded the prior hold posture as `approval_status: not_approved`; v10.7 recorded `approval_status: approved_pending_real_target_validation` with `trial_run: false`, `live_calls_performed: false`, and `provider_active: false` before the v10.8A attempted Sourcify run.
 
 ## 3) Required founder phrase

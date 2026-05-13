@@ -6,6 +6,7 @@ Plan a future controlled trial for ABI/source lookup. This document is planning 
 
 ## 3) Current status
 
+- v11.6 provider pivot review recorded in `docs/16_launch/ABI_SOURCE_PROVIDER_PIVOT_REVIEW.md` (docs/test only; no live activation; aligns with unresolved Sourcify validation posture).
 - Provider wiring skeleton exists (`abi_source_provider_config` boundary; disabled by default).
 - `.env.example` placeholders exist; keys are optional and not committed.
 - No provider enabled by default (`SENTINEL_ABI_SOURCE_PROVIDER_ENABLED=false`).

@@ -6,7 +6,7 @@ Plan how to correct the Sourcify endpoint strategy before any controlled trial r
 
 ## 3) Current evidence
 
-Consolidated posture (no new network run): `docs/16_launch/SOURCIFY_ENDPOINT_VALIDATION_STATUS.md` (v11.5).
+Consolidated posture (no new network run): `docs/16_launch/SOURCIFY_ENDPOINT_VALIDATION_STATUS.md` (v11.5). **Next decision point** for continuing Sourcify vs preparing Blockscout vs holding live work: `docs/16_launch/ABI_SOURCE_PROVIDER_PIVOT_REVIEW.md` (v11.6; docs/test only).
 
 - v10.8A local attempt: 5 requests attempted, all network_error, no usable metadata.
 - v11.2 VPS preflight: one request, reachable true, HTTP 404, no usable metadata.
@@ -108,6 +108,7 @@ If the recorded attempt shows TLS or network errors, treat it as environment-spe
 ## 12) Cross-references
 
 - `docs/16_launch/SOURCIFY_ENDPOINT_VALIDATION_STATUS.md`
+- `docs/16_launch/ABI_SOURCE_PROVIDER_PIVOT_REVIEW.md`
 - `docs/16_launch/ABI_SOURCE_PROVIDER_VPS_CONNECTIVITY_PREFLIGHT.md`
 - `reports/provider_trials/sourcify_vps_preflight.v11.2.json`
 - `docs/16_launch/ABI_SOURCE_PROVIDER_TRIAL_RUNBOOK.md`

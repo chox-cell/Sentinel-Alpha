@@ -82,6 +82,7 @@ Summarize current Sourcify connectivity and endpoint validation evidence recorde
 
 ## 8) Cross-references
 
+- `docs/16_launch/ABI_SOURCE_PROVIDER_PIVOT_REVIEW.md` (v11.6 provider path review; docs/test only)
 - `docs/16_launch/SOURCIFY_ENDPOINT_CORRECTION_PLAN.md`
 - `docs/16_launch/ABI_SOURCE_PROVIDER_VPS_CONNECTIVITY_PREFLIGHT.md`
 - `docs/16_launch/ABI_SOURCE_PROVIDER_TRIAL_RUNBOOK.md`

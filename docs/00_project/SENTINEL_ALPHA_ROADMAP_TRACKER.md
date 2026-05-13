@@ -131,6 +131,7 @@ Status: **Done**
 - v11.3 Sourcify Endpoint Correction Plan (docs/test-only; no network calls; endpoint strategy before rerun)
 - v11.4 VPS Sourcify Endpoint Validation — One Target Only (one GET for T01; endpoint validation artifact; not trial rerun; provider remains disabled)
 - v11.5 Sourcify Endpoint Validation Failure Consolidation (docs/test-only status note; no new network; full trial remains blocked until usable metadata)
+- v11.6 ABI/Source Provider Pivot Review (docs/test-only; Sourcify unresolved; Blockscout prep vs retry options; no provider activation)
 - Agent commerce vision truth-filter update (UCP/AP2/Trust Object remain roadmap context)
 
 ## 5) Cost discipline

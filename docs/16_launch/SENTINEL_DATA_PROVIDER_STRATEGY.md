@@ -119,3 +119,9 @@ Upgrade from free/local mode only when one or more triggers occur:
 - v10.0 adds `docs/16_launch/ABI_SOURCE_PROVIDER_TRIAL_PLAN.md` as the controlled free-trial gate artifact (docs-only; **not active** until separately approved).
 - trial scope, limits, success/failure criteria, rollback, and public claim controls are defined there; runtime defaults stay unchanged from this doc step.
 - live provider trial requires that trial plan plus a completed decision record and explicit founder approval (see `SENTINEL_PROVIDER_DECISION_GATE.md`).
+
+## 15) v11.6 ABI/source provider pivot review posture
+
+- v11.6 adds `docs/16_launch/ABI_SOURCE_PROVIDER_PIVOT_REVIEW.md` as a docs/test-only review after unresolved Sourcify endpoint validation.
+- no provider activation, network calls, or `.env` mutation are performed by this strategy note step.
+- Blockscout may be prepared as a candidate path in documentation only until a separate founder phrase and validation plan exist.
