@@ -73,6 +73,16 @@ notes:
   - see docs/16_launch/ABI_SOURCE_PROVIDER_PIVOT_REVIEW.md
 ```
 
+v11.7 Blockscout endpoint validation plan (docs/test-only; no network; plan not executed):
+
+```
+v11.7_blockscout_endpoint_validation_plan: true
+blockscout_validation_plan_status: prepared / not run
+provider_remains_disabled: true
+notes:
+  - see docs/16_launch/BLOCKSCOUT_ENDPOINT_VALIDATION_PLAN.md
+```
+
 Historical note: v10.6 recorded the prior hold posture as `approval_status: not_approved`; v10.7 recorded `approval_status: approved_pending_real_target_validation` with `trial_run: false`, `live_calls_performed: false`, and `provider_active: false` before the v10.8A attempted Sourcify run.
 
 ## 3) Required founder phrase

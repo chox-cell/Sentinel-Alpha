@@ -20,6 +20,7 @@ Operational checklist for a future controlled live ABI/source provider trial. Th
 - v11.4 one-target Sourcify endpoint validation evidence exists at `reports/provider_trials/sourcify_endpoint_validation.v11.4.json` (endpoint validation only; not a trial rerun; trial rerun still blocked).
 - v11.5 consolidated endpoint validation status: `docs/16_launch/SOURCIFY_ENDPOINT_VALIDATION_STATUS.md` (no new network run).
 - v11.6 ABI/source provider pivot review: `docs/16_launch/ABI_SOURCE_PROVIDER_PIVOT_REVIEW.md` (docs/test only; no provider activation). **Read and align with the pivot review before opening any new live provider validation path** (Sourcify retry, Blockscout prep, or other).
+- v11.7 Blockscout endpoint validation plan: `docs/16_launch/BLOCKSCOUT_ENDPOINT_VALIDATION_PLAN.md` (docs/test only; **not run** from this file). **Read this plan and satisfy its gates before any approved Blockscout live endpoint validation** (still requires the separate founder phrase in that plan).
 - **Full five-target trial remains blocked** until **usable metadata** is observed from a successful endpoint-validation evidence path (per that status note and the correction plan). **Full trial remains blocked** until that gate clears. Connectivity preflight alone does not clear this gate.
 - Live execution still requires sourced target review, env hash capture, confirmed network path, and this runbook's execution step. A controlled trial rerun still requires the separate founder phrase **"green light rerun Sourcify trial from VPS"** even after a successful connectivity preflight, and only after endpoint validation succeeds as recorded in the approval record and schema discipline.
 
@@ -30,6 +31,7 @@ Authorization posture is anchored in `docs/16_launch/ABI_SOURCE_PROVIDER_TRIAL_A
 A live trial cannot run until all of the following are explicitly true and recorded:
 
 - pivot review read and current: `docs/16_launch/ABI_SOURCE_PROVIDER_PIVOT_REVIEW.md` (v11.6 posture; docs-only; no new provider selected until founder path and phrases align).
+- Blockscout endpoint validation plan read when Blockscout is the chosen next path: `docs/16_launch/BLOCKSCOUT_ENDPOINT_VALIDATION_PLAN.md` (v11.7; docs-only until the separate Blockscout validation phrase is recorded).
 - founder phrase recorded: explicit yes (written decision), including reproduction of the required phrase gate from the approval record.
 - VPS Sourcify connectivity preflight completed with recorded result per `ABI_SOURCE_PROVIDER_VPS_CONNECTIVITY_PREFLIGHT.md` and `reports/provider_trials/sourcify_vps_preflight.v11.2.json` (reachability only; not ABI metadata proof).
 - founder rerun phrase recorded for any post-v10.8A rerun: "green light rerun Sourcify trial from VPS".

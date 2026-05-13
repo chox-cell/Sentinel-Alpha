@@ -125,3 +125,9 @@ Upgrade from free/local mode only when one or more triggers occur:
 - v11.6 adds `docs/16_launch/ABI_SOURCE_PROVIDER_PIVOT_REVIEW.md` as a docs/test-only review after unresolved Sourcify endpoint validation.
 - no provider activation, network calls, or `.env` mutation are performed by this strategy note step.
 - Blockscout may be prepared as a candidate path in documentation only until a separate founder phrase and validation plan exist.
+
+## 16) v11.7 Blockscout endpoint validation plan posture
+
+- v11.7 adds `docs/16_launch/BLOCKSCOUT_ENDPOINT_VALIDATION_PLAN.md` as a docs/test-only plan for a future one-target Blockscout endpoint validation path.
+- this step does not call Blockscout, enable runtime providers, or require API keys.
+- full trial and dataset-wide lookup remain blocked until separate gates in that plan and the trial runbook are satisfied.

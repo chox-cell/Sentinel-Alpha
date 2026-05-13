@@ -53,7 +53,7 @@ Review the ABI/source provider path after **unresolved** Sourcify endpoint valid
 
 - **Do not run** the full Sourcify five-target trial now.
 - **Do not run** five-target lookup now.
-- **Prepare** the Blockscout endpoint validation plan as the **next docs/test** step, **unless** the founder explicitly chooses **Option A** (Sourcify retry phrase above).
+- **Prepare** the Blockscout endpoint validation plan as the **next docs/test** step, **unless** the founder explicitly chooses **Option A** (Sourcify retry phrase above). Prepared plan: `docs/16_launch/BLOCKSCOUT_ENDPOINT_VALIDATION_PLAN.md` (v11.7; documentation only; **not** a validation run).
 - **Keep the provider disabled** until a sanctioned validation or trial path clears recorded gates.
 
 ## 7) Decision criteria (unchanged discipline)
@@ -93,5 +93,6 @@ Review the ABI/source provider path after **unresolved** Sourcify endpoint valid
 - `docs/16_launch/ABI_SOURCE_PROVIDER_TRIAL_APPROVAL_RECORD.md`
 - `docs/16_launch/ABI_SOURCE_PROVIDER_TRIAL_PLAN.md`
 - `docs/16_launch/SENTINEL_DATA_PROVIDER_STRATEGY.md`
+- `docs/16_launch/BLOCKSCOUT_ENDPOINT_VALIDATION_PLAN.md` (v11.7; prepared next path after unresolved Sourcify validation; **not run** from this pivot doc)
 
 This file does not run trials, activate providers, or perform network calls.

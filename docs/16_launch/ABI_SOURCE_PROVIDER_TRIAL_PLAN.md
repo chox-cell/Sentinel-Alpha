@@ -7,6 +7,7 @@ Plan a future controlled trial for ABI/source lookup. This document is planning 
 ## 3) Current status
 
 - v11.6 provider pivot review recorded in `docs/16_launch/ABI_SOURCE_PROVIDER_PIVOT_REVIEW.md` (docs/test only; no live activation; aligns with unresolved Sourcify validation posture).
+- v11.7 Blockscout endpoint validation plan recorded in `docs/16_launch/BLOCKSCOUT_ENDPOINT_VALIDATION_PLAN.md` (docs/test only; candidate path after Sourcify unresolved; **not run** from this file).
 - Provider wiring skeleton exists (`abi_source_provider_config` boundary; disabled by default).
 - `.env.example` placeholders exist; keys are optional and not committed.
 - No provider enabled by default (`SENTINEL_ABI_SOURCE_PROVIDER_ENABLED=false`).
@@ -17,8 +18,8 @@ Plan a future controlled trial for ABI/source lookup. This document is planning 
 
 Rank candidates for the first controlled trial:
 
-1. **Sourcify** — Preferred first: source-verification oriented; can reduce reliance on per-explorer API keys for many flows.
-2. **Blockscout** — Useful when a stable Base-compatible or instance endpoint is available and policy allows read-only use.
+1. **Sourcify** — Preferred first: source-verification oriented; can reduce reliance on per-explorer API keys for many flows. **Recorded posture:** unresolved after v10.8A/v11.2/v11.4/v11.5; see status and pivot docs before assuming Sourcify readiness.
+2. **Blockscout** — Useful when a stable Base-compatible or instance endpoint is available and policy allows read-only use. **Next docs/test path:** `docs/16_launch/BLOCKSCOUT_ENDPOINT_VALIDATION_PLAN.md` (v11.7 plan prepared; **not run** until founder phrase and runbook gates).
 3. **Basescan** — Strong Base alignment; requires strict API-key discipline; defer until trial process is proven.
 4. **Etherscan** — Broad coverage; requires strong API-key discipline and rate/tier awareness; defer until after Sourcify/Blockscout evaluation.
 
