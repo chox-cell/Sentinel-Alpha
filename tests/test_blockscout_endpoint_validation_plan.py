@@ -25,7 +25,9 @@ def test_blockscout_plan_doc_exists_and_has_required_content():
     assert "no api key" in low or "no api keys" in low
     assert "{blockscout_base_url}/api/v2/smart-contracts/{address}" in text
     assert "BLOCKSCOUT_BASE_ENDPOINT_SOURCE_PACK.md" in text
-    assert "blockscout endpoint validation is blocked" in low
+    assert "blockscout endpoint validation" in low and "blocked" in low
+    assert "b01" in low and "source-backed" in low
+    assert "not selected" in low
     assert 'green light VPS Blockscout endpoint validation only' in text
     assert 'green light rerun Blockscout trial from VPS' in text
     assert "raw_response_stored: false" in text
@@ -67,6 +69,7 @@ def test_posture_docs_forbid_unsafe_positive_phrases():
         + TRIAL_PLAN.read_text(encoding="utf-8")
     ).lower()
     forbidden = [
+        "blockscout endpoint works",
         "blockscout integration live",
         "trial completed",
         "live abi coverage",

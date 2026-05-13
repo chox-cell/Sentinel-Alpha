@@ -1,4 +1,4 @@
-# Blockscout Base Endpoint Source Pack v11.8
+# Blockscout Base Endpoint Source Pack v11.9
 
 ## 2) Purpose
 
@@ -12,6 +12,21 @@ Collect **source-backed** candidate information for choosing a **Blockscout-comp
 - Full trial remains blocked until endpoint validation and separate founder gates succeed.
 - **`.env.example`** contains **`BLOCKSCOUT_BASE_URL=`** placeholder only (no live value required for this pack).
 
+### Selection status
+
+```
+selected_candidate_id: null
+endpoint_validation_blocked: true
+reason: no candidate selected for validation yet
+```
+
+### Explicit non-claims
+
+- No endpoint validation run from this documentation revision.
+- Endpoint **not** proven reachable (no probe; no “endpoint works” claim).
+- No usable metadata received from Blockscout in this step.
+- Provider disabled; no runtime provider activation authorized here.
+
 ## 4) Source requirements
 
 Before any endpoint validation, a **chosen** candidate must be documented with:
@@ -23,31 +38,33 @@ Before any endpoint validation, a **chosen** candidate must be documented with:
 - `chain_id`: **8453**
 - `evidence_note` — what the source supports vs does not prove (no “endpoint works” claim from this pack alone).
 - `confidence`: **low** / **medium** / **high** (default **low** until verified sources replace placeholders).
-- `selected_for_validation`: **false** by default for all rows in this pack revision.
+- `selected_for_validation`: **false** by default until a steward marks **exactly one** row for an approved validation window.
 - `validation_status`: **not_run** until a future approved validation records otherwise.
 
 ## 5) Candidate table
 
-Placeholder posture: verified public URLs are **not** committed yet for B01–B03. Each row uses **`REQUIRED_SOURCE_URL`** with **`replacement_required: true`** until a steward replaces it with a reviewed URL and updates `confidence`.
+- **B01** is a **real source-backed** candidate row (public URLs below). It is **not** selected for validation in this revision (`selected_for_validation: false`).
+- **B02** and **B03** remain **source-required placeholders** (`REQUIRED_SOURCE_URL`, `replacement_required: true`) until replaced.
 
-### B01 — Blockscout official docs / source candidate
+### B01 — Base Mainnet API docs | Blockscout (source-backed)
 
 | Field | Value |
 | --- | --- |
 | `candidate_id` | B01 |
-| `source_url` | `REQUIRED_SOURCE_URL` |
-| `source_label` | Blockscout official docs/source candidate |
-| `observed_endpoint_or_docs_path` | Official Blockscout REST/OpenAPI path for `GET /api/v2/smart-contracts/{address_hash}` (documented upstream; not probed here) |
+| `source_url` | https://base.blockscout.com/api-docs |
+| `source_label` | Base Mainnet API docs \| Blockscout |
+| `observed_endpoint_or_docs_path` | https://base.blockscout.com/api/v2/smart-contracts/{address} |
+| `candidate_base_url` | https://base.blockscout.com |
 | `chain` | base |
 | `chain_id` | 8453 |
-| `evidence_note` | Row is a **candidate slot** only; does **not** prove reachability, ABI availability, or correct Base deployment URL. |
-| `confidence` | low |
+| `evidence_note` | Public Base Blockscout API docs surface cited; endpoint shape remains **candidate only** until validation. REST base URL depends on Blockscout instance; here aligned to Base mainnet explorer host. |
+| `confidence` | medium |
 | `selected_for_validation` | false |
 | `validation_status` | not_run |
-| `replacement_required` | true |
-| `notes` | Replace `REQUIRED_SOURCE_URL` with a reviewed Blockscout project/docs URL before selection. |
+| `replacement_required` | false |
+| `notes` | Source-backed candidate only; no network validation performed. Additional context: Blockscout REST API overview — https://www.blog.blockscout.com/blockscout-rest-api/ |
 
-### B02 — Base explorer / API candidate
+### B02 — Base explorer / API candidate (placeholder)
 
 | Field | Value |
 | --- | --- |
@@ -64,7 +81,7 @@ Placeholder posture: verified public URLs are **not** committed yet for B01–B0
 | `replacement_required` | true |
 | `notes` | Requires terms-of-use and stability review before any selection. |
 
-### B03 — Alternate Blockscout-compatible endpoint candidate
+### B03 — Alternate Blockscout-compatible endpoint candidate (placeholder)
 
 | Field | Value |
 | --- | --- |
@@ -104,7 +121,8 @@ Placeholder posture: verified public URLs are **not** committed yet for B01–B0
 **Allowed**
 
 - Blockscout endpoint **source pack** is **prepared** (this document).
-- Blockscout endpoint **selection is pending** (no `selected_for_validation: true` row in this revision).
+- **B01** is documented as a **source-backed candidate** (not a validation result).
+- Blockscout endpoint **selection is pending** (`selected_candidate_id: null`; no `selected_for_validation: true` row).
 - **Provider remains disabled** by default.
 
 **Forbidden** (avoid implying)
