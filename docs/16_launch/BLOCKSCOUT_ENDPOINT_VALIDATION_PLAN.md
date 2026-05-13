@@ -8,8 +8,9 @@ Prepare **Blockscout** as an alternative ABI/source **endpoint validation** path
 
 - **Sourcify** remains **unresolved** after **v10.8A**, **v11.2**, **v11.4**, and **v11.5** recorded evidence (no usable Sourcify metadata in consolidated posture).
 - The **v11.6** pivot review recommends preparing the **Blockscout** path as the next **docs/test** step unless the founder chooses a Sourcify retry instead.
+- **B01** is **selected** in `docs/16_launch/BLOCKSCOUT_BASE_ENDPOINT_SOURCE_PACK.md` (v12.0) as the **single future** Blockscout endpoint validation candidate for Base (`https://base.blockscout.com`); selection is **documentation only** — **no** validation run, **no** reachability claim.
 - **Provider remains disabled** by default.
-- **Full trial remains blocked** until endpoint validation succeeds and separate founder gates are met.
+- **Full trial remains blocked** until a **successful one-target** Blockscout endpoint validation (when executed) **and** the separate founder phrase **"green light rerun Blockscout trial from VPS"** (plus runbook gates). Until then, **full trial remains blocked**.
 - **No usable metadata** has been received from **Sourcify** in recorded evidence.
 
 ## 4) Blockscout validation scope
@@ -38,9 +39,10 @@ For **Base**, a candidate **`blockscout_base_url`** must be **reviewed and appro
 
 ## 5a) Endpoint source pack and selection gate
 
-- **Candidate base URLs** for Base must be collected and reviewed using `docs/16_launch/BLOCKSCOUT_BASE_ENDPOINT_SOURCE_PACK.md` (v11.9 source pack; docs/test only).
-- **B01** is documented there as a **real source-backed** candidate (`https://base.blockscout.com` docs surface) with `selected_for_validation: false` — **not selected** for validation in the current pack revision.
-- **Blockscout endpoint validation remains blocked** until the founder **selects exactly one** candidate for validation (steward sets `selected_for_validation: true` for **only one** row, typically after review of B01 vs placeholders B02/B03) **and** the separate founder phrase **"green light VPS Blockscout endpoint validation only"** is recorded for the approved run window.
+- **Candidate base URLs** for Base are recorded in `docs/16_launch/BLOCKSCOUT_BASE_ENDPOINT_SOURCE_PACK.md` (v12.0 source pack; docs/test only).
+- **B01** is **selected** as the **only** candidate for a **future** one-target validation (`selected_for_validation: true`; `validation_status` still **not_run** in that pack).
+- **Blockscout endpoint validation remains blocked** until the founder says **exactly**: **"green light VPS Blockscout endpoint validation only"** for the approved VPS validation window (phrase not yet given at v12.0 publication time).
+- **Full trial remains blocked** until **successful one-target** Blockscout endpoint validation **and** the founder says **exactly**: **"green light rerun Blockscout trial from VPS"** (plus runbook gates).
 
 ## 6) Future required phrase
 
@@ -124,7 +126,7 @@ A **full five-target** provider trial remains **blocked** until:
 
 ## 12) Cross-references
 
-- `docs/16_launch/BLOCKSCOUT_BASE_ENDPOINT_SOURCE_PACK.md` (B01 source-backed; selection pending)
+- `docs/16_launch/BLOCKSCOUT_BASE_ENDPOINT_SOURCE_PACK.md` (v12.0; B01 selected; validation not run)
 - `docs/16_launch/ABI_SOURCE_PROVIDER_PIVOT_REVIEW.md`
 - `docs/16_launch/ABI_SOURCE_PROVIDER_TRIAL_RUNBOOK.md`
 - `docs/16_launch/ABI_SOURCE_PROVIDER_TRIAL_APPROVAL_RECORD.md`

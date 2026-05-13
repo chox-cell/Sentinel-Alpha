@@ -1,4 +1,4 @@
-# Blockscout Base Endpoint Source Pack v11.9
+# Blockscout Base Endpoint Source Pack v12.0
 
 ## 2) Purpose
 
@@ -15,10 +15,12 @@ Collect **source-backed** candidate information for choosing a **Blockscout-comp
 ### Selection status
 
 ```
-selected_candidate_id: null
+selected_candidate_id: B01
 endpoint_validation_blocked: true
-reason: no candidate selected for validation yet
+reason: validation phrase not yet given
 ```
+
+**Note:** **B01** is **selected for future validation only**. No network validation has run.
 
 ### Explicit non-claims
 
@@ -38,13 +40,13 @@ Before any endpoint validation, a **chosen** candidate must be documented with:
 - `chain_id`: **8453**
 - `evidence_note` — what the source supports vs does not prove (no “endpoint works” claim from this pack alone).
 - `confidence`: **low** / **medium** / **high** (default **low** until verified sources replace placeholders).
-- `selected_for_validation`: **false** by default until a steward marks **exactly one** row for an approved validation window.
+- `selected_for_validation`: **true** for **at most one** row chosen for a future validation window (v12.0: **B01**); other rows remain **false**.
 - `validation_status`: **not_run** until a future approved validation records otherwise.
 
 ## 5) Candidate table
 
-- **B01** is a **real source-backed** candidate row (public URLs below). It is **not** selected for validation in this revision (`selected_for_validation: false`).
-- **B02** and **B03** remain **source-required placeholders** (`REQUIRED_SOURCE_URL`, `replacement_required: true`) until replaced.
+- **B01** is the **single selected** candidate for a **future** one-target Blockscout endpoint validation (`selected_for_validation: true`); `validation_status` remains **not_run** until an approved validation executes.
+- **B02** and **B03** remain **not selected** (`selected_for_validation: false`), **source-required placeholders** (`REQUIRED_SOURCE_URL`, `replacement_required: true`) until replaced.
 
 ### B01 — Base Mainnet API docs | Blockscout (source-backed)
 
@@ -59,8 +61,9 @@ Before any endpoint validation, a **chosen** candidate must be documented with:
 | `chain_id` | 8453 |
 | `evidence_note` | Public Base Blockscout API docs surface cited; endpoint shape remains **candidate only** until validation. REST base URL depends on Blockscout instance; here aligned to Base mainnet explorer host. |
 | `confidence` | medium |
-| `selected_for_validation` | false |
+| `selected_for_validation` | true |
 | `validation_status` | not_run |
+| `selected_reason` | source-backed Base Blockscout API docs candidate |
 | `replacement_required` | false |
 | `notes` | Source-backed candidate only; no network validation performed. Additional context: Blockscout REST API overview — https://www.blog.blockscout.com/blockscout-rest-api/ |
 
@@ -121,8 +124,8 @@ Before any endpoint validation, a **chosen** candidate must be documented with:
 **Allowed**
 
 - Blockscout endpoint **source pack** is **prepared** (this document).
-- **B01** is documented as a **source-backed candidate** (not a validation result).
-- Blockscout endpoint **selection is pending** (`selected_candidate_id: null`; no `selected_for_validation: true` row).
+- **B01** is documented as a **source-backed candidate** and is **selected for future validation only** (not a validation result; `validation_status: not_run`).
+- Endpoint validation is **still blocked** (`endpoint_validation_blocked: true`) until the founder phrase in §7 is given for an approved run.
 - **Provider remains disabled** by default.
 
 **Forbidden** (avoid implying)

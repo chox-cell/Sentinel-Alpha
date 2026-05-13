@@ -9,53 +9,52 @@ CLAIMS = REPO_ROOT / "docs/18_investor/CLAIMS_LEDGER.md"
 RUNBOOK = REPO_ROOT / "docs/16_launch/ABI_SOURCE_PROVIDER_TRIAL_RUNBOOK.md"
 
 
-def test_b01_real_urls_and_fields():
+def test_source_pack_selection_and_block_reason():
     text = PACK.read_text(encoding="utf-8")
     low = text.lower()
 
-    assert "https://base.blockscout.com/api-docs" in text
-    assert "Base Mainnet API docs | Blockscout" in text
-    assert "https://base.blockscout.com" in text
-    assert "/api/v2/smart-contracts/{address}" in text
+    assert "selected_candidate_id: b01" in low
+    assert "endpoint_validation_blocked: true" in low
+    assert "validation phrase not yet given" in low
+    assert "selected for future validation only" in low
+    assert "no network validation has run" in low
+
+
+def test_b01_selected_for_validation_true():
+    t = PACK.read_text(encoding="utf-8")
+    assert "| `selected_for_validation` | true |" in t
+    assert "| `validation_status` | not_run |" in t
+    assert "selected_reason" in t.lower()
+    assert "source-backed base blockscout api docs candidate" in t.lower()
+
+
+def test_b02_b03_not_selected():
+    t = PACK.read_text(encoding="utf-8").lower()
+    assert "| `candidate_id` | b02 |" in t
+    assert "| `selected_for_validation` | false |" in t
+    assert "b03" in t
+
+
+def test_validation_plan_b01_selected_and_phrases():
+    pl = PLAN.read_text(encoding="utf-8")
+    low = pl.lower()
     assert "b01" in low
-    assert "| `selected_for_validation` | true |" in text
-    assert "replacement_required" in low and "false" in low
-    assert "validation_status" in low
-    assert "not_run" in low
+    assert "selected" in low
+    assert 'green light VPS Blockscout endpoint validation only' in pl
+    assert 'green light rerun Blockscout trial from VPS' in pl
 
 
-def test_b02_b03_placeholders():
-    text = PACK.read_text(encoding="utf-8")
-    assert "REQUIRED_SOURCE_URL" in text
-    assert "replacement_required" in text.lower()
-    assert "b02" in text.lower()
-    assert "b03" in text.lower()
-
-
-def test_selection_status_gate():
-    text = PACK.read_text(encoding="utf-8").lower()
-    assert "selected_candidate_id: b01" in text
-    assert "endpoint_validation_blocked" in text
-    assert "true" in text
-    assert "validation phrase not yet given" in text
-
-
-def test_validation_plan_b01_selected():
-    pl = PLAN.read_text(encoding="utf-8").lower()
-    assert "b01" in pl
-    assert "selected" in pl
-    assert "green light vps blockscout endpoint validation only" in pl
-
-
-def test_approval_includes_v11_9_and_v12_blockscout():
+def test_approval_v12_selection():
     ap = APPROVAL.read_text(encoding="utf-8")
-    assert "blockscout_source_candidate_b01:" in ap
     assert "blockscout_selected_candidate: B01" in ap
+    assert "validation_not_run" in ap
+    assert "provider_remains_disabled: true" in ap
 
 
-def test_claims_include_selection_record():
+def test_claims_selection_row():
     cl = CLAIMS.read_text(encoding="utf-8").lower()
     assert "blockscout candidate selection record" in cl
+    assert "b01 selected / validation not run / no provider activation" in cl
 
 
 def test_posture_docs_forbid_unsafe_positive_phrases():
@@ -81,7 +80,7 @@ def test_posture_docs_forbid_unsafe_positive_phrases():
         assert phrase not in combined, phrase
 
 
-def test_env_unchanged_during_real_candidate_tests():
+def test_env_unchanged_during_selection_record_tests():
     env_path = REPO_ROOT / ".env"
     before = hashlib.sha256(env_path.read_bytes()).hexdigest() if env_path.exists() else "missing"
 

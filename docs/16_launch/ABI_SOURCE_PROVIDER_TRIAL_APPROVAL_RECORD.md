@@ -104,6 +104,19 @@ notes:
   - see docs/16_launch/BLOCKSCOUT_BASE_ENDPOINT_SOURCE_PACK.md
 ```
 
+v12.0 Blockscout candidate selection record (docs/test-only; no network; B01 selected for future validation):
+
+```
+v12.0_blockscout_candidate_selection_record: true
+blockscout_selected_candidate: B01
+blockscout_candidate_selection_status: selected / validation_not_run
+blockscout_endpoint_validation_status: not_run
+provider_remains_disabled: true
+trial_rerun: false
+notes:
+  - see docs/16_launch/BLOCKSCOUT_BASE_ENDPOINT_SOURCE_PACK.md
+```
+
 Historical note: v10.6 recorded the prior hold posture as `approval_status: not_approved`; v10.7 recorded `approval_status: approved_pending_real_target_validation` with `trial_run: false`, `live_calls_performed: false`, and `provider_active: false` before the v10.8A attempted Sourcify run.
 
 ## 3) Required founder phrase

@@ -26,8 +26,7 @@ def test_blockscout_plan_doc_exists_and_has_required_content():
     assert "{blockscout_base_url}/api/v2/smart-contracts/{address}" in text
     assert "BLOCKSCOUT_BASE_ENDPOINT_SOURCE_PACK.md" in text
     assert "blockscout endpoint validation" in low and "blocked" in low
-    assert "b01" in low and "source-backed" in low
-    assert "not selected" in low
+    assert "b01" in low and "selected" in low
     assert 'green light VPS Blockscout endpoint validation only' in text
     assert 'green light rerun Blockscout trial from VPS' in text
     assert "raw_response_stored: false" in text

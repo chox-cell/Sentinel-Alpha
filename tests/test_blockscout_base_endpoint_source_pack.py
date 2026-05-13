@@ -15,7 +15,7 @@ def test_source_pack_doc_exists_and_has_required_content():
     text = PACK.read_text(encoding="utf-8")
     low = text.lower()
 
-    assert "blockscout base endpoint source pack v11.9" in low
+    assert "blockscout base endpoint source pack v12.0" in low
     assert "no blockscout endpoint validation has run" in low
     assert "no blockscout base url" in low and "selected for runtime" in low
     assert "provider remains disabled" in low
@@ -40,7 +40,7 @@ def test_validation_plan_references_source_pack_and_gate():
     pl = PLAN.read_text(encoding="utf-8").lower()
     assert "blockscout_base_endpoint_source_pack.md" in pl
     assert "blockscout endpoint validation" in pl and "blocked" in pl
-    assert "exactly one" in pl and "candidate" in pl
+    assert "b01" in pl and "selected" in pl
 
 
 def test_pivot_references_source_pack():
@@ -59,7 +59,7 @@ def test_approval_and_claims_source_pack_posture():
     assert "blockscout_source_pack_status:" in ap
     assert "prepared / endpoint not selected" in ap
     assert "blockscout base endpoint source pack" in cl
-    assert "source pack prepared / endpoint not selected / no network validation" in cl
+    assert "source pack prepared / b01 selected for future validation / not run" in cl
 
 
 def test_posture_docs_forbid_unsafe_positive_phrases():
