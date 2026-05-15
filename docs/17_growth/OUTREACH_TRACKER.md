@@ -197,3 +197,19 @@ Maintainer signal on x402 ecosystem page PR (ecosystem page sunset; PR closed; c
 | Agentic.Market | https://agentic.market | not submitted | Chox | long | See submission pack §7 |
 | Pay.sh | https://pay.sh | not submitted | Chox | short | See submission pack §7 |
 | ampersend discover | https://app.ampersend.ai/discover | not submitted | Chox | long | See submission pack §7 |
+
+## giskard09 / Mycelium Trails — x402 directory cross-reference signal (v12.x)
+
+Paraphrased **community** reply on the closed x402 ecosystem PR thread (no implied maintainer authority):
+
+- responder: giskard09 (community / adjacent builder; role as stated in prior tracker notes)
+- signal: **pre/post split** described as clean — Sentinel at **decision boundary**, Mycelium at **execution record**; **independent layers**, **same discovery surfaces**; may **show up together** without coupling specs
+- stated intent: will **submit Mycelium** to the **same** community directories listed in the redirection table above
+- future copy: **openness to cross-reference** in each other’s directory copy **once both submissions are live** (listings exist)
+- partnership_claim: false
+- endorsement_claim: false
+- integration_claim: false
+- coupled_runtime_stack_claim: false
+- directory_submissions_status: **community directory rows above remain `not submitted` here** until a real manual submission is recorded and verified
+- status: **community alignment signal** / **no partnership** / **no integration**
+- notes: positive **alignment signal** only; not partnership, not approval, not shared runtime stack; cross-reference is **optional** and **after** both listings are live — see `docs/17_growth/X402_DIRECTORY_SUBMISSION_PACK.md` §10

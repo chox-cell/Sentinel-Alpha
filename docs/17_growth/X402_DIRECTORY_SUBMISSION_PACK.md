@@ -121,10 +121,22 @@ Use when a directory allows a fuller description:
 5. Capture **submission URL** or listing ID when the directory provides one.
 6. Update `docs/17_growth/OUTREACH_TRACKER.md` **only after** manual action.
 
-## 10) Cross-references
+## 10) Optional future cross-reference (Mycelium Trails — community signal)
+
+Adjacent **community** builder **giskard09** indicated on the closed x402 ecosystem PR thread that **Mycelium Trails** may be submitted to the **same** community-maintained x402 directories, and that **optional cross-reference** in each project’s directory copy could happen **after both** projects have **live** directory listings.
+
+Documentation-only posture:
+
+- **Mycelium Trails** is an **adjacent community project** oriented toward **post-execution accountability** (execution record / trail).
+- **Sentinel Alpha / BeezShield** focuses on **pre-execution decisioning** (policy assistance at the decision boundary).
+- **Cross-reference** may be added **only after** both projects have **live** directory submissions (listings visible on the directory).
+- **No partnership**, **no official integration**, **no endorsement**, and **no shared runtime dependency** is claimed from this note. This is **future possible** coordination on **copy** only, not a spec coupling.
+
+## 11) Cross-references
 
 - `docs/17_growth/OUTREACH_TRACKER.md`
 - `docs/17_growth/SENTINEL_ALPHA_PUBLIC_TECHNICAL_SUMMARY.md`
+- `docs/17_growth/PRE_POST_LOOP_REFERENCE_PATTERN.md`
 - `docs/18_investor/CLAIMS_LEDGER.md`
 
 This pack does not perform submissions, claim partnership, or enable integrations.

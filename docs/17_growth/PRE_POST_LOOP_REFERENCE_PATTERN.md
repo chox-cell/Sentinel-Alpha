@@ -19,3 +19,5 @@ This pattern is a local architecture sketch and not a live integration statement
 - no partnership claim
 - no wallet execution/signing in this sketch
 - regression evidence only, not a security guarantee
+
+Future **community directory** listing copy may reference this **pre/post** split using **documentation-only composability** wording (Sentinel pre-decision, adjacent post-accountability surfaces), without implying live runtime coupling or coupling technical specs.
