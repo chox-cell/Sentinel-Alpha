@@ -1,12 +1,6 @@
+from fastapi.testclient import TestClient
+
 from apps.api import main
-
-
-class _FakeBackgroundTasks:
-    def __init__(self):
-        self.calls = []
-
-    def add_task(self, func, *args, **kwargs):
-        self.calls.append((func, args, kwargs))
 
 
 def test_background_tasks_scheduled_for_non_cache(monkeypatch):
@@ -30,16 +24,29 @@ def test_background_tasks_scheduled_for_non_cache(monkeypatch):
         },
     )
 
-    tasks = _FakeBackgroundTasks()
-    req = main.RequestModel(
-        contract_address="0x1111111111111111111111111111111111111111",
-        chain="base",
-        context={"event_type": "new_deploy"},
-    )
-    response = main.risk_score(req=req, background_tasks=tasks, payment_signature="demo")
+    captured: list[tuple[str, dict | None]] = []
 
-    assert response["api_version"] == "2026.8.0"
-    assert len(tasks.calls) == 2
+    def fake_schedule(background_tasks, *, event_payload, outcome_record):
+        captured.append(("log", event_payload))
+        if outcome_record:
+            captured.append(("outcome", outcome_record))
+
+    monkeypatch.setattr(main, "schedule_post_risk_tasks", fake_schedule)
+
+    client = TestClient(main.app)
+    response = client.post(
+        "/contracts/risk-score",
+        json={
+            "contract_address": "0x1111111111111111111111111111111111111111",
+            "chain": "base",
+            "context": {"event_type": "new_deploy"},
+        },
+        headers={"PAYMENT-SIGNATURE": "demo"},
+    )
+
+    assert response.status_code == 200
+    assert response.json()["api_version"] == "2026.8.0"
+    assert len(captured) == 2
 
 
 def test_cache_hit_does_not_schedule_outcome_record_task(monkeypatch):
@@ -63,13 +70,24 @@ def test_cache_hit_does_not_schedule_outcome_record_task(monkeypatch):
         },
     )
 
-    tasks = _FakeBackgroundTasks()
-    req = main.RequestModel(
-        contract_address="0x1111111111111111111111111111111111111111",
-        chain="base",
-        context={"event_type": "new_deploy"},
-    )
-    main.risk_score(req=req, background_tasks=tasks, payment_signature="demo")
+    captured: list[tuple[str, dict | None]] = []
 
-    # log_event task is still expected, but no outcome recording task.
-    assert len(tasks.calls) == 1
+    def fake_schedule(background_tasks, *, event_payload, outcome_record):
+        captured.append(("log", event_payload))
+        if outcome_record:
+            captured.append(("outcome", outcome_record))
+
+    monkeypatch.setattr(main, "schedule_post_risk_tasks", fake_schedule)
+
+    client = TestClient(main.app)
+    client.post(
+        "/contracts/risk-score",
+        json={
+            "contract_address": "0x1111111111111111111111111111111111111111",
+            "chain": "base",
+            "context": {"event_type": "new_deploy"},
+        },
+        headers={"PAYMENT-SIGNATURE": "demo"},
+    )
+
+    assert len(captured) == 1

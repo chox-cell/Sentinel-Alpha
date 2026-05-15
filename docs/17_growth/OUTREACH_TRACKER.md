@@ -276,6 +276,20 @@ Maintainer signal on x402 ecosystem page PR (ecosystem page sunset; PR closed; c
 - endorsement_claim: false
 - integration_claim: false
 
+## x402scan directory registration — sixth diagnosis (v12.x)
+
+- target_url: `https://api.beezshield.com/contracts/risk-score`
+- channel: x402scan.com manual listing flow (server access logs correlate with scanners)
+- registration_status: **attempted_validation_failed_post_422** (no listing claimed)
+- observed:
+  - Majority of discovery verbs (**GET**, **HEAD**, **PATCH**, **PUT**, **DELETE**) → **402**; **OPTIONS** → **204** once compatibility patches landed
+  - At least one **POST** to **`/contracts/risk-score`** returned **422 Unprocessable Entity**, attributed to unpaid body validation preceding the payment gate (pre-fix)
+- reason_summary: Unpaid **POST** must return **402** challenge before mandatory JSON/schema validation — see `docs/17_growth/X402_DIRECTORY_SUBMISSION_PACK.md` **§3f** (repo ordering change; **no deployment claim**)
+- listing_success_claim: false
+- partnership_claim: false
+- endorsement_claim: false
+- integration_claim: false
+
 ## giskard09 / Mycelium Trails — x402 directory cross-reference signal (v12.x)
 
 Paraphrased **community** reply on the closed x402 ecosystem PR thread (no implied maintainer authority):

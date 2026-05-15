@@ -11,10 +11,11 @@ load_dotenv(_REPO_ROOT / ".env", override=True)
 
 from fastapi import BackgroundTasks, FastAPI, Header, HTTPException, Request
 from fastapi.responses import JSONResponse, Response
-from pydantic import BaseModel
+from pydantic import BaseModel, ValidationError
 from typing import Optional, Dict, Any
 
 from apps.webhooks.quicknode import router as quicknode_router
+from services.x402.coinbase import verify_demo_payment
 from services.x402.payment import require_x402_payment, build_x402_challenge, x402_payment_discovery_headers
 from services.x402.onchain_verifier import get_onchain_verification_status
 from services.x402.replay_guard import get_replay_status
@@ -74,6 +75,18 @@ class RequestModel(BaseModel):
     context: Optional[Dict[str, Any]] = None
 
 
+_RISK_SCORE_POST_OPENAPI_EXTRA = {
+    "requestBody": {
+        "required": True,
+        "content": {
+            "application/json": {
+                "schema": RequestModel.model_json_schema(),
+            }
+        },
+    }
+}
+
+
 _RISK_SCORE_OPTIONS_CORS_HEADERS = {
     "Access-Control-Allow-Methods": "DELETE,GET,HEAD,OPTIONS,PATCH,POST,PUT",
     "Access-Control-Allow-Headers": "Content-Type,X-SENTINEL-LANE,X402-PAYMENT,PAYMENT-REQUIRED",
@@ -91,6 +104,19 @@ def _risk_score_discovery_challenge_json_response(request: Request) -> JSONRespo
     return JSONResponse(
         status_code=402,
         content=challenge,
+        headers=x402_payment_discovery_headers(challenge),
+    )
+
+
+def _post_prepayment_discovery_response(lane: str) -> JSONResponse:
+    """
+    POST unpaid probes: preserve FastAPI's historical ``{"detail": challenge}`` shape for scanners
+    (GET remains a flat JSON body).
+    """
+    challenge = build_x402_challenge(lane=lane)
+    return JSONResponse(
+        status_code=402,
+        content={"detail": challenge},
         headers=x402_payment_discovery_headers(challenge),
     )
 
@@ -181,28 +207,78 @@ def risk_score_options_x402_discovery(request: Request):
     return Response(status_code=204, headers=_RISK_SCORE_OPTIONS_CORS_HEADERS)
 
 
-@app.post("/contracts/risk-score")
-def risk_score(
-    req: RequestModel,
+@app.post("/contracts/risk-score", openapi_extra=_RISK_SCORE_POST_OPENAPI_EXTRA)
+async def risk_score(
+    request: Request,
     background_tasks: BackgroundTasks,
-    request: Request = None,
     payment_signature: str | None = Header(default=None, alias="PAYMENT-SIGNATURE"),
-    x402_payment: str | None = Header(default=None, alias="X402-PAYMENT"),
+    x402_payment_hdr: str | None = Header(default=None, alias="X402-PAYMENT"),
     x_sentinel_lane: str | None = Header(default=None, alias="X-SENTINEL-LANE"),
 ):
+    """
+    Paid execution uses JSON body validated only after payment headers pass.
+    Unpaid scanners may send empty/invalid JSON — route returns ``402`` + ``detail`` challenge first.
+    """
     client_ip = request.client.host if (request and request.client) else None
     if not _rate_limit_allow(client_ip):
         raise HTTPException(status_code=429, detail={"error": "rate_limit_exceeded"})
 
+    payment_signature = payment_signature if isinstance(payment_signature, str) else None
+    x402_payment_hdr = x402_payment_hdr if isinstance(x402_payment_hdr, str) else None
     lane_raw = x_sentinel_lane if isinstance(x_sentinel_lane, str) else None
-    lane = (lane_raw or "basic").strip().lower()
+    lane = (lane_raw.strip().lower() if isinstance(lane_raw, str) and lane_raw.strip() else "basic")
     if lane not in _SUPPORTED_LANES:
         return JSONResponse(status_code=400, content={"error": "invalid_lane"})
+
+    mode = (os.getenv("PAYMENT_MODE", "demo") or "demo").strip().lower()
+
+    # Before reading the body: return challenge for probes that omit payment signals (avoids 422 noise).
+    if mode == "demo":
+        if not verify_demo_payment(payment_signature):
+            return _post_prepayment_discovery_response(lane)
+    else:
+        x402_enabled = (os.getenv("X402_ENABLED", "false") or "false").strip().lower() in {
+            "1",
+            "true",
+            "yes",
+            "on",
+        }
+        if not x402_enabled:
+            return JSONResponse(status_code=402, content={"detail": {"error": "x402_disabled"}})
+        xp = (x402_payment_hdr or "").strip()
+        if not xp:
+            return _post_prepayment_discovery_response(lane)
+
+    raw = await request.body()
+    if not raw.strip():
+        payload: dict[str, Any] = {}
+    else:
+        try:
+            parsed = json.loads(raw.decode("utf-8"))
+        except json.JSONDecodeError:
+            raise HTTPException(
+                status_code=422,
+                detail=[{"loc": ["body"], "msg": "Invalid JSON payload", "type": "json_invalid"}],
+            )
+        if parsed is None:
+            payload = {}
+        elif not isinstance(parsed, dict):
+            raise HTTPException(
+                status_code=422,
+                detail=[{"loc": ["body"], "msg": "JSON body must be an object", "type": "value_error"}],
+            )
+        else:
+            payload = parsed
+
+    try:
+        req = RequestModel.model_validate(payload)
+    except ValidationError as exc:
+        raise HTTPException(status_code=422, detail=exc.errors()) from exc
 
     payment_billing = require_x402_payment(
         {
             "PAYMENT-SIGNATURE": payment_signature,
-            "X402-PAYMENT": x402_payment,
+            "X402-PAYMENT": x402_payment_hdr,
         },
         lane=lane,
     )

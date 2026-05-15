@@ -53,6 +53,13 @@ Maintainer/community response on the x402 ecosystem page PR (paraphrased posture
 - **Repository behavior:** **PATCH**, **PUT**, and **DELETE** on **`/contracts/risk-score`** return the **same** basic-lane **402** JSON challenge and **`PAYMENT-REQUIRED`** / expose headers as **GET**, with **`include_in_schema=False`** so **OpenAPI** does **not** describe them as scoring APIs (**POST** remains the documented risk endpoint). Discovery-only (**no** scoring, **no** required body, **no** DB writes). **OPTIONS** **`Access-Control-Allow-Methods`** updated to acknowledge these verbs for preflight alignment.
 - **Posture unchanged:** **§7** **`not submitted`** / validation failed; **no listing success claim**.
 
+## 3f) x402scan sixth diagnosis — unpaid POST 422 vs prepayment gate (no listing claim)
+
+- **Evidence (2026):** scanners reached the endpoint with **GET**/ **HEAD**/ **OPTIONS** and **PATCH**/ **PUT**/ **DELETE** behaving as **402**/ **204**, while OpenAPI correctly lists **`get`** / **`head`** / **`options`** / **`post`**. Logs still showed at least one **`POST /contracts/risk-score` → 422 Unprocessable Entity** probe.
+- **Hypothesis:** the probe omitted **`X402-PAYMENT`** (or otherwise presented as unpaid) but sent **empty**, **missing**, **non-JSON**, or **schema-incomplete JSON** bodies; FastAPI/Pydantic **body validation ran before payment challenge logic**, yielding **422** instead of **402**.
+- **Repository behavior:** **`POST /contracts/risk-score`** checks **payment/demo gate first** (**`PAYMENT-SIGNATURE`** in demo mode, **`X402-PAYMENT`** in real **`PAYMENT_MODE=real`** with **`X402_ENABLED`**). Unpaid probes return **402** with historical **`detail`‑wrapped** discovery challenge plus **`PAYMENT-REQUIRED`** without consuming the payload. **Paid** callers with **`X402-PAYMENT`** then receive normal **JSON parse + validation** (**422** on invalid payloads) before execution. Paid execution unchanged. **Compatibility only**.
+- **Posture unchanged:** **§7** **`not submitted`** / validation failed; **no listing success claim**.
+
 ## 4) Project identity
 
 | Field | Value |
@@ -95,7 +102,7 @@ Use when a directory allows a fuller description:
 | `submission_owner` | Chox |
 | `copy_variant` | short |
 | `evidence_links` | https://beezshield.com · https://beezshield.com/manifesto.html · https://www.npmjs.com/package/@beezshield/sentinel · `docs/17_growth/SENTINEL_ALPHA_PUBLIC_TECHNICAL_SUMMARY.md` (in-repo public-safe summary) |
-| `notes` | Probe timeline §3a–§3e: OpenAPI reachable; verbs **GET/POST/HEAD/OPTIONS** stabilized; exact-EVM **`accepts`** (§3d); fifth: **PATCH/PUT/DELETE** were **405** before all-method discovery 402 (**§3e**). **`status` stays `not submitted`**; **never claim listing success prematurely**. |
+| `notes` | Probe timeline §3a–§3f: OpenAPI / verb matrix / exact-EVM **`accepts`** / **POST prepayment gate** (**§3f**) after **422** on empty/invalid unpaid **POST**. **`status` stays `not submitted`**; **never claim listing success prematurely**. |
 
 ### Agentic.Market
 

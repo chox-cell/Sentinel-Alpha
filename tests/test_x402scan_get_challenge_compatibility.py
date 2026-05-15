@@ -126,6 +126,7 @@ def test_outreach_and_claims_record_x402scan_attempt_without_success_claim():
     assert "attempted_validation_failed_requirements_schema" in ot
     assert "attempted_validation_failed_schema" in ot
     assert "attempted_validation_failed_unsupported_methods" in ot
+    assert "attempted_validation_failed_post_422" in ot
     assert "validation failed" in cl
     assert "no listing" in cl or "no listing claim" in cl
 
