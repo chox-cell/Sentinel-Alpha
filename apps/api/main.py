@@ -10,7 +10,7 @@ _REPO_ROOT = Path(__file__).resolve().parents[2]
 load_dotenv(_REPO_ROOT / ".env", override=True)
 
 from fastapi import BackgroundTasks, FastAPI, Header, HTTPException, Request
-from fastapi.responses import JSONResponse
+from fastapi.responses import JSONResponse, Response
 from pydantic import BaseModel
 from typing import Optional, Dict, Any
 
@@ -73,6 +73,14 @@ class RequestModel(BaseModel):
     chain: str
     context: Optional[Dict[str, Any]] = None
 
+
+_RISK_SCORE_OPTIONS_CORS_HEADERS = {
+    "Access-Control-Allow-Methods": "GET,HEAD,POST,OPTIONS",
+    "Access-Control-Allow-Headers": "Content-Type,X-SENTINEL-LANE,X402-PAYMENT,PAYMENT-REQUIRED",
+    "Access-Control-Expose-Headers": "PAYMENT-REQUIRED",
+}
+
+
 @app.get("/health")
 def health():
     return {
@@ -111,6 +119,35 @@ def risk_score_get_x402_discovery(request: Request):
         content=challenge,
         headers=x402_payment_discovery_headers(challenge),
     )
+
+
+@app.head("/contracts/risk-score")
+def risk_score_head_x402_discovery(request: Request):
+    """
+    Discovery-only: same payment requirement signal as GET (402 + PAYMENT-REQUIRED), no JSON body,
+    for validators that probe with HEAD (e.g. some directory scanners). No scoring, no DB writes.
+    """
+    client_ip = request.client.host if (request and request.client) else None
+    if not _rate_limit_allow(client_ip):
+        raise HTTPException(status_code=429, detail={"error": "rate_limit_exceeded"})
+
+    challenge = build_x402_challenge(lane="basic")
+    return Response(
+        status_code=402,
+        headers=x402_payment_discovery_headers(challenge),
+    )
+
+
+@app.options("/contracts/risk-score")
+def risk_score_options_x402_discovery(request: Request):
+    """
+    Preflight-safe handler for scanners / browsers probing OPTIONS without running scoring or DB writes.
+    """
+    client_ip = request.client.host if (request and request.client) else None
+    if not _rate_limit_allow(client_ip):
+        raise HTTPException(status_code=429, detail={"error": "rate_limit_exceeded"})
+
+    return Response(status_code=204, headers=_RISK_SCORE_OPTIONS_CORS_HEADERS)
 
 
 @app.post("/contracts/risk-score")

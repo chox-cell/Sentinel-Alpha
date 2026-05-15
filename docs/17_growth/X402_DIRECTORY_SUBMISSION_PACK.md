@@ -32,6 +32,13 @@ Maintainer/community response on the x402 ecosystem page PR (paraphrased posture
 - **Repository behavior:** **`GET`** and **`POST` (missing payment)** on `/contracts/risk-score` expose **legacy challenge keys** unchanged and add **`x402Version`**, **`accepts`** ( **`scheme`: `exact`**; **`network`**: **`eip155:8453`** to match `.well-known` + legacy **`network`**; **`maxAmountRequired`** in USDC **6-decimal atomic units**, e.g. `0.02` → **`20000`** ), plus **`PAYMENT-REQUIRED`** (**standard base64** over compact JSON `{"x402Version","accepts"}`) and **`Access-Control-Expose-Headers: PAYMENT-REQUIRED`** for browser-style clients behind CORS gateways.
 - **Posture unchanged:** **`status`** for x402scan in §7 remains **`not submitted` / validation failed** until **verified** listing; **do not claim** submission success.
 
+## 3c) x402scan third attempt — HEAD / OPTIONS probe hypothesis (no listing claim)
+
+- **Observed in production diagnostics (2026, post–schema/header compat):** **GET** `https://api.beezshield.com/contracts/risk-score` returns **402** with **`PAYMENT-REQUIRED`**, legacy fields, **`x402Version`**, and **`accepts[]`** as intended; **x402scan** listing flow **still failed** with **`Error: Expected 402 response`**.
+- **Additional signals:** **`HEAD`** and **`OPTIONS`** on the same path returned **405 Method Not Allowed** (e.g. `Allow:` listing **GET** only for HEAD), implying some validators may use **HEAD** and/or **browser preflight** **OPTIONS** instead of—or before—**GET**.
+- **Repository behavior:** **`HEAD /contracts/risk-score`** returns **402** with the same **`PAYMENT-REQUIRED`** / **`Access-Control-Expose-Headers: PAYMENT-REQUIRED`** as **GET**, **no response body**, discovery-only (**no** scoring, **no** `contract_address`, **no** DB writes). **`OPTIONS`** returns **204** with **`Access-Control-Allow-Methods`** **`GET,HEAD,POST,OPTIONS`**, **`Access-Control-Allow-Headers`** including **`Content-Type`**, **`X-SENTINEL-LANE`**, **`X402-PAYMENT`**, **`PAYMENT-REQUIRED`**, and **`Access-Control-Expose-Headers: PAYMENT-REQUIRED`** — compatibility only for discovery/preflight, **not** a global CORS policy for other routes.
+- **Posture unchanged:** **§7 x402scan** remains **`not submitted` / validation failed** until verified listing URL; **no listing success claimed** until the directory visibly accepts the row.
+
 ## 4) Project identity
 
 | Field | Value |
@@ -74,7 +81,7 @@ Use when a directory allows a fuller description:
 | `submission_owner` | Chox |
 | `copy_variant` | short |
 | `evidence_links` | https://beezshield.com · https://beezshield.com/manifesto.html · https://www.npmjs.com/package/@beezshield/sentinel · `docs/17_growth/SENTINEL_ALPHA_PUBLIC_TECHNICAL_SUMMARY.md` (in-repo public-safe summary) |
-| `notes` | Validators often **GET** the URL and expect **402** — see §3a. First attempt failed (GET **405**); second attempt (**GET 402** + challenge body, then **`x402Version`/`accepts`/`PAYMENT-REQUIRED`** per §3b) **still rejected** — **`status` stays `not submitted`** until a verified listing exists; **never claim listing success prematurely**. |
+| `notes` | Validators may use **GET**, **HEAD**, and/or **OPTIONS** — §3a–§3c. Chronology: (1) GET **405** before GET-compat; (2) GET **402** plus `x402Version` / `accepts` / `PAYMENT-REQUIRED`, still rejected; (3) **HEAD** and **OPTIONS** returned **405** in production diagnostics before HEAD/OPTIONS compatibility in-repo. **`status` stays `not submitted`** until a verified listing exists; **never claim listing success prematurely**. |
 
 ### Agentic.Market
 

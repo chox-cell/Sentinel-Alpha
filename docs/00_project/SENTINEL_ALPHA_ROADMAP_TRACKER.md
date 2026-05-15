@@ -140,6 +140,7 @@ Status: **Done**
 - v12.x Mycelium directory cross-reference signal (giskard09 community alignment; optional future directory copy cross-reference after both listings live; no partnership/integration)
 - v12.x x402scan GET challenge compatibility (`GET /contracts/risk-score` returns 402 discovery challenge; POST unchanged; directory listing not claimed)
 - v12.x x402scan schema/header compatibility (`x402Version` + `accepts[]` + `PAYMENT-REQUIRED` on 402 discovery responses; unpaid POST aligns; legacy body keys preserved; no listing claim)
+- v12.x x402scan HEAD/OPTIONS compatibility (`HEAD` discovery 402 + payment headers empty body; `OPTIONS` preflight **204** with allow-methods/Headers/Expose headers on `/contracts/risk-score`; no listing claim)
 - Agent commerce vision truth-filter update (UCP/AP2/Trust Object remain roadmap context)
 
 ## 5) Cost discipline

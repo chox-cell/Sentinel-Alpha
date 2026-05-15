@@ -227,6 +227,22 @@ Maintainer signal on x402 ecosystem page PR (ecosystem page sunset; PR closed; c
 - endorsement_claim: false
 - integration_claim: false
 
+## x402scan directory registration — third attempt (v12.x)
+
+- target_url: `https://api.beezshield.com/contracts/risk-score`
+- channel: x402scan.com manual listing flow (“This URL only”)
+- registration_status: **attempted_validation_failed_head_options** (no listing claimed)
+- observed:
+  - **GET** → **402** + legacy challenge + **`x402Version`** + **`accepts[]`** + **`PAYMENT-REQUIRED`** header (compat deploy live)
+  - **HEAD** → **405** (**Allow** advertised **GET** only) — likely blocked validators probing **HEAD**
+  - **OPTIONS** → **405** (**Allow** **GET**) — likely blocked **preflight** probes
+  - directory UI **still**: **Error: Expected 402 response**
+- reason_summary: **GET** schema/header compatibility **did not resolve** listing validation; diagnostics suggest **HEAD** / **OPTIONS** **405** as next probe gap — see `docs/17_growth/X402_DIRECTORY_SUBMISSION_PACK.md` §3c for repository-side **HEAD 402** + **OPTIONS 204** compatibility (no deployment claim here)
+- listing_success_claim: false
+- partnership_claim: false
+- endorsement_claim: false
+- integration_claim: false
+
 ## giskard09 / Mycelium Trails — x402 directory cross-reference signal (v12.x)
 
 Paraphrased **community** reply on the closed x402 ecosystem PR thread (no implied maintainer authority):
