@@ -46,6 +46,13 @@ Maintainer/community response on the x402 ecosystem page PR (paraphrased posture
 - **Repository behavior (compatibility only):** **`accepts[0]`** and the **`PAYMENT-REQUIRED`** JSON use **`scheme: "exact"`**, **`network: "eip155:8453"`**, **`asset`** = Base USDC contract, **`amount`** and **`maxAmountRequired`** = same **6-decimal USDC** atomic string, **`maxTimeoutSeconds: 60`**, **`extra: { "name": "USDC", "version": "2" }`**, unchanged **`payTo`** per env. **Not** a protocol certification or listing claim.
 - **Posture unchanged:** **§7 x402scan** **`not submitted`** / validation failed until verified listing; **no success claim**.
 
+## 3e) x402scan fifth diagnosis — OpenAPI / multi-verb discovery (PATCH/PUT/DELETE) (no listing claim)
+
+- **Evidence (2026, VPS access logs during x402scan attempt):** scanners hit **`/openapi.json`** (**200**); probed **`/contracts/risk-score`** with **GET** (and query variants) **402**, **POST** unpaid **402**, **HEAD** **402**, **OPTIONS** **204**, and **PATCH** / **PUT** / **DELETE** (**405** Method Not Allowed prior to fix).
+- **Hypothesis:** validators enumerate **HTTP methods** (from OpenAPI or brute force) and expect **402 Payment Required** on the **same resource path** for discovery-shaped verbs, not only **GET**/ **POST**/ **HEAD**.
+- **Repository behavior:** **PATCH**, **PUT**, and **DELETE** on **`/contracts/risk-score`** return the **same** basic-lane **402** JSON challenge and **`PAYMENT-REQUIRED`** / expose headers as **GET**, with **`include_in_schema=False`** so **OpenAPI** does **not** describe them as scoring APIs (**POST** remains the documented risk endpoint). Discovery-only (**no** scoring, **no** required body, **no** DB writes). **OPTIONS** **`Access-Control-Allow-Methods`** updated to acknowledge these verbs for preflight alignment.
+- **Posture unchanged:** **§7** **`not submitted`** / validation failed; **no listing success claim**.
+
 ## 4) Project identity
 
 | Field | Value |
@@ -88,7 +95,7 @@ Use when a directory allows a fuller description:
 | `submission_owner` | Chox |
 | `copy_variant` | short |
 | `evidence_links` | https://beezshield.com · https://beezshield.com/manifesto.html · https://www.npmjs.com/package/@beezshield/sentinel · `docs/17_growth/SENTINEL_ALPHA_PUBLIC_TECHNICAL_SUMMARY.md` (in-repo public-safe summary) |
-| `notes` | Validators may use **GET**, **HEAD**, and/or **OPTIONS** — §3a–§3d. Chronology: GET **405** → GET **402**/schema → HEAD/OPTIONS **405** → HEAD/OPTIONS compat; **fourth** hypothesis: exact-EVM **`accepts`** (Base USDC contract in **`accepts[0].asset`**, timeout, **`extra`**) — §3d. **`status` stays `not submitted`**; **never claim listing success prematurely**. |
+| `notes` | Probe timeline §3a–§3e: OpenAPI reachable; verbs **GET/POST/HEAD/OPTIONS** stabilized; exact-EVM **`accepts`** (§3d); fifth: **PATCH/PUT/DELETE** were **405** before all-method discovery 402 (**§3e**). **`status` stays `not submitted`**; **never claim listing success prematurely**. |
 
 ### Agentic.Market
 

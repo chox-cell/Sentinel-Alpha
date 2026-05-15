@@ -75,10 +75,24 @@ class RequestModel(BaseModel):
 
 
 _RISK_SCORE_OPTIONS_CORS_HEADERS = {
-    "Access-Control-Allow-Methods": "GET,HEAD,POST,OPTIONS",
+    "Access-Control-Allow-Methods": "DELETE,GET,HEAD,OPTIONS,PATCH,POST,PUT",
     "Access-Control-Allow-Headers": "Content-Type,X-SENTINEL-LANE,X402-PAYMENT,PAYMENT-REQUIRED",
     "Access-Control-Expose-Headers": "PAYMENT-REQUIRED",
 }
+
+
+def _risk_score_discovery_challenge_json_response(request: Request) -> JSONResponse:
+    """Same unpaid x402 discovery JSON body + headers as GET (basic lane); no scoring, no persistence."""
+    client_ip = request.client.host if (request and request.client) else None
+    if not _rate_limit_allow(client_ip):
+        raise HTTPException(status_code=429, detail={"error": "rate_limit_exceeded"})
+
+    challenge = build_x402_challenge(lane="basic")
+    return JSONResponse(
+        status_code=402,
+        content=challenge,
+        headers=x402_payment_discovery_headers(challenge),
+    )
 
 
 @app.get("/health")
@@ -108,17 +122,34 @@ def risk_score_get_x402_discovery(request: Request):
     Discovery/validation-only: return x402 challenge on GET for directory crawlers (e.g. x402scan).
     Does not run risk scoring, require a body, or write state.
     """
-    client_ip = request.client.host if (request and request.client) else None
-    if not _rate_limit_allow(client_ip):
-        raise HTTPException(status_code=429, detail={"error": "rate_limit_exceeded"})
+    return _risk_score_discovery_challenge_json_response(request)
 
-    # Always advertise the default basic lane for URL-only validation probes.
-    challenge = build_x402_challenge(lane="basic")
-    return JSONResponse(
-        status_code=402,
-        content=challenge,
-        headers=x402_payment_discovery_headers(challenge),
-    )
+
+@app.patch(
+    "/contracts/risk-score",
+    include_in_schema=False,
+)
+def risk_score_patch_discovery_x402_only(request: Request):
+    """Scanner compatibility: identical 402 challenge as GET — not listed in OpenAPI; does not run scoring."""
+    return _risk_score_discovery_challenge_json_response(request)
+
+
+@app.put(
+    "/contracts/risk-score",
+    include_in_schema=False,
+)
+def risk_score_put_discovery_x402_only(request: Request):
+    """Scanner compatibility: identical 402 challenge as GET — not listed in OpenAPI; does not run scoring."""
+    return _risk_score_discovery_challenge_json_response(request)
+
+
+@app.delete(
+    "/contracts/risk-score",
+    include_in_schema=False,
+)
+def risk_score_delete_discovery_x402_only(request: Request):
+    """Scanner compatibility: identical 402 challenge as GET — not listed in OpenAPI; does not run scoring."""
+    return _risk_score_discovery_challenge_json_response(request)
 
 
 @app.head("/contracts/risk-score")

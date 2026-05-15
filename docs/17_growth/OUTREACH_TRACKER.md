@@ -258,6 +258,24 @@ Maintainer signal on x402 ecosystem page PR (ecosystem page sunset; PR closed; c
 - endorsement_claim: false
 - integration_claim: false
 
+## x402scan directory registration — fifth diagnosis (v12.x)
+
+- target_url: `https://api.beezshield.com/contracts/risk-score`
+- channel: x402scan.com manual listing flow (server logs show OpenAPI fetch + verb matrix)
+- registration_status: **attempted_validation_failed_unsupported_methods** (no listing claimed)
+- observed (VPS / access logs summary):
+  - **GET** `/openapi.json` → **200**
+  - **GET** **`/contracts/risk-score`** (including query probes) → **402**
+  - **POST** **`/contracts/risk-score`** (unpaid path) → **402**
+  - **HEAD** → **402**
+  - **OPTIONS** → **204**
+  - **PATCH** / **PUT** / **DELETE** → **405** (before all-method compatibility patch)
+- reason_summary: Scanners exercised **unsupported methods**; **405** on **PATCH**/ **PUT**/ **DELETE** suspected as residual validation blocker — repo adds **402** challenge responses on those paths for discovery parity (**§3e**); **no deployment claim**
+- listing_success_claim: false
+- partnership_claim: false
+- endorsement_claim: false
+- integration_claim: false
+
 ## giskard09 / Mycelium Trails — x402 directory cross-reference signal (v12.x)
 
 Paraphrased **community** reply on the closed x402 ecosystem PR thread (no implied maintainer authority):

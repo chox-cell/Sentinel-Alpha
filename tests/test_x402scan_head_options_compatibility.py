@@ -62,7 +62,8 @@ def test_options_preflight_cors_headers(monkeypatch):
     assert response.status_code in (200, 204)
     h = _lower_headers(response)
     methods = (h.get("access-control-allow-methods") or "").upper()
-    assert "GET" in methods and "HEAD" in methods and "POST" in methods and "OPTIONS" in methods
+    for m in ("GET", "HEAD", "POST", "OPTIONS", "PATCH", "PUT", "DELETE"):
+        assert m in methods
     allow_hdrs = (h.get("access-control-allow-headers") or "").lower()
     assert "x402-payment" in allow_hdrs
     assert "content-type" in allow_hdrs
