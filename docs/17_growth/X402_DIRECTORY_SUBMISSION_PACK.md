@@ -39,6 +39,13 @@ Maintainer/community response on the x402 ecosystem page PR (paraphrased posture
 - **Repository behavior:** **`HEAD /contracts/risk-score`** returns **402** with the same **`PAYMENT-REQUIRED`** / **`Access-Control-Expose-Headers: PAYMENT-REQUIRED`** as **GET**, **no response body**, discovery-only (**no** scoring, **no** `contract_address`, **no** DB writes). **`OPTIONS`** returns **204** with **`Access-Control-Allow-Methods`** **`GET,HEAD,POST,OPTIONS`**, **`Access-Control-Allow-Headers`** including **`Content-Type`**, **`X-SENTINEL-LANE`**, **`X402-PAYMENT`**, **`PAYMENT-REQUIRED`**, and **`Access-Control-Expose-Headers: PAYMENT-REQUIRED`** — compatibility only for discovery/preflight, **not** a global CORS policy for other routes.
 - **Posture unchanged:** **§7 x402scan** remains **`not submitted` / validation failed** until verified listing URL; **no listing success claimed** until the directory visibly accepts the row.
 
+## 3d) x402scan fourth diagnosis — exact EVM `accepts[]` alignment (no listing claim)
+
+- **Observed (2026, post–HEAD/OPTIONS compat):** **GET** / **HEAD** return **402** with **`PAYMENT-REQUIRED`**; **OPTIONS** returns **204** with CORS-shaped headers; **`accepts[]`** includes **`x402Version`**, **`scheme: exact`**, **`eip155:8453`**, atomic **`maxAmountRequired`**, **`payTo`**, etc. **x402scan** submission **still fails** with **`Error: Expected 402 response`**.
+- **Working hypothesis:** remaining mismatch is **exact-EVM payment requirements** detail: **`accepts[0].asset`** should be the **Base mainnet USDC ERC-20 contract address** (same value as returned in live **`accepts[0].asset`**) rather than the symbol-only placeholder, plus fields such as **`amount`**, **`maxTimeoutSeconds`**, and structured **`extra`** (name/version), while **legacy** top-level **`asset: "USDC"`** stays for human readers.
+- **Repository behavior (compatibility only):** **`accepts[0]`** and the **`PAYMENT-REQUIRED`** JSON use **`scheme: "exact"`**, **`network: "eip155:8453"`**, **`asset`** = Base USDC contract, **`amount`** and **`maxAmountRequired`** = same **6-decimal USDC** atomic string, **`maxTimeoutSeconds: 60`**, **`extra: { "name": "USDC", "version": "2" }`**, unchanged **`payTo`** per env. **Not** a protocol certification or listing claim.
+- **Posture unchanged:** **§7 x402scan** **`not submitted`** / validation failed until verified listing; **no success claim**.
+
 ## 4) Project identity
 
 | Field | Value |
@@ -81,7 +88,7 @@ Use when a directory allows a fuller description:
 | `submission_owner` | Chox |
 | `copy_variant` | short |
 | `evidence_links` | https://beezshield.com · https://beezshield.com/manifesto.html · https://www.npmjs.com/package/@beezshield/sentinel · `docs/17_growth/SENTINEL_ALPHA_PUBLIC_TECHNICAL_SUMMARY.md` (in-repo public-safe summary) |
-| `notes` | Validators may use **GET**, **HEAD**, and/or **OPTIONS** — §3a–§3c. Chronology: (1) GET **405** before GET-compat; (2) GET **402** plus `x402Version` / `accepts` / `PAYMENT-REQUIRED`, still rejected; (3) **HEAD** and **OPTIONS** returned **405** in production diagnostics before HEAD/OPTIONS compatibility in-repo. **`status` stays `not submitted`** until a verified listing exists; **never claim listing success prematurely**. |
+| `notes` | Validators may use **GET**, **HEAD**, and/or **OPTIONS** — §3a–§3d. Chronology: GET **405** → GET **402**/schema → HEAD/OPTIONS **405** → HEAD/OPTIONS compat; **fourth** hypothesis: exact-EVM **`accepts`** (Base USDC contract in **`accepts[0].asset`**, timeout, **`extra`**) — §3d. **`status` stays `not submitted`**; **never claim listing success prematurely**. |
 
 ### Agentic.Market
 

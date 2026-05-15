@@ -243,6 +243,21 @@ Maintainer signal on x402 ecosystem page PR (ecosystem page sunset; PR closed; c
 - endorsement_claim: false
 - integration_claim: false
 
+## x402scan directory registration — fourth diagnosis (v12.x)
+
+- target_url: `https://api.beezshield.com/contracts/risk-score`
+- channel: x402scan.com manual listing flow (“This URL only”)
+- registration_status: **attempted_validation_failed_requirements_schema** (no listing claimed)
+- observed:
+  - **GET** /**HEAD** → **402** + **`PAYMENT-REQUIRED`** + **`accepts[]`** (post method & header compatibility)
+  - **OPTIONS** → **204** (post preflight compatibility)
+  - directory UI **still**: **Error: Expected 402 response**
+- reason_summary: Methods and transport headers **match** documented discovery probes; rejection likely driven by **exact-EVM requirement object** shape (**`asset`** as USDC **contract** on Base, **`amount`**, **`maxTimeoutSeconds`**, **`extra`**, etc.) — see `docs/17_growth/X402_DIRECTORY_SUBMISSION_PACK.md` §3d (repo-side alignment; **no deployment claim** here)
+- listing_success_claim: false
+- partnership_claim: false
+- endorsement_claim: false
+- integration_claim: false
+
 ## giskard09 / Mycelium Trails — x402 directory cross-reference signal (v12.x)
 
 Paraphrased **community** reply on the closed x402 ecosystem PR thread (no implied maintainer authority):

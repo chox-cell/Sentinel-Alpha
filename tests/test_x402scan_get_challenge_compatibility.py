@@ -7,6 +7,7 @@ from fastapi.testclient import TestClient
 
 from apps.api import main as api_main
 from apps.api.main import app
+from services.x402.payment import BASE_MAINNET_USDC_CONTRACT
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
 PACK = REPO_ROOT / "docs/17_growth/X402_DIRECTORY_SUBMISSION_PACK.md"
@@ -30,10 +31,13 @@ def _challenge_assertions(body: dict, *, pay_to: str, resource_url: str = "https
     assert a0["scheme"] == "exact"
     assert a0["network"] == "eip155:8453"
     assert a0["maxAmountRequired"] == "20000"
+    assert a0["amount"] == "20000"
     assert a0["payTo"] == pay_to
-    assert a0["asset"] == "USDC"
+    assert a0["asset"] == BASE_MAINNET_USDC_CONTRACT
     assert a0["resource"] == resource_url
     assert a0["mimeType"] == "application/json"
+    assert a0["maxTimeoutSeconds"] == 60
+    assert a0["extra"] == {"name": "USDC", "version": "2"}
 
 
 def test_get_contracts_risk_score_returns_402_x402_challenge(monkeypatch):
@@ -118,6 +122,8 @@ def test_outreach_and_claims_record_x402scan_attempt_without_success_claim():
     assert "expected 402" in ot or "402" in ot
     cl = CLAIMS.read_text(encoding="utf-8").lower()
     assert "x402scan registration attempt" in cl
+    assert "fourth" in cl or "requirements schema" in cl
+    assert "attempted_validation_failed_requirements_schema" in ot
     assert "attempted_validation_failed_schema" in ot
     assert "validation failed" in cl
     assert "no listing" in cl or "no listing claim" in cl

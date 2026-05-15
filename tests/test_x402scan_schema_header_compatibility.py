@@ -9,6 +9,7 @@ from fastapi.testclient import TestClient
 
 from apps.api import main as api_main
 from apps.api.main import app
+from services.x402.payment import BASE_MAINNET_USDC_CONTRACT
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
 PACK = REPO_ROOT / "docs/17_growth/X402_DIRECTORY_SUBMISSION_PACK.md"
@@ -50,8 +51,8 @@ def test_get_402_legacy_and_discovery_schema(monkeypatch):
     assert req["scheme"] == "exact"
     assert req["network"] == "eip155:8453"
     assert req["maxAmountRequired"] == "20000"
-    assert req["payTo"] == "0x_payto_schema"
-    assert req["asset"] == "USDC"
+    assert req["amount"] == "20000"
+    assert req["asset"] == BASE_MAINNET_USDC_CONTRACT
     assert req["resource"] == "https://api.example.invalid/contracts/risk-score"
     assert req["mimeType"] == "application/json"
     assert req["description"] == "BeezShield Sentinel Alpha risk score"
@@ -116,6 +117,7 @@ def test_post_unpaid_402_discovery_schema_and_headers(monkeypatch):
     assert "payment-required" in expose
     decoded = json.loads(base64.standard_b64decode(pr_val).decode("utf-8"))
     assert decoded["x402Version"] == 1
+    assert decoded["accepts"][0]["asset"] == BASE_MAINNET_USDC_CONTRACT
 
 
 def test_docs_second_attempt_schema_status_and_no_listing_claim():

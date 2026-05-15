@@ -30,9 +30,35 @@ def _risk_score_resource_public_url() -> str:
 
 USDC_DECIMALS = 6
 
+# Base mainnet USDC — used in `accepts[]` / PAYMENT-REQUIRED for exact EVM compatibility (CAIP-2 eip155:8453).
+BASE_MAINNET_USDC_CONTRACT = "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913"
+
 
 def _usdc_amount_atomic_string(usdc_human: float) -> str:
     return str(int(round(usdc_human * (10**USDC_DECIMALS))))
+
+
+def _accepts_evm_asset_for_network() -> str:
+    """Prefer USDC contract address on Base mainnet; symbolic USDC if network is non-Base."""
+    return BASE_MAINNET_USDC_CONTRACT if _x402_challenge_network() == "eip155:8453" else "USDC"
+
+
+def build_accepts_exact_evm_item(*, pay_to: str, amount_float: float) -> dict:
+    """Single `accepts[]` entry for discovery / PAYMENT-REQUIRED (exact scheme, Base USDC atomic units)."""
+    atomic = _usdc_amount_atomic_string(amount_float)
+    return {
+        "scheme": "exact",
+        "network": _x402_challenge_network(),
+        "asset": _accepts_evm_asset_for_network(),
+        "amount": atomic,
+        "maxAmountRequired": atomic,
+        "payTo": pay_to,
+        "maxTimeoutSeconds": 60,
+        "resource": _risk_score_resource_public_url(),
+        "description": "BeezShield Sentinel Alpha risk score",
+        "mimeType": "application/json",
+        "extra": {"name": "USDC", "version": "2"},
+    }
 
 
 def encode_payment_required_header(challenge_body: dict) -> str:
@@ -65,16 +91,7 @@ def build_x402_challenge(lane: str = "basic") -> dict:
     )
     amount_float = pricing[selected_lane]
 
-    accepts_item = {
-        "scheme": "exact",
-        "network": _x402_challenge_network(),
-        "maxAmountRequired": _usdc_amount_atomic_string(amount_float),
-        "resource": _risk_score_resource_public_url(),
-        "description": "BeezShield Sentinel Alpha risk score",
-        "mimeType": "application/json",
-        "payTo": pay_to,
-        "asset": "USDC",
-    }
+    accepts_item = build_accepts_exact_evm_item(pay_to=pay_to, amount_float=amount_float)
 
     return {
         "x402_version": "0.2",
