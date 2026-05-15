@@ -15,7 +15,7 @@ from pydantic import BaseModel
 from typing import Optional, Dict, Any
 
 from apps.webhooks.quicknode import router as quicknode_router
-from services.x402.payment import require_x402_payment, build_x402_challenge
+from services.x402.payment import require_x402_payment, build_x402_challenge, x402_payment_discovery_headers
 from services.x402.onchain_verifier import get_onchain_verification_status
 from services.x402.replay_guard import get_replay_status
 from services.x402.settlement_ledger import get_settlement_status
@@ -105,7 +105,12 @@ def risk_score_get_x402_discovery(request: Request):
         raise HTTPException(status_code=429, detail={"error": "rate_limit_exceeded"})
 
     # Always advertise the default basic lane for URL-only validation probes.
-    return JSONResponse(status_code=402, content=build_x402_challenge(lane="basic"))
+    challenge = build_x402_challenge(lane="basic")
+    return JSONResponse(
+        status_code=402,
+        content=challenge,
+        headers=x402_payment_discovery_headers(challenge),
+    )
 
 
 @app.post("/contracts/risk-score")

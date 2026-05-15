@@ -1,4 +1,6 @@
+import base64
 import hashlib
+import json
 from pathlib import Path
 
 from fastapi.testclient import TestClient
@@ -12,7 +14,7 @@ OUTREACH = REPO_ROOT / "docs/17_growth/OUTREACH_TRACKER.md"
 CLAIMS = REPO_ROOT / "docs/18_investor/CLAIMS_LEDGER.md"
 
 
-def _challenge_assertions(body: dict, *, pay_to: str) -> None:
+def _challenge_assertions(body: dict, *, pay_to: str, resource_url: str = "https://api.beezshield.com/contracts/risk-score") -> None:
     assert body["x402_version"] == "0.2"
     assert body["payment_method"] == "x402"
     assert body["network"] == "eip155:8453"
@@ -22,6 +24,16 @@ def _challenge_assertions(body: dict, *, pay_to: str) -> None:
     assert body["resource"] == "/contracts/risk-score"
     assert body["instructions"] == "Submit X402-PAYMENT header to access this resource."
     assert body["lane"] == "basic"
+    assert body["x402Version"] == 1
+    assert isinstance(body["accepts"], list) and len(body["accepts"]) == 1
+    a0 = body["accepts"][0]
+    assert a0["scheme"] == "exact"
+    assert a0["network"] == "eip155:8453"
+    assert a0["maxAmountRequired"] == "20000"
+    assert a0["payTo"] == pay_to
+    assert a0["asset"] == "USDC"
+    assert a0["resource"] == resource_url
+    assert a0["mimeType"] == "application/json"
 
 
 def test_get_contracts_risk_score_returns_402_x402_challenge(monkeypatch):
@@ -34,8 +46,17 @@ def test_get_contracts_risk_score_returns_402_x402_challenge(monkeypatch):
     client = TestClient(app)
     response = client.get("/contracts/risk-score")
     assert response.status_code == 402
+    assert response.headers.get("payment-required")
+    expose = response.headers.get("access-control-expose-headers", "")
+    assert "payment-required".lower() in expose.lower()
+
     body = response.json()
     _challenge_assertions(body, pay_to="0xwallet_get_test")
+
+    hdr = response.headers["payment-required"]
+    dec = json.loads(base64.standard_b64decode(hdr).decode("utf-8"))
+    assert dec["x402Version"] == 1
+    assert dec["accepts"][0]["maxAmountRequired"] == "20000"
 
 
 def test_get_does_not_require_contract_address_or_run_scoring(monkeypatch):
@@ -83,6 +104,11 @@ def test_post_without_payment_still_returns_402_challenge(monkeypatch):
     assert detail["network"] == "eip155:8453"
     assert detail["resource"] == "/contracts/risk-score"
     assert detail["lane"] == "basic"
+    assert detail["x402Version"] == 1
+    assert detail["accepts"][0]["scheme"] == "exact"
+    assert response.headers.get("payment-required")
+    expose = response.headers.get("access-control-expose-headers", "")
+    assert "payment-required".lower() in expose.lower()
 
 
 def test_outreach_and_claims_record_x402scan_attempt_without_success_claim():
@@ -92,6 +118,7 @@ def test_outreach_and_claims_record_x402scan_attempt_without_success_claim():
     assert "expected 402" in ot or "402" in ot
     cl = CLAIMS.read_text(encoding="utf-8").lower()
     assert "x402scan registration attempt" in cl
+    assert "attempted_validation_failed_schema" in ot
     assert "validation failed" in cl
     assert "no listing" in cl or "no listing claim" in cl
 

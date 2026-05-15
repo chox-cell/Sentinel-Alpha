@@ -21,6 +21,19 @@ def test_build_x402_challenge_uses_lane_and_addresses(monkeypatch):
         "resource": "/contracts/risk-score",
         "instructions": "Submit X402-PAYMENT header to access this resource.",
         "lane": "executive",
+        "x402Version": 1,
+        "accepts": [
+            {
+                "scheme": "exact",
+                "network": "eip155:8453",
+                "maxAmountRequired": "70000",
+                "resource": "https://api.beezshield.com/contracts/risk-score",
+                "description": "BeezShield Sentinel Alpha risk score",
+                "mimeType": "application/json",
+                "payTo": "0xtreasury",
+                "asset": "USDC",
+            }
+        ],
     }
 
 
@@ -41,3 +54,6 @@ def test_internal_x402_challenge_endpoint(monkeypatch):
     assert body["amount_usdc"] == "0.23"
     assert body["asset"] == "USDC"
     assert body["resource"] == "/contracts/risk-score"
+    assert body["x402Version"] == 1
+    assert body["accepts"][0]["scheme"] == "exact"
+    assert body["accepts"][0]["maxAmountRequired"] == "230000"

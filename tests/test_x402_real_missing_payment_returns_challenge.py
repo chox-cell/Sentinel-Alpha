@@ -1,3 +1,6 @@
+import base64
+import json as json_stdlib
+
 from fastapi import HTTPException
 
 from services.x402.payment import require_x402_payment
@@ -25,6 +28,14 @@ def test_real_mode_missing_payment_returns_challenge(monkeypatch):
         assert detail["asset"] == "USDC"
         assert detail["resource"] == "/contracts/risk-score"
         assert detail["instructions"] == "Submit X402-PAYMENT header to access this resource."
+        assert detail["x402Version"] == 1
+        assert detail["accepts"][0]["scheme"] == "exact"
+        h = {str(k).lower(): v for k, v in (exc.headers or {}).items()}
+        pr_val = h.get("payment-required")
+        assert pr_val
+        assert "payment-required" in (h.get("access-control-expose-headers") or "").lower()
+        dec = json_stdlib.loads(base64.standard_b64decode(pr_val).decode("utf-8"))
+        assert dec["accepts"][0]["maxAmountRequired"] == "20000"
 
 
 def test_real_mode_disabled_returns_x402_disabled_error(monkeypatch):

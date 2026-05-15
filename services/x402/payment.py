@@ -1,3 +1,5 @@
+import base64
+import json as json_stdlib
 import os
 import uuid
 from dotenv import load_dotenv
@@ -18,6 +20,42 @@ def _x402_challenge_network() -> str:
     return net
 
 
+def _risk_score_resource_public_url() -> str:
+    base = (
+        (os.getenv("PUBLIC_BASE_URL") or "https://api.beezshield.com").strip().rstrip("/")
+        or "https://api.beezshield.com"
+    )
+    return f"{base}/contracts/risk-score"
+
+
+USDC_DECIMALS = 6
+
+
+def _usdc_amount_atomic_string(usdc_human: float) -> str:
+    return str(int(round(usdc_human * (10**USDC_DECIMALS))))
+
+
+def encode_payment_required_header(challenge_body: dict) -> str:
+    """
+    Compatibility header used by some x402 clients/directory validators alongside HTTP 402.
+    Value is standard base64 (no PEM wrapping) over compact JSON {"x402Version","accepts"} only.
+    Not an official-protocol claim; aligns with Coinbase/x402-era PAYMENT-REQUIRED patterns for discovery.
+    """
+    envelope = {
+        "x402Version": challenge_body["x402Version"],
+        "accepts": challenge_body["accepts"],
+    }
+    raw = json_stdlib.dumps(envelope, separators=(",", ":"), ensure_ascii=False).encode("utf-8")
+    return base64.b64encode(raw).decode("ascii")
+
+
+def x402_payment_discovery_headers(challenge_body: dict) -> dict[str, str]:
+    return {
+        "PAYMENT-REQUIRED": encode_payment_required_header(challenge_body),
+        "Access-Control-Expose-Headers": "PAYMENT-REQUIRED",
+    }
+
+
 def build_x402_challenge(lane: str = "basic") -> dict:
     pricing = get_pricing_tiers()
     selected_lane = lane if lane in {"basic", "executive", "premium", "priority"} else "basic"
@@ -25,17 +63,32 @@ def build_x402_challenge(lane: str = "basic") -> dict:
         (os.getenv("X402_REVENUE_ADDRESS") or "").strip()
         or (os.getenv("SENTINEL_TREASURY_WALLET") or "").strip()
     )
+    amount_float = pricing[selected_lane]
+
+    accepts_item = {
+        "scheme": "exact",
+        "network": _x402_challenge_network(),
+        "maxAmountRequired": _usdc_amount_atomic_string(amount_float),
+        "resource": _risk_score_resource_public_url(),
+        "description": "BeezShield Sentinel Alpha risk score",
+        "mimeType": "application/json",
+        "payTo": pay_to,
+        "asset": "USDC",
+    }
 
     return {
         "x402_version": "0.2",
         "payment_method": "x402",
         "network": _x402_challenge_network(),
         "pay_to": pay_to,
-        "amount_usdc": f"{pricing[selected_lane]:.2f}",
+        "amount_usdc": f"{amount_float:.2f}",
         "asset": "USDC",
         "resource": "/contracts/risk-score",
         "instructions": "Submit X402-PAYMENT header to access this resource.",
         "lane": selected_lane,
+        # Discovery / validator-adjacent fields (preserve legacy snake_case keys above).
+        "x402Version": 1,
+        "accepts": [accepts_item],
     }
 
 
@@ -66,7 +119,12 @@ def require_x402_payment(headers: dict, lane: str = "basic") -> dict:
         raise HTTPException(status_code=402, detail={"error": "x402_disabled"})
 
     if not x402_payment_header:
-        raise HTTPException(status_code=402, detail=build_x402_challenge(selected_lane))
+        challenge = build_x402_challenge(selected_lane)
+        raise HTTPException(
+            status_code=402,
+            detail=challenge,
+            headers=x402_payment_discovery_headers(challenge),
+        )
 
     verification = verify_real_payment(x402_payment_header, lane=selected_lane)
     if verification["status"] not in {"tx_format_valid_unverified", "verified"}:

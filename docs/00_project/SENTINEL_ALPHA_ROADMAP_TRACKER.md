@@ -139,6 +139,7 @@ Status: **Done**
 - v12.x x402 Directory Submission Pack (docs/test-only; community directory copy after ecosystem-page sunset signal; no auto-submit)
 - v12.x Mycelium directory cross-reference signal (giskard09 community alignment; optional future directory copy cross-reference after both listings live; no partnership/integration)
 - v12.x x402scan GET challenge compatibility (`GET /contracts/risk-score` returns 402 discovery challenge; POST unchanged; directory listing not claimed)
+- v12.x x402scan schema/header compatibility (`x402Version` + `accepts[]` + `PAYMENT-REQUIRED` on 402 discovery responses; unpaid POST aligns; legacy body keys preserved; no listing claim)
 - Agent commerce vision truth-filter update (UCP/AP2/Trust Object remain roadmap context)
 
 ## 5) Cost discipline

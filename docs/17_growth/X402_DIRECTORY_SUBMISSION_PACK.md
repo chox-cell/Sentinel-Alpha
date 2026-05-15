@@ -22,7 +22,15 @@ Maintainer/community response on the x402 ecosystem page PR (paraphrased posture
 - **x402scan** (and similar tools) may validate a submitted URL with **GET** and expect **HTTP 402** plus a JSON **x402 challenge** body.
 - **Observed manual attempt (2026):** registering `https://api.beezshield.com/contracts/risk-score` failed with **Error: Expected 402 response** because **GET** returned **405 Method Not Allowed** (`Allow: POST`) while **POST** with JSON + `X-SENTINEL-LANE: basic` correctly returned **402** and a challenge (`payment_method: x402`, `network: eip155:8453`, etc.).
 - **Repository API behavior:** **GET `/contracts/risk-score`** returns **402** and the same challenge **shape** as an unpaid **POST** path (discovery only: **no** risk scoring, **no** required `contract_address`, **no** DB writes). **POST** behavior is unchanged for paid flows.
-- **Listing claim discipline:** **Do not** claim x402scan (or any directory) **listing success** from this document. The **x402scan.com** row in §7 remains **`not submitted`** until a **verified** manual registration and listing URL are recorded in `OUTREACH_TRACKER.md`.
+- **Listing claim discipline:** **Do not** claim x402scan (or any directory) **listing success** from this document. The **x402scan.com** row in §7 remains **`not submitted`** until a **verified** manual registration and listing URL are recorded in `OUTREACH_TRACKER.md`. **Listing is not claimed** until **x402scan** (or the directory UI) visibly accepts the submission and a listing URL exists.
+
+## 3b) x402scan second attempt — schema/header compatibility hypothesis (no listing claim)
+
+- **Observed after GET-compat deploy (2026):** public **GET** `https://api.beezshield.com/contracts/risk-score` returns **HTTP 402** with JSON including legacy fields (`x402_version`, `pay_to`, `amount_usdc`, etc.).
+- **x402scan outcome:** manual **“This URL only”** registration **still failed** with **`Error: Expected 402 response`** despite **GET 402**.
+- **Working hypothesis:** the directory validator may expect a **modern** wire shape (**`x402Version`**, **`accepts[]`**) and/or a **`PAYMENT-REQUIRED`** response header carrying a **compact / base64** payment-requirements payload (patterns described in Coinbase / x402-foundation-era documentation alongside HTTP 402). This repository adds those fields **as API compatibility only** — **not** an official x402 protocol certification.
+- **Repository behavior:** **`GET`** and **`POST` (missing payment)** on `/contracts/risk-score` expose **legacy challenge keys** unchanged and add **`x402Version`**, **`accepts`** ( **`scheme`: `exact`**; **`network`**: **`eip155:8453`** to match `.well-known` + legacy **`network`**; **`maxAmountRequired`** in USDC **6-decimal atomic units**, e.g. `0.02` → **`20000`** ), plus **`PAYMENT-REQUIRED`** (**standard base64** over compact JSON `{"x402Version","accepts"}`) and **`Access-Control-Expose-Headers: PAYMENT-REQUIRED`** for browser-style clients behind CORS gateways.
+- **Posture unchanged:** **`status`** for x402scan in §7 remains **`not submitted` / validation failed** until **verified** listing; **do not claim** submission success.
 
 ## 4) Project identity
 
@@ -66,7 +74,7 @@ Use when a directory allows a fuller description:
 | `submission_owner` | Chox |
 | `copy_variant` | short |
 | `evidence_links` | https://beezshield.com · https://beezshield.com/manifesto.html · https://www.npmjs.com/package/@beezshield/sentinel · `docs/17_growth/SENTINEL_ALPHA_PUBLIC_TECHNICAL_SUMMARY.md` (in-repo public-safe summary) |
-| `notes` | Validators often **GET** the URL and expect **402** — see §3a. Prior manual registration failed until GET compatibility; **`status` stays `not submitted`** until a verified listing exists after manual retry. |
+| `notes` | Validators often **GET** the URL and expect **402** — see §3a. First attempt failed (GET **405**); second attempt (**GET 402** + challenge body, then **`x402Version`/`accepts`/`PAYMENT-REQUIRED`** per §3b) **still rejected** — **`status` stays `not submitted`** until a verified listing exists; **never claim listing success prematurely**. |
 
 ### Agentic.Market
 

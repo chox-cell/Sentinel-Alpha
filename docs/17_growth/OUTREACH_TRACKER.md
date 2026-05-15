@@ -213,6 +213,20 @@ Maintainer signal on x402 ecosystem page PR (ecosystem page sunset; PR closed; c
 - listing_success_claim: false
 - notes: update **§7 x402scan row** to `submitted` **only** after manual verification and captured listing URL; do not mark success prematurely
 
+## x402scan directory registration — second attempt (v12.x)
+
+- target_url: `https://api.beezshield.com/contracts/risk-score`
+- channel: x402scan.com manual listing flow (“This URL only”)
+- registration_status: **attempted_validation_failed_schema** (no listing claimed)
+- observed:
+  - **GET** → **402** + JSON challenge (legacy **`x402_version`** / **`payment_method`** / **`network`** / **`pay_to`** / **`amount_usdc`** / …)
+  - directory UI still surfaced **Error: Expected 402 response** (hypothesis: stricter **`x402Version`** / **`accepts[]`** payload and/or **`PAYMENT-REQUIRED`** header expectations)
+  - compatibility patch in-repo adds **`x402Version`**, **`accepts`** ( **`exact`** scheme ), **`maxAmountRequired`** (USDC 6 decimals), and **`PAYMENT-REQUIRED`** (standard base64 over compact `{x402Version,accepts}` JSON) plus **`Access-Control-Expose-Headers: PAYMENT-REQUIRED`** on **402** discovery responses — API-side only
+- listing_success_claim: false
+- partnership_claim: false
+- endorsement_claim: false
+- integration_claim: false
+
 ## giskard09 / Mycelium Trails — x402 directory cross-reference signal (v12.x)
 
 Paraphrased **community** reply on the closed x402 ecosystem PR thread (no implied maintainer authority):
