@@ -1,0 +1,130 @@
+# x402 Directory Submission Pack
+
+## 2) Purpose
+
+Prepare **truthful** submission copy for **x402 community-maintained directories**. This document is **preparation only**: it does **not** submit forms, scrape directories, deploy, publish packages, change `.env`, or imply official x402 integration, partnership, or endorsement.
+
+## 3) Source signal
+
+Maintainer/community response on the x402 ecosystem page PR (paraphrased posture for internal use):
+
+- The **x402 ecosystem page** on the official repo path is being **sunset** because maintaining it is no longer scalable.
+- Maintainers are **closing** ecosystem-page PRs and redirecting projects to **community-maintained** x402 directories, including:
+  - **x402scan.com**
+  - **Agentic.Market**
+  - **Pay.sh**
+  - **app.ampersend.ai/discover**
+- This is a **directory redirection signal**, not a rejection of BeezShield specifically.
+- This is **not** acceptance, integration, partnership, or endorsement.
+
+## 4) Project identity
+
+| Field | Value |
+| --- | --- |
+| **Project** | BeezShield / Sentinel Alpha |
+| **Category** | Pre-execution risk decision layer for autonomous agents touching onchain contracts/assets |
+| **Doctrine** | BeezShield builds guardians, not traders. |
+| **Website** | https://beezshield.com |
+| **Manifesto** | https://beezshield.com/manifesto.html |
+| **llms.txt** | https://beezshield.com/llms.txt |
+| **npm** | `@beezshield/sentinel` |
+| **API** | `/contracts/risk-score` |
+| **x402 posture** | x402-gated API posture (builders handle payment flow explicitly; SDK does not auto-settle) |
+
+## 5) Short submission copy
+
+Use for directory forms with tight character limits:
+
+> **BeezShield / Sentinel Alpha** helps builders add **allow / review / block** checks before agent onchain actions on contracts and assets. We are a **pre-execution risk decision layer**, not a trading agent. **x402-gated API posture** on `/contracts/risk-score`; npm package **`@beezshield/sentinel`**. AgentKit-style local demo and trust-loop documentation exist in-repo. **Not a security guarantee** — policy assistance and conservative signals only. BeezShield builds **guardians, not traders**.
+
+## 6) Long submission copy
+
+Use when a directory allows a fuller description:
+
+> **Sentinel Alpha** (BeezShield) is a **pre-execution risk decision layer** for **autonomous agents** that interact with **onchain contracts and assets**. Before execution, builders can route agent actions through **allow / review / block** policy assistance using `/contracts/risk-score` and the **`@beezshield/sentinel`** SDK.
+>
+> **x402-gated API posture:** the API supports x402-style gated access patterns; **builders supply payment/settlement explicitly** — the SDK surfaces challenges and errors and does **not** perform automatic x402 settlement.
+>
+> **What exists today (public-safe):** website, manifesto, llms.txt, npm SDK, x402-gated API path, **AgentKit-style local demo** (in-repo; not an official Coinbase AgentKit provider), **decision receipts**, **payment decision link** boundary objects, and **trust loop** documentation/fixtures for composability discussion.
+>
+> **Boundaries (do not overclaim):** not official x402 integration; not x402 partnership or endorsement; not live automatic settlement; not guaranteed protection; not honeypot detection; not MEV prevention; not prompt-injection prevention. BeezShield builds **guardians, not traders**.
+
+## 7) Directory-specific notes
+
+### x402scan.com
+
+| Field | Value |
+| --- | --- |
+| `status` | not submitted |
+| `submission_owner` | Chox |
+| `copy_variant` | short |
+| `evidence_links` | https://beezshield.com · https://beezshield.com/manifesto.html · https://www.npmjs.com/package/@beezshield/sentinel · `docs/17_growth/SENTINEL_ALPHA_PUBLIC_TECHNICAL_SUMMARY.md` (in-repo public-safe summary) |
+| `notes` | Review x402scan listing rules before manual paste; capture listing URL after real submission. |
+
+### Agentic.Market
+
+| Field | Value |
+| --- | --- |
+| `status` | not submitted |
+| `submission_owner` | Chox |
+| `copy_variant` | long |
+| `evidence_links` | https://beezshield.com · https://beezshield.com/manifesto.html · https://www.npmjs.com/package/@beezshield/sentinel · `docs/17_growth/SENTINEL_ALPHA_PUBLIC_TECHNICAL_SUMMARY.md` |
+| `notes` | Agent/autonomous-builder angle; emphasize pre-execution policy layer, not trading bot. |
+
+### Pay.sh
+
+| Field | Value |
+| --- | --- |
+| `status` | not submitted |
+| `submission_owner` | Chox |
+| `copy_variant` | short |
+| `evidence_links` | https://beezshield.com · https://beezshield.com/manifesto.html · https://www.npmjs.com/package/@beezshield/sentinel · `docs/17_growth/SENTINEL_ALPHA_PUBLIC_TECHNICAL_SUMMARY.md` |
+| `notes` | Payment/x402-adjacent discovery; state x402-gated posture without automatic settlement claim. |
+
+### app.ampersend.ai/discover
+
+| Field | Value |
+| --- | --- |
+| `status` | not submitted |
+| `submission_owner` | Chox |
+| `copy_variant` | long |
+| `evidence_links` | https://beezshield.com · https://beezshield.com/manifesto.html · https://www.npmjs.com/package/@beezshield/sentinel · `docs/17_growth/SENTINEL_ALPHA_PUBLIC_TECHNICAL_SUMMARY.md` |
+| `notes` | Discovery listing; use long copy if form allows trust-loop / composability context. |
+
+## 8) Safe claim controls
+
+**Allowed**
+
+- x402-gated API posture
+- Sentinel Alpha can be used as **pre-execution policy assistance**
+- SDK/package **`@beezshield/sentinel`** available on npm
+- **AgentKit-style demo** exists (local/in-repo; not official AgentKit provider)
+- **Trust loop** documentation exists (reference pattern; not live integrated runtime wiring)
+
+**Forbidden**
+
+- official x402 integration
+- x402 partnership
+- x402 endorsement
+- automatic x402 settlement live
+- guaranteed protection
+- detects honeypots
+- prevents MEV
+- prevents prompt injection
+
+## 9) Manual submission checklist
+
+1. Review each directory’s current rules and required fields.
+2. Paste **short** or **long** copy from §5–§6 manually (no automation from this repo).
+3. Use **public links only** (website, manifesto, npm, in-repo public summary path as needed).
+4. Do **not** mark `status: submitted` in this pack or `OUTREACH_TRACKER.md` until a **real** manual submission occurred.
+5. Capture **submission URL** or listing ID when the directory provides one.
+6. Update `docs/17_growth/OUTREACH_TRACKER.md` **only after** manual action.
+
+## 10) Cross-references
+
+- `docs/17_growth/OUTREACH_TRACKER.md`
+- `docs/17_growth/SENTINEL_ALPHA_PUBLIC_TECHNICAL_SUMMARY.md`
+- `docs/18_investor/CLAIMS_LEDGER.md`
+
+This pack does not perform submissions, claim partnership, or enable integrations.

@@ -177,3 +177,23 @@ Track the first **20** builder targets. Replace placeholder rows **T01–T20** w
 - response_status: closed (completed)
 - next_follow_up_date: hold
 - note: message used evidence-only wording and no safety guarantee claims; issue closed as completed by lalalune with labels bug, security; no written acceptance/rejection observed; visibility signal only, not integration or partnership.
+
+## x402 ecosystem directory redirection (v12.x)
+
+Maintainer signal on x402 ecosystem page PR (ecosystem page sunset; PR closed; community directories suggested):
+
+- signal_type: directory redirection received
+- integration_claim: false
+- partnership_claim: false
+- endorsement_claim: false
+- rejection_of_beezshield_specifically: false
+- notes: not a BeezShield-specific rejection; not acceptance/integration/partnership; prepare manual submissions per `docs/17_growth/X402_DIRECTORY_SUBMISSION_PACK.md`
+
+### x402 community directory submission targets (not submitted)
+
+| Directory | URL | status | submission_owner | copy_variant | notes |
+| --- | --- | --- | --- | --- | --- |
+| x402scan | https://x402scan.com | not submitted | Chox | short | See submission pack §7 |
+| Agentic.Market | https://agentic.market | not submitted | Chox | long | See submission pack §7 |
+| Pay.sh | https://pay.sh | not submitted | Chox | short | See submission pack §7 |
+| ampersend discover | https://app.ampersend.ai/discover | not submitted | Chox | long | See submission pack §7 |

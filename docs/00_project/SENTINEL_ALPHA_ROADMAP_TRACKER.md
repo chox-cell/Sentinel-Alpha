@@ -136,6 +136,7 @@ Status: **Done**
 - v11.8 Blockscout Base Endpoint Source Pack (docs/test-only; candidate URL slots; no selection; no network)
 - v11.9 Blockscout Base Source-Backed Endpoint Candidate (B01 public docs URLs documented; not selected; not validated; no network)
 - v12.0 Blockscout Candidate Selection Record (B01 selected for future one-target validation; phrase gate; no network; no provider activation)
+- v12.x x402 Directory Submission Pack (docs/test-only; community directory copy after ecosystem-page sunset signal; no auto-submit)
 - Agent commerce vision truth-filter update (UCP/AP2/Trust Object remain roadmap context)
 
 ## 5) Cost discipline
