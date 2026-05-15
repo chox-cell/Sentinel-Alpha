@@ -94,6 +94,20 @@ def internal_env_source():
     }
 
 
+@app.get("/contracts/risk-score")
+def risk_score_get_x402_discovery(request: Request):
+    """
+    Discovery/validation-only: return x402 challenge on GET for directory crawlers (e.g. x402scan).
+    Does not run risk scoring, require a body, or write state.
+    """
+    client_ip = request.client.host if (request and request.client) else None
+    if not _rate_limit_allow(client_ip):
+        raise HTTPException(status_code=429, detail={"error": "rate_limit_exceeded"})
+
+    # Always advertise the default basic lane for URL-only validation probes.
+    return JSONResponse(status_code=402, content=build_x402_challenge(lane="basic"))
+
+
 @app.post("/contracts/risk-score")
 def risk_score(
     req: RequestModel,

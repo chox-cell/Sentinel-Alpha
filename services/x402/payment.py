@@ -10,10 +10,17 @@ from services.x402.settlement_ledger import write_settlement_record
 load_dotenv()
 
 
+def _x402_challenge_network() -> str:
+    """CAIP-2 style network id for challenge JSON (wire format). Base mainnet -> eip155:8453."""
+    net = (os.getenv("X402_NETWORK", "base") or "base").strip().lower() or "base"
+    if net == "base":
+        return "eip155:8453"
+    return net
+
+
 def build_x402_challenge(lane: str = "basic") -> dict:
     pricing = get_pricing_tiers()
     selected_lane = lane if lane in {"basic", "executive", "premium", "priority"} else "basic"
-    network = (os.getenv("X402_NETWORK", "base") or "base").strip().lower() or "base"
     pay_to = (
         (os.getenv("X402_REVENUE_ADDRESS") or "").strip()
         or (os.getenv("SENTINEL_TREASURY_WALLET") or "").strip()
@@ -22,7 +29,7 @@ def build_x402_challenge(lane: str = "basic") -> dict:
     return {
         "x402_version": "0.2",
         "payment_method": "x402",
-        "network": network,
+        "network": _x402_challenge_network(),
         "pay_to": pay_to,
         "amount_usdc": f"{pricing[selected_lane]:.2f}",
         "asset": "USDC",

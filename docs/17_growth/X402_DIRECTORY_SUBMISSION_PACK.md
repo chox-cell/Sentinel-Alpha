@@ -17,6 +17,13 @@ Maintainer/community response on the x402 ecosystem page PR (paraphrased posture
 - This is a **directory redirection signal**, not a rejection of BeezShield specifically.
 - This is **not** acceptance, integration, partnership, or endorsement.
 
+## 3a) x402scan probe / GET compatibility (directory validation)
+
+- **x402scan** (and similar tools) may validate a submitted URL with **GET** and expect **HTTP 402** plus a JSON **x402 challenge** body.
+- **Observed manual attempt (2026):** registering `https://api.beezshield.com/contracts/risk-score` failed with **Error: Expected 402 response** because **GET** returned **405 Method Not Allowed** (`Allow: POST`) while **POST** with JSON + `X-SENTINEL-LANE: basic` correctly returned **402** and a challenge (`payment_method: x402`, `network: eip155:8453`, etc.).
+- **Repository API behavior:** **GET `/contracts/risk-score`** returns **402** and the same challenge **shape** as an unpaid **POST** path (discovery only: **no** risk scoring, **no** required `contract_address`, **no** DB writes). **POST** behavior is unchanged for paid flows.
+- **Listing claim discipline:** **Do not** claim x402scan (or any directory) **listing success** from this document. The **x402scan.com** row in §7 remains **`not submitted`** until a **verified** manual registration and listing URL are recorded in `OUTREACH_TRACKER.md`.
+
 ## 4) Project identity
 
 | Field | Value |
@@ -59,7 +66,7 @@ Use when a directory allows a fuller description:
 | `submission_owner` | Chox |
 | `copy_variant` | short |
 | `evidence_links` | https://beezshield.com · https://beezshield.com/manifesto.html · https://www.npmjs.com/package/@beezshield/sentinel · `docs/17_growth/SENTINEL_ALPHA_PUBLIC_TECHNICAL_SUMMARY.md` (in-repo public-safe summary) |
-| `notes` | Review x402scan listing rules before manual paste; capture listing URL after real submission. |
+| `notes` | Validators often **GET** the URL and expect **402** — see §3a. Prior manual registration failed until GET compatibility; **`status` stays `not submitted`** until a verified listing exists after manual retry. |
 
 ### Agentic.Market
 

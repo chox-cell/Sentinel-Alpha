@@ -198,6 +198,21 @@ Maintainer signal on x402 ecosystem page PR (ecosystem page sunset; PR closed; c
 | Pay.sh | https://pay.sh | not submitted | Chox | short | See submission pack §7 |
 | ampersend discover | https://app.ampersend.ai/discover | not submitted | Chox | long | See submission pack §7 |
 
+## x402scan directory registration attempt (v12.x)
+
+- target_url: `https://api.beezshield.com/contracts/risk-score`
+- channel: x402scan.com manual listing flow (“This URL only”)
+- registration_status: **attempted_validation_failed** (no listing claimed)
+- observed_before_fix:
+  - GET → **405** Method Not Allowed (`Allow: POST`)
+  - POST (JSON body + `X-SENTINEL-LANE: basic`) → **402** + x402 challenge JSON (`payment_method: x402`, `network: eip155:8453`, `pay_to`, `amount_usdc`, `resource`, `lane`, …)
+  - validator_message: **Error: Expected 402 response** (consistent with GET-based probe expecting 402)
+- compatibility_note: GET must return **402** challenge for discovery validators; POST behavior unchanged — see `docs/17_growth/X402_DIRECTORY_SUBMISSION_PACK.md` §3a
+- integration_claim: false
+- partnership_claim: false
+- listing_success_claim: false
+- notes: update **§7 x402scan row** to `submitted` **only** after manual verification and captured listing URL; do not mark success prematurely
+
 ## giskard09 / Mycelium Trails — x402 directory cross-reference signal (v12.x)
 
 Paraphrased **community** reply on the closed x402 ecosystem PR thread (no implied maintainer authority):

@@ -19,7 +19,7 @@ def test_real_mode_missing_payment_returns_challenge(monkeypatch):
         detail = exc.detail
         assert detail["x402_version"] == "0.2"
         assert detail["payment_method"] == "x402"
-        assert detail["network"] == "base"
+        assert detail["network"] == "eip155:8453"
         assert detail["pay_to"] == "0xtreasury"
         assert detail["amount_usdc"] == "0.02"
         assert detail["asset"] == "USDC"

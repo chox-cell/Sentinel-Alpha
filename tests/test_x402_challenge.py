@@ -14,7 +14,7 @@ def test_build_x402_challenge_uses_lane_and_addresses(monkeypatch):
     assert challenge == {
         "x402_version": "0.2",
         "payment_method": "x402",
-        "network": "base",
+        "network": "eip155:8453",
         "pay_to": "0xtreasury",
         "amount_usdc": "0.07",
         "asset": "USDC",
@@ -36,7 +36,7 @@ def test_internal_x402_challenge_endpoint(monkeypatch):
     body = response.json()
     assert body["x402_version"] == "0.2"
     assert body["payment_method"] == "x402"
-    assert body["network"] == "base"
+    assert body["network"] == "eip155:8453"
     assert body["pay_to"] == "0xrevenue"
     assert body["amount_usdc"] == "0.23"
     assert body["asset"] == "USDC"
