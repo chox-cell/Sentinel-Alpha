@@ -60,6 +60,13 @@ Maintainer/community response on the x402 ecosystem page PR (paraphrased posture
 - **Repository behavior:** **`POST /contracts/risk-score`** checks **payment/demo gate first** (**`PAYMENT-SIGNATURE`** in demo mode, **`X402-PAYMENT`** in real **`PAYMENT_MODE=real`** with **`X402_ENABLED`**). Unpaid probes return **402** with historical **`detail`‑wrapped** discovery challenge plus **`PAYMENT-REQUIRED`** without consuming the payload. **Paid** callers with **`X402-PAYMENT`** then receive normal **JSON parse + validation** (**422** on invalid payloads) before execution. Paid execution unchanged. **Compatibility only**.
 - **Posture unchanged:** **§7** **`not submitted`** / validation failed; **no listing success claim**.
 
+## 3g) x402scan seventh diagnosis — public OpenAPI exposed internal resources (no listing claim)
+
+- **Evidence (2026):** **x402scan** repeatedly fetched **`GET /openapi.json`** (**200**), then probed paths discovered from that schema — including **`/internal/x402/status`**, **`/internal/x402/lanes`**, **`/internal/x402/challenge`**, **`/internal/x402/onchain/status`**, **`/internal/identity/erc8004/status`**, **`/health`**, and **`/webhooks/*`** — which return **200** or **405**, not **402**. **`/contracts/risk-score`** itself returned **402** on discovery probes.
+- **Hypothesis:** validators treat **OpenAPI-listed paths** as resources to validate for **402 Payment Required**, not only the submitted marketplace URL; exposing **non-paid internal/diagnostic** routes causes **“Expected 402 response”** failures.
+- **Repository behavior (compatibility only):** default **`/openapi.json`** hides **`/internal/*`**, **`/health`**, and **`/webhooks/*`** via **`include_in_schema=False`** while **runtime endpoints remain callable**. **`/contracts/risk-score`** stays documented (**`get`**, **`head`**, **`options`**, **`post`**); **PATCH** / **PUT** / **DELETE** remain **`include_in_schema=False`**. **Not** a listing or protocol certification claim.
+- **Posture unchanged:** **§7** **`not submitted`** / validation failed; **no listing success claim**.
+
 ## 4) Project identity
 
 | Field | Value |
@@ -102,7 +109,7 @@ Use when a directory allows a fuller description:
 | `submission_owner` | Chox |
 | `copy_variant` | short |
 | `evidence_links` | https://beezshield.com · https://beezshield.com/manifesto.html · https://www.npmjs.com/package/@beezshield/sentinel · `docs/17_growth/SENTINEL_ALPHA_PUBLIC_TECHNICAL_SUMMARY.md` (in-repo public-safe summary) |
-| `notes` | Probe timeline §3a–§3f: OpenAPI / verb matrix / exact-EVM **`accepts`** / **POST prepayment gate** (**§3f**) after **422** on empty/invalid unpaid **POST**. **`status` stays `not submitted`**; **never claim listing success prematurely**. |
+| `notes` | Probe timeline §3a–§3g: OpenAPI / verb matrix / exact-EVM **`accepts`** / **POST prepayment gate** (**§3f**) / **public OpenAPI filter** (**§3g**) after internal paths in **`/openapi.json`** returned **200**/**405**. **`status` stays `not submitted`**; **never claim listing success prematurely**. |
 
 ### Agentic.Market
 

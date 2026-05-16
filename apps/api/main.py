@@ -36,7 +36,7 @@ from shared.config.env import get_env_bool, get_quicknode_env_status
 from shared.config.limits import get_ingestion_limits
 
 app = FastAPI(title="Sentinel Alpha API")
-app.include_router(quicknode_router)
+app.include_router(quicknode_router, include_in_schema=False)
 MANIFEST_PATH = Path("docs/01_manifest/manifest.json")
 _SUPPORTED_LANES = {"basic", "executive", "premium", "priority"}
 _RATE_LIMIT_LOCK = threading.Lock()
@@ -121,7 +121,7 @@ def _post_prepayment_discovery_response(lane: str) -> JSONResponse:
     )
 
 
-@app.get("/health")
+@app.get("/health", include_in_schema=False)
 def health():
     return {
         "ok": True,
@@ -130,7 +130,7 @@ def health():
     }
 
 
-@app.get("/internal/env/source")
+@app.get("/internal/env/source", include_in_schema=False)
 def internal_env_source():
     payment_status = get_payment_status()
     return {
@@ -310,12 +310,12 @@ async def risk_score(
     return response
 
 
-@app.get("/internal/cache-metrics")
+@app.get("/internal/cache-metrics", include_in_schema=False)
 def internal_cache_metrics():
     return get_cache_metrics()
 
 
-@app.get("/internal/manifest")
+@app.get("/internal/manifest", include_in_schema=False)
 def internal_manifest():
     manifest = json.loads(MANIFEST_PATH.read_text(encoding="utf-8"))
     public_base_url = (os.getenv("PUBLIC_BASE_URL") or "").strip()
@@ -324,7 +324,7 @@ def internal_manifest():
     return manifest
 
 
-@app.get("/internal/quicknode-live-check")
+@app.get("/internal/quicknode-live-check", include_in_schema=False)
 def internal_quicknode_live_check():
     status = get_quicknode_env_status()
     chain = os.getenv("QUICKNODE_CHAIN", "base").strip().lower() or "base"
@@ -345,7 +345,7 @@ def internal_quicknode_live_check():
     }
 
 
-@app.get("/internal/rate-limit/status")
+@app.get("/internal/rate-limit/status", include_in_schema=False)
 def internal_rate_limit_status():
     enabled, per_minute = _get_rate_limit_config()
     with _RATE_LIMIT_LOCK:
@@ -358,7 +358,7 @@ def internal_rate_limit_status():
     }
 
 
-@app.get("/internal/security/status")
+@app.get("/internal/security/status", include_in_schema=False)
 def internal_security_status():
     enabled, per_minute = _get_rate_limit_config()
     return {
@@ -368,7 +368,7 @@ def internal_security_status():
     }
 
 
-@app.get("/internal/dlq/status")
+@app.get("/internal/dlq/status", include_in_schema=False)
 def internal_dlq_status():
     return {
         "count_estimate": len(read_dlq(limit=1000)),
@@ -376,22 +376,22 @@ def internal_dlq_status():
     }
 
 
-@app.get("/internal/ingestion/status")
+@app.get("/internal/ingestion/status", include_in_schema=False)
 def internal_ingestion_status():
     return get_ingestion_limits()
 
 
-@app.get("/internal/identity/status")
+@app.get("/internal/identity/status", include_in_schema=False)
 def internal_identity_status():
     return get_identity_status()
 
 
-@app.get("/internal/identity/erc8004/status")
+@app.get("/internal/identity/erc8004/status", include_in_schema=False)
 def internal_identity_erc8004_status():
     return get_erc8004_status()
 
 
-@app.get("/internal/attestation/status")
+@app.get("/internal/attestation/status", include_in_schema=False)
 def internal_attestation_status():
     return {
         "attestation_version": "attestation-0.1",
@@ -401,12 +401,12 @@ def internal_attestation_status():
     }
 
 
-@app.get("/internal/x402/status")
+@app.get("/internal/x402/status", include_in_schema=False)
 def internal_x402_status():
     return get_payment_status()
 
 
-@app.get("/internal/x402/pricing")
+@app.get("/internal/x402/pricing", include_in_schema=False)
 def internal_x402_pricing():
     return {
         "pricing_tiers": get_pricing_tiers(),
@@ -414,7 +414,7 @@ def internal_x402_pricing():
     }
 
 
-@app.get("/internal/x402/lanes")
+@app.get("/internal/x402/lanes", include_in_schema=False)
 def internal_x402_lanes():
     return {
         "supported_lanes": ["basic", "executive", "premium", "priority"],
@@ -423,12 +423,12 @@ def internal_x402_lanes():
     }
 
 
-@app.get("/internal/x402/challenge")
+@app.get("/internal/x402/challenge", include_in_schema=False)
 def internal_x402_challenge(lane: str = "basic"):
     return build_x402_challenge(lane=lane)
 
 
-@app.get("/internal/x402/verification/status")
+@app.get("/internal/x402/verification/status", include_in_schema=False)
 def internal_x402_verification_status():
     onchain_verify = (os.getenv("X402_ONCHAIN_VERIFY", "false") or "false").strip().lower() in {"1", "true", "yes", "on"}
     network = (os.getenv("X402_NETWORK", "base") or "base").strip().lower() or "base"
@@ -444,16 +444,16 @@ def internal_x402_verification_status():
     }
 
 
-@app.get("/internal/x402/replay/status")
+@app.get("/internal/x402/replay/status", include_in_schema=False)
 def internal_x402_replay_status():
     return get_replay_status()
 
 
-@app.get("/internal/x402/settlements/status")
+@app.get("/internal/x402/settlements/status", include_in_schema=False)
 def internal_x402_settlements_status():
     return get_settlement_status()
 
 
-@app.get("/internal/x402/onchain/status")
+@app.get("/internal/x402/onchain/status", include_in_schema=False)
 def internal_x402_onchain_status():
     return get_onchain_verification_status()
