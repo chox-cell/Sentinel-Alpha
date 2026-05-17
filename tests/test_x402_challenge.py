@@ -32,7 +32,6 @@ def test_build_x402_challenge_uses_lane_and_addresses(monkeypatch):
                 "scheme": "exact",
                 "network": "base",
                 "asset": BASE_MAINNET_USDC_CONTRACT,
-                "amount": "70000",
                 "maxAmountRequired": "70000",
                 "payTo": "0xtreasury",
                 "maxTimeoutSeconds": 60,
@@ -40,6 +39,26 @@ def test_build_x402_challenge_uses_lane_and_addresses(monkeypatch):
                 "description": "BeezShield Sentinel Alpha risk score",
                 "mimeType": "application/json",
                 "extra": {"name": "USD Coin", "version": "2"},
+                "outputSchema": {
+                    "input": {
+                        "type": "http",
+                        "method": "POST",
+                        "discoverable": True,
+                        "bodyType": "json",
+                        "bodyFields": {
+                            "contract_address": {
+                                "type": "string",
+                                "description": "Contract address to evaluate",
+                                "required": True,
+                            },
+                            "chain": {
+                                "type": "string",
+                                "description": "Target chain, e.g. base",
+                                "required": True,
+                            },
+                        },
+                    }
+                },
             }
         ],
     }
@@ -65,7 +84,8 @@ def test_internal_x402_challenge_endpoint(monkeypatch):
     assert body["x402Version"] == 1
     assert body["accepts"][0]["scheme"] == "exact"
     assert body["accepts"][0]["maxAmountRequired"] == "230000"
-    assert body["accepts"][0]["amount"] == "230000"
+    assert "amount" not in body["accepts"][0]
+    assert body["accepts"][0]["outputSchema"]["input"]["method"] == "POST"
     assert body["accepts"][0]["asset"] == BASE_MAINNET_USDC_CONTRACT
     assert body["accepts"][0]["maxTimeoutSeconds"] == 60
     assert body["accepts"][0]["network"] == "base"

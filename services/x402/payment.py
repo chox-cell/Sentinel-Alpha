@@ -58,14 +58,40 @@ def _accepts_evm_asset_for_network() -> str:
     return BASE_MAINNET_USDC_CONTRACT if _accepts_item_network() == "base" else "USDC"
 
 
-def build_accepts_exact_evm_item(*, pay_to: str, amount_float: float) -> dict:
-    """Single `accepts[]` entry for discovery / PAYMENT-REQUIRED (exact scheme, Base USDC atomic units)."""
+def _risk_score_output_schema_input() -> dict:
+    """x402scan v1-style ``outputSchema.input`` for POST risk-score discovery."""
+    return {
+        "input": {
+            "type": "http",
+            "method": "POST",
+            "discoverable": True,
+            "bodyType": "json",
+            "bodyFields": {
+                "contract_address": {
+                    "type": "string",
+                    "description": "Contract address to evaluate",
+                    "required": True,
+                },
+                "chain": {
+                    "type": "string",
+                    "description": "Target chain, e.g. base",
+                    "required": True,
+                },
+            },
+        }
+    }
+
+
+def build_accepts_x402scan_v1_strict_item(*, pay_to: str, amount_float: float) -> dict:
+    """
+    x402scan v1 strict ``accepts[]`` entry: ``maxAmountRequired`` only (no ``amount``),
+    includes ``outputSchema.input``.
+    """
     atomic = _usdc_amount_atomic_string(amount_float)
     return {
         "scheme": "exact",
         "network": _accepts_item_network(),
         "asset": _accepts_evm_asset_for_network(),
-        "amount": atomic,
         "maxAmountRequired": atomic,
         "payTo": pay_to,
         "maxTimeoutSeconds": 60,
@@ -73,7 +99,13 @@ def build_accepts_exact_evm_item(*, pay_to: str, amount_float: float) -> dict:
         "description": "BeezShield Sentinel Alpha risk score",
         "mimeType": "application/json",
         "extra": {"name": "USD Coin", "version": "2"},
+        "outputSchema": _risk_score_output_schema_input(),
     }
+
+
+def build_accepts_exact_evm_item(*, pay_to: str, amount_float: float) -> dict:
+    """GET / legacy discovery ``accepts[]`` (strict v1 shape; no ``amount`` field)."""
+    return build_accepts_x402scan_v1_strict_item(pay_to=pay_to, amount_float=amount_float)
 
 
 def encode_payment_required_header(challenge_body: dict) -> str:
@@ -99,12 +131,18 @@ def x402_payment_discovery_headers(challenge_body: dict) -> dict[str, str]:
 
 
 def build_x402_challenge_v1_pure(lane: str = "basic") -> dict:
-    """x402scan POST validators: only ``x402Version``, ``error``, and ``accepts`` (no legacy keys)."""
-    full = build_x402_challenge(lane=lane)
+    """x402scan POST: pure top-level v1 body with strict ``accepts[]`` (no legacy keys)."""
+    pricing = get_pricing_tiers()
+    selected_lane = lane if lane in {"basic", "executive", "premium", "priority"} else "basic"
+    pay_to = (
+        (os.getenv("X402_REVENUE_ADDRESS") or "").strip()
+        or (os.getenv("SENTINEL_TREASURY_WALLET") or "").strip()
+    )
+    amount_float = pricing[selected_lane]
     return {
-        "x402Version": full["x402Version"],
-        "error": full["error"],
-        "accepts": full["accepts"],
+        "x402Version": 1,
+        "error": X402_V1_DISCOVERY_ERROR,
+        "accepts": [build_accepts_x402scan_v1_strict_item(pay_to=pay_to, amount_float=amount_float)],
     }
 
 

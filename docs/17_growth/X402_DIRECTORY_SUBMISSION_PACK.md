@@ -92,6 +92,12 @@ Maintainer/community response on the x402 ecosystem page PR (paraphrased posture
 - **Repository behavior (compatibility only):** unpaid **POST** response and **POST** **`PAYMENT-REQUIRED`** encode **pure** v1 JSON (**three keys only**). **GET** keeps legacy + v1 fields. Paid **POST** unchanged. **Not** a listing claim.
 - **Posture unchanged:** **§7** **`not submitted`** / validation failed; **no listing success claim**.
 
+## 3l) x402scan twelfth diagnosis — strict ``accepts[]`` (no ``amount``, ``outputSchema``) (no listing claim)
+
+- **Evidence (2026):** **One resource** + pure **POST** v1 body (**§3k**), still **“No valid x402 response found”**. **x402scan** v1 examples use **`maxAmountRequired`** without **`accepts[0].amount`** and include **`outputSchema.input`** for HTTP POST JSON fields.
+- **Repository behavior (compatibility only):** strict **`accepts[]`** for unpaid **POST** (and **GET** discovery **`accepts`**) drops **`amount`**, adds **`outputSchema.input`** (`contract_address`, `chain`). **POST** body / **`PAYMENT-REQUIRED`** remain pure v1 top-level keys. Paid **POST** unchanged. **Not** a listing claim.
+- **Posture unchanged:** **§7** **`not submitted`** / validation failed; **no listing success claim**.
+
 ## 4) Project identity
 
 | Field | Value |
@@ -134,7 +140,7 @@ Use when a directory allows a fuller description:
 | `submission_owner` | Chox |
 | `copy_variant` | short |
 | `evidence_links` | https://beezshield.com · https://beezshield.com/manifesto.html · https://www.npmjs.com/package/@beezshield/sentinel · `docs/17_growth/SENTINEL_ALPHA_PUBLIC_TECHNICAL_SUMMARY.md` (in-repo public-safe summary) |
-| `notes` | Probe timeline §3a–§3k: **pure POST v1 body** (**§3k**, three keys only on unpaid **POST**). **`status` stays `not submitted`**; **never claim listing success prematurely**. |
+| `notes` | Probe timeline §3a–§3l: **strict ``accepts[]``** (**§3l**: no **`amount`**, **`outputSchema.input`**). **`status` stays `not submitted`**; **never claim listing success prematurely**. |
 
 ### Agentic.Market
 
