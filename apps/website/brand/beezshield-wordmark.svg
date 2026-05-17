@@ -1,21 +1,4 @@
-<svg width="1200" height="320" viewBox="0 0 1200 320" fill="none" xmlns="http://www.w3.org/2000/svg">
-  <rect width="1200" height="320" rx="48" fill="#050505"/>
-  <g transform="translate(60 40)">
-    <path d="M120 10L210 55V145C210 210 165 255 120 270C75 255 30 210 30 145V55L120 10Z" stroke="#FFB000" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/>
-    <g stroke="#1a1a1a" stroke-width="3">
-      <path d="M120 40L150 55V85L120 100L90 85V55Z"/>
-      <path d="M120 100L150 115V145L120 160L90 145V115Z"/>
-      <path d="M150 55L180 70V100L150 115Z"/>
-      <path d="M90 55L60 70V100L90 115Z"/>
-    </g>
-    <path d="M120 60L145 75V105L120 120L95 105V75L120 60Z" fill="#FFB000"/>
-    <path d="M120 72L135 80V96L120 104L105 96V80L120 72Z" fill="#050505"/>
-    <circle cx="120" cy="88" r="8" fill="#39D7FF"/>
-    <path d="M155 85L185 70V105L155 120V85Z" fill="#FFB000" fill-opacity="0.2" stroke="#FFB000" stroke-width="4"/>
-    <path d="M85 85L55 70V105L85 120V85Z" fill="#FFB000" fill-opacity="0.2" stroke="#FFB000" stroke-width="4"/>
-    <path d="M120 130L135 140V195L120 220L105 195V140L120 130Z" fill="#39D7FF" fill-opacity="0.1" stroke="#39D7FF" stroke-width="4"/>
-    <path d="M120 145L126 155V190L120 205L114 190V155L120 145Z" fill="#39D7FF"/>
-  </g>
-  <text x="310" y="155" fill="#FFFFFF" font-family="'Inter', 'Roboto', 'Segoe UI', sans-serif" font-size="84" font-weight="800" letter-spacing="-1">BeezShield</text>
-  <text x="315" y="225" fill="#39D7FF" font-family="'Inter', 'Roboto', 'Segoe UI', monospace" font-size="32" font-weight="500" letter-spacing="2">MACHINE TRUST INFRASTRUCTURE</text>
+<svg width="600" height="160" viewBox="0 0 600 160" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <text x="0" y="80" fill="#FFFFFF" font-family="'Inter', sans-serif" font-size="72" font-weight="800" letter-spacing="-1">BeezShield</text>
+  <text x="4" y="125" fill="#39D7FF" font-family="'JetBrains Mono', monospace" font-size="22" font-weight="600" letter-spacing="2">MACHINE TRUST INFRASTRUCTURE</text>
 </svg>

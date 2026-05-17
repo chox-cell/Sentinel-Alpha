@@ -1,30 +1,14 @@
 <svg width="512" height="512" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg">
-  <rect width="512" height="512" rx="100" fill="#050505"/>
-  <path d="M256 50L430 130V290C430 400 350 460 256 490C162 460 82 400 82 290V130L256 50Z" stroke="#090909" stroke-width="16" fill="#090909"/>
-  <!-- Glowing edge shield -->
-  <path d="M256 64L410 136V286C410 380 340 436 256 462C172 436 102 380 102 286V136L256 64Z" stroke="#FFB000" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/>
+  <!-- Outer Gold Shield -->
+  <path d="M256 32L448 112V256C448 375.5 365 448 256 480C147 448 64 375.5 64 256V112L256 32Z" stroke="#FFB000" stroke-width="32" stroke-linecap="round" stroke-linejoin="round"/>
   
-  <!-- Hexagon grid inside shield -->
-  <g stroke="#1a1a1a" stroke-width="4">
-    <path d="M256 120L310 150V210L256 240L202 210V150Z"/>
-    <path d="M256 240L310 270V330L256 360L202 330V270Z"/>
-    <path d="M310 150L364 180V240L310 270Z"/>
-    <path d="M202 150L148 180V240L202 270Z"/>
-    <path d="M310 270L364 300V360L310 390Z"/>
-    <path d="M202 270L148 300V360L202 390Z"/>
-  </g>
-
-  <!-- Abstract bee geometry / terminal look -->
-  <path d="M256 140L300 166V216L256 242L212 216V166L256 140Z" fill="#FFB000"/>
-  <path d="M256 156L284 172V204L256 220L228 204V172L256 156Z" fill="#050505"/>
-  <!-- Eye/core -->
-  <circle cx="256" cy="188" r="14" fill="#39D7FF"/>
+  <!-- Inner Electric Blue Hexagon (Bee/Hive reference) -->
+  <path d="M256 160L336 206V298L256 344L176 298V206L256 160Z" fill="#39D7FF" fill-opacity="0.1" stroke="#39D7FF" stroke-width="24" stroke-linejoin="round"/>
   
-  <!-- Wings / Shield segments -->
-  <path d="M316 190L370 160V220L316 250V190Z" fill="#FFB000" fill-opacity="0.2" stroke="#FFB000" stroke-width="6"/>
-  <path d="M196 190L142 160V220L196 250V190Z" fill="#FFB000" fill-opacity="0.2" stroke="#FFB000" stroke-width="6"/>
+  <!-- Core Data/Trust Node -->
+  <circle cx="256" cy="252" r="24" fill="#FFB000"/>
   
-  <!-- Cyber sting / vertical base -->
-  <path d="M256 260L280 280V380L256 420L232 380V280L256 260Z" fill="#39D7FF" fill-opacity="0.1" stroke="#39D7FF" stroke-width="6"/>
-  <path d="M256 280L266 295V375L256 400L246 375V295L256 280Z" fill="#39D7FF"/>
+  <!-- Vertical cyber line -->
+  <path d="M256 96V160" stroke="#FFB000" stroke-width="16" stroke-linecap="round"/>
+  <path d="M256 344V400" stroke="#FFB000" stroke-width="16" stroke-linecap="round"/>
 </svg>
