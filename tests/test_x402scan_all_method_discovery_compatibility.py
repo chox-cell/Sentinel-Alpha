@@ -119,11 +119,7 @@ def test_openapi_does_not_list_patch_put_delete_on_risk_score():
     paths = schema.get("paths") or {}
     rs = paths.get("/contracts/risk-score")
     assert rs is not None
-    methods = list(rs.keys())
-    assert "post" in methods and "get" in methods
-    assert "patch" not in methods
-    assert "put" not in methods
-    assert "delete" not in methods
+    assert list(rs.keys()) == ["post"]
 
 
 def test_docs_fifth_attempt_recorded_without_listing_success():

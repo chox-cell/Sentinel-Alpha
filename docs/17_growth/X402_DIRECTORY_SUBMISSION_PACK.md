@@ -73,6 +73,13 @@ Maintainer/community response on the x402 ecosystem page PR (paraphrased posture
 - **Repository behavior (compatibility only):** **`accepts[0].network`** → **`base`**; legacy top-level **`network`** stays **`eip155:8453`**; discovery bodies add **`error: "X-PAYMENT header is required"`**; **GET** returns flat v1 body; **POST** unpaid merges **top-level** v1 fields plus **`detail`** duplicate; **`PAYMENT-REQUIRED`** base64 includes **`error`** + **`accepts`** with **`network: base`**; **`extra.name`** → **`USD Coin`**. HTTP/OpenAPI/POST-prepayment behavior from §3e–§3g unchanged. **Not** a listing claim.
 - **Posture unchanged:** **§7** **`not submitted`** / validation failed; **no listing success claim**.
 
+## 3i) x402scan ninth diagnosis — multiple OpenAPI operations on one path (no listing claim)
+
+- **Evidence (2026):** After v1 schema + public OpenAPI filter, **`/openapi.json`** listed only **`/contracts/risk-score`** but exposed **four operations** (**`get`**, **`head`**, **`options`**, **`post`**). **x402scan** UI showed **“Add API (4 resources)”** and still **“Expected 402 response”**. Runtime probes were correct (**GET**/**POST** unpaid **402**, **HEAD** **402** empty body, **OPTIONS** **204**, **PATCH**/**PUT**/**DELETE** **402**).
+- **Hypothesis:** validators treat **each OpenAPI operation** as a separate resource; **HEAD** (no JSON body) and **OPTIONS** (**204**) are not valid payable x402 resources even when runtime compatibility is correct.
+- **Repository behavior (compatibility only):** public **`/openapi.json`** documents **only `post`** on **`/contracts/risk-score`** (**`include_in_schema=False`** on **GET**/**HEAD**/**OPTIONS** discovery handlers; **PATCH**/**PUT**/**DELETE** remain hidden). Runtime methods unchanged. **POST** description documents unpaid **402** challenge. **Not** a listing claim.
+- **Posture unchanged:** **§7** **`not submitted`** / validation failed; **no listing success claim**.
+
 ## 4) Project identity
 
 | Field | Value |
@@ -115,7 +122,7 @@ Use when a directory allows a fuller description:
 | `submission_owner` | Chox |
 | `copy_variant` | short |
 | `evidence_links` | https://beezshield.com · https://beezshield.com/manifesto.html · https://www.npmjs.com/package/@beezshield/sentinel · `docs/17_growth/SENTINEL_ALPHA_PUBLIC_TECHNICAL_SUMMARY.md` (in-repo public-safe summary) |
-| `notes` | Probe timeline §3a–§3h: OpenAPI filter (**§3g**) / **v1 schema alignment** (**§3h**: **`network: base`** in **`accepts`**, top-level **`error`**, **POST** top-level + **`detail`**). **`status` stays `not submitted`**; **never claim listing success prematurely**. |
+| `notes` | Probe timeline §3a–§3i: **v1 schema** (**§3h**) / **single OpenAPI operation** (**§3i**: **`post` only** on **`/contracts/risk-score`**). **`status` stays `not submitted`**; **never claim listing success prematurely**. |
 
 ### Agentic.Market
 

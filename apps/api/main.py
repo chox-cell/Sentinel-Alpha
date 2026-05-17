@@ -141,7 +141,7 @@ def internal_env_source():
     }
 
 
-@app.get("/contracts/risk-score")
+@app.get("/contracts/risk-score", include_in_schema=False)
 def risk_score_get_x402_discovery(request: Request):
     """
     Discovery/validation-only: return x402 challenge on GET for directory crawlers (e.g. x402scan).
@@ -177,7 +177,7 @@ def risk_score_delete_discovery_x402_only(request: Request):
     return _risk_score_discovery_challenge_json_response(request)
 
 
-@app.head("/contracts/risk-score")
+@app.head("/contracts/risk-score", include_in_schema=False)
 def risk_score_head_x402_discovery(request: Request):
     """
     Discovery-only: same payment requirement signal as GET (402 + PAYMENT-REQUIRED), no JSON body,
@@ -194,7 +194,7 @@ def risk_score_head_x402_discovery(request: Request):
     )
 
 
-@app.options("/contracts/risk-score")
+@app.options("/contracts/risk-score", include_in_schema=False)
 def risk_score_options_x402_discovery(request: Request):
     """
     Preflight-safe handler for scanners / browsers probing OPTIONS without running scoring or DB writes.
@@ -206,7 +206,23 @@ def risk_score_options_x402_discovery(request: Request):
     return Response(status_code=204, headers=_RISK_SCORE_OPTIONS_CORS_HEADERS)
 
 
-@app.post("/contracts/risk-score", openapi_extra=_RISK_SCORE_POST_OPENAPI_EXTRA)
+@app.post(
+    "/contracts/risk-score",
+    openapi_extra=_RISK_SCORE_POST_OPENAPI_EXTRA,
+    summary="Contract risk score (x402-gated)",
+    description=(
+        "Payable marketplace operation for BeezShield Sentinel Alpha. Unpaid requests "
+        "(missing or invalid X402-PAYMENT in real mode, or invalid PAYMENT-SIGNATURE in demo mode) "
+        "receive HTTP 402 with top-level x402Version, error, and accepts challenge JSON plus "
+        "PAYMENT-REQUIRED header. Paid requests with valid payment receive contract risk scoring. "
+        "Pre-execution policy assistance only — not a security guarantee."
+    ),
+    responses={
+        402: {"description": "Payment required — x402 discovery challenge (unpaid)"},
+        200: {"description": "Risk score JSON (paid)"},
+        422: {"description": "Invalid request body (paid path only, after payment gate)"},
+    },
+)
 async def risk_score(
     request: Request,
     background_tasks: BackgroundTasks,
@@ -216,7 +232,7 @@ async def risk_score(
 ):
     """
     Paid execution uses JSON body validated only after payment headers pass.
-    Unpaid scanners may send empty/invalid JSON — route returns ``402`` + ``detail`` challenge first.
+    Unpaid scanners may send empty/invalid JSON — route returns ``402`` + top-level/detail challenge first.
     """
     client_ip = request.client.host if (request and request.client) else None
     if not _rate_limit_allow(client_ip):

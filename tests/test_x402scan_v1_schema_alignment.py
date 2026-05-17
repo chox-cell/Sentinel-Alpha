@@ -88,9 +88,7 @@ def test_head_options_patch_put_delete_and_openapi_unchanged(monkeypatch):
 
     paths = c.get("/openapi.json").json().get("paths") or {}
     assert list(paths.keys()) == ["/contracts/risk-score"]
-    rs = paths["/contracts/risk-score"]
-    assert "post" in rs and "get" in rs
-    assert "patch" not in rs and "put" not in rs and "delete" not in rs
+    assert list(paths["/contracts/risk-score"].keys()) == ["post"]
 
 
 def test_docs_eighth_attempt_without_listing_success():

@@ -319,6 +319,21 @@ Maintainer signal on x402 ecosystem page PR (ecosystem page sunset; PR closed; c
 - endorsement_claim: false
 - integration_claim: false
 
+## x402scan directory registration — ninth diagnosis (v12.x)
+
+- target_url: `https://api.beezshield.com/contracts/risk-score`
+- channel: x402scan.com manual listing flow (UI + OpenAPI fetch)
+- registration_status: **attempted_validation_failed_openapi_multiple_operations** (no listing claimed)
+- observed:
+  - Runtime **402**/**204** matrix compatible on **`/contracts/risk-score`**
+  - **`/openapi.json`** listed **`get`**, **`head`**, **`options`**, **`post`** on the same path → UI **“Add API (4 resources)”**
+  - Validation still **“Expected 402 response”**
+- reason_summary: x402scan likely validates **each OpenAPI operation** as a resource; **HEAD**/**OPTIONS** are not payable x402 surfaces — reduce public OpenAPI to **POST only** — see `docs/17_growth/X402_DIRECTORY_SUBMISSION_PACK.md` **§3i** (**no deployment claim**)
+- listing_success_claim: false
+- partnership_claim: false
+- endorsement_claim: false
+- integration_claim: false
+
 ## giskard09 / Mycelium Trails — x402 directory cross-reference signal (v12.x)
 
 Paraphrased **community** reply on the closed x402 ecosystem PR thread (no implied maintainer authority):

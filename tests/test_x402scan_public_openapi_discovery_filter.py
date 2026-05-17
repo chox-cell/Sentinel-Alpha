@@ -28,18 +28,12 @@ def test_openapi_excludes_internal_health_and_webhooks():
     assert "/webhooks/quicknode/health" not in paths
 
 
-def test_openapi_includes_risk_score_with_expected_methods():
+def test_openapi_includes_risk_score_post_only():
     paths = _openapi_paths(TestClient(app))
+    assert list(paths.keys()) == ["/contracts/risk-score"]
     rs = paths.get("/contracts/risk-score")
     assert rs is not None
-    methods = set(rs.keys())
-    assert "post" in methods
-    assert "get" in methods
-    assert "head" in methods
-    assert "options" in methods
-    assert "patch" not in methods
-    assert "put" not in methods
-    assert "delete" not in methods
+    assert list(rs.keys()) == ["post"]
 
 
 def test_runtime_health_and_internal_still_work():
