@@ -50,8 +50,8 @@ Do **not** commit placeholder PNGs without a deliberate design export pass.
 
 ## Generated public SVG assets
 
-- `apps/website/public/brand/beezshield-logo.svg`
-- `apps/website/public/brand/beezshield-wordmark.svg`
+- `apps/website/brand/beezshield-logo.svg`
+- `apps/website/brand/beezshield-wordmark.svg`
+- `apps/website/favicon.svg`
 
-These are simple first-pass vector assets for directory/profile use. They are not final brand identity assets.
-
+Note: The simple first-pass vector assets were replaced with the stronger public identity v2.

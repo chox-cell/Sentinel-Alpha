@@ -77,7 +77,9 @@ def test_index_x402scan_brand_surface():
     assert "POST https://api.beezshield.com/contracts/risk-score" in html
     assert "0.02 USDC" in html
     assert "BeezShield" in html
+    assert "Machine Trust Infrastructure" in html
     assert "favicon.svg" in html
+    assert "Browser demo paused" in html
 
 
 def test_registry_x402scan_page():

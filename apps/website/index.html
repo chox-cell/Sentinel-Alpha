@@ -57,8 +57,8 @@
     <nav class="top-nav">
         <div class="nav-container">
             <a href="index.html" class="brand brand-link" aria-label="BeezShield home">
-                <img src="brand/beezshield-logo.svg" alt="" width="32" height="32" class="brand-logo-img">
-                <img src="brand/beezshield-wordmark.svg" alt="BeezShield" height="24" class="brand-wordmark-img">
+                <img src="brand/beezshield-logo.svg" alt="" width="40" height="40" class="brand-logo-img">
+                <img src="brand/beezshield-wordmark.svg" alt="BeezShield" height="32" class="brand-wordmark-img">
             </a>
             <div class="nav-links">
                 <a href="docs.html">Docs</a>
@@ -344,16 +344,13 @@
 
                         <!-- Fallback Panel -->
                         <div id="scanFallback" class="fallback-panel" style="display: none;">
-                            <div class="fallback-icon"><i data-lucide="alert-circle"></i></div>
-                            <h3 class="mono">Decision unavailable</h3>
-                            <p class="text-muted text-sm mt-2 mb-4">The browser session could not complete the Sentinel request. You can still integrate server-side.</p>
+                            <div class="fallback-icon"><i data-lucide="shield-alert"></i></div>
+                            <h3 class="mono">Browser demo paused</h3>
+                            <p class="text-muted text-sm mt-2 mb-4">Use the API endpoint or server-side integration for live decisions.</p>
                             <div class="fallback-actions">
-                                <button id="fallbackCopyCurlBtn" class="btn btn-outline btn-sm">Copy cURL <i data-lucide="copy" class="icon-sm"></i></button>
-                                <a href="#builder" class="btn btn-primary btn-sm">Add to your bot</a>
-                                <button id="tryAgainBtn" class="btn btn-secondary btn-sm">Try Again</button>
-                            </div>
-                            <div class="mt-4 text-center">
-                                <a href="https://api.beezshield.com/contracts/risk-score" target="_blank" class="text-muted text-xs underline">Open API Endpoint <i data-lucide="external-link" class="icon-xs inline"></i></a>
+                                <a href="https://api.beezshield.com/contracts/risk-score" target="_blank" class="btn btn-primary btn-sm">View x402 resource</a>
+                                <a href="registry/x402scan.html" class="btn btn-secondary btn-sm">Read registry proof</a>
+                                <button id="fallbackCopyCurlBtn" class="btn btn-outline btn-sm">Copy API curl <i data-lucide="copy" class="icon-sm"></i></button>
                             </div>
                         </div>
                     </div>

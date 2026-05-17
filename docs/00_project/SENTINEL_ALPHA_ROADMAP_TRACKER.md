@@ -154,6 +154,7 @@ Status: **Done**
 - v12.x x402scan v1 body-first discovery (omit **`PAYMENT-REQUIRED`** on **v1** **402** so @agentcash/discovery parses JSON body; **x-payment-info** on OpenAPI **POST**; no listing claim)
 - v12.x — **x402scan registration completed** for `/contracts/risk-score`; public-safe directory evidence recorded (`X402SCAN_REGISTRATION_EVIDENCE.md`); **next:** brand/logo pack + remaining directory submissions (Agentic.Market, Pay.sh, Ampersend Discover)
 - v12.x frontend brand integration (BeezShield logo/wordmark on homepage, x402scan proof block, API quick-start, `registry/x402scan.html`, claim-safe footer; no API/runtime changes)
+- v12.x public UI polish (homepage layout, registry header, SVG logo styling, and claim-safe demo status)
 - v12.x Agentic.Market submission pack prepared (`AGENTIC_MARKET_SUBMISSION_PACK.md`); manual submission pending
 - Agent commerce vision truth-filter update (UCP/AP2/Trust Object remain roadmap context)
 
