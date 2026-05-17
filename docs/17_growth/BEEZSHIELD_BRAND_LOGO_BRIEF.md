@@ -47,3 +47,11 @@ Do **not** commit placeholder PNGs without a deliberate design export pass.
 
 - Pair logo assets with public-safe claims from `X402SCAN_REGISTRATION_EVIDENCE.md` and `X402_DIRECTORY_SUBMISSION_PACK.md`.
 - Avoid “official x402,” “partner,” “endorsed,” or “guaranteed security” in visual taglines.
+
+## Generated public SVG assets
+
+- `apps/website/public/brand/beezshield-logo.svg`
+- `apps/website/public/brand/beezshield-wordmark.svg`
+
+These are simple first-pass vector assets for directory/profile use. They are not final brand identity assets.
+
