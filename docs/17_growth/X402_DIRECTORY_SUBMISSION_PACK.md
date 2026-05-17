@@ -98,6 +98,12 @@ Maintainer/community response on the x402 ecosystem page PR (paraphrased posture
 - **Repository behavior (compatibility only):** strict **`accepts[]`** for unpaid **POST** (and **GET** discovery **`accepts`**) drops **`amount`**, adds **`outputSchema.input`** (`contract_address`, `chain`). **POST** body / **`PAYMENT-REQUIRED`** remain pure v1 top-level keys. Paid **POST** unchanged. **Not** a listing claim.
 - **Posture unchanged:** **§7** **`not submitted`** / validation failed; **no listing success claim**.
 
+## 3m) x402scan thirteenth diagnosis — restore ``accepts[0].amount`` for runtime checker (no listing claim)
+
+- **Evidence (2026):** **One resource**, pure **POST** v1 body, **`outputSchema`**, no **`amount`** on **`accepts[0]** (**§3l**) — still **“No valid x402 response found”**. **x402scan** source (**`check-endpoint`**) maps **`paymentMethods`** via **`tokenStringToNumber(accept.amount)`** — runtime expects **`amount`**, not only **`maxAmountRequired`**.
+- **Repository behavior (compatibility only):** restore **`accepts[0].amount`** = **`maxAmountRequired`** (e.g. **`"20000"`** for basic) on pure **POST** / header challenge; keep pure top-level keys and **`outputSchema.input`**. **GET** legacy preserved. **Not** a listing claim.
+- **Posture unchanged:** **§7** **`not submitted`** / validation failed; **no listing success claim**.
+
 ## 4) Project identity
 
 | Field | Value |
@@ -140,7 +146,7 @@ Use when a directory allows a fuller description:
 | `submission_owner` | Chox |
 | `copy_variant` | short |
 | `evidence_links` | https://beezshield.com · https://beezshield.com/manifesto.html · https://www.npmjs.com/package/@beezshield/sentinel · `docs/17_growth/SENTINEL_ALPHA_PUBLIC_TECHNICAL_SUMMARY.md` (in-repo public-safe summary) |
-| `notes` | Probe timeline §3a–§3l: **strict ``accepts[]``** (**§3l**: no **`amount`**, **`outputSchema.input`**). **`status` stays `not submitted`**; **never claim listing success prematurely**. |
+| `notes` | Probe timeline §3a–§3m: **`accepts[0].amount`** restored for x402scan runtime (**§3m**). **`status` stays `not submitted`**; **never claim listing success prematurely**. |
 
 ### Agentic.Market
 

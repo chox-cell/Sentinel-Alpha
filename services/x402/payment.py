@@ -84,14 +84,15 @@ def _risk_score_output_schema_input() -> dict:
 
 def build_accepts_x402scan_v1_strict_item(*, pay_to: str, amount_float: float) -> dict:
     """
-    x402scan v1 strict ``accepts[]`` entry: ``maxAmountRequired`` only (no ``amount``),
-    includes ``outputSchema.input``.
+    x402scan v1 ``accepts[]`` entry: ``amount`` + ``maxAmountRequired`` (runtime checker reads
+  ``accept.amount``), plus ``outputSchema.input``.
     """
     atomic = _usdc_amount_atomic_string(amount_float)
     return {
         "scheme": "exact",
         "network": _accepts_item_network(),
         "asset": _accepts_evm_asset_for_network(),
+        "amount": atomic,
         "maxAmountRequired": atomic,
         "payTo": pay_to,
         "maxTimeoutSeconds": 60,
@@ -104,7 +105,7 @@ def build_accepts_x402scan_v1_strict_item(*, pay_to: str, amount_float: float) -
 
 
 def build_accepts_exact_evm_item(*, pay_to: str, amount_float: float) -> dict:
-    """GET / legacy discovery ``accepts[]`` (strict v1 shape; no ``amount`` field)."""
+    """GET / legacy discovery ``accepts[]`` (v1 shape with ``amount``, ``outputSchema``)."""
     return build_accepts_x402scan_v1_strict_item(pay_to=pay_to, amount_float=amount_float)
 
 

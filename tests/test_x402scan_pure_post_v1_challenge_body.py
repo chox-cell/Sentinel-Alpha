@@ -55,7 +55,7 @@ def _assert_pure_post_body(body: dict) -> None:
     assert a0["network"] == "base"
     assert a0["asset"] == BASE_MAINNET_USDC_CONTRACT
     assert a0["maxAmountRequired"] == "20000"
-    assert "amount" not in a0
+    assert a0["amount"] == "20000"
     assert a0["outputSchema"]["input"]["method"] == "POST"
 
 

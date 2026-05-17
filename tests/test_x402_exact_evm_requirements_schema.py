@@ -41,7 +41,7 @@ def test_get_402_payment_required_and_body_accepts_exact_evm(monkeypatch):
     assert h0["network"] == "base"
     assert hdr_json["error"] == "X-PAYMENT header is required"
     assert h0["asset"] == BASE_MAINNET_USDC_CONTRACT
-    assert "amount" not in h0
+    assert h0["amount"] == "20000"
     assert h0["maxAmountRequired"] == "20000"
     assert h0["outputSchema"]["input"]["type"] == "http"
     assert h0["payTo"] == "0x_payto_exact_evM"

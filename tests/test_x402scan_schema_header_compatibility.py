@@ -51,8 +51,8 @@ def test_get_402_legacy_and_discovery_schema(monkeypatch):
     assert req["scheme"] == "exact"
     assert req["network"] == "base"
     assert body["error"] == "X-PAYMENT header is required"
+    assert req["amount"] == "20000"
     assert req["maxAmountRequired"] == "20000"
-    assert "amount" not in req
     assert req["outputSchema"]["input"]["discoverable"] is True
     assert req["asset"] == BASE_MAINNET_USDC_CONTRACT
     assert req["resource"] == "https://api.example.invalid/contracts/risk-score"
