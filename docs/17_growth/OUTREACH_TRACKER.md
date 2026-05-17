@@ -194,7 +194,7 @@ Maintainer signal on x402 ecosystem page PR (ecosystem page sunset; PR closed; c
 | Directory | URL | status | submission_owner | copy_variant | notes |
 | --- | --- | --- | --- | --- | --- |
 | x402scan | https://x402scan.com | **registered** | Chox | short | §3o / `X402SCAN_REGISTRATION_EVIDENCE.md` |
-| Agentic.Market | https://agentic.market | not submitted | Chox | long | See submission pack §7 |
+| Agentic.Market | https://agentic.market | prepared_not_submitted | Chox | long | `AGENTIC_MARKET_SUBMISSION_PACK.md` |
 | Pay.sh | https://pay.sh | not submitted | Chox | short | See submission pack §7 |
 | ampersend discover | https://app.ampersend.ai/discover | not submitted | Chox | long | See submission pack §7 |
 
@@ -408,6 +408,22 @@ Maintainer signal on x402 ecosystem page PR (ecosystem page sunset; PR closed; c
 - partnership_claim: false
 - endorsement_claim: false
 - integration_claim: false
+
+## Agentic.Market submission — prepared (v12.x)
+
+- target: Agentic.Market (https://agentic.market)
+- status: **prepared_not_submitted**
+- owner: Chox
+- source_pack: `docs/17_growth/AGENTIC_MARKET_SUBMISSION_PACK.md`
+- x402scan_proof_available: true
+- x402scan_proof_url: https://beezshield.com/registry/x402scan.html
+- manual_submission_required: true
+- submission_result: null
+- official_integration_claim: false
+- partnership_claim: false
+- endorsement_claim: false
+- security_guarantee_claim: false
+- notes: Copy and checklist ready; do not auto-submit; update row only after verified listing URL
 
 ## x402scan directory registration — success (v12.x)
 

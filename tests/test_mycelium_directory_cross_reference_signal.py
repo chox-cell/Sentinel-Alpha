@@ -45,9 +45,9 @@ def test_claims_mycelium_cross_reference_row():
 
 def test_directory_targets_still_not_submitted():
     ot = OUTREACH.read_text(encoding="utf-8")
-    # Four community directory rows in the v12.x table
-    # x402scan is registered; three community directories remain not submitted
-    assert ot.count("| not submitted |") >= 3
+    # x402scan registered; Agentic.Market prepared_not_submitted; Pay.sh + ampersend not submitted
+    assert "prepared_not_submitted" in ot
+    assert ot.count("| not submitted |") >= 2
 
 
 def test_pre_post_mentions_future_directory_copy():
