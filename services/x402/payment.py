@@ -98,6 +98,16 @@ def x402_payment_discovery_headers(challenge_body: dict) -> dict[str, str]:
     }
 
 
+def build_x402_challenge_v1_pure(lane: str = "basic") -> dict:
+    """x402scan POST validators: only ``x402Version``, ``error``, and ``accepts`` (no legacy keys)."""
+    full = build_x402_challenge(lane=lane)
+    return {
+        "x402Version": full["x402Version"],
+        "error": full["error"],
+        "accepts": full["accepts"],
+    }
+
+
 def build_x402_challenge(lane: str = "basic") -> dict:
     pricing = get_pricing_tiers()
     selected_lane = lane if lane in {"basic", "executive", "premium", "priority"} else "basic"

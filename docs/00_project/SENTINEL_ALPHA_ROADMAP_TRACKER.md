@@ -148,6 +148,7 @@ Status: **Done**
 - v12.x x402scan v1 schema alignment (**`accepts[0].network: base`**, top-level **`error`**, legacy **`network: eip155:8453`**; **POST** top-level + **`detail`**; **PAYMENT-REQUIRED** includes **`error`**; no listing claim)
 - v12.x x402scan single OpenAPI operation (public **`/openapi.json`** documents **POST only** on **`/contracts/risk-score`**; **GET**/**HEAD**/**OPTIONS** runtime unchanged; no listing claim)
 - v12.x x402scan POST body strict v1 (unpaid **POST** flat challenge same as **GET**, no **`detail`** wrapper; OpenAPI sample body; no listing claim)
+- v12.x x402scan pure POST v1 body (unpaid **POST** returns only **x402Version**/**error**/**accepts**; **GET** legacy preserved; no listing claim)
 - Agent commerce vision truth-filter update (UCP/AP2/Trust Object remain roadmap context)
 
 ## 5) Cost discipline

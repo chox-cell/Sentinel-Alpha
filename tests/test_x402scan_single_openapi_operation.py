@@ -56,9 +56,8 @@ def test_runtime_discovery_verbs_unchanged(monkeypatch):
     post_r = c.post("/contracts/risk-score", content=b"")
     assert post_r.status_code == 402
     body = post_r.json()
-    assert body["x402Version"] == 1
+    assert set(body.keys()) == {"x402Version", "error", "accepts"}
     assert body["error"] == X402_V1_DISCOVERY_ERROR
-    assert isinstance(body["accepts"], list)
     assert body["accepts"][0]["network"] == "base"
 
     pr = post_r.headers.get("payment-required")

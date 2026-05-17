@@ -16,7 +16,12 @@ from typing import Optional, Dict, Any
 
 from apps.webhooks.quicknode import router as quicknode_router
 from services.x402.coinbase import verify_demo_payment
-from services.x402.payment import require_x402_payment, build_x402_challenge, x402_payment_discovery_headers
+from services.x402.payment import (
+    require_x402_payment,
+    build_x402_challenge,
+    build_x402_challenge_v1_pure,
+    x402_payment_discovery_headers,
+)
 from services.x402.onchain_verifier import get_onchain_verification_status
 from services.x402.replay_guard import get_replay_status
 from services.x402.settlement_ledger import get_settlement_status
@@ -113,8 +118,8 @@ def _risk_score_discovery_challenge_json_response(request: Request) -> JSONRespo
 
 
 def _post_prepayment_discovery_response(lane: str) -> JSONResponse:
-    """POST unpaid probes: same flat x402 v1 challenge JSON as GET (no ``detail`` wrapper)."""
-    challenge = build_x402_challenge(lane=lane)
+    """POST unpaid probes: pure x402scan v1 body (``x402Version`` / ``error`` / ``accepts`` only)."""
+    challenge = build_x402_challenge_v1_pure(lane=lane)
     return JSONResponse(
         status_code=402,
         content=challenge,
@@ -215,12 +220,14 @@ def risk_score_options_x402_discovery(request: Request):
     description=(
         "Payable marketplace operation for BeezShield Sentinel Alpha. Unpaid requests "
         "(missing or invalid X402-PAYMENT in real mode, or invalid PAYMENT-SIGNATURE in demo mode) "
-        "receive HTTP 402 with top-level x402Version, error, and accepts challenge JSON plus "
+        "receive HTTP 402 with a pure x402 v1 challenge body (x402Version, error, accepts only) plus "
         "PAYMENT-REQUIRED header. Paid requests with valid payment receive contract risk scoring. "
         "Pre-execution policy assistance only — not a security guarantee."
     ),
     responses={
-        402: {"description": "Payment required — x402 discovery challenge (unpaid)"},
+        402: {
+            "description": "Payment required — pure x402 v1 challenge (x402Version, error, accepts only)",
+        },
         200: {"description": "Risk score JSON (paid)"},
         422: {"description": "Invalid request body (paid path only, after payment gate)"},
     },

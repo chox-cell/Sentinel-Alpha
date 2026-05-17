@@ -70,7 +70,20 @@ def test_unpaid_post_variants_flat_402(monkeypatch):
         assert body["x402Version"] == 1
         assert body["error"] == X402_V1_DISCOVERY_ERROR
         assert isinstance(body["accepts"], list) and len(body["accepts"]) >= 1
+        assert set(body.keys()) == {"x402Version", "error", "accepts"}
         assert _core_x402_fields(body) == _core_x402_fields(get_body)
+        for legacy in (
+            "x402_version",
+            "payment_method",
+            "network",
+            "pay_to",
+            "amount_usdc",
+            "asset",
+            "resource",
+            "instructions",
+            "lane",
+        ):
+            assert legacy not in body
 
         hdr = _decode_pr(r)
         assert hdr["x402Version"] == 1

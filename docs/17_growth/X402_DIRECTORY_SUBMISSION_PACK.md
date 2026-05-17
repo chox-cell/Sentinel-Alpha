@@ -86,6 +86,12 @@ Maintainer/community response on the x402 ecosystem page PR (paraphrased posture
 - **Repository behavior (compatibility only):** unpaid **POST** returns the **same flat** **`x402Version` / `error` / `accepts`** (+ legacy keys) as **GET**, **without** a **`detail`** wrapper. OpenAPI **POST** **`example`** documents minimal **`contract_address` + `chain`**. Paid path unchanged. **Not** a listing claim.
 - **Posture unchanged:** **§7** **`not submitted`** / validation failed; **no listing success claim**.
 
+## 3k) x402scan eleventh diagnosis — pure POST v1 body (no legacy keys) (no listing claim)
+
+- **Evidence (2026):** **One resource** detected; unpaid **POST** returns **402** with flat v1 fields and no **`detail`**, but validation still reports **“No valid x402 response found”**. **x402scan** v1 examples include only **`x402Version`**, **`error`**, **`accepts`** — extra legacy keys on **POST** may be rejected.
+- **Repository behavior (compatibility only):** unpaid **POST** response and **POST** **`PAYMENT-REQUIRED`** encode **pure** v1 JSON (**three keys only**). **GET** keeps legacy + v1 fields. Paid **POST** unchanged. **Not** a listing claim.
+- **Posture unchanged:** **§7** **`not submitted`** / validation failed; **no listing success claim**.
+
 ## 4) Project identity
 
 | Field | Value |
@@ -128,7 +134,7 @@ Use when a directory allows a fuller description:
 | `submission_owner` | Chox |
 | `copy_variant` | short |
 | `evidence_links` | https://beezshield.com · https://beezshield.com/manifesto.html · https://www.npmjs.com/package/@beezshield/sentinel · `docs/17_growth/SENTINEL_ALPHA_PUBLIC_TECHNICAL_SUMMARY.md` (in-repo public-safe summary) |
-| `notes` | Probe timeline §3a–§3j: **single OpenAPI operation** (**§3i**) / **strict flat POST body** (**§3j**, no **`detail`**). **`status` stays `not submitted`**; **never claim listing success prematurely**. |
+| `notes` | Probe timeline §3a–§3k: **pure POST v1 body** (**§3k**, three keys only on unpaid **POST**). **`status` stays `not submitted`**; **never claim listing success prematurely**. |
 
 ### Agentic.Market
 

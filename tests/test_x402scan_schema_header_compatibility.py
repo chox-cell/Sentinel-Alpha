@@ -107,11 +107,9 @@ def test_post_unpaid_402_discovery_schema_and_headers(monkeypatch):
     assert response.status_code == 402
 
     body = response.json()
+    assert set(body.keys()) == {"x402Version", "error", "accepts"}
     assert body["x402Version"] == 1
     assert body["error"] == "X-PAYMENT header is required"
-    assert isinstance(body["accepts"], list)
-    assert "detail" not in body
-    assert body["x402_version"] == "0.2"
     assert body["accepts"][0]["scheme"] == "exact"
     assert body["accepts"][0]["payTo"] == "0xpost_schema"
     assert body["accepts"][0]["maxAmountRequired"] == "20000"

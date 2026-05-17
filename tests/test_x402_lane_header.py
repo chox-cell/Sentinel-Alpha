@@ -51,9 +51,8 @@ def test_priority_lane_reflects_challenge_amount(monkeypatch):
     )
     assert response.status_code == 402
     body = response.json()
-    assert "detail" not in body
-    assert body["lane"] == "priority"
-    assert body["amount_usdc"] == "0.15"
+    assert set(body.keys()) == {"x402Version", "error", "accepts"}
+    assert body["accepts"][0]["maxAmountRequired"] == "150000"
 
 
 def test_priority_lane_reflects_billing_amount_on_paid_success(monkeypatch, tmp_path):
