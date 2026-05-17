@@ -1,0 +1,12 @@
+<svg width="1200" height="320" viewBox="0 0 1200 320" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1200" height="320" rx="48" fill="#050505"/>
+  <g transform="translate(56 40)">
+    <path d="M120 8L224 60V148C224 221 179 276 120 300C61 276 16 221 16 148V60L120 8Z" stroke="#FFB000" stroke-width="18" stroke-linejoin="round"/>
+    <path d="M120 60L174 88V146C174 189 151 220 120 237C89 220 66 189 66 146V88L120 60Z" fill="#FFB000"/>
+    <path d="M93 126H147" stroke="#050505" stroke-width="14" stroke-linecap="round"/>
+    <path d="M93 160H147" stroke="#050505" stroke-width="14" stroke-linecap="round"/>
+    <path d="M120 98V205" stroke="#050505" stroke-width="14" stroke-linecap="round"/>
+  </g>
+  <text x="330" y="145" fill="#FFFFFF" font-family="Arial, Helvetica, sans-serif" font-size="72" font-weight="800">BeezShield</text>
+  <text x="333" y="210" fill="#FFB000" font-family="Arial, Helvetica, sans-serif" font-size="34" font-weight="600">Machine Trust Infrastructure</text>
+</svg>

@@ -22,7 +22,7 @@
     <meta name="twitter:image" content="https://beezshield.com/og-image.png">
 
     <!-- Favicon -->
-    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 32 32%22 fill=%22none%22><path d=%22M16 2L28 9V23L16 30L4 23V9L16 2Z%22 stroke=%22%23FFB000%22 stroke-width=%222.5%22/><path d=%22M16 10L21 13V19L16 22L11 19V13L16 10Z%22 fill=%22%23FFB000%22/></svg>">
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
 
     <!-- JSON-LD -->
     <script type="application/ld+json">
@@ -56,15 +56,10 @@
 
     <nav class="top-nav">
         <div class="nav-container">
-            <div class="brand">
-                <svg width="24" height="24" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" class="brand-icon-svg">
-                    <path d="M16 2L28 9V23L16 30L4 23V9L16 2Z" stroke="#FFB000" stroke-width="2.5" stroke-linejoin="round"/>
-                    <path d="M16 10L21 13V19L16 22L11 19V13L16 10Z" fill="#FFB000">
-                        <animate attributeName="opacity" values="0.7;1;0.7" dur="3s" repeatCount="indefinite" />
-                    </path>
-                </svg>
-                <span class="brand-text">BeezShield</span>
-            </div>
+            <a href="index.html" class="brand brand-link" aria-label="BeezShield home">
+                <img src="brand/beezshield-logo.svg" alt="" width="32" height="32" class="brand-logo-img">
+                <img src="brand/beezshield-wordmark.svg" alt="BeezShield" height="24" class="brand-wordmark-img">
+            </a>
             <div class="nav-links">
                 <a href="docs.html">Docs</a>
                 <a href="pricing.html">Pricing</a>
@@ -81,6 +76,7 @@
         <section class="hero">
             <div class="container hero-content">
                 <div class="hero-text">
+                    <img src="brand/beezshield-wordmark.svg" alt="BeezShield" class="hero-wordmark" height="36">
                     <div class="badge">
                         <span class="pulse-dot"></span>
                         <span class="mono text-sm">Sentinel Alpha is live on Base</span>
@@ -191,6 +187,54 @@
                 <div class="proof-item"><i data-lucide="coins"></i> x402 payments</div>
                 <div class="proof-item"><i data-lucide="layers"></i> Base Mainnet</div>
                 <div class="proof-item"><i data-lucide="github"></i> Public GitHub</div>
+                <div class="proof-item proof-item-accent"><i data-lucide="list-checks"></i> <a href="registry/x402scan.html">x402scan registered</a></div>
+            </div>
+        </section>
+
+        <!-- x402scan directory proof -->
+        <section id="x402scan-proof" class="section section-compact">
+            <div class="container">
+                <div class="card proof-card-x402">
+                    <div class="proof-card-header">
+                        <img src="brand/beezshield-logo.svg" alt="" width="40" height="40" class="brand-logo-img">
+                        <div>
+                            <h2 class="proof-card-title">Registered on x402scan</h2>
+                            <p class="text-muted text-sm">Directory listing — marketplace discoverability only.</p>
+                        </div>
+                    </div>
+                    <p class="mt-4">BeezShield Sentinel Alpha is registered as a payable x402 resource on x402scan. This is a directory listing only and does not imply partnership, endorsement, or a security guarantee.</p>
+                    <p class="mono text-sm mt-4"><span class="text-muted">Resource:</span> <a href="https://api.beezshield.com/contracts/risk-score" target="_blank" rel="noopener">https://api.beezshield.com/contracts/risk-score</a></p>
+                    <a href="registry/x402scan.html" class="btn btn-outline btn-sm mt-4">Registry details</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- API Quick Start -->
+        <section id="api-quickstart" class="section bg-panel section-compact">
+            <div class="container">
+                <div class="section-header">
+                    <h2>API Quick Start</h2>
+                    <p class="text-muted">Unpaid POST returns an x402 discovery challenge; paid requests include payment headers per lane.</p>
+                </div>
+                <div class="api-quickstart-grid">
+                    <div class="card api-meta-card">
+                        <ul class="mono text-sm api-meta-list">
+                            <li><span class="text-muted">Endpoint</span> <code>POST https://api.beezshield.com/contracts/risk-score</code></li>
+                            <li><span class="text-muted">Network</span> <strong>Base</strong></li>
+                            <li><span class="text-muted">Asset</span> <strong>USDC</strong></li>
+                            <li><span class="text-muted">Basic lane</span> <strong>0.02 USDC</strong></li>
+                        </ul>
+                    </div>
+                    <div class="card code-card">
+                        <span class="mono text-xs text-muted">Example unpaid discovery</span>
+                        <pre class="mono text-sm mt-2"><code>curl -s -X POST https://api.beezshield.com/contracts/risk-score | jq .</code></pre>
+                        <span class="mono text-xs text-muted mt-4">Example body (paid scan)</span>
+                        <pre class="mono text-sm mt-2"><code>{
+  "contract_address": "0x1111111111111111111111111111111111111111",
+  "chain": "base"
+}</code></pre>
+                    </div>
+                </div>
             </div>
         </section>
 
@@ -483,17 +527,14 @@ if result.get("action") == "BLOCK":
     <footer class="site-footer">
         <div class="container footer-content">
             <div class="footer-brand">
-                <svg width="24" height="24" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" class="brand-icon-svg">
-                    <path d="M16 2L28 9V23L16 30L4 23V9L16 2Z" stroke="#FFB000" stroke-width="2.5" stroke-linejoin="round"/>
-                    <path d="M16 10L21 13V19L16 22L11 19V13L16 10Z" fill="#FFB000">
-                        <animate attributeName="opacity" values="0.7;1;0.7" dur="3s" repeatCount="indefinite" />
-                    </path>
-                </svg>
-                <span class="brand-text">BeezShield</span>
+                <img src="brand/beezshield-logo.svg" alt="" width="28" height="28" class="brand-logo-img">
+                <img src="brand/beezshield-wordmark.svg" alt="BeezShield" height="20" class="brand-wordmark-img">
                 <p class="text-muted text-sm mt-2">Machine Trust Infrastructure</p>
+                <p class="footer-claim-note text-xs text-muted mt-4">BeezShield builds pre-execution risk decision tools for agents. It does not provide a security guarantee, trading guarantee, or official x402 endorsement.</p>
             </div>
             <div class="footer-links text-sm">
                 <a href="docs.html">Docs</a>
+                <a href="registry/x402scan.html">x402scan registry</a>
                 <a href="pricing.html">Pricing</a>
                 <a href="trust.html">Trust</a>
                 <a href="about.html">About</a>
