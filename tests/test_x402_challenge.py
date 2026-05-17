@@ -1,7 +1,11 @@
 from fastapi.testclient import TestClient
 
 from apps.api.main import app
-from services.x402.payment import BASE_MAINNET_USDC_CONTRACT, build_x402_challenge
+from services.x402.payment import (
+    BASE_MAINNET_USDC_CONTRACT,
+    X402_V1_DISCOVERY_ERROR,
+    build_x402_challenge,
+)
 
 
 def test_build_x402_challenge_uses_lane_and_addresses(monkeypatch):
@@ -22,10 +26,11 @@ def test_build_x402_challenge_uses_lane_and_addresses(monkeypatch):
         "instructions": "Submit X402-PAYMENT header to access this resource.",
         "lane": "executive",
         "x402Version": 1,
+        "error": X402_V1_DISCOVERY_ERROR,
         "accepts": [
             {
                 "scheme": "exact",
-                "network": "eip155:8453",
+                "network": "base",
                 "asset": BASE_MAINNET_USDC_CONTRACT,
                 "amount": "70000",
                 "maxAmountRequired": "70000",
@@ -34,7 +39,7 @@ def test_build_x402_challenge_uses_lane_and_addresses(monkeypatch):
                 "resource": "https://api.beezshield.com/contracts/risk-score",
                 "description": "BeezShield Sentinel Alpha risk score",
                 "mimeType": "application/json",
-                "extra": {"name": "USDC", "version": "2"},
+                "extra": {"name": "USD Coin", "version": "2"},
             }
         ],
     }
@@ -63,4 +68,6 @@ def test_internal_x402_challenge_endpoint(monkeypatch):
     assert body["accepts"][0]["amount"] == "230000"
     assert body["accepts"][0]["asset"] == BASE_MAINNET_USDC_CONTRACT
     assert body["accepts"][0]["maxTimeoutSeconds"] == 60
-    assert body["accepts"][0]["extra"] == {"name": "USDC", "version": "2"}
+    assert body["accepts"][0]["network"] == "base"
+    assert body["error"] == X402_V1_DISCOVERY_ERROR
+    assert body["accepts"][0]["extra"] == {"name": "USD Coin", "version": "2"}

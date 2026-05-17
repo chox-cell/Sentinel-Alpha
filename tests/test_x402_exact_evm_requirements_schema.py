@@ -38,13 +38,14 @@ def test_get_402_payment_required_and_body_accepts_exact_evm(monkeypatch):
     assert isinstance(hdr_json["accepts"], list) and len(hdr_json["accepts"]) == 1
     h0 = hdr_json["accepts"][0]
     assert h0["scheme"] == "exact"
-    assert h0["network"] == "eip155:8453"
+    assert h0["network"] == "base"
+    assert hdr_json["error"] == "X-PAYMENT header is required"
     assert h0["asset"] == BASE_MAINNET_USDC_CONTRACT
     assert h0["amount"] == "20000"
     assert h0["maxAmountRequired"] == "20000"
     assert h0["payTo"] == "0x_payto_exact_evM"
     assert h0["maxTimeoutSeconds"] == 60
-    assert h0["extra"]["name"] == "USDC"
+    assert h0["extra"]["name"] == "USD Coin"
     assert h0["extra"]["version"] == "2"
 
     body = r.json()

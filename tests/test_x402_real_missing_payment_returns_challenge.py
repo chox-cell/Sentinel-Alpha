@@ -29,7 +29,9 @@ def test_real_mode_missing_payment_returns_challenge(monkeypatch):
         assert detail["resource"] == "/contracts/risk-score"
         assert detail["instructions"] == "Submit X402-PAYMENT header to access this resource."
         assert detail["x402Version"] == 1
+        assert detail["error"] == "X-PAYMENT header is required"
         assert detail["accepts"][0]["scheme"] == "exact"
+        assert detail["accepts"][0]["network"] == "base"
         h = {str(k).lower(): v for k, v in (exc.headers or {}).items()}
         pr_val = h.get("payment-required")
         assert pr_val
@@ -38,10 +40,9 @@ def test_real_mode_missing_payment_returns_challenge(monkeypatch):
         assert dec["accepts"][0]["maxAmountRequired"] == "20000"
         assert dec["accepts"][0]["amount"] == "20000"
         assert dec["accepts"][0]["maxTimeoutSeconds"] == 60
-        assert dec["accepts"][0]["extra"]["name"] == "USDC"
-        assert dec["accepts"][0]["amount"] == "20000"
-        assert dec["accepts"][0]["maxTimeoutSeconds"] == 60
-        assert dec["accepts"][0]["extra"]["name"] == "USDC"
+        assert dec["error"] == "X-PAYMENT header is required"
+        assert dec["accepts"][0]["network"] == "base"
+        assert dec["accepts"][0]["extra"]["name"] == "USD Coin"
 
 
 def test_real_mode_disabled_returns_x402_disabled_error(monkeypatch):

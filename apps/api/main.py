@@ -110,13 +110,12 @@ def _risk_score_discovery_challenge_json_response(request: Request) -> JSONRespo
 
 def _post_prepayment_discovery_response(lane: str) -> JSONResponse:
     """
-    POST unpaid probes: preserve FastAPI's historical ``{"detail": challenge}`` shape for scanners
-    (GET remains a flat JSON body).
+    POST unpaid probes: top-level x402scan v1 fields plus ``detail`` duplicate for legacy clients.
     """
     challenge = build_x402_challenge(lane=lane)
     return JSONResponse(
         status_code=402,
-        content={"detail": challenge},
+        content={**challenge, "detail": challenge},
         headers=x402_payment_discovery_headers(challenge),
     )
 

@@ -67,6 +67,12 @@ Maintainer/community response on the x402 ecosystem page PR (paraphrased posture
 - **Repository behavior (compatibility only):** default **`/openapi.json`** hides **`/internal/*`**, **`/health`**, and **`/webhooks/*`** via **`include_in_schema=False`** while **runtime endpoints remain callable**. **`/contracts/risk-score`** stays documented (**`get`**, **`head`**, **`options`**, **`post`**); **PATCH** / **PUT** / **DELETE** remain **`include_in_schema=False`**. **Not** a listing or protocol certification claim.
 - **Posture unchanged:** **§7** **`not submitted`** / validation failed; **no listing success claim**.
 
+## 3h) x402scan eighth diagnosis — v1 schema (`network: base`, top-level `error`) (no listing claim)
+
+- **Evidence (2026):** Inspected **x402scan** source/tests: v1 validators expect **`x402Version: 1`**, top-level **`error`** (e.g. **`"X-PAYMENT header is required"`**), **`accepts[]`**, and **`accepts[0].network: "base"`** (not **`eip155:8453`**). **POST** examples use **top-level** fields, not only nested **`detail`**. UI **“Expected 402 response”** is a generic fallback.
+- **Repository behavior (compatibility only):** **`accepts[0].network`** → **`base`**; legacy top-level **`network`** stays **`eip155:8453`**; discovery bodies add **`error: "X-PAYMENT header is required"`**; **GET** returns flat v1 body; **POST** unpaid merges **top-level** v1 fields plus **`detail`** duplicate; **`PAYMENT-REQUIRED`** base64 includes **`error`** + **`accepts`** with **`network: base`**; **`extra.name`** → **`USD Coin`**. HTTP/OpenAPI/POST-prepayment behavior from §3e–§3g unchanged. **Not** a listing claim.
+- **Posture unchanged:** **§7** **`not submitted`** / validation failed; **no listing success claim**.
+
 ## 4) Project identity
 
 | Field | Value |
@@ -109,7 +115,7 @@ Use when a directory allows a fuller description:
 | `submission_owner` | Chox |
 | `copy_variant` | short |
 | `evidence_links` | https://beezshield.com · https://beezshield.com/manifesto.html · https://www.npmjs.com/package/@beezshield/sentinel · `docs/17_growth/SENTINEL_ALPHA_PUBLIC_TECHNICAL_SUMMARY.md` (in-repo public-safe summary) |
-| `notes` | Probe timeline §3a–§3g: OpenAPI / verb matrix / exact-EVM **`accepts`** / **POST prepayment gate** (**§3f**) / **public OpenAPI filter** (**§3g**) after internal paths in **`/openapi.json`** returned **200**/**405**. **`status` stays `not submitted`**; **never claim listing success prematurely**. |
+| `notes` | Probe timeline §3a–§3h: OpenAPI filter (**§3g**) / **v1 schema alignment** (**§3h**: **`network: base`** in **`accepts`**, top-level **`error`**, **POST** top-level + **`detail`**). **`status` stays `not submitted`**; **never claim listing success prematurely**. |
 
 ### Agentic.Market
 

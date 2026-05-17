@@ -305,6 +305,20 @@ Maintainer signal on x402 ecosystem page PR (ecosystem page sunset; PR closed; c
 - endorsement_claim: false
 - integration_claim: false
 
+## x402scan directory registration — eighth diagnosis (v12.x)
+
+- target_url: `https://api.beezshield.com/contracts/risk-score`
+- channel: x402scan.com manual listing flow (source review + live probes)
+- registration_status: **attempted_validation_failed_x402scan_v1_schema** (no listing claimed)
+- observed:
+  - HTTP/OpenAPI compatibility landed (**402** on paid resource, clean **`/openapi.json`**, **POST** prepayment **402**)
+  - **x402scan** source indicates v1 tests expect **`accepts[0].network: "base"`**, top-level **`error`**, and top-level **`x402Version`/`accepts`** on **POST** (not only **`detail`**)
+- reason_summary: Align unpaid challenge JSON and **`PAYMENT-REQUIRED`** with x402scan v1 schema while preserving legacy top-level **`network: eip155:8453`** — see `docs/17_growth/X402_DIRECTORY_SUBMISSION_PACK.md` **§3h** (**no deployment claim**)
+- listing_success_claim: false
+- partnership_claim: false
+- endorsement_claim: false
+- integration_claim: false
+
 ## giskard09 / Mycelium Trails — x402 directory cross-reference signal (v12.x)
 
 Paraphrased **community** reply on the closed x402 ecosystem PR thread (no implied maintainer authority):

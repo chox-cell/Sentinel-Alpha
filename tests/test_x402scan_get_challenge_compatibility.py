@@ -29,7 +29,8 @@ def _challenge_assertions(body: dict, *, pay_to: str, resource_url: str = "https
     assert isinstance(body["accepts"], list) and len(body["accepts"]) == 1
     a0 = body["accepts"][0]
     assert a0["scheme"] == "exact"
-    assert a0["network"] == "eip155:8453"
+    assert a0["network"] == "base"
+    assert body["error"] == "X-PAYMENT header is required"
     assert a0["maxAmountRequired"] == "20000"
     assert a0["amount"] == "20000"
     assert a0["payTo"] == pay_to
@@ -37,7 +38,7 @@ def _challenge_assertions(body: dict, *, pay_to: str, resource_url: str = "https
     assert a0["resource"] == resource_url
     assert a0["mimeType"] == "application/json"
     assert a0["maxTimeoutSeconds"] == 60
-    assert a0["extra"] == {"name": "USDC", "version": "2"}
+    assert a0["extra"] == {"name": "USD Coin", "version": "2"}
 
 
 def test_get_contracts_risk_score_returns_402_x402_challenge(monkeypatch):
@@ -60,6 +61,8 @@ def test_get_contracts_risk_score_returns_402_x402_challenge(monkeypatch):
     hdr = response.headers["payment-required"]
     dec = json.loads(base64.standard_b64decode(hdr).decode("utf-8"))
     assert dec["x402Version"] == 1
+    assert dec["error"] == "X-PAYMENT header is required"
+    assert dec["accepts"][0]["network"] == "base"
     assert dec["accepts"][0]["maxAmountRequired"] == "20000"
 
 
@@ -103,7 +106,11 @@ def test_post_without_payment_still_returns_402_challenge(monkeypatch):
         },
     )
     assert response.status_code == 402
-    detail = response.json()["detail"]
+    body = response.json()
+    assert body["x402Version"] == 1
+    assert body["error"] == "X-PAYMENT header is required"
+    assert isinstance(body["accepts"], list)
+    detail = body["detail"]
     assert detail["payment_method"] == "x402"
     assert detail["network"] == "eip155:8453"
     assert detail["resource"] == "/contracts/risk-score"

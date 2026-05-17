@@ -11,12 +11,27 @@ from services.x402.settlement_ledger import write_settlement_record
 
 load_dotenv()
 
+# x402scan v1 schema / directory validators (top-level discovery body + PAYMENT-REQUIRED).
+X402_V1_DISCOVERY_ERROR = "X-PAYMENT header is required"
+
+
+def _x402_env_network_slug() -> str:
+    return (os.getenv("X402_NETWORK", "base") or "base").strip().lower() or "base"
+
 
 def _x402_challenge_network() -> str:
-    """CAIP-2 style network id for challenge JSON (wire format). Base mainnet -> eip155:8453."""
-    net = (os.getenv("X402_NETWORK", "base") or "base").strip().lower() or "base"
+    """Legacy top-level network id (CAIP-2). Base mainnet -> eip155:8453."""
+    net = _x402_env_network_slug()
     if net == "base":
         return "eip155:8453"
+    return net
+
+
+def _accepts_item_network() -> str:
+    """`accepts[]` network slug for x402scan v1 (Base -> ``base``, not CAIP-2)."""
+    net = _x402_env_network_slug()
+    if net in {"base", "eip155:8453"}:
+        return "base"
     return net
 
 
@@ -40,7 +55,7 @@ def _usdc_amount_atomic_string(usdc_human: float) -> str:
 
 def _accepts_evm_asset_for_network() -> str:
     """Prefer USDC contract address on Base mainnet; symbolic USDC if network is non-Base."""
-    return BASE_MAINNET_USDC_CONTRACT if _x402_challenge_network() == "eip155:8453" else "USDC"
+    return BASE_MAINNET_USDC_CONTRACT if _accepts_item_network() == "base" else "USDC"
 
 
 def build_accepts_exact_evm_item(*, pay_to: str, amount_float: float) -> dict:
@@ -48,7 +63,7 @@ def build_accepts_exact_evm_item(*, pay_to: str, amount_float: float) -> dict:
     atomic = _usdc_amount_atomic_string(amount_float)
     return {
         "scheme": "exact",
-        "network": _x402_challenge_network(),
+        "network": _accepts_item_network(),
         "asset": _accepts_evm_asset_for_network(),
         "amount": atomic,
         "maxAmountRequired": atomic,
@@ -57,7 +72,7 @@ def build_accepts_exact_evm_item(*, pay_to: str, amount_float: float) -> dict:
         "resource": _risk_score_resource_public_url(),
         "description": "BeezShield Sentinel Alpha risk score",
         "mimeType": "application/json",
-        "extra": {"name": "USDC", "version": "2"},
+        "extra": {"name": "USD Coin", "version": "2"},
     }
 
 
@@ -69,6 +84,7 @@ def encode_payment_required_header(challenge_body: dict) -> str:
     """
     envelope = {
         "x402Version": challenge_body["x402Version"],
+        "error": challenge_body["error"],
         "accepts": challenge_body["accepts"],
     }
     raw = json_stdlib.dumps(envelope, separators=(",", ":"), ensure_ascii=False).encode("utf-8")
@@ -105,6 +121,7 @@ def build_x402_challenge(lane: str = "basic") -> dict:
         "lane": selected_lane,
         # Discovery / validator-adjacent fields (preserve legacy snake_case keys above).
         "x402Version": 1,
+        "error": X402_V1_DISCOVERY_ERROR,
         "accepts": [accepts_item],
     }
 

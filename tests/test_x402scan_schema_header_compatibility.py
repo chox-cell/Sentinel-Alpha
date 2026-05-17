@@ -49,7 +49,8 @@ def test_get_402_legacy_and_discovery_schema(monkeypatch):
 
     req = body["accepts"][0]
     assert req["scheme"] == "exact"
-    assert req["network"] == "eip155:8453"
+    assert req["network"] == "base"
+    assert body["error"] == "X-PAYMENT header is required"
     assert req["maxAmountRequired"] == "20000"
     assert req["amount"] == "20000"
     assert req["asset"] == BASE_MAINNET_USDC_CONTRACT
@@ -59,6 +60,8 @@ def test_get_402_legacy_and_discovery_schema(monkeypatch):
 
     dec = json.loads(base64.standard_b64decode(pr_val).decode("utf-8"))
     assert dec["x402Version"] == 1
+    assert dec["error"] == "X-PAYMENT header is required"
+    assert dec["accepts"][0]["network"] == "base"
     assert dec["accepts"][0]["maxAmountRequired"] == "20000"
 
 
@@ -103,7 +106,11 @@ def test_post_unpaid_402_discovery_schema_and_headers(monkeypatch):
     )
     assert response.status_code == 402
 
-    detail = response.json()["detail"]
+    body = response.json()
+    assert body["x402Version"] == 1
+    assert body["error"] == "X-PAYMENT header is required"
+    assert isinstance(body["accepts"], list)
+    detail = body["detail"]
     assert isinstance(detail, dict)
     assert detail["x402_version"] == "0.2"
     assert detail["x402Version"] == 1

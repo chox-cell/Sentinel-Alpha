@@ -145,6 +145,7 @@ Status: **Done**
 - v12.x x402scan multi-verb discovery (PATCH/PUT/DELETE return same **402** challenge as GET, **exclude** from OpenAPI schema; OPTIONS allow-methods expanded; no listing claim)
 - v12.x x402scan POST prepayment gate (unpaid **POST** returns **402** before JSON/Pydantic validation; paid path unchanged; OpenAPI **POST** body schema preserved; no listing claim)
 - v12.x x402scan public OpenAPI discovery filter (default **`/openapi.json`** hides **`/internal/*`**, **`/health`**, **`/webhooks/*`**; runtime unchanged; **`/contracts/risk-score`** remains documented; no listing claim)
+- v12.x x402scan v1 schema alignment (**`accepts[0].network: base`**, top-level **`error`**, legacy **`network: eip155:8453`**; **POST** top-level + **`detail`**; **PAYMENT-REQUIRED** includes **`error`**; no listing claim)
 - Agent commerce vision truth-filter update (UCP/AP2/Trust Object remain roadmap context)
 
 ## 5) Cost discipline
