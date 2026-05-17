@@ -152,6 +152,7 @@ Status: **Done**
 - v12.x x402scan accepts strict schema (**`outputSchema.input`** on discovery **accepts**; no listing claim)
 - v12.x x402scan runtime amount compatibility (restore **`accepts[0].amount`** = **`maxAmountRequired`** for x402scan **`check-endpoint`**; pure **POST** body preserved; no listing claim)
 - v12.x x402scan v1 body-first discovery (omit **`PAYMENT-REQUIRED`** on **v1** **402** so @agentcash/discovery parses JSON body; **x-payment-info** on OpenAPI **POST**; no listing claim)
+- v12.x — **x402scan registration completed** for `/contracts/risk-score`; public-safe directory evidence recorded (`X402SCAN_REGISTRATION_EVIDENCE.md`); **next:** brand/logo pack + remaining directory submissions (Agentic.Market, Pay.sh, Ampersend Discover)
 - Agent commerce vision truth-filter update (UCP/AP2/Trust Object remain roadmap context)
 
 ## 5) Cost discipline

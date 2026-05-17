@@ -193,7 +193,7 @@ Maintainer signal on x402 ecosystem page PR (ecosystem page sunset; PR closed; c
 
 | Directory | URL | status | submission_owner | copy_variant | notes |
 | --- | --- | --- | --- | --- | --- |
-| x402scan | https://x402scan.com | not submitted | Chox | short | See submission pack §7 |
+| x402scan | https://x402scan.com | **registered** | Chox | short | §3o / `X402SCAN_REGISTRATION_EVIDENCE.md` |
 | Agentic.Market | https://agentic.market | not submitted | Chox | long | See submission pack §7 |
 | Pay.sh | https://pay.sh | not submitted | Chox | short | See submission pack §7 |
 | ampersend discover | https://app.ampersend.ai/discover | not submitted | Chox | long | See submission pack §7 |
@@ -408,6 +408,24 @@ Maintainer signal on x402 ecosystem page PR (ecosystem page sunset; PR closed; c
 - partnership_claim: false
 - endorsement_claim: false
 - integration_claim: false
+
+## x402scan directory registration — success (v12.x)
+
+- target_url: `https://api.beezshield.com/contracts/risk-score`
+- channel: x402scan.com — `/resources/register`
+- registration_status: **registered**
+- submitted_resource: `https://api.beezshield.com/contracts/risk-score`
+- owner: Chox
+- evidence: **Registration Complete** / **Successfully registered 1 of 1 resources**
+- visible_title: `BeezShield | Pre-execution decision engine for agents`
+- visible_path: `/contracts/risk-score`
+- recorded_date: 2026-05-16
+- official_integration_claim: false
+- partnership_claim: false
+- endorsement_claim: false
+- security_guarantee_claim: false
+- directory_registration_claim: true
+- notes: Marketplace/directory registration only (not official integration/partnership/endorsement); prior attempts §3a–§3n preserved as history above; see `docs/17_growth/X402SCAN_REGISTRATION_EVIDENCE.md`
 
 ## giskard09 / Mycelium Trails — x402 directory cross-reference signal (v12.x)
 

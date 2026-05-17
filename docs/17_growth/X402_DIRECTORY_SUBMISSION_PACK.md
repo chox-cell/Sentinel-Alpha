@@ -22,7 +22,7 @@ Maintainer/community response on the x402 ecosystem page PR (paraphrased posture
 - **x402scan** (and similar tools) may validate a submitted URL with **GET** and expect **HTTP 402** plus a JSON **x402 challenge** body.
 - **Observed manual attempt (2026):** registering `https://api.beezshield.com/contracts/risk-score` failed with **Error: Expected 402 response** because **GET** returned **405 Method Not Allowed** (`Allow: POST`) while **POST** with JSON + `X-SENTINEL-LANE: basic` correctly returned **402** and a challenge (`payment_method: x402`, `network: eip155:8453`, etc.).
 - **Repository API behavior:** **GET `/contracts/risk-score`** returns **402** and the same challenge **shape** as an unpaid **POST** path (discovery only: **no** risk scoring, **no** required `contract_address`, **no** DB writes). **POST** behavior is unchanged for paid flows.
-- **Listing claim discipline:** **Do not** claim x402scan (or any directory) **listing success** from this document. The **x402scan.com** row in §7 remains **`not submitted`** until a **verified** manual registration and listing URL are recorded in `OUTREACH_TRACKER.md`. **Listing is not claimed** until **x402scan** (or the directory UI) visibly accepts the submission and a listing URL exists.
+- **Listing claim discipline:** **Do not** claim directory **listing success** without verified UI evidence. **x402scan.com** is **`registered`** as of **§3o** (2026-05-16); other §7 directories remain **`not submitted`**. Marketplace registration is **discoverability only** — not official integration, partnership, or endorsement.
 
 ## 3b) x402scan second attempt — schema/header compatibility hypothesis (no listing claim)
 
@@ -110,6 +110,18 @@ Maintainer/community response on the x402 ecosystem page PR (paraphrased posture
 - **Repository behavior (compatibility only):** unpaid **v1** discovery (**GET**, **POST**, **PATCH**/**PUT**/**DELETE**, **HEAD** without body) omits **`PAYMENT-REQUIRED`** / **`Access-Control-Expose-Headers`** for that header; scanners read **402** JSON body. **POST** OpenAPI adds **`x-payment-info`** (planning metadata only). Paid **POST** unchanged. **Not** a listing claim.
 - **Posture unchanged:** **§7** **`not submitted`** / validation failed; **no listing success claim**.
 
+## 3o) x402scan registration success (directory listing only)
+
+- **Status:** **`registered`** (marketplace / directory discoverability only).
+- **Directory:** [x402scan](https://x402scan.com) — flow: **`/resources/register`**.
+- **Resource URL:** `https://api.beezshield.com/contracts/risk-score`
+- **Resource path:** `/contracts/risk-score`
+- **Visible marketplace title:** `BeezShield | Pre-execution decision engine for agents`
+- **UI result (2026-05-16):** **Registration Complete** — **Successfully registered 1 of 1 resources**
+- **Interpretation:** Community **x402 directory** registration succeeded after **v1 body-first** compatibility (**§3n**). This is **not** official x402 protocol certification, **not** an x402 partnership, **not** endorsement, and **not** a security guarantee.
+- **Evidence doc:** `docs/17_growth/X402SCAN_REGISTRATION_EVIDENCE.md`
+- **Does not prove:** automated settlement success, full production security coverage, trading/arbitrage capability, x402scan partnership.
+
 ## 4) Project identity
 
 | Field | Value |
@@ -148,11 +160,11 @@ Use when a directory allows a fuller description:
 
 | Field | Value |
 | --- | --- |
-| `status` | not submitted |
+| `status` | **registered** (2026-05-16; see §3o) |
 | `submission_owner` | Chox |
 | `copy_variant` | short |
-| `evidence_links` | https://beezshield.com · https://beezshield.com/manifesto.html · https://www.npmjs.com/package/@beezshield/sentinel · `docs/17_growth/SENTINEL_ALPHA_PUBLIC_TECHNICAL_SUMMARY.md` (in-repo public-safe summary) |
-| `notes` | Probe timeline §3a–§3n: **v1 body-first** (**§3n**, no v1 **`PAYMENT-REQUIRED`** header). **`status` stays `not submitted`**; **never claim listing success prematurely**. |
+| `evidence_links` | https://api.beezshield.com/contracts/risk-score · https://beezshield.com · `docs/17_growth/X402SCAN_REGISTRATION_EVIDENCE.md` |
+| `notes` | **Registered** after probe timeline §3a–§3n (**v1 body-first**). Remaining directories still **`not submitted`**. No official integration / partnership / endorsement claims. |
 
 ### Agentic.Market
 
