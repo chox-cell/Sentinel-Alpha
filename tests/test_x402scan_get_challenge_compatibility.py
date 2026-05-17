@@ -110,13 +110,12 @@ def test_post_without_payment_still_returns_402_challenge(monkeypatch):
     assert body["x402Version"] == 1
     assert body["error"] == "X-PAYMENT header is required"
     assert isinstance(body["accepts"], list)
-    detail = body["detail"]
-    assert detail["payment_method"] == "x402"
-    assert detail["network"] == "eip155:8453"
-    assert detail["resource"] == "/contracts/risk-score"
-    assert detail["lane"] == "basic"
-    assert detail["x402Version"] == 1
-    assert detail["accepts"][0]["scheme"] == "exact"
+    assert "detail" not in body
+    assert body["payment_method"] == "x402"
+    assert body["network"] == "eip155:8453"
+    assert body["resource"] == "/contracts/risk-score"
+    assert body["lane"] == "basic"
+    assert body["accepts"][0]["scheme"] == "exact"
     assert response.headers.get("payment-required")
     expose = response.headers.get("access-control-expose-headers", "")
     assert "payment-required".lower() in expose.lower()

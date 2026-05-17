@@ -37,9 +37,10 @@ def test_post_unpaid_empty_raw_body_402(monkeypatch):
     h = _lower(r)
     assert h.get("payment-required")
     assert "payment-required" in (h.get("access-control-expose-headers") or "").lower()
-    d = r.json()["detail"]
-    assert d["x402Version"] == 1
-    assert d["accepts"][0]["asset"] == BASE_MAINNET_USDC_CONTRACT
+    body = r.json()
+    assert "detail" not in body
+    assert body["x402Version"] == 1
+    assert body["accepts"][0]["asset"] == BASE_MAINNET_USDC_CONTRACT
 
 
 def test_post_unpaid_no_content_type_402(monkeypatch):

@@ -110,13 +110,11 @@ def test_post_unpaid_402_discovery_schema_and_headers(monkeypatch):
     assert body["x402Version"] == 1
     assert body["error"] == "X-PAYMENT header is required"
     assert isinstance(body["accepts"], list)
-    detail = body["detail"]
-    assert isinstance(detail, dict)
-    assert detail["x402_version"] == "0.2"
-    assert detail["x402Version"] == 1
-    assert detail["accepts"][0]["scheme"] == "exact"
-    assert detail["accepts"][0]["payTo"] == "0xpost_schema"
-    assert detail["accepts"][0]["maxAmountRequired"] == "20000"
+    assert "detail" not in body
+    assert body["x402_version"] == "0.2"
+    assert body["accepts"][0]["scheme"] == "exact"
+    assert body["accepts"][0]["payTo"] == "0xpost_schema"
+    assert body["accepts"][0]["maxAmountRequired"] == "20000"
 
     raw = dict(response.headers)
     pr_val, expose = _hdr(raw)

@@ -80,6 +80,12 @@ Maintainer/community response on the x402 ecosystem page PR (paraphrased posture
 - **Repository behavior (compatibility only):** public **`/openapi.json`** documents **only `post`** on **`/contracts/risk-score`** (**`include_in_schema=False`** on **GET**/**HEAD**/**OPTIONS** discovery handlers; **PATCH**/**PUT**/**DELETE** remain hidden). Runtime methods unchanged. **POST** description documents unpaid **402** challenge. **Not** a listing claim.
 - **Posture unchanged:** **§7** **`not submitted`** / validation failed; **no listing success claim**.
 
+## 3j) x402scan tenth diagnosis — strict flat POST body (no ``detail``) (no listing claim)
+
+- **Evidence (2026):** **x402scan** UI shows **one resource** after single-operation OpenAPI (**§3i**), but validation fails with **“No valid x402 response found (tried empty body and OpenAPI-derived sample body)”**. **GET** returns valid flat v1 JSON; **POST** unpaid previously duplicated the challenge under **`detail`**, which may fail strict POST-body validators.
+- **Repository behavior (compatibility only):** unpaid **POST** returns the **same flat** **`x402Version` / `error` / `accepts`** (+ legacy keys) as **GET**, **without** a **`detail`** wrapper. OpenAPI **POST** **`example`** documents minimal **`contract_address` + `chain`**. Paid path unchanged. **Not** a listing claim.
+- **Posture unchanged:** **§7** **`not submitted`** / validation failed; **no listing success claim**.
+
 ## 4) Project identity
 
 | Field | Value |
@@ -122,7 +128,7 @@ Use when a directory allows a fuller description:
 | `submission_owner` | Chox |
 | `copy_variant` | short |
 | `evidence_links` | https://beezshield.com · https://beezshield.com/manifesto.html · https://www.npmjs.com/package/@beezshield/sentinel · `docs/17_growth/SENTINEL_ALPHA_PUBLIC_TECHNICAL_SUMMARY.md` (in-repo public-safe summary) |
-| `notes` | Probe timeline §3a–§3i: **v1 schema** (**§3h**) / **single OpenAPI operation** (**§3i**: **`post` only** on **`/contracts/risk-score`**). **`status` stays `not submitted`**; **never claim listing success prematurely**. |
+| `notes` | Probe timeline §3a–§3j: **single OpenAPI operation** (**§3i**) / **strict flat POST body** (**§3j**, no **`detail`**). **`status` stays `not submitted`**; **never claim listing success prematurely**. |
 
 ### Agentic.Market
 

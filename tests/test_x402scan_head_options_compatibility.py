@@ -123,7 +123,9 @@ def test_post_unpaid_still_402(monkeypatch):
         },
     )
     assert r.status_code == 402
-    assert r.json()["detail"]["x402Version"] == 1
+    body = r.json()
+    assert "detail" not in body
+    assert body["x402Version"] == 1
 
 
 def test_docs_third_attempt_and_no_listing_success_claim():

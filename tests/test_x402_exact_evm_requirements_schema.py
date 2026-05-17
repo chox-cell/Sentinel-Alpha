@@ -82,7 +82,9 @@ def test_head_options_post_unpaid_preserved(monkeypatch):
         },
     )
     assert post.status_code == 402
-    assert post.json()["detail"]["accepts"][0]["asset"] == BASE_MAINNET_USDC_CONTRACT
+    post_body = post.json()
+    assert "detail" not in post_body
+    assert post_body["accepts"][0]["asset"] == BASE_MAINNET_USDC_CONTRACT
 
 
 def test_docs_fourth_attempt_and_no_verified_listing_claim():

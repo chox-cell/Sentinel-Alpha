@@ -61,7 +61,7 @@ def test_get_402_v1_top_level_schema(monkeypatch):
     assert hdr["accepts"][0]["asset"] == BASE_MAINNET_USDC_CONTRACT
 
 
-def test_post_unpaid_top_level_v1_not_only_detail(monkeypatch):
+def test_post_unpaid_flat_v1_no_detail_wrapper(monkeypatch):
     _real_unpaid(monkeypatch, wallet="0x_v1_post")
     r = TestClient(app).post("/contracts/risk-score", content=b"")
     assert r.status_code == 402
@@ -69,8 +69,7 @@ def test_post_unpaid_top_level_v1_not_only_detail(monkeypatch):
     assert body["x402Version"] == 1
     assert body["error"] == X402_V1_DISCOVERY_ERROR
     assert isinstance(body["accepts"], list)
-    assert body["detail"]["x402Version"] == 1
-    assert body["detail"]["error"] == X402_V1_DISCOVERY_ERROR
+    assert "detail" not in body
 
 
 def test_head_options_patch_put_delete_and_openapi_unchanged(monkeypatch):

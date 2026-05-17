@@ -63,7 +63,8 @@ def test_missing_real_payment_returns_challenge(monkeypatch):
     client = TestClient(app)
     response = client.post("/contracts/risk-score", json=_request_body())
     assert response.status_code == 402
-    detail = response.json()["detail"]
-    assert detail["x402_version"] == "0.2"
-    assert detail["payment_method"] == "x402"
-    assert detail["resource"] == "/contracts/risk-score"
+    body = response.json()
+    assert "detail" not in body
+    assert body["x402_version"] == "0.2"
+    assert body["payment_method"] == "x402"
+    assert body["resource"] == "/contracts/risk-score"

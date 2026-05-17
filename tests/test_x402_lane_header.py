@@ -50,9 +50,10 @@ def test_priority_lane_reflects_challenge_amount(monkeypatch):
         headers={"X-SENTINEL-LANE": "priority"},
     )
     assert response.status_code == 402
-    detail = response.json()["detail"]
-    assert detail["lane"] == "priority"
-    assert detail["amount_usdc"] == "0.15"
+    body = response.json()
+    assert "detail" not in body
+    assert body["lane"] == "priority"
+    assert body["amount_usdc"] == "0.15"
 
 
 def test_priority_lane_reflects_billing_amount_on_paid_success(monkeypatch, tmp_path):

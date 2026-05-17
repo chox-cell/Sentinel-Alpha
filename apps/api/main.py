@@ -81,6 +81,10 @@ _RISK_SCORE_POST_OPENAPI_EXTRA = {
         "content": {
             "application/json": {
                 "schema": RequestModel.model_json_schema(),
+                "example": {
+                    "contract_address": "0x1111111111111111111111111111111111111111",
+                    "chain": "base",
+                },
             }
         },
     }
@@ -109,13 +113,11 @@ def _risk_score_discovery_challenge_json_response(request: Request) -> JSONRespo
 
 
 def _post_prepayment_discovery_response(lane: str) -> JSONResponse:
-    """
-    POST unpaid probes: top-level x402scan v1 fields plus ``detail`` duplicate for legacy clients.
-    """
+    """POST unpaid probes: same flat x402 v1 challenge JSON as GET (no ``detail`` wrapper)."""
     challenge = build_x402_challenge(lane=lane)
     return JSONResponse(
         status_code=402,
-        content={**challenge, "detail": challenge},
+        content=challenge,
         headers=x402_payment_discovery_headers(challenge),
     )
 
@@ -232,7 +234,7 @@ async def risk_score(
 ):
     """
     Paid execution uses JSON body validated only after payment headers pass.
-    Unpaid scanners may send empty/invalid JSON — route returns ``402`` + top-level/detail challenge first.
+    Unpaid scanners may send empty/invalid JSON — route returns flat ``402`` challenge (same shape as GET) first.
     """
     client_ip = request.client.host if (request and request.client) else None
     if not _rate_limit_allow(client_ip):

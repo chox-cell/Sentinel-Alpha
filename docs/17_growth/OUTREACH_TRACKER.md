@@ -334,6 +334,21 @@ Maintainer signal on x402 ecosystem page PR (ecosystem page sunset; PR closed; c
 - endorsement_claim: false
 - integration_claim: false
 
+## x402scan directory registration — tenth diagnosis (v12.x)
+
+- target_url: `https://api.beezshield.com/contracts/risk-score`
+- channel: x402scan.com manual listing flow
+- registration_status: **attempted_validation_failed_post_body_shape** (no listing claimed)
+- observed:
+  - UI **one resource** (OpenAPI **POST** only) after **§3i**
+  - Error **“No valid x402 response found (tried empty body and OpenAPI-derived sample body)”**
+  - **GET** flat v1 challenge OK; **POST** unpaid had nested **`detail`** duplicate
+- reason_summary: Align unpaid **POST** response to the same flat v1 body as **GET** (no **`detail`**) for empty and OpenAPI sample probes — see `docs/17_growth/X402_DIRECTORY_SUBMISSION_PACK.md` **§3j** (**no deployment claim**)
+- listing_success_claim: false
+- partnership_claim: false
+- endorsement_claim: false
+- integration_claim: false
+
 ## giskard09 / Mycelium Trails — x402 directory cross-reference signal (v12.x)
 
 Paraphrased **community** reply on the closed x402 ecosystem PR thread (no implied maintainer authority):
