@@ -26,13 +26,6 @@ def _real_unpaid(monkeypatch, wallet: str = "0x_v1_schema") -> None:
     monkeypatch.setenv("RATE_LIMIT_ENABLED", "false")
 
 
-def _decode_payment_required(resp) -> dict:
-    raw = {str(k).lower(): v for k, v in resp.headers.items()}
-    pr = raw.get("payment-required")
-    assert pr
-    return json.loads(base64.standard_b64decode(pr).decode("utf-8"))
-
-
 def test_get_402_v1_top_level_schema(monkeypatch):
     _real_unpaid(monkeypatch)
     client = TestClient(app)
@@ -54,11 +47,7 @@ def test_get_402_v1_top_level_schema(monkeypatch):
     assert a0["extra"]["name"] == "USD Coin"
     assert a0["extra"]["version"] == "2"
 
-    hdr = _decode_payment_required(r)
-    assert hdr["x402Version"] == 1
-    assert hdr["error"] == X402_V1_DISCOVERY_ERROR
-    assert hdr["accepts"][0]["network"] == "base"
-    assert hdr["accepts"][0]["asset"] == BASE_MAINNET_USDC_CONTRACT
+    assert r.headers.get("payment-required") is None
 
 
 def test_post_unpaid_pure_v1_no_legacy_keys(monkeypatch):
@@ -76,7 +65,7 @@ def test_head_options_patch_put_delete_and_openapi_unchanged(monkeypatch):
     head = c.head("/contracts/risk-score")
     assert head.status_code == 402
     assert head.content == b""
-    assert _decode_payment_required(head)["error"] == X402_V1_DISCOVERY_ERROR
+    assert head.headers.get("payment-required") is None
 
     assert c.options("/contracts/risk-score").status_code in (200, 204)
     assert c.patch("/contracts/risk-score").status_code == 402

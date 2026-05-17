@@ -35,8 +35,7 @@ def test_post_unpaid_empty_raw_body_402(monkeypatch):
     r = client.post("/contracts/risk-score", content=b"", headers={"Content-Type": "application/json"})
     assert r.status_code == 402
     h = _lower(r)
-    assert h.get("payment-required")
-    assert "payment-required" in (h.get("access-control-expose-headers") or "").lower()
+    assert h.get("payment-required") is None
     body = r.json()
     assert "detail" not in body
     assert body["x402Version"] == 1

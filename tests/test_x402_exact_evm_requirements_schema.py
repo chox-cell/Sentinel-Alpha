@@ -1,4 +1,4 @@
-"""Exact-EVM `accepts[]` / PAYMENT-REQUIRED alignment (Base USDC contract, timeout, extras)."""
+"""Exact-EVM `accepts[]` alignment (Base USDC contract, timeout, extras; v1 body-first)."""
 
 import base64
 import hashlib
@@ -31,29 +31,15 @@ def test_get_402_payment_required_and_body_accepts_exact_evm(monkeypatch):
     r = client.get("/contracts/risk-score")
     assert r.status_code == 402
 
-    pr = _lower_hdrs(r).get("payment-required")
-    assert pr
-    hdr_json = json.loads(base64.standard_b64decode(pr).decode("utf-8"))
-    assert hdr_json["x402Version"] == 1
-    assert isinstance(hdr_json["accepts"], list) and len(hdr_json["accepts"]) == 1
-    h0 = hdr_json["accepts"][0]
-    assert h0["scheme"] == "exact"
-    assert h0["network"] == "base"
-    assert hdr_json["error"] == "X-PAYMENT header is required"
-    assert h0["asset"] == BASE_MAINNET_USDC_CONTRACT
-    assert h0["amount"] == "20000"
-    assert h0["maxAmountRequired"] == "20000"
-    assert h0["outputSchema"]["input"]["type"] == "http"
-    assert h0["payTo"] == "0x_payto_exact_evM"
-    assert h0["maxTimeoutSeconds"] == 60
-    assert h0["extra"]["name"] == "USD Coin"
-    assert h0["extra"]["version"] == "2"
+    assert _lower_hdrs(r).get("payment-required") is None
 
     body = r.json()
     assert body["asset"] == "USDC"
     assert body["resource"] == "/contracts/risk-score"
     b0 = body["accepts"][0]
-    assert b0 == h0
+    assert b0["amount"] == "20000"
+    assert b0["maxAmountRequired"] == "20000"
+    assert b0["outputSchema"]["input"]["method"] == "POST"
 
 
 def test_head_options_post_unpaid_preserved(monkeypatch):
@@ -67,7 +53,7 @@ def test_head_options_post_unpaid_preserved(monkeypatch):
     head = client.head("/contracts/risk-score")
     assert head.status_code == 402
     assert head.content == b""
-    assert _lower_hdrs(head).get("payment-required")
+    assert _lower_hdrs(head).get("payment-required") is None
 
     opt = client.options("/contracts/risk-score")
     assert opt.status_code in (200, 204)

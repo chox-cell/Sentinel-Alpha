@@ -66,9 +66,7 @@ def test_post_unpaid_strict_accepts_and_header(monkeypatch):
         assert set(body.keys()) == {"x402Version", "error", "accepts"}
         _assert_strict_accepts(body["accepts"][0], pay_to="0x_accepts_strict")
 
-        hdr = json.loads(base64.standard_b64decode(r.headers["payment-required"]).decode("utf-8"))
-        assert set(hdr.keys()) == {"x402Version", "error", "accepts"}
-        _assert_strict_accepts(hdr["accepts"][0], pay_to="0x_accepts_strict")
+        assert r.headers.get("payment-required") is None
 
 
 def test_get_402_and_openapi_post_only(monkeypatch):

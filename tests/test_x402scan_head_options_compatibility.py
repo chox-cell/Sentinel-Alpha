@@ -30,8 +30,9 @@ def test_head_contracts_risk_score_402_headers_empty_body(monkeypatch):
     assert response.status_code == 402
     assert response.content == b""
     h = _lower_headers(response)
-    assert h.get("payment-required")
-    assert "payment-required" in (h.get("access-control-expose-headers") or "").lower()
+    assert h.get("payment-required") is None
+    expose = h.get("access-control-expose-headers") or ""
+    assert "payment-required" not in expose.lower()
 
 
 def test_head_does_not_run_scoring(monkeypatch):
@@ -101,7 +102,7 @@ def test_get_still_402_with_schema_fields(monkeypatch):
     body = r.json()
     assert body["x402Version"] == 1
     assert body["accepts"][0]["scheme"] == "exact"
-    assert _lower_headers(r).get("payment-required")
+    assert _lower_headers(r).get("payment-required") is None
 
 
 def test_post_unpaid_still_402(monkeypatch):

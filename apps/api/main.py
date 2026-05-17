@@ -92,7 +92,12 @@ _RISK_SCORE_POST_OPENAPI_EXTRA = {
                 },
             }
         },
-    }
+    },
+    "x-payment-info": {
+        "authMode": "paid",
+        "protocols": ["x402"],
+        "price": {"amount": "0.02", "currency": "USDC"},
+    },
 }
 
 
@@ -187,8 +192,8 @@ def risk_score_delete_discovery_x402_only(request: Request):
 @app.head("/contracts/risk-score", include_in_schema=False)
 def risk_score_head_x402_discovery(request: Request):
     """
-    Discovery-only: same payment requirement signal as GET (402 + PAYMENT-REQUIRED), no JSON body,
-    for validators that probe with HEAD (e.g. some directory scanners). No scoring, no DB writes.
+    Discovery-only: 402 with empty body (v1 body-first; no PAYMENT-REQUIRED header on HEAD).
+    No scoring, no DB writes.
     """
     client_ip = request.client.host if (request and request.client) else None
     if not _rate_limit_allow(client_ip):
@@ -220,8 +225,9 @@ def risk_score_options_x402_discovery(request: Request):
     description=(
         "Payable marketplace operation for BeezShield Sentinel Alpha. Unpaid requests "
         "(missing or invalid X402-PAYMENT in real mode, or invalid PAYMENT-SIGNATURE in demo mode) "
-        "receive HTTP 402 with a pure x402 v1 challenge body (x402Version, error, accepts only) plus "
-        "PAYMENT-REQUIRED header. Paid requests with valid payment receive contract risk scoring. "
+        "receive HTTP 402 with a pure x402 v1 challenge JSON body (x402Version, error, accepts only; "
+        "body-first, no PAYMENT-REQUIRED header on v1). Paid requests with valid payment receive "
+        "contract risk scoring. "
         "Pre-execution policy assistance only — not a security guarantee."
     ),
     responses={

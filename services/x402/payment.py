@@ -125,6 +125,16 @@ def encode_payment_required_header(challenge_body: dict) -> str:
 
 
 def x402_payment_discovery_headers(challenge_body: dict) -> dict[str, str]:
+    """
+    Discovery response headers for unpaid challenges.
+
+    x402 **v1** (`x402Version == 1`): **no** ``PAYMENT-REQUIRED`` header — @agentcash/discovery
+    treats that header as **v2-only** and would skip JSON body parsing if present.
+
+    Future v2 challenges may emit the header again.
+    """
+    if challenge_body.get("x402Version") == 1:
+        return {}
     return {
         "PAYMENT-REQUIRED": encode_payment_required_header(challenge_body),
         "Access-Control-Expose-Headers": "PAYMENT-REQUIRED",

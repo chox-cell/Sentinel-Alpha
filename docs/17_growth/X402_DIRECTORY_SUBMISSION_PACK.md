@@ -104,6 +104,12 @@ Maintainer/community response on the x402 ecosystem page PR (paraphrased posture
 - **Repository behavior (compatibility only):** restore **`accepts[0].amount`** = **`maxAmountRequired`** (e.g. **`"20000"`** for basic) on pure **POST** / header challenge; keep pure top-level keys and **`outputSchema.input`**. **GET** legacy preserved. **Not** a listing claim.
 - **Posture unchanged:** **§7** **`not submitted`** / validation failed; **no listing success claim**.
 
+## 3n) x402scan fourteenth diagnosis — v1 body-first (no v1 ``PAYMENT-REQUIRED`` header) (no listing claim)
+
+- **Evidence (2026):** Pure **POST** v1 body + **`amount`** + **`outputSchema`** (**§3m**); still **“No valid x402 response found”**. **@agentcash/discovery** (**`probeMethod`**) reads **`payment-required`** header first; **`parsePaymentRequiredBody2`** accepts only **`x402Version === 2`**, so a **v1** header blocks JSON body parsing and **`paymentOptions`** extraction.
+- **Repository behavior (compatibility only):** unpaid **v1** discovery (**GET**, **POST**, **PATCH**/**PUT**/**DELETE**, **HEAD** without body) omits **`PAYMENT-REQUIRED`** / **`Access-Control-Expose-Headers`** for that header; scanners read **402** JSON body. **POST** OpenAPI adds **`x-payment-info`** (planning metadata only). Paid **POST** unchanged. **Not** a listing claim.
+- **Posture unchanged:** **§7** **`not submitted`** / validation failed; **no listing success claim**.
+
 ## 4) Project identity
 
 | Field | Value |
@@ -146,7 +152,7 @@ Use when a directory allows a fuller description:
 | `submission_owner` | Chox |
 | `copy_variant` | short |
 | `evidence_links` | https://beezshield.com · https://beezshield.com/manifesto.html · https://www.npmjs.com/package/@beezshield/sentinel · `docs/17_growth/SENTINEL_ALPHA_PUBLIC_TECHNICAL_SUMMARY.md` (in-repo public-safe summary) |
-| `notes` | Probe timeline §3a–§3m: **`accepts[0].amount`** restored for x402scan runtime (**§3m**). **`status` stays `not submitted`**; **never claim listing success prematurely**. |
+| `notes` | Probe timeline §3a–§3n: **v1 body-first** (**§3n**, no v1 **`PAYMENT-REQUIRED`** header). **`status` stays `not submitted`**; **never claim listing success prematurely**. |
 
 ### Agentic.Market
 

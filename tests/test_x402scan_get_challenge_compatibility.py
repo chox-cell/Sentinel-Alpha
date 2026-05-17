@@ -51,20 +51,12 @@ def test_get_contracts_risk_score_returns_402_x402_challenge(monkeypatch):
     client = TestClient(app)
     response = client.get("/contracts/risk-score")
     assert response.status_code == 402
-    assert response.headers.get("payment-required")
-    expose = response.headers.get("access-control-expose-headers", "")
-    assert "payment-required".lower() in expose.lower()
+    assert response.headers.get("payment-required") is None
+    expose = (response.headers.get("access-control-expose-headers") or "").lower()
+    assert "payment-required" not in expose
 
     body = response.json()
     _challenge_assertions(body, pay_to="0xwallet_get_test")
-
-    hdr = response.headers["payment-required"]
-    dec = json.loads(base64.standard_b64decode(hdr).decode("utf-8"))
-    assert dec["x402Version"] == 1
-    assert dec["error"] == "X-PAYMENT header is required"
-    assert dec["accepts"][0]["network"] == "base"
-    assert dec["accepts"][0]["maxAmountRequired"] == "20000"
-
 
 def test_get_does_not_require_contract_address_or_run_scoring(monkeypatch):
     monkeypatch.setenv("X402_NETWORK", "base")
@@ -111,9 +103,7 @@ def test_post_without_payment_still_returns_402_challenge(monkeypatch):
     assert body["x402Version"] == 1
     assert body["error"] == "X-PAYMENT header is required"
     assert body["accepts"][0]["scheme"] == "exact"
-    assert response.headers.get("payment-required")
-    expose = response.headers.get("access-control-expose-headers", "")
-    assert "payment-required".lower() in expose.lower()
+    assert response.headers.get("payment-required") is None
 
 
 def test_outreach_and_claims_record_x402scan_attempt_without_success_claim():

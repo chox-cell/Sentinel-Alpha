@@ -30,8 +30,7 @@ def _discovery_env(monkeypatch, *, wallet: str) -> None:
 def _assert_402_discovery_response(response, *, pay_to: str) -> dict:
     assert response.status_code == 402
     h = _lower_headers(response)
-    assert h.get("payment-required")
-    assert "payment-required" in (h.get("access-control-expose-headers") or "").lower()
+    assert h.get("payment-required") is None
     body = response.json()
     assert body["x402Version"] == 1
     assert body["asset"] == "USDC"
@@ -91,7 +90,7 @@ def test_get_head_options_post_unpaid_unchanged(monkeypatch):
     hd = client.head("/contracts/risk-score")
     assert hd.status_code == 402
     assert hd.content == b""
-    assert _lower_headers(hd).get("payment-required")
+    assert _lower_headers(hd).get("payment-required") is None
 
     assert client.options("/contracts/risk-score").status_code in (200, 204)
 

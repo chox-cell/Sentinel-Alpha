@@ -76,9 +76,7 @@ def test_unpaid_post_pure_v1_variants(monkeypatch):
         r = call()
         assert r.status_code == 402
         _assert_pure_post_body(r.json())
-        hdr = json.loads(base64.standard_b64decode(r.headers["payment-required"]).decode("utf-8"))
-        assert set(hdr.keys()) == _PURE_KEYS
-        assert hdr["accepts"][0]["network"] == "base"
+        assert r.headers.get("payment-required") is None
 
 
 def test_get_legacy_preserved_openapi_post_only(monkeypatch):

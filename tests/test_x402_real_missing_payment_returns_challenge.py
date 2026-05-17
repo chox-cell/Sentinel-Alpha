@@ -1,6 +1,3 @@
-import base64
-import json as json_stdlib
-
 from fastapi import HTTPException
 
 from services.x402.payment import require_x402_payment
@@ -33,16 +30,12 @@ def test_real_mode_missing_payment_returns_challenge(monkeypatch):
         assert detail["accepts"][0]["scheme"] == "exact"
         assert detail["accepts"][0]["network"] == "base"
         h = {str(k).lower(): v for k, v in (exc.headers or {}).items()}
-        pr_val = h.get("payment-required")
-        assert pr_val
-        assert "payment-required" in (h.get("access-control-expose-headers") or "").lower()
-        dec = json_stdlib.loads(base64.standard_b64decode(pr_val).decode("utf-8"))
-        assert dec["accepts"][0]["amount"] == "20000"
-        assert dec["accepts"][0]["maxAmountRequired"] == "20000"
-        assert dec["accepts"][0]["maxTimeoutSeconds"] == 60
-        assert dec["error"] == "X-PAYMENT header is required"
-        assert dec["accepts"][0]["network"] == "base"
-        assert dec["accepts"][0]["extra"]["name"] == "USD Coin"
+        assert h.get("payment-required") is None
+        assert detail["accepts"][0]["amount"] == "20000"
+        assert detail["accepts"][0]["maxAmountRequired"] == "20000"
+        assert detail["accepts"][0]["maxTimeoutSeconds"] == 60
+        assert detail["accepts"][0]["extra"]["name"] == "USD Coin"
+        assert detail["accepts"][0]["outputSchema"]["input"]["method"] == "POST"
 
 
 def test_real_mode_disabled_returns_x402_disabled_error(monkeypatch):

@@ -151,6 +151,7 @@ Status: **Done**
 - v12.x x402scan pure POST v1 body (unpaid **POST** returns only **x402Version**/**error**/**accepts**; **GET** legacy preserved; no listing claim)
 - v12.x x402scan accepts strict schema (**`outputSchema.input`** on discovery **accepts**; no listing claim)
 - v12.x x402scan runtime amount compatibility (restore **`accepts[0].amount`** = **`maxAmountRequired`** for x402scan **`check-endpoint`**; pure **POST** body preserved; no listing claim)
+- v12.x x402scan v1 body-first discovery (omit **`PAYMENT-REQUIRED`** on **v1** **402** so @agentcash/discovery parses JSON body; **x-payment-info** on OpenAPI **POST**; no listing claim)
 - Agent commerce vision truth-filter update (UCP/AP2/Trust Object remain roadmap context)
 
 ## 5) Cost discipline

@@ -1,4 +1,4 @@
-"""x402scan-style schema + PAYMENT-REQUIRED header compatibility (GET/POST unpaid 402 paths)."""
+"""x402scan-style schema compatibility (GET/POST unpaid 402; v1 body-first, no PAYMENT-REQUIRED header)."""
 
 import base64
 import hashlib
@@ -38,8 +38,8 @@ def test_get_402_legacy_and_discovery_schema(monkeypatch):
 
     raw = dict(response.headers)
     pr_val, expose = _hdr(raw)
-    assert pr_val
-    assert "payment-required" in expose
+    assert pr_val is None
+    assert "payment-required" not in expose
 
     body = response.json()
     assert body["x402_version"] == "0.2"
@@ -58,13 +58,6 @@ def test_get_402_legacy_and_discovery_schema(monkeypatch):
     assert req["resource"] == "https://api.example.invalid/contracts/risk-score"
     assert req["mimeType"] == "application/json"
     assert req["description"] == "BeezShield Sentinel Alpha risk score"
-
-    dec = json.loads(base64.standard_b64decode(pr_val).decode("utf-8"))
-    assert dec["x402Version"] == 1
-    assert dec["error"] == "X-PAYMENT header is required"
-    assert dec["accepts"][0]["network"] == "base"
-    assert dec["accepts"][0]["maxAmountRequired"] == "20000"
-
 
 def test_get_does_not_require_body_or_execute_scoring(monkeypatch):
     monkeypatch.setenv("X402_NETWORK", "base")
@@ -117,11 +110,8 @@ def test_post_unpaid_402_discovery_schema_and_headers(monkeypatch):
 
     raw = dict(response.headers)
     pr_val, expose = _hdr(raw)
-    assert pr_val
-    assert "payment-required" in expose
-    decoded = json.loads(base64.standard_b64decode(pr_val).decode("utf-8"))
-    assert decoded["x402Version"] == 1
-    assert decoded["accepts"][0]["asset"] == BASE_MAINNET_USDC_CONTRACT
+    assert pr_val is None
+    assert "payment-required" not in expose
 
 
 def test_docs_second_attempt_schema_status_and_no_listing_claim():

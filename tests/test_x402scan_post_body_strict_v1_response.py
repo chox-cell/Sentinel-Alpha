@@ -39,10 +39,10 @@ def _core_x402_fields(body: dict) -> dict:
     }
 
 
-def _decode_pr(resp) -> dict:
-    pr = resp.headers.get("payment-required")
-    assert pr
-    return json.loads(base64.standard_b64decode(pr).decode("utf-8"))
+def _assert_no_pr_header(resp) -> None:
+    assert resp.headers.get("payment-required") is None
+    expose = (resp.headers.get("access-control-expose-headers") or "").lower()
+    assert "payment-required" not in expose
 
 
 def test_unpaid_post_variants_flat_402(monkeypatch):
@@ -85,13 +85,7 @@ def test_unpaid_post_variants_flat_402(monkeypatch):
         ):
             assert legacy not in body
 
-        hdr = _decode_pr(r)
-        assert hdr["x402Version"] == 1
-        assert hdr["error"] == X402_V1_DISCOVERY_ERROR
-        assert hdr["accepts"][0]["network"] == "base"
-
-        expose = (r.headers.get("access-control-expose-headers") or "").lower()
-        assert "payment-required" in expose
+        _assert_no_pr_header(r)
 
 
 def test_runtime_and_openapi_unchanged(monkeypatch):

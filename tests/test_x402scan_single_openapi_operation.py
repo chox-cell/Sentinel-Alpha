@@ -46,7 +46,7 @@ def test_runtime_discovery_verbs_unchanged(monkeypatch):
     head_r = c.head("/contracts/risk-score")
     assert head_r.status_code == 402
     assert head_r.content == b""
-    assert head_r.headers.get("payment-required")
+    assert head_r.headers.get("payment-required") is None
 
     assert c.options("/contracts/risk-score").status_code in (200, 204)
     assert c.patch("/contracts/risk-score").status_code == 402
@@ -60,10 +60,7 @@ def test_runtime_discovery_verbs_unchanged(monkeypatch):
     assert body["error"] == X402_V1_DISCOVERY_ERROR
     assert body["accepts"][0]["network"] == "base"
 
-    pr = post_r.headers.get("payment-required")
-    assert pr
-    hdr = json.loads(base64.standard_b64decode(pr).decode("utf-8"))
-    assert hdr["accepts"][0]["network"] == "base"
+    assert post_r.headers.get("payment-required") is None
 
 
 def test_docs_ninth_attempt_without_listing_success():
