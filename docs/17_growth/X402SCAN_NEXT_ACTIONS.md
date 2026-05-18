@@ -22,7 +22,7 @@ BeezShield is now discoverable as a payable machine-to-machine trust API. This i
 
 1. ~~Add brand assets to the website and public metadata.~~ **done**
 2. ~~Add a small “Listed on x402scan” proof block on public site.~~ **done**
-3. ~~UI/brand polish for homepage and registry pages.~~ **done**
+3. ~~UI/brand polish for homepage and registry pages (icon-only logo, no SVG wordmark in header/footer).~~ **done**
 4. Prepare Agentic.Market submission.
 4. Prepare Pay.sh submission.
 5. Prepare Ampersend discover submission.

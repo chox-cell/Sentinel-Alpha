@@ -57,8 +57,8 @@
     <nav class="top-nav">
         <div class="nav-container">
             <a href="index.html" class="brand brand-link" aria-label="BeezShield home">
-                <img src="brand/beezshield-logo.svg" alt="" width="40" height="40" class="brand-logo-img">
-                <img src="brand/beezshield-wordmark.svg" alt="BeezShield" height="32" class="brand-wordmark-img">
+                <img src="brand/beezshield-logo.svg" alt="BeezShield Logo" width="32" height="32" class="brand-logo-img">
+                <span class="brand-text">BeezShield</span>
             </a>
             <div class="nav-links">
                 <a href="docs.html">Docs</a>
@@ -76,7 +76,6 @@
         <section class="hero">
             <div class="container hero-content">
                 <div class="hero-text">
-                    <img src="brand/beezshield-wordmark.svg" alt="BeezShield" class="hero-wordmark" height="36">
                     <div class="badge">
                         <span class="pulse-dot"></span>
                         <span class="mono text-sm">Sentinel Alpha is live on Base</span>
@@ -524,8 +523,10 @@ if result.get("action") == "BLOCK":
     <footer class="site-footer">
         <div class="container footer-content">
             <div class="footer-brand">
-                <img src="brand/beezshield-logo.svg" alt="" width="28" height="28" class="brand-logo-img">
-                <img src="brand/beezshield-wordmark.svg" alt="BeezShield" height="20" class="brand-wordmark-img">
+                <div style="display: flex; align-items: center; gap: 0.5rem;">
+                    <img src="brand/beezshield-logo.svg" alt="BeezShield Logo" width="28" height="28" class="brand-logo-img">
+                    <span class="brand-text">BeezShield</span>
+                </div>
                 <p class="text-muted text-sm mt-2">Machine Trust Infrastructure</p>
                 <p class="footer-claim-note text-xs text-muted mt-4">BeezShield builds pre-execution risk decision tools for agents. It does not provide a security guarantee, trading guarantee, or official x402 endorsement.</p>
             </div>

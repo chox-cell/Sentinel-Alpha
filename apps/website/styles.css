@@ -628,17 +628,7 @@ h1 {
     display: block;
     flex-shrink: 0;
 }
-.brand-wordmark-img {
-    display: block;
-    max-width: min(180px, 42vw);
-    height: auto;
-}
-.hero-wordmark {
-    display: block;
-    max-width: min(220px, 70vw);
-    margin-bottom: 1.25rem;
-    opacity: 0.95;
-}
+
 
 .section-compact {
     padding: 4rem 0;

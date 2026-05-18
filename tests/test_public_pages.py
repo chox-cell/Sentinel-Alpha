@@ -69,7 +69,7 @@ def test_index_x402scan_brand_surface():
     html = INDEX.read_text(encoding="utf-8")
     low = html.lower()
     assert "brand/beezshield-logo.svg" in html
-    assert "brand/beezshield-wordmark.svg" in html
+    assert "brand/beezshield-wordmark.svg" not in html
     assert "Registered on x402scan" in html
     assert "payable x402 resource" in low
     assert "directory listing only" in low
@@ -80,6 +80,15 @@ def test_index_x402scan_brand_surface():
     assert "Machine Trust Infrastructure" in html
     assert "favicon.svg" in html
     assert "Browser demo paused" in html
+
+
+def test_logo_no_text():
+    logo = Path("apps/website/brand/beezshield-logo.svg").read_text(encoding="utf-8")
+    favicon = Path("apps/website/favicon.svg").read_text(encoding="utf-8")
+    
+    for svg in [logo, favicon]:
+        assert "<text" not in svg
+        assert "BeezShield" not in svg
 
 
 def test_registry_x402scan_page():
