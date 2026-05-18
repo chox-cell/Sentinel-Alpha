@@ -20,6 +20,17 @@
 | **Asset** | USDC |
 | **Package** | `@beezshield/sentinel` (`0.1.0` on npm; see https://www.npmjs.com/package/@beezshield/sentinel) |
 
+## Submission state machine
+
+| State | Meaning | When to set |
+| --- | --- | --- |
+| `prepared_not_submitted` | Copy + checklist ready; no form sent | **Current** — default until manual submit |
+| `submitted_pending` | Form sent; awaiting directory review | After submit + confirmation; no listing URL yet |
+| `listed_verified` | Public listing URL captured and checked | **Only** with verified Agentic.Market URL |
+| `rejected_needs_fix` | Directory rejected or validation failed | With rejection reason + fix notes in tracker |
+
+**Rules:** Never use `listed_verified` without a verified listing URL. No fake listing claim. x402scan remains **registered** (directory only) independent of Agentic.Market state.
+
 ## One-liner
 
 > BeezShield Sentinel Alpha is a pre-execution risk decision API for autonomous agents, payable with x402 on Base.
@@ -96,7 +107,7 @@
 After manual submission (or if rejected):
 
 1. Update `docs/17_growth/OUTREACH_TRACKER.md` **Agentic.Market** table row:
-   - `prepared_not_submitted` → `submitted` (with date) when form sent; → `listed` only with verified public listing URL.
+   - `prepared_not_submitted` → `submitted_pending` when form sent; → `listed_verified` only with verified public listing URL; → `rejected_needs_fix` on failure.
    - Set `submission_result` to confirmation text, listing URL, or rejection reason.
 2. Add a dated block `## Agentic.Market directory submission — attempt (v12.x)` with evidence links (no partnership/integration claims).
 3. Update `docs/17_growth/X402_DIRECTORY_SUBMISSION_PACK.md` §7 Agentic.Market row `status` to match verified outcome.

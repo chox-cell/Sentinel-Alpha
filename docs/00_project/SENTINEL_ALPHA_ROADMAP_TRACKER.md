@@ -156,6 +156,7 @@ Status: **Done**
 - v12.x frontend brand integration (BeezShield logo/wordmark on homepage, x402scan proof block, API quick-start, `registry/x402scan.html`, claim-safe footer; no API/runtime changes)
 - v12.x public UI polish (homepage layout, registry header, SVG logo styling, and claim-safe demo status)
 - v12.x Agentic.Market submission pack prepared (`AGENTIC_MARKET_SUBMISSION_PACK.md`); manual submission pending
+- v12.x public growth readiness (`GET /public/status`, `GET /public/metrics`, `REVENUE_FUNNEL.md`, `API_INTEGRATION_COPY_BLOCKS.md`; process-lifetime counters; no revenue/partnership claims)
 - Agent commerce vision truth-filter update (UCP/AP2/Trust Object remain roadmap context)
 
 ## 5) Cost discipline

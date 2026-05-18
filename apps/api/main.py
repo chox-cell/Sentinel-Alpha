@@ -37,6 +37,14 @@ from services.identity.identity_config import get_identity_status
 from services.identity.erc8004_adapter import get_erc8004_status
 from services.latency_shield.background import schedule_post_risk_tasks
 from services.x402.payment_config import get_payment_status, get_pricing_tiers
+from services.growth.public_status import (
+    build_public_integration_status,
+    build_public_metrics_payload,
+)
+from services.growth.public_usage_metrics import (
+    record_paid_request,
+    record_unpaid_discovery_402,
+)
 from shared.config.env import get_env_bool, get_quicknode_env_status
 from shared.config.limits import get_ingestion_limits
 
@@ -115,6 +123,7 @@ def _risk_score_discovery_challenge_json_response(request: Request) -> JSONRespo
         raise HTTPException(status_code=429, detail={"error": "rate_limit_exceeded"})
 
     challenge = build_x402_challenge(lane="basic")
+    record_unpaid_discovery_402()
     return JSONResponse(
         status_code=402,
         content=challenge,
@@ -125,11 +134,39 @@ def _risk_score_discovery_challenge_json_response(request: Request) -> JSONRespo
 def _post_prepayment_discovery_response(lane: str) -> JSONResponse:
     """POST unpaid probes: pure x402scan v1 body (``x402Version`` / ``error`` / ``accepts`` only)."""
     challenge = build_x402_challenge_v1_pure(lane=lane)
+    record_unpaid_discovery_402()
     return JSONResponse(
         status_code=402,
         content=challenge,
         headers=x402_payment_discovery_headers(challenge),
     )
+
+
+@app.get(
+    "/public/status",
+    include_in_schema=False,
+    summary="Public integration status (BeezShield)",
+    description=(
+        "Public-safe service posture for builders and directories. "
+        "Excluded from filtered /openapi.json so x402scan sees a single payable POST on "
+        "/contracts/risk-score only."
+    ),
+)
+def public_integration_status():
+    return build_public_integration_status()
+
+
+@app.get(
+    "/public/metrics",
+    include_in_schema=False,
+    summary="Public usage counters (process lifetime)",
+    description=(
+        "Aggregate 402 discovery and paid request counts since process start. "
+        "No IPs, wallets, or env secrets."
+    ),
+)
+def public_usage_metrics():
+    return build_public_metrics_payload()
 
 
 @app.get("/health", include_in_schema=False)
@@ -200,6 +237,7 @@ def risk_score_head_x402_discovery(request: Request):
         raise HTTPException(status_code=429, detail={"error": "rate_limit_exceeded"})
 
     challenge = build_x402_challenge(lane="basic")
+    record_unpaid_discovery_402()
     return Response(
         status_code=402,
         headers=x402_payment_discovery_headers(challenge),
@@ -337,6 +375,7 @@ async def risk_score(
         outcome_record=result.get("outcome_record"),
     )
 
+    record_paid_request()
     return response
 
 
