@@ -68,8 +68,9 @@ def test_index_nav_has_required_links():
 def test_index_x402scan_brand_surface():
     html = INDEX.read_text(encoding="utf-8")
     low = html.lower()
-    assert "brand/beezshield-logo.svg" in html
-    assert "brand/beezshield-wordmark.svg" not in html
+    assert "brand/beezshield-logo.svg?v=clean-logo-2" in html
+    assert "beezshield-wordmark.svg" not in html
+    assert "hero-wordmark" not in html
     assert "Registered on x402scan" in html
     assert "payable x402 resource" in low
     assert "directory listing only" in low
