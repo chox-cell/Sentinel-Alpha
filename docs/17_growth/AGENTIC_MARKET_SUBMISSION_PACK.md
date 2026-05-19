@@ -6,7 +6,7 @@
 
 | Field | Value |
 | --- | --- |
-| **Status** | **prepared / not submitted** |
+| **Status** | **submitted_pending** (validator run 2026-05-19; not listed on Agentic.Market search yet) |
 | **Target** | [Agentic.Market](https://agentic.market) |
 | **Submission owner** | Chox |
 | **Product name** | BeezShield Sentinel Alpha |
@@ -24,7 +24,8 @@
 
 | State | Meaning | When to set |
 | --- | --- | --- |
-| `prepared_not_submitted` | Copy + checklist ready; no form sent | **Current** — default until manual submit |
+| `prepared_not_submitted` | Copy + checklist ready; no form sent | Superseded after 2026-05-19 validator attempt |
+| `submitted_pending` | Seller validator run; Bazaar review/indexing pending | **Current** — see `OUTREACH_TRACKER.md` manual attempt block |
 | `submitted_pending` | Form sent; awaiting directory review | After submit + confirmation; no listing URL yet |
 | `listed_verified` | Public listing URL captured and checked | **Only** with verified Agentic.Market URL |
 | `rejected_needs_fix` | Directory rejected or validation failed | With rejection reason + fix notes in tracker |
@@ -88,9 +89,17 @@
 - automatic x402 settlement live
 - guaranteed protection / honeypot detection / MEV prevention claims
 
+## Agentic.Market discovery model (2026-05-19)
+
+- **No traditional listing form** with product name / long description fields was found on https://agentic.market.
+- Seller path: **Validate Endpoint** → https://agentic.market/validate — checks x402 + **Bazaar** indexing.
+- FAQ: services indexed on the **Bazaar** appear in Agentic.Market search automatically.
+- Manual attempt screenshot: `docs/17_growth/evidence/agentic-market-validate-2026-05-19.png`
+- Validator result (GET probe): **Implementation Invalid** (v2 resource + PAYMENT-REQUIRED header + `extensions.bazaar` expected). **Do not break x402scan v1 body-first** without a deliberate compatibility plan.
+
 ## Manual submission checklist
 
-1. Open https://agentic.market and locate the project/service submission flow (form or GitHub issue — confirm current process on site).
+1. Open https://agentic.market/validate (not a copy/paste listing form — Bazaar indexer path).
 2. Copy **one-liner** or **short copy** into title/summary fields; use **long copy** for description/body if character limits allow.
 3. Paste **API endpoint:** `https://api.beezshield.com/contracts/risk-score`.
 4. Paste **website:** `https://beezshield.com/`.

@@ -56,7 +56,8 @@ def test_pack_exists_with_required_fields():
     assert PACK.exists()
     text = PACK.read_text(encoding="utf-8")
     low = text.lower()
-    assert "prepared" in low and "not submitted" in low
+    assert "submitted_pending" in low
+    assert "prepared" in low or "prepared_not_submitted" in low
     assert "Agentic.Market" in text
     assert "https://beezshield.com/" in text
     assert "https://api.beezshield.com/contracts/risk-score" in text
@@ -72,14 +73,14 @@ def test_pack_exists_with_required_fields():
     )
 
 
-def test_outreach_tracker_prepared_block():
+def test_outreach_tracker_agentic_market_attempt():
     ot = OUTREACH.read_text(encoding="utf-8")
     low = ot.lower()
-    assert "prepared_not_submitted" in low
+    assert "submitted_pending" in low
     assert "AGENTIC_MARKET_SUBMISSION_PACK.md" in ot
-    assert "x402scan_proof_available: true" in ot
-    assert "manual_submission_required: true" in ot
-    assert "submission_result: null" in ot
+    assert "agentic.market/validate" in low
+    assert "listing_success_claim: false" in ot
+    assert "implementation invalid" in low
 
 
 def test_pack_public_copy_no_positive_forbidden_claims():

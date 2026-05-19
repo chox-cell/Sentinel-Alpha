@@ -45,8 +45,8 @@ def test_claims_mycelium_cross_reference_row():
 
 def test_directory_targets_still_not_submitted():
     ot = OUTREACH.read_text(encoding="utf-8")
-    # x402scan registered; Agentic.Market prepared_not_submitted; Pay.sh + ampersend not submitted
-    assert "prepared_not_submitted" in ot
+    # x402scan registered; Agentic.Market submitted_pending; Pay.sh + ampersend not submitted
+    assert "submitted_pending" in ot
     assert ot.count("| not submitted |") >= 2
 
 

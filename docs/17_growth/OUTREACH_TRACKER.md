@@ -194,7 +194,7 @@ Maintainer signal on x402 ecosystem page PR (ecosystem page sunset; PR closed; c
 | Directory | URL | status | submission_owner | copy_variant | notes |
 | --- | --- | --- | --- | --- | --- |
 | x402scan | https://x402scan.com | **registered** | Chox | short | §3o / `X402SCAN_REGISTRATION_EVIDENCE.md` |
-| Agentic.Market | https://agentic.market | prepared_not_submitted | Chox | long | `AGENTIC_MARKET_SUBMISSION_PACK.md` |
+| Agentic.Market | https://agentic.market | submitted_pending | Chox | long | `AGENTIC_MARKET_SUBMISSION_PACK.md` · validator 2026-05-19 |
 | Pay.sh | https://pay.sh | not submitted | Chox | short | See submission pack §7 |
 | ampersend discover | https://app.ampersend.ai/discover | not submitted | Chox | long | See submission pack §7 |
 
@@ -412,18 +412,41 @@ Maintainer signal on x402 ecosystem page PR (ecosystem page sunset; PR closed; c
 ## Agentic.Market submission — prepared (v12.x)
 
 - target: Agentic.Market (https://agentic.market)
-- status: **prepared_not_submitted**
+- status: **prepared_not_submitted** (superseded by manual attempt below)
 - owner: Chox
 - source_pack: `docs/17_growth/AGENTIC_MARKET_SUBMISSION_PACK.md`
 - x402scan_proof_available: true
 - x402scan_proof_url: https://beezshield.com/registry/x402scan.html
 - manual_submission_required: true
-- submission_result: null
+- notes: No traditional listing form on site; discovery is Bazaar-indexed per seller FAQ
+
+## Agentic.Market directory submission — manual attempt (v12.x)
+
+- recorded_date: 2026-05-19
+- owner: Chox
+- status: **submitted_pending** (seller validator run; **not** `listed_verified`)
+- channel: https://agentic.market/validate (Seller Tools — Bazaar indexer path; no separate copy/paste listing form found)
+- validator_url: https://agentic.market/validate?url=https%3A%2F%2Fapi.beezshield.com%2Fcontracts%2Frisk-score
+- marketplace_search: `https://agentic.market/?q=beezshield` → **0 results** (not listed yet)
+- screenshot: `docs/17_growth/evidence/agentic-market-validate-2026-05-19.png`
+- submission_result: **Implementation Invalid** — 4 checks failed (GET probe). Failures include: missing v2 top-level `resource`; `x402Version` is 1 (validator expects 2); v2 `PAYMENT-REQUIRED` header (current API uses v1 body-first for x402scan); missing `extensions.bazaar`. **Do not change API in this step** — x402scan compatibility preserved.
+- prepared_copy_fields_used (for future Bazaar/metadata if requested):
+  - product_name: BeezShield Sentinel Alpha
+  - category: Agent Security / Web3 / x402 / Onchain Risk
+  - website: https://beezshield.com/
+  - api_endpoint: https://api.beezshield.com/contracts/risk-score
+  - proof: https://beezshield.com/registry/x402scan.html
+  - x402scan_listing: registered (directory only); resource API https://api.beezshield.com/contracts/risk-score
+  - npm: @beezshield/sentinel (https://www.npmjs.com/package/@beezshield/sentinel)
+  - pricing: 0.02 USDC basic lane on Base USDC
+  - claim_posture: directory registration only; no partnership; no guarantee
+- listing_url: null
 - official_integration_claim: false
 - partnership_claim: false
 - endorsement_claim: false
 - security_guarantee_claim: false
-- notes: Copy and checklist ready; do not auto-submit; update row only after verified listing URL
+- listing_success_claim: false
+- notes: Await Bazaar indexing / v2+bazaar compatibility work before `listed_verified`. Next: re-validate with POST after indexer docs review; do not claim Agentic.Market partnership.
 
 ## x402scan directory registration — success (v12.x)
 
