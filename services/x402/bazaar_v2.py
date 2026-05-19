@@ -35,24 +35,33 @@ def _treasury_pay_to() -> str:
     )
 
 
+_BAZAAR_INPUT_EXAMPLE = {
+    "contract_address": "0x1111111111111111111111111111111111111111",
+    "chain": "base",
+}
+
+_BAZAAR_OUTPUT_EXAMPLE = {
+    "risk_score": 42,
+    "decision": "review",
+    "reasons": ["Contract requires manual review before execution."],
+}
+
+
 def _bazaar_extensions() -> dict:
     return {
         "bazaar": {
             "info": {
+                "toolName": "beezshield_risk_score",
+                "method": "POST",
                 "title": "BeezShield Sentinel Alpha Risk Score",
                 "description": (
-                    "Pre-execution risk decision layer for autonomous agents on Base. "
-                    "x402-gated policy assistance only — not a security guarantee, "
-                    "partnership, or endorsement."
+                    "Pre-execution risk decision API for autonomous agents on Base. "
+                    "Returns machine-readable allow, review, or block posture before contract "
+                    "execution. Policy assistance only — not a security guarantee, partnership, "
+                    "or endorsement."
                 ),
-                "input": {
-                    "contract_address": "0x1111111111111111111111111111111111111111",
-                    "chain": "base",
-                },
-                "output": {
-                    "risk_score": "number",
-                    "decision": "allow|review|block",
-                },
+                "input": dict(_BAZAAR_INPUT_EXAMPLE),
+                "output": {"example": dict(_BAZAAR_OUTPUT_EXAMPLE)},
             },
             "schema": {
                 "input": {
@@ -65,9 +74,17 @@ def _bazaar_extensions() -> dict:
                 },
                 "output": {
                     "type": "object",
+                    "required": ["risk_score", "decision"],
                     "properties": {
                         "risk_score": {"type": "number"},
-                        "decision": {"type": "string"},
+                        "decision": {
+                            "type": "string",
+                            "enum": ["allow", "review", "block"],
+                        },
+                        "reasons": {
+                            "type": "array",
+                            "items": {"type": "string"},
+                        },
                     },
                 },
             },

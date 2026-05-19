@@ -55,3 +55,53 @@ def test_v2_unpaid_post_has_payment_required_header_and_payload(monkeypatch):
         assert a0["amount"] == "20000"
         assert a0["network"] == "base"
         assert a0["asset"] == BASE_MAINNET_USDC_CONTRACT
+
+
+def _bazaar_from_payload(payload: dict) -> dict:
+    return payload["extensions"]["bazaar"]
+
+
+def test_v2_bazaar_info_has_toolname_and_method(monkeypatch):
+    _real_unpaid(monkeypatch)
+    r = TestClient(app).post("/contracts/risk-score-v2", content=b"")
+    assert r.status_code == 402
+    info = _bazaar_from_payload(r.json())["info"]
+    assert info["toolName"] == "beezshield_risk_score"
+    assert info["method"] == "POST"
+    assert info["title"] == "BeezShield Sentinel Alpha Risk Score"
+    assert "pre-execution" in info["description"].lower()
+
+
+def test_v2_bazaar_info_has_output_example(monkeypatch):
+    _real_unpaid(monkeypatch)
+    r = TestClient(app).post("/contracts/risk-score-v2", content=b"")
+    example = _bazaar_from_payload(r.json())["info"]["output"]["example"]
+    assert example == {
+        "risk_score": 42,
+        "decision": "review",
+        "reasons": ["Contract requires manual review before execution."],
+    }
+
+
+def test_v2_bazaar_output_schema_required_fields(monkeypatch):
+    _real_unpaid(monkeypatch)
+    r = TestClient(app).post("/contracts/risk-score-v2", content=b"")
+    out_schema = _bazaar_from_payload(r.json())["schema"]["output"]
+    assert out_schema["type"] == "object"
+    assert out_schema["required"] == ["risk_score", "decision"]
+    decision = out_schema["properties"]["decision"]
+    assert decision["enum"] == ["allow", "review", "block"]
+    assert out_schema["properties"]["reasons"]["type"] == "array"
+
+
+def test_v2_payment_required_header_matches_body_bazaar(monkeypatch):
+    _real_unpaid(monkeypatch)
+    r = TestClient(app).post("/contracts/risk-score-v2", content=b"")
+    header_raw = r.headers.get("PAYMENT-REQUIRED") or r.headers.get("payment-required")
+    decoded = _decode_payment_required(header_raw)
+    body = r.json()
+    for payload in (decoded, body):
+        bazaar = _bazaar_from_payload(payload)
+        assert bazaar["info"]["toolName"] == "beezshield_risk_score"
+        assert bazaar["info"]["output"]["example"]["decision"] == "review"
+        assert bazaar["schema"]["input"]["required"] == ["contract_address", "chain"]
