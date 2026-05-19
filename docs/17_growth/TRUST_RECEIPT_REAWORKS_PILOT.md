@@ -16,6 +16,7 @@ This packet answers that request as a **paid-pilot deliverable** aligned with `T
 | Item | Path |
 | --- | --- |
 | Redacted JSON (this pilot) | `docs/17_growth/fixtures/trust_receipt_reaworks_pilot.redacted.json` |
+| **$25 review packet** | `docs/17_growth/REAWORKS_REVIEW_PACKET_001.md` + `fixtures/trust_receipt_reaworks_review_packet_001.redacted.json` |
 | Generic v0 spec | `docs/17_growth/TRUST_RECEIPT_V0_SPEC.md` |
 | Website pilot surface | `apps/website/pilot/trust-receipt.html` |
 
