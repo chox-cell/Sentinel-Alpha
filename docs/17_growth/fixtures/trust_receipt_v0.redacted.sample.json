@@ -1,0 +1,41 @@
+{
+  "receipt_version": "trust-receipt-v0",
+  "receipt_id": "pilot-2026-05-19-agentkit-sentinel-001",
+  "pilot_only": true,
+  "sample_only": true,
+  "documentation_only": true,
+  "secrets_excluded": true,
+  "proposed_action": "contract_risk_precheck_before_agentkit_step",
+  "normalized_args_hash": "a3f2c91e8b704d5e6c1a9f0e2d8b7c6a5e4f3d2c1b0a9f8e7d6c5b4a39281706",
+  "sentinel_decision": "review",
+  "risk_score": 42,
+  "policy_version": "sentinel-policy-v0",
+  "decision_timestamp": "2026-05-19T14:32:10Z",
+  "checked_signals": [
+    "contract_metadata_present",
+    "proxy_pattern_hint",
+    "owner_concentration_band",
+    "liquidity_depth_band",
+    "external_listing_crosscheck_stub"
+  ],
+  "not_checked": [
+    "live_mempool_simulation",
+    "honeypot_bytecode_deep_scan",
+    "mev_sandwich_risk_model",
+    "full_agent_wallet_history",
+    "post_execution_profitability"
+  ],
+  "agentkit_result_hash_or_tx_ref": "exec_ref:7c4e2f1a9b0d8e6f5a4c3b2d1e0f9a8b7c6d5e4f3a2b1c0d9e8f7a6b5c4d3e2f1",
+  "payment_lane": "basic",
+  "release_refund_cure_rule": "If BeezShield does not deliver a Trust Receipt v0 JSON matching this schema within 5 business days of confirmed pilot payment, buyer may request a one-time pilot fee refund; remedy limited to pilot fee; no consequential damages.",
+  "disclaimer": "This Trust Receipt is policy-assistance metadata from one redacted AgentKit-style + Sentinel pilot run. It is not a security guarantee, audit certificate, or execution-quality proof. It does not prove profitability or onchain safety. secrets_excluded is true: no API keys, env values, wallet private material, or raw transaction internals are included.",
+  "linking_refs": {
+    "action_ref": "e1a70f112f7407d4124d46f867f6b8ec8d5ef8cbde8dbe37d627ca2a9802de4d",
+    "sentinel_decision_ref": "6fced8b43e5f6c67f5b57cf6d1ddf7d2c68f6f727d6f5a6f11f22f25cf84a3e6",
+    "payment_decision_link_ref": "4ea1623eaee75db61f89f4cafe7f13f7e5ae16ad95e2fca0c16f6534382f7b6a"
+  },
+  "notSecurityGuarantee": true,
+  "automatic_settlement_claimed": false,
+  "partnership_claimed": false,
+  "integration_claimed": false
+}
