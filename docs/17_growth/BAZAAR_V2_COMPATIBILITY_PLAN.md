@@ -24,25 +24,36 @@ x402scan registration remains tied to **`/contracts/risk-score`**. The v2 path i
 | `/openapi.json` | **POST `/contracts/risk-score` only** (x402scan filter unchanged) |
 | `/openapi.bazaar.json` | **POST `/contracts/risk-score-v2` only** + `x-payment-info` |
 
-## Agentic.Market validation record (2026-05-19)
+## Production verification (commit `b57330a`, 2026-05-19)
+
+| Check | Result |
+| --- | --- |
+| **Git** | `b57330a` on `origin/main` (pushed) |
+| **POST v2 unpaid** | **HTTP 402** — `x402Version: 2`, `resource`, `accepts`, `extensions.bazaar` |
+| **PAYMENT-REQUIRED** | Present; base64 decodes to **identical** JSON as 402 body |
+| **Bazaar info fields** | `toolName`, `method`, `output.example` present on production |
+| **OpenAPI split** | `/openapi.json` → POST `/contracts/risk-score` only; `/openapi.bazaar.json` → POST `/contracts/risk-score-v2` only |
+| **v1 unchanged** | POST `/contracts/risk-score` → **402**, `x402Version: 1`, keys `x402Version`/`error`/`accepts` only; **no** `PAYMENT-REQUIRED` |
+
+## Agentic.Market validator (post-deploy, 2026-05-19)
 
 | Field | Value |
 | --- | --- |
 | **Validator URL** | https://agentic.market/validate?url=https%3A%2F%2Fapi.beezshield.com%2Fcontracts%2Frisk-score-v2&method=POST |
-| **Method** | POST |
-| **Production probe** | `POST https://api.beezshield.com/contracts/risk-score-v2` → **HTTP 404** (v2 route not deployed to production yet) |
-| **Validator UI result** | **No x402 Setup Detected** — endpoint reachable but did not return **402** (expected **402**, got **404**) |
-| **Screenshot** | `docs/17_growth/evidence/agentic-market-validate-v2-2026-05-19.png` |
-| **Search** | https://agentic.market/?q=beezshield → **0 results** |
-| **Tracker status** | `rejected_needs_fix` (deploy v2, then re-validate) |
-| **In-repo** | `tests/test_bazaar_v2_payment_required.py` passes locally — not an Agentic.Market pass claim |
+| **Validator UI** | **Implementation Invalid** — **SDK Parse Error:** failed to extract method/toolName from discovery info |
+| **Likely cause** | `@x402/extensions` expects `extensions.bazaar.info.input.type` + `input.method` (+ `bodyType`/`body` for POST), not top-level `info.method` / `info.toolName` |
+| **Screenshot** | `docs/17_growth/evidence/agentic-market-validate-v2-b57330a-2026-05-19.png` |
+| **Search** | https://agentic.market/?q=beezshield → **0 results** (no listing URL) |
+| **Tracker status** | `rejected_needs_fix` (align Bazaar `info.input` shape, then re-validate) |
 
-Prior validator run (same day, v1 URL): **Implementation Invalid** on `…/risk-score` — expected; x402scan remains on v1.
+Earlier same-day attempt (pre-deploy): **404** / **No x402 Setup Detected** — `docs/17_growth/evidence/agentic-market-validate-v2-2026-05-19.png`.
+
+Prior v1 URL probe: **Implementation Invalid** — expected; x402scan remains on v1.
 
 ## Agentic.Market status
 
 - **Not listed** — no verified Agentic.Market listing URL.
-- **Validator not passed** on production v2 URL until deploy returns unpaid **POST → 402** with v2 + Bazaar shape.
+- **Production v2 live** for x402 transport checks; **validator not passed** (SDK discovery parse).
 - **No** partnership, endorsement, certification, or security guarantee claims.
 
 ## Claim discipline

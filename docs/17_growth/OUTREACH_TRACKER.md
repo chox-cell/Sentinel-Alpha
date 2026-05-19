@@ -448,27 +448,34 @@ Maintainer signal on x402 ecosystem page PR (ecosystem page sunset; PR closed; c
 - listing_success_claim: false
 - notes: Await Bazaar indexing / v2+bazaar compatibility work before `listed_verified`. Next: re-validate with POST after indexer docs review; do not claim Agentic.Market partnership.
 
-## Agentic.Market — Bazaar v2 validator attempt (2026-05-19)
+## Agentic.Market — Bazaar v2 production verify (b57330a, 2026-05-19)
 
 - recorded_date: 2026-05-19
 - owner: Chox
 - status: **rejected_needs_fix**
+- deploy_commit: `b57330a` (pushed to `origin/main`, live on production)
 - channel: https://agentic.market/validate
 - validator_url: https://agentic.market/validate?url=https%3A%2F%2Fapi.beezshield.com%2Fcontracts%2Frisk-score-v2&method=POST
 - target_endpoint: https://api.beezshield.com/contracts/risk-score-v2
-- production_unpaid_post_status: **404** (route not live on production API yet)
-- validator_ui_result: **No x402 Setup Detected** (reachable but not **402**)
-- transport_check: endpoint reachable — **404** vs expected **402**
-- screenshot: `docs/17_growth/evidence/agentic-market-validate-v2-2026-05-19.png`
+- production_unpaid_post_status: **402** (`x402Version: 2`, `PAYMENT-REQUIRED` header matches body)
+- production_bazaar_info: `toolName`, `method`, `output.example` present (top-level `info.*`)
+- validator_ui_result: **Implementation Invalid** — SDK Parse Error: failed to extract method/toolName from discovery info
 - marketplace_search: https://agentic.market/?q=beezshield → **0 results**
 - listing_url: null
-- in_repo_v2_tests: passing (`test_bazaar_v2_payment_required.py`) — local only; not a marketplace pass claim
+- screenshot: `docs/17_growth/evidence/agentic-market-validate-v2-b57330a-2026-05-19.png`
+- v1_unchanged: POST `/contracts/risk-score` body-first v1, no `PAYMENT-REQUIRED`
 - official_integration_claim: false
 - partnership_claim: false
 - endorsement_claim: false
 - security_guarantee_claim: false
 - listing_success_claim: false
-- notes: Deploy `POST /contracts/risk-score-v2` to production, then re-validate POST; if validator passes but search empty, move to `validator_passed_not_listed`
+- notes: Next fix — nest method/body under `extensions.bazaar.info.input` per `@x402/extensions` HTTP POST shape; re-validate; use `validator_passed_not_listed` only after validator pass + still 0 search results
+
+## Agentic.Market — Bazaar v2 validator attempt pre-deploy (2026-05-19)
+
+- status: superseded
+- production_unpaid_post_status: **404**
+- screenshot: `docs/17_growth/evidence/agentic-market-validate-v2-2026-05-19.png`
 
 ## x402scan directory registration — success (v12.x)
 

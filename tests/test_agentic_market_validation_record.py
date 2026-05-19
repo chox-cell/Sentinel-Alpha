@@ -56,8 +56,10 @@ def test_v2_validation_record_present():
     assert "agentic.market/validate" in plan
     assert "risk-score-v2" in plan
     assert "rejected_needs_fix" in plan
-    assert "agentic-market-validate-v2-2026-05-19.png" in plan
-    assert "404" in plan
+    assert "b57330a" in plan
+    assert "Production verification" in plan
+    assert "toolName" in plan and "output.example" in plan
+    assert "agentic-market-validate-v2-b57330a-2026-05-19.png" in plan
 
 
 def test_submission_pack_rejected_not_listed():
@@ -69,9 +71,11 @@ def test_submission_pack_rejected_not_listed():
 
 def test_outreach_v2_attempt_block():
     tracker = (GROWTH / "OUTREACH_TRACKER.md").read_text(encoding="utf-8")
-    assert "Bazaar v2 validator attempt" in tracker
+    assert "Bazaar v2 production verify" in tracker
+    assert "b57330a" in tracker
     assert "risk-score-v2" in tracker
     assert "listing_success_claim: false" in tracker
+    assert "SDK Parse Error" in tracker
 
 
 def test_no_forbidden_agentic_claims_in_growth_docs():
