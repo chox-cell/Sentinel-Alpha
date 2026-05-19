@@ -24,12 +24,26 @@ x402scan registration remains tied to **`/contracts/risk-score`**. The v2 path i
 | `/openapi.json` | **POST `/contracts/risk-score` only** (x402scan filter unchanged) |
 | `/openapi.bazaar.json` | **POST `/contracts/risk-score-v2` only** + `x-payment-info` |
 
+## Agentic.Market validation record (2026-05-19)
+
+| Field | Value |
+| --- | --- |
+| **Validator URL** | https://agentic.market/validate?url=https%3A%2F%2Fapi.beezshield.com%2Fcontracts%2Frisk-score-v2&method=POST |
+| **Method** | POST |
+| **Production probe** | `POST https://api.beezshield.com/contracts/risk-score-v2` → **HTTP 404** (v2 route not deployed to production yet) |
+| **Validator UI result** | **No x402 Setup Detected** — endpoint reachable but did not return **402** (expected **402**, got **404**) |
+| **Screenshot** | `docs/17_growth/evidence/agentic-market-validate-v2-2026-05-19.png` |
+| **Search** | https://agentic.market/?q=beezshield → **0 results** |
+| **Tracker status** | `rejected_needs_fix` (deploy v2, then re-validate) |
+| **In-repo** | `tests/test_bazaar_v2_payment_required.py` passes locally — not an Agentic.Market pass claim |
+
+Prior validator run (same day, v1 URL): **Implementation Invalid** on `…/risk-score` — expected; x402scan remains on v1.
+
 ## Agentic.Market status
 
-- **Not listed** until https://agentic.market/validate passes and search shows a public listing URL.
-- Prior validator run (2026-05-19): failed on v1 endpoint — expected; use **v2** URL for re-validation:
-  `https://api.beezshield.com/contracts/risk-score-v2`
-- **No** partnership, endorsement, or security guarantee claims.
+- **Not listed** — no verified Agentic.Market listing URL.
+- **Validator not passed** on production v2 URL until deploy returns unpaid **POST → 402** with v2 + Bazaar shape.
+- **No** partnership, endorsement, certification, or security guarantee claims.
 
 ## Claim discipline
 

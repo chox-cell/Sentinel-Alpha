@@ -6,7 +6,8 @@
 
 | Field | Value |
 | --- | --- |
-| **Status** | **submitted_pending** (validator run 2026-05-19; not listed on Agentic.Market search yet) |
+| **Status** | **rejected_needs_fix** (v2 validator 2026-05-19: production **404**; re-validate after deploy) |
+| **Bazaar v2 endpoint** | https://api.beezshield.com/contracts/risk-score-v2 |
 | **Target** | [Agentic.Market](https://agentic.market) |
 | **Submission owner** | Chox |
 | **Product name** | BeezShield Sentinel Alpha |
@@ -24,11 +25,11 @@
 
 | State | Meaning | When to set |
 | --- | --- | --- |
-| `prepared_not_submitted` | Copy + checklist ready; no form sent | Superseded after 2026-05-19 validator attempt |
-| `submitted_pending` | Seller validator run; Bazaar review/indexing pending | **Current** — see `OUTREACH_TRACKER.md` manual attempt block |
-| `submitted_pending` | Form sent; awaiting directory review | After submit + confirmation; no listing URL yet |
+| `prepared_not_submitted` | Copy + checklist ready; no form sent | Superseded |
+| `submitted_pending` | Seller validator run; awaiting Bazaar | Superseded by v2 attempt |
+| `validator_passed_not_listed` | Validator green; search has no listing | Set only after verified pass on production v2 URL |
 | `listed_verified` | Public listing URL captured and checked | **Only** with verified Agentic.Market URL |
-| `rejected_needs_fix` | Directory rejected or validation failed | With rejection reason + fix notes in tracker |
+| `rejected_needs_fix` | Validation failed or not deployed | **Current** — production v2 **404**; UI: **No x402 Setup Detected** |
 
 **Rules:** Never use `listed_verified` without a verified listing URL. No fake listing claim. x402scan remains **registered** (directory only) independent of Agentic.Market state.
 
