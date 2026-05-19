@@ -14,6 +14,7 @@ PAGES = [
 
 INDEX = Path("apps/website/index.html")
 REGISTRY_X402 = Path("apps/website/registry/x402scan.html")
+PILOT_TRUST_RECEIPT = Path("apps/website/pilot/trust-receipt.html")
 
 
 def _merged() -> str:
@@ -87,7 +88,7 @@ def test_index_x402scan_brand_surface():
 
 def test_no_wordmark_references_in_any_active_file():
     # All html/css pages under apps/website
-    active_files = [INDEX, REGISTRY_X402, Path("apps/website/styles.css")] + PAGES
+    active_files = [INDEX, REGISTRY_X402, PILOT_TRUST_RECEIPT, Path("apps/website/styles.css")] + PAGES
     for path in active_files:
         if path.exists():
             content = path.read_text(encoding="utf-8").lower()
@@ -125,6 +126,22 @@ def test_logo_count_patterns():
     reg_total_logos = re.findall(r'beezshield-logo\.svg', registry_html)
     assert len(reg_total_logos) == 1
 
+    # Pilot page logo counts
+    assert PILOT_TRUST_RECEIPT.exists()
+    pilot_html = PILOT_TRUST_RECEIPT.read_text(encoding="utf-8")
+    pilot_nav_match = re.search(r'<nav class="top-nav">.*?</nav>', pilot_html, re.DOTALL)
+    assert pilot_nav_match is not None
+    pilot_nav_logos = re.findall(r'beezshield-logo\.svg', pilot_nav_match.group(0))
+    assert len(pilot_nav_logos) == 1
+
+    pilot_footer_match = re.search(r'<footer class="site-footer">.*?</footer>', pilot_html, re.DOTALL)
+    assert pilot_footer_match is not None
+    pilot_footer_logos = re.findall(r'beezshield-logo\.svg', pilot_footer_match.group(0))
+    assert len(pilot_footer_logos) == 1
+
+    pilot_total_logos = re.findall(r'beezshield-logo\.svg', pilot_html)
+    assert len(pilot_total_logos) == 2
+
 
 def test_logo_no_text():
     logo = Path("apps/website/brand/beezshield-logo.svg").read_text(encoding="utf-8")
@@ -145,3 +162,26 @@ def test_registry_x402scan_page():
     assert "agentic.market" in reg
     assert "pay.sh" in reg
     assert "ampersend" in reg
+
+
+def test_pilot_trust_receipt_page():
+    assert PILOT_TRUST_RECEIPT.exists()
+    html = PILOT_TRUST_RECEIPT.read_text(encoding="utf-8")
+    low = html.lower()
+    
+    # Required pricing and description copy
+    assert "$25" in html
+    assert "$50" in html
+    assert "agentkit" in low
+    assert "sentinel" in low
+    assert "redacted" in low
+    assert "json" in low
+    assert "receipt" in low
+    
+    # Required safety disclaimers
+    assert "security guarantee" in low
+    assert "endorsement" in low
+    assert "partnership" in low
+    
+    # Single logo checks (logo file name check)
+    assert "beezshield-wordmark.svg" not in html

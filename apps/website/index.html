@@ -84,8 +84,8 @@
                     <p class="subtitle">BeezShield gives bots a pre-execution decision layer before they touch unsafe contracts. <strong class="highlight">Your agent should not execute blind.</strong></p>
                     
                     <div class="cta-group">
-                        <a href="#quickstart" class="btn btn-primary">Test the API</a>
-                        <a href="#integration-split" class="btn btn-secondary">Integrate Sentinel Alpha</a>
+                        <a href="pilot/trust-receipt.html" class="btn btn-primary">Request Trust Receipt Pilot</a>
+                        <a href="#builder" class="btn btn-secondary">Test x402 API</a>
                     </div>
                 </div>
 
@@ -139,6 +139,64 @@
                 <div class="proof-item"><i data-lucide="clock" class="text-amber" style="color:var(--accent); margin-right:0.25rem;"></i> Agentic.Market: Validation pending (Bazaar v2 in progress)</div>
                 <div class="proof-item"><i data-lucide="minus-circle" class="text-muted" style="color:var(--text-muted); margin-right:0.25rem;"></i> Pay.sh: Not submitted</div>
                 <div class="proof-item"><i data-lucide="minus-circle" class="text-muted" style="color:var(--text-muted); margin-right:0.25rem;"></i> Ampersend: Not submitted</div>
+            </div>
+        </section>
+
+        <!-- Sentinel + Trust Receipt Pilot Overview Section -->
+        <section id="trust-receipt-overview" class="section">
+            <div class="container">
+                <div class="section-header center">
+                    <h2>Sentinel + Trust Receipt Pipeline</h2>
+                    <p class="text-muted">Verification at every stage of the autonomous agent lifecycle.</p>
+                </div>
+                
+                <div class="grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 2.5rem; margin-top: 3rem; align-items: stretch;">
+                    <!-- Before Execution -->
+                    <div class="card" style="border: 1px solid var(--border-light); background: linear-gradient(180deg, rgba(255, 255, 255, 0.02) 0%, rgba(0, 0, 0, 0.4) 100%); display: flex; flex-direction: column; justify-content: space-between; padding: 2rem;">
+                        <div>
+                            <div class="badge mb-4"><span class="mono text-xs text-amber">PRE-EXECUTION</span></div>
+                            <h3 class="mono text-xl mb-3"><i data-lucide="shield" class="icon-sm inline text-amber" style="margin-right: 0.5rem;"></i> Sentinel Risk Decision</h3>
+                            <p class="text-muted text-sm mb-4">Before an agent performs any wallet automation or contract execution, Sentinel assesses the transaction target's threat profile, blocking execution on high-risk signatures or unverified contract entities.</p>
+                            <ul class="text-sm text-muted" style="list-style: none; padding: 0; line-height: 2;">
+                                <li><i data-lucide="check" class="icon-xs inline text-green" style="color:#10b981; margin-right:0.25rem;"></i> Query pre-execution risk score via POST</li>
+                                <li><i data-lucide="check" class="icon-xs inline text-green" style="color:#10b981; margin-right:0.25rem;"></i> 0.02 USDC per-request basic lane pricing</li>
+                                <li><i data-lucide="check" class="icon-xs inline text-green" style="color:#10b981; margin-right:0.25rem;"></i> Real-time threat classification</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <!-- After Execution -->
+                    <div class="card" style="border: 1px solid var(--border-light); background: linear-gradient(180deg, rgba(255, 255, 255, 0.02) 0%, rgba(0, 0, 0, 0.4) 100%); display: flex; flex-direction: column; justify-content: space-between; padding: 2rem;">
+                        <div>
+                            <div class="badge mb-4" style="border-color: var(--electric-blue);"><span class="mono text-xs text-electric" style="color:var(--electric-blue);">POST-EXECUTION</span></div>
+                            <h3 class="mono text-xl mb-3"><i data-lucide="receipt" class="icon-sm inline text-electric" style="margin-right: 0.5rem; color:var(--electric-blue);"></i> Trust Receipt Packet</h3>
+                            <p class="text-muted text-sm mb-4">Once execution completes, the agent compiles a cryptographically signed Trust Receipt. The receipt acts as an auditable verification packet of the agent's pre-execution inputs and post-execution logs.</p>
+                            <ul class="text-sm text-muted" style="list-style: none; padding: 0; line-height: 2;">
+                                <li><i data-lucide="check" class="icon-xs inline text-green" style="color:#10b981; margin-right:0.25rem;"></i> Cryptographically signed receipts</li>
+                                <li><i data-lucide="check" class="icon-xs inline text-green" style="color:#10b981; margin-right:0.25rem;"></i> Redacted logs & payload details</li>
+                                <li><i data-lucide="check" class="icon-xs inline text-green" style="color:#10b981; margin-right:0.25rem;"></i> Auditable by third-party protocols</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- What this proves / does not prove card -->
+                <div class="card mt-8" style="background: rgba(0, 0, 0, 0.2); border: 1px solid var(--border-light); padding: 2rem;">
+                    <div class="grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; align-items: start;">
+                        <div>
+                            <h4 class="mono text-sm text-green mb-3" style="color:#10b981;"><i data-lucide="shield-check" class="icon-sm inline" style="margin-right:0.25rem;"></i> What this proves</h4>
+                            <p class="text-xs text-muted" style="line-height: 1.6;">The Sentinel + Trust Receipt pipeline proves that a specific agent performed pre-execution contract verification prior to taking onchain action. It verifies that decisions were backed by point-in-time threat database intelligence and that the resulting transaction matches the validated contract target.</p>
+                        </div>
+                        <div>
+                            <h4 class="mono text-sm text-amber mb-3"><i data-lucide="shield-alert" class="icon-sm inline" style="margin-right:0.25rem;"></i> What this does not prove</h4>
+                            <p class="text-xs text-muted" style="line-height: 1.6;">This pipeline is not a security guarantee. It does not prove the logical correctness of the target contract's code, nor does it guarantee protection against zero-day exploits. It is not an official endorsement or partnership with the target protocols or base infrastructure providers.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="center mt-8">
+                    <a href="pilot/trust-receipt.html" class="btn btn-primary">Learn More & Request Trust Receipt Pilot</a>
+                </div>
             </div>
         </section>
 
