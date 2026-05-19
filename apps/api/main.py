@@ -22,6 +22,10 @@ from services.x402.payment import (
     build_x402_challenge_v1_pure,
     x402_payment_discovery_headers,
 )
+from services.x402.bazaar_v2 import (
+    build_x402_challenge_v2_bazaar,
+    x402_v2_discovery_headers,
+)
 from services.x402.onchain_verifier import get_onchain_verification_status
 from services.x402.replay_guard import get_replay_status
 from services.x402.settlement_ledger import get_settlement_status
@@ -108,6 +112,11 @@ _RISK_SCORE_POST_OPENAPI_EXTRA = {
     },
 }
 
+_RISK_SCORE_V2_POST_OPENAPI_EXTRA = {
+    "requestBody": _RISK_SCORE_POST_OPENAPI_EXTRA["requestBody"],
+    "x-payment-info": _RISK_SCORE_POST_OPENAPI_EXTRA["x-payment-info"],
+}
+
 
 _RISK_SCORE_OPTIONS_CORS_HEADERS = {
     "Access-Control-Allow-Methods": "DELETE,GET,HEAD,OPTIONS,PATCH,POST,PUT",
@@ -140,6 +149,78 @@ def _post_prepayment_discovery_response(lane: str) -> JSONResponse:
         content=challenge,
         headers=x402_payment_discovery_headers(challenge),
     )
+
+
+def _post_v2_prepayment_discovery_response(lane: str) -> JSONResponse:
+    """Bazaar / Agentic.Market: x402 v2 body + PAYMENT-REQUIRED header (separate from v1 resource)."""
+    challenge = build_x402_challenge_v2_bazaar(lane=lane)
+    record_unpaid_discovery_402()
+    return JSONResponse(
+        status_code=402,
+        content=challenge,
+        headers=x402_v2_discovery_headers(challenge),
+    )
+
+
+async def _parse_risk_score_json_body(request: Request) -> dict[str, Any]:
+    raw = await request.body()
+    if not raw.strip():
+        return {}
+    try:
+        parsed = json.loads(raw.decode("utf-8"))
+    except json.JSONDecodeError:
+        raise HTTPException(
+            status_code=422,
+            detail=[{"loc": ["body"], "msg": "Invalid JSON payload", "type": "json_invalid"}],
+        ) from None
+    if parsed is None:
+        return {}
+    if not isinstance(parsed, dict):
+        raise HTTPException(
+            status_code=422,
+            detail=[{"loc": ["body"], "msg": "JSON body must be an object", "type": "value_error"}],
+        )
+    return parsed
+
+
+async def _execute_paid_risk_score(
+    background_tasks: BackgroundTasks,
+    req: RequestModel,
+    payment_signature: str | None,
+    x402_payment_hdr: str | None,
+    lane: str,
+) -> dict:
+    payment_billing = require_x402_payment(
+        {
+            "PAYMENT-SIGNATURE": payment_signature,
+            "X402-PAYMENT": x402_payment_hdr,
+        },
+        lane=lane,
+    )
+    result = evaluate_contract_with_meta(
+        contract_address=req.contract_address,
+        chain=req.chain,
+        context=req.context,
+    )
+    response = result["response"]
+    if isinstance(payment_billing, dict):
+        response["billing"] = {
+            "amount": payment_billing.get("amount", response.get("billing", {}).get("amount", "0.02")),
+            "method": payment_billing.get("method", response.get("billing", {}).get("method", "x402")),
+            "status": payment_billing.get("status", response.get("billing", {}).get("status", "demo")),
+        }
+    schedule_post_risk_tasks(
+        background_tasks,
+        event_payload={
+            "contract_address": req.contract_address,
+            "chain": req.chain,
+            "context": req.context,
+            "response": response,
+        },
+        outcome_record=result.get("outcome_record"),
+    )
+    record_paid_request()
+    return response
 
 
 @app.get(
@@ -317,66 +398,121 @@ async def risk_score(
         if not xp:
             return _post_prepayment_discovery_response(lane)
 
-    raw = await request.body()
-    if not raw.strip():
-        payload: dict[str, Any] = {}
-    else:
-        try:
-            parsed = json.loads(raw.decode("utf-8"))
-        except json.JSONDecodeError:
-            raise HTTPException(
-                status_code=422,
-                detail=[{"loc": ["body"], "msg": "Invalid JSON payload", "type": "json_invalid"}],
-            )
-        if parsed is None:
-            payload = {}
-        elif not isinstance(parsed, dict):
-            raise HTTPException(
-                status_code=422,
-                detail=[{"loc": ["body"], "msg": "JSON body must be an object", "type": "value_error"}],
-            )
-        else:
-            payload = parsed
-
+    payload = await _parse_risk_score_json_body(request)
     try:
         req = RequestModel.model_validate(payload)
     except ValidationError as exc:
         raise HTTPException(status_code=422, detail=exc.errors()) from exc
 
-    payment_billing = require_x402_payment(
-        {
-            "PAYMENT-SIGNATURE": payment_signature,
-            "X402-PAYMENT": x402_payment_hdr,
-        },
-        lane=lane,
-    )
-
-    result = evaluate_contract_with_meta(
-        contract_address=req.contract_address,
-        chain=req.chain,
-        context=req.context,
-    )
-    response = result["response"]
-    if isinstance(payment_billing, dict):
-        response["billing"] = {
-            "amount": payment_billing.get("amount", response.get("billing", {}).get("amount", "0.02")),
-            "method": payment_billing.get("method", response.get("billing", {}).get("method", "x402")),
-            "status": payment_billing.get("status", response.get("billing", {}).get("status", "demo")),
-        }
-
-    schedule_post_risk_tasks(
+    return await _execute_paid_risk_score(
         background_tasks,
-        event_payload={
-            "contract_address": req.contract_address,
-            "chain": req.chain,
-            "context": req.context,
-            "response": response,
-        },
-        outcome_record=result.get("outcome_record"),
+        req,
+        payment_signature,
+        x402_payment_hdr,
+        lane,
     )
 
-    record_paid_request()
-    return response
+
+@app.post(
+    "/contracts/risk-score-v2",
+    include_in_schema=False,
+    summary="Contract risk score (x402 v2 / Bazaar discovery)",
+    description=(
+        "Separate Bazaar/Agentic.Market discovery resource. Unpaid POST returns HTTP 402 with "
+        "x402Version 2, top-level resource, PAYMENT-REQUIRED header, and extensions.bazaar. "
+        "Does not replace x402scan v1 registration on /contracts/risk-score."
+    ),
+    responses={
+        402: {"description": "Payment required — x402 v2 + Bazaar discovery"},
+        200: {"description": "Risk score JSON (paid)"},
+        422: {"description": "Invalid request body (paid path only, after payment gate)"},
+    },
+)
+async def risk_score_v2(
+    request: Request,
+    background_tasks: BackgroundTasks,
+    payment_signature: str | None = Header(default=None, alias="PAYMENT-SIGNATURE"),
+    x402_payment_hdr: str | None = Header(default=None, alias="X402-PAYMENT"),
+    x_sentinel_lane: str | None = Header(default=None, alias="X-SENTINEL-LANE"),
+):
+    client_ip = request.client.host if (request and request.client) else None
+    if not _rate_limit_allow(client_ip):
+        raise HTTPException(status_code=429, detail={"error": "rate_limit_exceeded"})
+
+    payment_signature = payment_signature if isinstance(payment_signature, str) else None
+    x402_payment_hdr = x402_payment_hdr if isinstance(x402_payment_hdr, str) else None
+    lane_raw = x_sentinel_lane if isinstance(x_sentinel_lane, str) else None
+    lane = (lane_raw.strip().lower() if isinstance(lane_raw, str) and lane_raw.strip() else "basic")
+    if lane not in _SUPPORTED_LANES:
+        return JSONResponse(status_code=400, content={"error": "invalid_lane"})
+
+    mode = (os.getenv("PAYMENT_MODE", "demo") or "demo").strip().lower()
+
+    if mode == "demo":
+        if not verify_demo_payment(payment_signature):
+            return _post_v2_prepayment_discovery_response(lane)
+    else:
+        x402_enabled = (os.getenv("X402_ENABLED", "false") or "false").strip().lower() in {
+            "1",
+            "true",
+            "yes",
+            "on",
+        }
+        if not x402_enabled:
+            return JSONResponse(status_code=402, content={"detail": {"error": "x402_disabled"}})
+        xp = (x402_payment_hdr or "").strip()
+        if not xp:
+            return _post_v2_prepayment_discovery_response(lane)
+
+    payload = await _parse_risk_score_json_body(request)
+    try:
+        req = RequestModel.model_validate(payload)
+    except ValidationError as exc:
+        raise HTTPException(status_code=422, detail=exc.errors()) from exc
+
+    return await _execute_paid_risk_score(
+        background_tasks,
+        req,
+        payment_signature,
+        x402_payment_hdr,
+        lane,
+    )
+
+
+@app.get("/openapi.bazaar.json", include_in_schema=False)
+def openapi_bazaar_json():
+    """Dedicated OpenAPI for Bazaar v2 resource only (excluded from x402scan /openapi.json)."""
+    base = app.openapi()
+    return {
+        "openapi": base.get("openapi", "3.1.0"),
+        "info": {
+            **base.get("info", {}),
+            "title": "BeezShield Sentinel Alpha — Bazaar x402 v2",
+            "description": (
+                "Discovery schema for POST /contracts/risk-score-v2 only. "
+                "x402scan registration remains on /contracts/risk-score (v1)."
+            ),
+        },
+        "paths": {
+            "/contracts/risk-score-v2": {
+                "post": {
+                    "summary": "Contract risk score (x402 v2 / Bazaar)",
+                    "description": (
+                        "Payable x402 v2 discovery for Agentic.Market/Bazaar indexers. "
+                        "Pre-execution policy assistance only — not a security guarantee."
+                    ),
+                    "operationId": "risk_score_v2",
+                    "requestBody": _RISK_SCORE_V2_POST_OPENAPI_EXTRA["requestBody"],
+                    "responses": {
+                        "402": {"description": "Payment required — x402 v2 + extensions.bazaar"},
+                        "200": {"description": "Risk score JSON (paid)"},
+                        "422": {"description": "Invalid request body (paid path only)"},
+                    },
+                    "x-payment-info": _RISK_SCORE_V2_POST_OPENAPI_EXTRA["x-payment-info"],
+                }
+            }
+        },
+    }
 
 
 @app.get("/internal/cache-metrics", include_in_schema=False)

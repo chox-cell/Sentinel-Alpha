@@ -28,6 +28,12 @@
 - **Automated settlement success** (builders handle payment flow explicitly)
 - Validation of every future x402scan probe or third-party crawler behavior
 
+## Bazaar / Agentic.Market (separate v2 path)
+
+- x402scan registration remains on **`POST /contracts/risk-score`** (v1 body-first).
+- Bazaar/Agentic.Market discovery uses **`POST /contracts/risk-score-v2`** (x402 v2 + `extensions.bazaar`) — see `docs/17_growth/BAZAAR_V2_COMPATIBILITY_PLAN.md`.
+- Agentic.Market is **not listed** until validator passes on the v2 URL.
+
 ## Follow-up actions
 
 1. Create BeezShield logo pack — see `docs/17_growth/BEEZSHIELD_BRAND_LOGO_BRIEF.md`
