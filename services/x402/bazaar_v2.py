@@ -52,7 +52,6 @@ def _bazaar_extensions() -> dict:
         "bazaar": {
             "info": {
                 "toolName": "beezshield_risk_score",
-                "method": "POST",
                 "title": "BeezShield Sentinel Alpha Risk Score",
                 "description": (
                     "Pre-execution risk decision API for autonomous agents on Base. "
@@ -60,8 +59,16 @@ def _bazaar_extensions() -> dict:
                     "execution. Policy assistance only — not a security guarantee, partnership, "
                     "or endorsement."
                 ),
-                "input": dict(_BAZAAR_INPUT_EXAMPLE),
-                "output": {"example": dict(_BAZAAR_OUTPUT_EXAMPLE)},
+                "input": {
+                    "type": "http",
+                    "method": "POST",
+                    "bodyType": "json",
+                    "body": dict(_BAZAAR_INPUT_EXAMPLE),
+                },
+                "output": {
+                    "type": "object",
+                    "example": dict(_BAZAAR_OUTPUT_EXAMPLE),
+                },
             },
             "schema": {
                 "input": {

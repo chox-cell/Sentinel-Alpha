@@ -459,7 +459,7 @@ Maintainer signal on x402 ecosystem page PR (ecosystem page sunset; PR closed; c
 - target_endpoint: https://api.beezshield.com/contracts/risk-score-v2
 - production_unpaid_post_status: **402** (`x402Version: 2`, `PAYMENT-REQUIRED` header matches body)
 - production_bazaar_info: `toolName`, `method`, `output.example` present (top-level `info.*`)
-- validator_ui_result: **Implementation Invalid** — SDK Parse Error: failed to extract method/toolName from discovery info
+- validator_ui_result: **Implementation Invalid** (b57330a) — SDK Parse Error; HTTP `info.input` shape fix in-repo — re-validate after deploy
 - marketplace_search: https://agentic.market/?q=beezshield → **0 results**
 - listing_url: null
 - screenshot: `docs/17_growth/evidence/agentic-market-validate-v2-b57330a-2026-05-19.png`

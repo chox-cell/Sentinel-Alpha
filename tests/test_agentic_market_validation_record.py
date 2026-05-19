@@ -59,6 +59,8 @@ def test_v2_validation_record_present():
     assert "b57330a" in plan
     assert "Production verification" in plan
     assert "toolName" in plan and "output.example" in plan
+    assert "bodyType" in plan or "info.input" in plan
+    assert "validator_passed_not_listed" in plan
     assert "agentic-market-validate-v2-b57330a-2026-05-19.png" in plan
 
 

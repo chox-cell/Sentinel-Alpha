@@ -6,7 +6,7 @@
 
 | Field | Value |
 | --- | --- |
-| **Status** | **rejected_needs_fix** (production **402** live `b57330a`; validator SDK parse error; not listed) |
+| **Status** | **rejected_needs_fix** (production **402** live; HTTP `info.input` shape fix pending validator re-run; not listed) |
 | **Bazaar v2 endpoint** | https://api.beezshield.com/contracts/risk-score-v2 |
 | **Target** | [Agentic.Market](https://agentic.market) |
 | **Submission owner** | Chox |

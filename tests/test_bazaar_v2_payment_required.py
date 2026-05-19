@@ -61,26 +61,22 @@ def _bazaar_from_payload(payload: dict) -> dict:
     return payload["extensions"]["bazaar"]
 
 
-def test_v2_bazaar_info_has_toolname_and_method(monkeypatch):
+def test_v2_bazaar_info_http_discovery_shape(monkeypatch):
     _real_unpaid(monkeypatch)
     r = TestClient(app).post("/contracts/risk-score-v2", content=b"")
     assert r.status_code == 402
     info = _bazaar_from_payload(r.json())["info"]
     assert info["toolName"] == "beezshield_risk_score"
-    assert info["method"] == "POST"
     assert info["title"] == "BeezShield Sentinel Alpha Risk Score"
     assert "pre-execution" in info["description"].lower()
-
-
-def test_v2_bazaar_info_has_output_example(monkeypatch):
-    _real_unpaid(monkeypatch)
-    r = TestClient(app).post("/contracts/risk-score-v2", content=b"")
-    example = _bazaar_from_payload(r.json())["info"]["output"]["example"]
-    assert example == {
-        "risk_score": 42,
-        "decision": "review",
-        "reasons": ["Contract requires manual review before execution."],
-    }
+    inp = info["input"]
+    assert inp["type"] == "http"
+    assert inp["method"] == "POST"
+    assert inp["bodyType"] == "json"
+    assert inp["body"]["contract_address"] == "0x1111111111111111111111111111111111111111"
+    assert inp["body"]["chain"] == "base"
+    assert info["output"]["type"] == "object"
+    assert info["output"]["example"]["risk_score"] == 42
 
 
 def test_v2_bazaar_output_schema_required_fields(monkeypatch):
@@ -100,8 +96,11 @@ def test_v2_payment_required_header_matches_body_bazaar(monkeypatch):
     header_raw = r.headers.get("PAYMENT-REQUIRED") or r.headers.get("payment-required")
     decoded = _decode_payment_required(header_raw)
     body = r.json()
+    assert decoded == body
     for payload in (decoded, body):
         bazaar = _bazaar_from_payload(payload)
         assert bazaar["info"]["toolName"] == "beezshield_risk_score"
+        assert bazaar["info"]["input"]["type"] == "http"
+        assert bazaar["info"]["input"]["method"] == "POST"
         assert bazaar["info"]["output"]["example"]["decision"] == "review"
         assert bazaar["schema"]["input"]["required"] == ["contract_address", "chain"]

@@ -40,11 +40,11 @@ x402scan registration remains tied to **`/contracts/risk-score`**. The v2 path i
 | Field | Value |
 | --- | --- |
 | **Validator URL** | https://agentic.market/validate?url=https%3A%2F%2Fapi.beezshield.com%2Fcontracts%2Frisk-score-v2&method=POST |
-| **Validator UI** | **Implementation Invalid** — **SDK Parse Error:** failed to extract method/toolName from discovery info |
-| **Likely cause** | `@x402/extensions` expects `extensions.bazaar.info.input.type` + `input.method` (+ `bodyType`/`body` for POST), not top-level `info.method` / `info.toolName` |
-| **Screenshot** | `docs/17_growth/evidence/agentic-market-validate-v2-b57330a-2026-05-19.png` |
+| **Validator UI (b57330a)** | **Implementation Invalid** — **SDK Parse Error:** failed to extract method/toolName from discovery info |
+| **Screenshot (pre-fix)** | `docs/17_growth/evidence/agentic-market-validate-v2-b57330a-2026-05-19.png` |
+| **In-repo fix** | `info.input` HTTP shape (`type`/`method`/`bodyType`/`body`) — re-validate on production after deploy |
 | **Search** | https://agentic.market/?q=beezshield → **0 results** (no listing URL) |
-| **Tracker status** | `rejected_needs_fix` (align Bazaar `info.input` shape, then re-validate) |
+| **Tracker status** | `rejected_needs_fix` until Agentic.Market validator passes; then `validator_passed_not_listed` if search still empty |
 
 Earlier same-day attempt (pre-deploy): **404** / **No x402 Setup Detected** — `docs/17_growth/evidence/agentic-market-validate-v2-2026-05-19.png`.
 
