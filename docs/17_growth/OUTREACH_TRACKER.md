@@ -516,3 +516,24 @@ Paraphrased **community** reply on the closed x402 ecosystem PR thread (no impli
 - directory_submissions_status: **community directory rows above remain `not submitted` here** until a real manual submission is recorded and verified
 - status: **community alignment signal** / **no partnership** / **no integration**
 - notes: positive **alignment signal** only; not partnership, not approval, not shared runtime stack; cross-reference is **optional** and **after** both listings are live — see `docs/17_growth/X402_DIRECTORY_SUBMISSION_PACK.md` §10
+
+## ReaWorks — Trust Receipt $25 outside review (v13.x)
+
+| Field | Value |
+| --- | --- |
+| **status** | **packet_sent_pending_review_payment** |
+| **recorded_date** | 2026-05-20 |
+| **packet_sent_at** | 2026-05-20T12:00:00Z |
+| **review_offer** | ReaWorks offered **$25** outside review of one draft Sentinel/AgentKit run |
+| **files_sent** | `docs/17_growth/REAWORKS_REVIEW_PACKET_001.md` |
+| | `docs/17_growth/fixtures/trust_receipt_reaworks_review_packet_001.redacted.json` |
+| **receipt_id** | `reaworks-review-packet-001` |
+| **payment_received** | **not confirmed** |
+| **review_completed** | **not confirmed** |
+| **revenue_confirmed** | **false** |
+| **paid_customer_claim** | **false** |
+| **partnership_claim** | **false** |
+| **integration_claim** | **false** |
+| **endorsement_claim** | **false** |
+| **security_guarantee_claim** | **false** |
+| **notes** | Packet prepared and sent for external review; awaiting **$25 payment** and written review outcome. Do not claim paid customer, partnership, integration, endorsement, or revenue until separately verified. |
