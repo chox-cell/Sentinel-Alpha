@@ -180,8 +180,18 @@ def test_pilot_trust_receipt_page():
     
     # Required safety disclaimers
     assert "security guarantee" in low
+    assert "execution quality guarantee" in low
     assert "endorsement" in low
     assert "partnership" in low
     
     # Single logo checks (logo file name check)
     assert "beezshield-wordmark.svg" not in html
+
+    # Review-ready packet components
+    assert "review-ready packet" in low
+    assert "request $25 review packet" in low
+    assert "redacted proposed action" in low
+    assert "sentinel decision" in low
+    assert "post-action result ref" in low
+    assert "not-checked boundary" in low
+    assert "buyer/operator-readable receipt map" in low

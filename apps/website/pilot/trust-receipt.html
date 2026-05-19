@@ -71,8 +71,34 @@
                 </div>
             </div>
 
+            <!-- Review-ready packet section -->
+            <div class="card mt-8" style="border: 1px solid var(--border-light); background: rgba(10,10,10,0.8); padding: 2.5rem;">
+                <div class="section-header center mb-6">
+                    <h2 class="mono text-xl" style="color: var(--accent);">Review-ready packet</h2>
+                    <p class="text-muted text-sm">Detailed schema composition of the pilot Trust Receipt delivery</p>
+                </div>
+                <div class="grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; align-items: start;">
+                    <div>
+                        <h3 class="mono text-sm text-amber mb-3">Receipt Specification & Map</h3>
+                        <ul class="text-xs text-muted" style="list-style: none; padding: 0; line-height: 2;">
+                            <li><strong style="color:#fff;">Redacted proposed action:</strong> Sanitized execution payload showing proposed call target, inputs, and gas cap before submission.</li>
+                            <li><strong style="color:#fff;">Sentinel decision:</strong> Captured pre-execution risk classification, threat signals, and path recommendation.</li>
+                            <li><strong style="color:#fff;">Post-action result ref:</strong> Secure onchain execution link, transaction hash, and outcome hash reference.</li>
+                            <li><strong style="color:#fff;">Not-checked boundary:</strong> Clear parameters detailing variables and dependencies excluded from local database checks.</li>
+                            <li><strong style="color:#fff;">Buyer/operator-readable receipt map:</strong> Simplified payload visualization index mapping machine-readable logs to human-auditable action cards.</li>
+                        </ul>
+                    </div>
+                    <div style="background: rgba(0, 0, 0, 0.4); border: 1px dashed var(--border-light); padding: 1.5rem; border-radius: 4px; display: flex; flex-direction: column; justify-content: center; height: 100%;">
+                        <p class="mono text-xs text-muted mb-4" style="line-height: 1.6;">
+                            Integrate this blueprint into your operational reviews. This review packet is not a security guarantee or execution quality guarantee, and does not claim official partnerships.
+                        </p>
+                        <a href="#pilotForm" onclick="selectTierAndScroll('25')" class="btn btn-primary btn-block text-center" style="font-family:var(--font-mono);">Request $25 review packet</a>
+                    </div>
+                </div>
+            </div>
+
             <!-- Pilot Request Form -->
-            <div class="card mt-8" style="max-width: 600px; margin-left: auto; margin-right: auto; border: 1px solid var(--border-accent); background: linear-gradient(180deg, rgba(255, 176, 0, 0.03) 0%, rgba(5, 5, 5, 0.9) 100%); padding: 2.5rem;">
+            <div id="pilotFormCard" class="card mt-8" style="max-width: 600px; margin-left: auto; margin-right: auto; border: 1px solid var(--border-accent); background: linear-gradient(180deg, rgba(255, 176, 0, 0.03) 0%, rgba(5, 5, 5, 0.9) 100%); padding: 2.5rem;">
                 <h2 class="mono text-xl mb-4 text-center" style="color: var(--accent);">Request Pilot Integration</h2>
                 <form id="pilotForm" onsubmit="handlePilotSubmit(event)">
                     <div style="margin-bottom: 1.25rem;">
@@ -162,6 +188,17 @@
             document.getElementById('formSuccess').style.display = 'block';
             if (window.lucide) {
                 lucide.createIcons();
+            }
+        }
+
+        function selectTierAndScroll(tierValue) {
+            const selectEl = document.getElementById('pilotTier');
+            if (selectEl) {
+                selectEl.value = tierValue;
+            }
+            const formCard = document.getElementById('pilotFormCard');
+            if (formCard) {
+                formCard.scrollIntoView({ behavior: 'smooth' });
             }
         }
     </script>
