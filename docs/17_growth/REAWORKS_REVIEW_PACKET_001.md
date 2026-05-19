@@ -1,8 +1,8 @@
 # ReaWorks Review Packet 001 — $25 outside review
 
 **Packet id:** `reaworks-review-packet-001`  
-**Fee:** **$25** one-time outside review (ReaWorks offer)  
-**Scope:** One draft **Sentinel + AgentKit-style** run — redacted, falsifiable, no API routes.
+**Commercial status:** ReaWorks **offered** a **$25 quick outside review** — commercial direction **pending clarification** (likely **BeezShield pays ReaWorks** for review, **not** BeezShield customer revenue). **No payment sent or received** is confirmed in this artifact.  
+**Scope:** Draft packet for **outside review** or a future **buyer** Trust Receipt pilot — one **Sentinel + AgentKit-style** run, redacted, falsifiable, no API routes.
 
 **Attachments**
 
@@ -80,9 +80,11 @@ No raw contract address, API keys, `.env`, bearer tokens, or payment payloads ap
 
 ## 4) Commercial boundary
 
-**payment_lane:** `basic` (x402 Sentinel call label only — not a billing audit)
+**payment_lane:** `basic` (x402 Sentinel call label in sample run only — not a billing audit)
 
-**release_refund_cure_rule:** If BeezShield does not deliver one Trust Receipt JSON matching `TRUST_RECEIPT_V0_SPEC.md` within **5 business days** of confirmed **$25** pilot payment, reviewer may request a **one-time pilot fee refund**; remedy limited to **$25**; no consequential damages.
+**review_fee_context:** **$25** refers to ReaWorks’ **outside review offer**, not confirmed BeezShield revenue. Do **not** record payment received from a customer.
+
+**release_refund_cure_rule (buyer-pilot template only):** If BeezShield later sells a **buyer** Trust Receipt pilot, a separate SOW may state: deliver JSON within **5 business days** of confirmed **buyer** pilot payment or refund the **buyer** pilot fee. That template does **not** apply to unconfirmed ReaWorks review spend.
 
 ---
 

@@ -90,9 +90,10 @@ Optional `linking_refs` (hashes only) may connect pre-decision and payment conte
 
 | Item | Status |
 | --- | --- |
-| ReaWorks review artifact | **Ready** — `fixtures/trust_receipt_reaworks_pilot.redacted.json` |
+| ReaWorks review artifact | **Ready** — `REAWORKS_REVIEW_PACKET_001.md` + fixtures |
+| ReaWorks commercial | **outside_review_offer_clarification_pending** — not customer revenue |
 | API mint routes | **Not implemented** (documentation-only) |
 | Bazaar v2 / Agentic.Market | Validator **passed** on production v2 (`62c0b1f`); **not listed** in search |
 | x402scan v1 | **Unchanged** — registered on `/contracts/risk-score` only |
 
-Deliver this JSON + §4 boundaries to design-partner review; no listing or guarantee claims in outreach.
+Deliver draft packet + §4 boundaries for outside review; no first-revenue, paid-customer, listing, or guarantee claims.
