@@ -57,7 +57,7 @@
     <nav class="top-nav">
         <div class="nav-container">
             <a href="index.html" class="brand brand-link" aria-label="BeezShield home">
-                <img src="brand/beezshield-logo.svg?v=clean-logo-2" alt="BeezShield Logo" width="32" height="32" class="brand-logo-img">
+                <img src="brand/beezshield-logo.svg?v=clean-logo-2" alt="BeezShield Logo" width="36" height="36" class="brand-logo-img">
                 <span class="brand-text">BeezShield</span>
             </a>
             <div class="nav-links">
@@ -85,7 +85,7 @@
                     
                     <div class="cta-group">
                         <a href="#quickstart" class="btn btn-primary">Test the API</a>
-                        <a href="#quickstart" class="btn btn-secondary">Integrate Sentinel Alpha</a>
+                        <a href="#integration-split" class="btn btn-secondary">Integrate Sentinel Alpha</a>
                     </div>
                 </div>
 
@@ -132,6 +132,16 @@
             </div>
         </section>
 
+        <!-- Directory Targets Strip -->
+        <section class="proof-strip">
+            <div class="container proof-container mono text-sm" style="display: flex; justify-content: space-between; flex-wrap: wrap; gap: 1rem;">
+                <div class="proof-item"><i data-lucide="check-circle" class="text-green" style="color:#10b981; margin-right:0.25rem;"></i> x402scan: Registered</div>
+                <div class="proof-item"><i data-lucide="clock" class="text-amber" style="color:var(--accent); margin-right:0.25rem;"></i> Agentic.Market: Validation pending (Bazaar v2 in progress)</div>
+                <div class="proof-item"><i data-lucide="minus-circle" class="text-muted" style="color:var(--text-muted); margin-right:0.25rem;"></i> Pay.sh: Not submitted</div>
+                <div class="proof-item"><i data-lucide="minus-circle" class="text-muted" style="color:var(--text-muted); margin-right:0.25rem;"></i> Ampersend: Not submitted</div>
+            </div>
+        </section>
+
         <!-- Use Cases -->
         <section id="use-cases" class="section bg-panel">
             <div class="container">
@@ -169,8 +179,50 @@
             </div>
         </section>
 
+        <!-- For Agents / For Humans Split -->
+        <section id="integration-split" class="section">
+            <div class="container">
+                <div class="section-header center">
+                    <h2>Integration Paths</h2>
+                    <p class="text-muted">Designed for autonomous execution. Documented for human developers.</p>
+                </div>
+                <div class="grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem;">
+                    <!-- For Agents Card -->
+                    <div class="card" style="border-top: 3px solid var(--accent); display: flex; flex-direction: column; justify-content: space-between;">
+                        <div>
+                            <div class="badge mb-4"><span class="mono text-xs text-amber">FOR AGENTS</span></div>
+                            <h3 class="mono text-lg mb-2">Automated Execution Pipeline</h3>
+                            <p class="text-muted text-sm mb-4">Integrate pre-execution decision checks directly into autonomous agent loops.</p>
+                            <ul class="text-sm text-muted" style="list-style: none; padding: 0; line-height: 2; margin-bottom: 2rem;">
+                                <li style="margin-bottom: 0.5rem;"><i data-lucide="terminal" class="icon-sm inline text-amber" style="margin-right: 0.5rem;"></i> <strong>POST Endpoint:</strong> <code>/contracts/risk-score</code></li>
+                                <li style="margin-bottom: 0.5rem;"><i data-lucide="coins" class="icon-sm inline text-amber" style="margin-right: 0.5rem;"></i> <strong>x402 Payment Loop:</strong> Reads 402 status, micro-payment on Base</li>
+                                <li style="margin-bottom: 0.5rem;"><i data-lucide="code" class="icon-sm inline text-amber" style="margin-right: 0.5rem;"></i> <strong>JSON Payloads:</strong> Compact input address, output action keys</li>
+                            </ul>
+                        </div>
+                        <a href="#quickstart" class="btn btn-outline btn-block">View API Spec</a>
+                    </div>
+                    
+                    <!-- For Humans Card -->
+                    <div class="card" style="border-top: 3px solid var(--electric-blue); display: flex; flex-direction: column; justify-content: space-between;">
+                        <div>
+                            <div class="badge mb-4"><span class="mono text-xs text-electric" style="color:var(--electric-blue);">FOR HUMANS</span></div>
+                            <h3 class="mono text-lg mb-2">Developer Tooling & Auditing</h3>
+                            <p class="text-muted text-sm mb-4">Everything human builders need to audit, configure, and initialize BeezShield.</p>
+                            <ul class="text-sm text-muted" style="list-style: none; padding: 0; line-height: 2; margin-bottom: 2rem;">
+                                <li style="margin-bottom: 0.5rem;"><i data-lucide="book-open" class="icon-sm inline text-electric" style="margin-right: 0.5rem; color:var(--electric-blue);"></i> <strong>Detailed Docs:</strong> <a href="docs.html" class="text-electric">API Reference & guides</a></li>
+                                <li style="margin-bottom: 0.5rem;"><i data-lucide="package" class="icon-sm inline text-electric" style="margin-right: 0.5rem; color:var(--electric-blue);"></i> <strong>npm SDK:</strong> Zero-dependency package <a href="https://www.npmjs.com/package/@beezshield/sentinel" target="_blank" class="text-electric">@beezshield/sentinel</a></li>
+                                <li style="margin-bottom: 0.5rem;"><i data-lucide="github" class="icon-sm inline text-electric" style="margin-right: 0.5rem; color:var(--electric-blue);"></i> <strong>GitHub Repository:</strong> Open-source SDK & templates <a href="https://github.com/chox-cell/Sentinel-Alpha" target="_blank" class="text-electric">chox-cell/Sentinel-Alpha</a></li>
+                                <li style="margin-bottom: 0.5rem;"><i data-lucide="file-check" class="icon-sm inline text-electric" style="margin-right: 0.5rem; color:var(--electric-blue);"></i> <strong>Registry Page:</strong> Public discoverability <a href="registry/x402scan.html" class="text-electric">x402scan record</a></li>
+                            </ul>
+                        </div>
+                        <a href="docs.html" class="btn btn-primary btn-block">Read Documentation</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
         <!-- How Agents Pay -->
-        <section id="how-agents-pay" class="section">
+        <section id="how-agents-pay" class="section bg-panel">
             <div class="container">
                 <div class="section-header">
                     <h2>How agents pay</h2>
@@ -200,23 +252,54 @@
             </div>
         </section>
 
-        <!-- Developer Quickstart -->
-        <section id="quickstart" class="section bg-panel">
+        <!-- Verifiable Proof Card / x402scan -->
+        <section id="x402scan-proof" class="section">
+            <div class="container">
+                <div class="card" style="border: 1px solid var(--border-accent); background: linear-gradient(135deg, rgba(255, 176, 0, 0.05) 0%, rgba(5, 5, 5, 0.9) 100%); padding: 2.5rem;">
+                    <div style="display: flex; align-items: center; gap: 1rem; flex-wrap: wrap;" class="mb-4">
+                        <i data-lucide="badge-check" class="text-amber" style="width: 40px; height: 40px; color: var(--accent);"></i>
+                        <div>
+                            <h3 class="mono text-lg mb-1" style="color: var(--accent);">Registered on x402scan</h3>
+                            <p class="text-muted text-xs">Directory Listing Record — Verified Payable Resource on Base</p>
+                        </div>
+                    </div>
+                    <p class="text-sm text-muted mb-6">Sentinel Alpha is registered under the x402 protocol specification as a payable machine-to-machine risk-score resource. Builders can query the API using standard ERC-20 payment lanes on Base Mainnet.</p>
+                    <div class="flex gap-4" style="display: flex; gap: 1rem; flex-wrap: wrap;">
+                        <a href="registry/x402scan.html" class="btn btn-outline btn-sm">Inspect Registry Record</a>
+                        <a href="#quickstart" class="btn btn-primary btn-sm">Interactive Quickstart</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Developer Quickstart / Builder -->
+        <section id="builder" class="section bg-panel">
             <div class="container">
                 <div class="section-header">
-                    <h2>Developer quickstart</h2>
-                    <p class="text-muted">Integrate Sentinel Alpha directly via HTTP or SDK.</p>
+                    <div class="badge mb-4">
+                        <span class="pulse-dot"></span>
+                        <span class="mono text-xs">Developer Preview</span>
+                    </div>
+                    <h2>Build with Sentinel Alpha</h2>
+                    <p class="text-muted">
+                        Pre-execution decision engine for agents. Developer quickstart: The Sentinel Alpha SDK (<code>@beezshield/sentinel</code>) is available on npm (version 0.1.0).
+                        Read documentation on how to use functions like <code>createSentinelClient()</code>, <code>scoreContract()</code>, and <code>decideBeforeExecution()</code>.
+                        Install it via: <code>npm install @beezshield/sentinel</code>.
+                        Upcoming integration: AgentKit integration: upcoming integration. View the AgentKit-style example in our repo.
+                    </p>
                 </div>
 
                 <div class="code-showcase mt-6">
-                    <div class="code-tabs">
+                    <div class="code-tabs" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap;">
                         <div class="code-tabs-buttons">
-                            <button type="button" class="tab-btn active" data-tab="qs-curl">cURL</button>
-                            <button type="button" class="tab-btn" data-tab="qs-ts">TypeScript</button>
+                            <button type="button" class="tab-btn active" data-tab="curl">cURL</button>
+                            <button type="button" class="tab-btn" data-tab="ts">TypeScript</button>
+                            <button type="button" class="tab-btn" data-tab="py">Python</button>
                         </div>
+                        <span class="mono text-xs text-muted">AgentKit integration: upcoming integration</span>
                     </div>
                     
-                    <div class="code-content active" id="tab-qs-curl">
+                    <div class="code-content active" id="tab-curl">
                         <pre class="mono text-sm"><code># Discovery (returns 402 Payment Required)
 curl -X POST https://api.beezshield.com/contracts/risk-score
 
@@ -226,9 +309,10 @@ curl -X POST "https://api.beezshield.com/contracts/risk-score" \
   -H "X-SENTINEL-LANE: basic" \
   -H "X402-PAYMENT: tx:YOUR_TX_HASH" \
   -d '{"contract_address":"0x...","chain":"base"}'</code></pre>
+                        <button class="copy-btn btn btn-outline btn-xs mt-2" data-target="tab-curl">Copy cURL</button>
                     </div>
                     
-                    <div class="code-content" id="tab-qs-ts" style="display:none;">
+                    <div class="code-content" id="tab-ts" style="display:none;">
                         <pre class="mono text-sm"><code>import { createSentinelClient } from "@beezshield/sentinel";
 
 const client = createSentinelClient({
@@ -239,13 +323,25 @@ const decision = await client.decideBeforeExecution({
   contract_address: "0x...",
   chain: "base",
 });</code></pre>
+                        <button class="copy-btn btn btn-outline btn-xs mt-2" data-target="tab-ts">Copy TS</button>
+                    </div>
+
+                    <div class="code-content" id="tab-py" style="display:none;">
+                        <pre class="mono text-sm"><code># Python integration
+# SDK method decodes the pre-execution risk score
+result = client.decideBeforeExecution({
+  "contract_address": "0x...",
+  "chain": "base"
+})</code></pre>
+                        <button class="copy-btn btn btn-outline btn-xs mt-2" data-target="tab-py">Copy Python</button>
                     </div>
                 </div>
                 
                 <div class="mt-6 flex gap-4 text-sm mono justify-center" style="display: flex; flex-wrap: wrap;">
+                    <a href="#builder" class="btn btn-primary btn-sm">Add to your bot</a>
                     <a href="https://www.npmjs.com/package/@beezshield/sentinel" target="_blank" class="btn btn-outline btn-sm">npm: @beezshield/sentinel</a>
                     <a href="https://api.beezshield.com/openapi.json" target="_blank" class="btn btn-outline btn-sm">OpenAPI JSON</a>
-                    <a href="https://api.beezshield.com/contracts/risk-score" target="_blank" class="btn btn-primary btn-sm">Live API Endpoint</a>
+                    <a href="https://api.beezshield.com/contracts/risk-score" target="_blank" class="btn btn-outline btn-sm">Live API Endpoint</a>
                 </div>
             </div>
         </section>
@@ -258,18 +354,20 @@ const decision = await client.decideBeforeExecution({
                     <p class="text-muted">Transparent per-request pricing via x402 on Base.</p>
                 </div>
                 <div class="grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; max-width: 800px; margin: 0 auto;">
-                    <div class="card" style="border-color: var(--electric-blue);">
-                        <div class="badge mb-4"><span class="pulse-dot"></span><span class="mono text-xs">LIVE</span></div>
+                    <div class="card" style="border: 2px solid var(--electric-blue); box-shadow: 0 0 30px rgba(56, 189, 248, 0.1); background: linear-gradient(180deg, rgba(56, 189, 248, 0.05) 0%, rgba(10, 10, 10, 0.8) 100%);">
+                        <div class="badge mb-4" style="border-color: var(--electric-blue);"><span class="pulse-dot" style="background: var(--electric-blue); box-shadow: 0 0 8px var(--electric-blue);"></span><span class="mono text-xs" style="color: var(--electric-blue);">LIVE & ACTIVE</span></div>
                         <h3 class="mono text-lg mb-2">Basic Lane</h3>
-                        <p class="text-3xl font-bold mb-4">0.02 <span class="text-sm text-muted">USDC / request</span></p>
-                        <p class="text-muted text-sm mb-6">Standard pre-execution risk score. Suitable for general automation.</p>
-                        <a href="#quickstart" class="btn btn-primary btn-block">Integrate Now</a>
+                        <p class="text-4xl font-bold mb-4" style="color: #fff;">0.02 <span class="text-sm text-muted" style="font-weight: normal;">USDC / request</span></p>
+                        <p class="text-muted text-sm mb-6">Standard pre-execution risk score. Direct automated routing with standard SLA.</p>
+                        <a href="#quickstart" class="btn btn-primary btn-block" style="background: var(--electric-blue); color: #000; box-shadow: 0 0 20px rgba(56, 189, 248, 0.3);">Integrate Basic Lane</a>
                     </div>
-                    <div class="card" style="opacity: 0.7;">
-                        <div class="badge mb-4"><span class="mono text-xs text-muted">COMING SOON</span></div>
-                        <h3 class="mono text-lg mb-2">Executive / Priority</h3>
-                        <p class="text-3xl font-bold mb-4">TBA</p>
-                        <p class="text-muted text-sm mb-6">High-throughput, dedicated infrastructure for high-value autonomous decisions.</p>
+                    <div class="card" style="opacity: 0.65; border: 1px solid var(--border-light); display: flex; flex-direction: column; justify-content: space-between;">
+                        <div>
+                            <div class="badge mb-4"><span class="mono text-xs text-muted">COMING SOON</span></div>
+                            <h3 class="mono text-lg mb-2">Executive / Priority</h3>
+                            <p class="text-3xl font-bold mb-4">TBA</p>
+                            <p class="text-muted text-sm mb-6">High-throughput, dedicated infrastructure for high-value autonomous decisions.</p>
+                        </div>
                         <p class="text-xs text-muted">Note: Pricing models may evolve as the network scales.</p>
                     </div>
                 </div>

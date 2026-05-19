@@ -82,6 +82,48 @@ def test_index_x402scan_brand_surface():
     assert "BeezShield" in html
     assert "Machine Trust Infrastructure" in html
     assert "favicon.svg" in html
+    assert "agentic.market: validation pending" in low
+
+
+def test_no_wordmark_references_in_any_active_file():
+    # All html/css pages under apps/website
+    active_files = [INDEX, REGISTRY_X402, Path("apps/website/styles.css")] + PAGES
+    for path in active_files:
+        if path.exists():
+            content = path.read_text(encoding="utf-8").lower()
+            assert "beezshield-wordmark.svg" not in content
+            assert "hero-wordmark" not in content
+            assert "brand-wordmark" not in content
+
+
+def test_logo_count_patterns():
+    import re
+    index_html = INDEX.read_text(encoding="utf-8")
+    # Assert exactly one logo in header
+    nav_match = re.search(r'<nav class="top-nav">.*?</nav>', index_html, re.DOTALL)
+    assert nav_match is not None
+    nav_logos = re.findall(r'beezshield-logo\.svg', nav_match.group(0))
+    assert len(nav_logos) == 1
+    
+    # Assert exactly one logo in footer
+    footer_match = re.search(r'<footer class="site-footer">.*?</footer>', index_html, re.DOTALL)
+    assert footer_match is not None
+    footer_logos = re.findall(r'beezshield-logo\.svg', footer_match.group(0))
+    assert len(footer_logos) == 1
+    
+    # Assert at most one icon in proof sections (not header/footer)
+    total_logos = re.findall(r'beezshield-logo\.svg', index_html)
+    assert len(total_logos) == 2
+    
+    # Registry page header logo rule
+    registry_html = REGISTRY_X402.read_text(encoding="utf-8")
+    reg_nav_match = re.search(r'<nav class="top-nav">.*?</nav>', registry_html, re.DOTALL)
+    assert reg_nav_match is not None
+    reg_nav_logos = re.findall(r'beezshield-logo\.svg', reg_nav_match.group(0))
+    assert len(reg_nav_logos) == 1
+    
+    reg_total_logos = re.findall(r'beezshield-logo\.svg', registry_html)
+    assert len(reg_total_logos) == 1
 
 
 def test_logo_no_text():
