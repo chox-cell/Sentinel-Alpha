@@ -84,3 +84,14 @@ Optional `linking_refs` (hashes only) may connect pre-decision and payment conte
 - Do not claim Agentic.Market or x402scan listing from this artifact.
 - Do not claim the risk check proves execution quality.
 - Do not publish buyer-identifying data or raw chain payloads in public repos.
+
+## 8) Pilot closeout (2026-05-19)
+
+| Item | Status |
+| --- | --- |
+| ReaWorks review artifact | **Ready** — `fixtures/trust_receipt_reaworks_pilot.redacted.json` |
+| API mint routes | **Not implemented** (documentation-only) |
+| Bazaar v2 / Agentic.Market | Validator **passed** on production v2 (`62c0b1f`); **not listed** in search |
+| x402scan v1 | **Unchanged** — registered on `/contracts/risk-score` only |
+
+Deliver this JSON + §4 boundaries to design-partner review; no listing or guarantee claims in outreach.

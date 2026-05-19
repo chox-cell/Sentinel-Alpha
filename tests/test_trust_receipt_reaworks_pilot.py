@@ -65,6 +65,8 @@ def test_doc_and_fixture_exist():
     assert FIXTURE.name in text
     assert "reaworks-pilot-2026-05-19-001" in text
     assert "does not prove" in text.lower()
+    assert "Pilot closeout" in text
+    assert "validator" in text.lower() and "passed" in text.lower()
     assert "execution quality" in text.lower()
 
 

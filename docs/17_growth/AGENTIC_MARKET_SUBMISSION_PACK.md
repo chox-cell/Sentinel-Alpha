@@ -6,7 +6,7 @@
 
 | Field | Value |
 | --- | --- |
-| **Status** | **rejected_needs_fix** (production **402** live; HTTP `info.input` shape fix pending validator re-run; not listed) |
+| **Status** | **validator_passed_not_listed** (validator pass on production v2; search **0 results**; not listed) |
 | **Bazaar v2 endpoint** | https://api.beezshield.com/contracts/risk-score-v2 |
 | **Target** | [Agentic.Market](https://agentic.market) |
 | **Submission owner** | Chox |
@@ -27,9 +27,9 @@
 | --- | --- | --- |
 | `prepared_not_submitted` | Copy + checklist ready; no form sent | Superseded |
 | `submitted_pending` | Seller validator run; awaiting Bazaar | Superseded by v2 attempt |
-| `validator_passed_not_listed` | Validator green; search has no listing | Set only after verified pass on production v2 URL |
+| `validator_passed_not_listed` | Validator green; search has no listing | **Current** — production pass `62c0b1f`; see `BAZAAR_V2_COMPATIBILITY_PLAN.md` |
 | `listed_verified` | Public listing URL captured and checked | **Only** with verified Agentic.Market URL |
-| `rejected_needs_fix` | Validation failed or not deployed | **Current** — production v2 **404**; UI: **No x402 Setup Detected** |
+| `rejected_needs_fix` | Validation failed or not deployed | Superseded (pre-`62c0b1f`) |
 
 **Rules:** Never use `listed_verified` without a verified listing URL. No fake listing claim. x402scan remains **registered** (directory only) independent of Agentic.Market state.
 

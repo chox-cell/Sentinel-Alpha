@@ -194,7 +194,7 @@ Maintainer signal on x402 ecosystem page PR (ecosystem page sunset; PR closed; c
 | Directory | URL | status | submission_owner | copy_variant | notes |
 | --- | --- | --- | --- | --- | --- |
 | x402scan | https://x402scan.com | **registered** | Chox | short | §3o / `X402SCAN_REGISTRATION_EVIDENCE.md` |
-| Agentic.Market | https://agentic.market | rejected_needs_fix | Chox | long | v2 validator 2026-05-19 · prod 404 |
+| Agentic.Market | https://agentic.market | validator_passed_not_listed | Chox | long | validator pass 62c0b1f · search 0 |
 | Pay.sh | https://pay.sh | not submitted | Chox | short | See submission pack §7 |
 | ampersend discover | https://app.ampersend.ai/discover | not submitted | Chox | long | See submission pack §7 |
 
@@ -448,28 +448,34 @@ Maintainer signal on x402 ecosystem page PR (ecosystem page sunset; PR closed; c
 - listing_success_claim: false
 - notes: Await Bazaar indexing / v2+bazaar compatibility work before `listed_verified`. Next: re-validate with POST after indexer docs review; do not claim Agentic.Market partnership.
 
-## Agentic.Market — Bazaar v2 production verify (b57330a, 2026-05-19)
+## Agentic.Market — Bazaar v2 validator pass (62c0b1f, 2026-05-19)
 
 - recorded_date: 2026-05-19
 - owner: Chox
-- status: **rejected_needs_fix**
-- deploy_commit: `b57330a` (pushed to `origin/main`, live on production)
+- status: **validator_passed_not_listed**
+- deploy_commit: `62c0b1f` (HTTP `info.input` shape on production)
 - channel: https://agentic.market/validate
 - validator_url: https://agentic.market/validate?url=https%3A%2F%2Fapi.beezshield.com%2Fcontracts%2Frisk-score-v2&method=POST
 - target_endpoint: https://api.beezshield.com/contracts/risk-score-v2
-- production_unpaid_post_status: **402** (`x402Version: 2`, `PAYMENT-REQUIRED` header matches body)
-- production_bazaar_info: `toolName`, `method`, `output.example` present (top-level `info.*`)
-- validator_ui_result: **Implementation Invalid** (b57330a) — SDK Parse Error; HTTP `info.input` shape fix in-repo — re-validate after deploy
+- production_unpaid_post_status: **402** (`x402Version: 2`, `PAYMENT-REQUIRED` == body)
+- production_bazaar_info: `toolName`; `input.type` **http**; `input.method` **POST**; `bodyType` **json**; `body` example; `output.example`
+- validator_ui_result: **Implementation Looks Correct** — all checks pass; needs first verify+settle for Bazaar indexing
 - marketplace_search: https://agentic.market/?q=beezshield → **0 results**
 - listing_url: null
-- screenshot: `docs/17_growth/evidence/agentic-market-validate-v2-b57330a-2026-05-19.png`
+- screenshot: `docs/17_growth/evidence/agentic-market-validate-v2-http-shape-pass-2026-05-19.png`
 - v1_unchanged: POST `/contracts/risk-score` body-first v1, no `PAYMENT-REQUIRED`
 - official_integration_claim: false
 - partnership_claim: false
 - endorsement_claim: false
 - security_guarantee_claim: false
 - listing_success_claim: false
-- notes: Next fix — nest method/body under `extensions.bazaar.info.input` per `@x402/extensions` HTTP POST shape; re-validate; use `validator_passed_not_listed` only after validator pass + still 0 search results
+- notes: Do not use `listed_verified` without public listing URL; trigger Bazaar indexing via first paid verify+settle when ready
+
+## Agentic.Market — Bazaar v2 production verify (b57330a, 2026-05-19)
+
+- status: superseded
+- validator_ui_result: **Implementation Invalid** — SDK Parse Error (pre-`62c0b1f`)
+- screenshot: `docs/17_growth/evidence/agentic-market-validate-v2-b57330a-2026-05-19.png`
 
 ## Agentic.Market — Bazaar v2 validator attempt pre-deploy (2026-05-19)
 
