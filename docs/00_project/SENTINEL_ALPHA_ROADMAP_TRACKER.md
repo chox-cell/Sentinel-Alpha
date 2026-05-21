@@ -157,7 +157,8 @@ Status: **Done**
 - v12.x public UI polish (homepage layout, registry header, SVG logo styling, and claim-safe demo status)
 - v12.x Agentic.Market submission pack prepared (`AGENTIC_MARKET_SUBMISSION_PACK.md`); manual submission pending
 - v12.x public growth readiness (`GET /public/status`, `GET /public/metrics`, `REVENUE_FUNNEL.md`, `API_INTEGRATION_COPY_BLOCKS.md`; process-lifetime counters; no revenue/partnership claims)
-- v13.0 first buyer/reviewer validation loop — ReaWorks Trust Receipt ($25 outside review offer): draft packet prepared (`REAWORKS_REVIEW_PACKET_001.md` + redacted JSON); **commercial clarification pending** (likely BeezShield pays reviewer); **not revenue**; no paid-customer claim
+- v13.0 community validation signal — ReaWorks Trust Receipt: public/community feedback on acceptance boundaries; optional **$25** paid review **cancelled_or_paused** (BeezShield did not pay); **not revenue**
+- v13.0 first-revenue target — **direct buyer/operator** Trust Receipt pilot (`$25–$50` SOW); ReaWorks path is **not** first revenue
 - Agent commerce vision truth-filter update (UCP/AP2/Trust Object remain roadmap context)
 
 ## 5) Cost discipline

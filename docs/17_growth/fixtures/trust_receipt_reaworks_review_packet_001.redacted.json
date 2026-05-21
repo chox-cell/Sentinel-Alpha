@@ -2,12 +2,10 @@
   "receipt_version": "trust-receipt-v0",
   "receipt_id": "reaworks-review-packet-001",
   "packet_ref": "docs/17_growth/REAWORKS_REVIEW_PACKET_001.md",
+  "status": "community_feedback_only",
+  "paid_review_status": "cancelled_or_paused",
   "pilot_only": true,
-  "review_fee_usd_offer": 25,
-  "review_fee_paid_by_beezshield_to_reviewer": "clarification_pending",
-  "payment_received_by_beezshield": false,
-  "payment_sent_to_reviewer": false,
-  "review_audience": "reaworks-outside-review",
+  "review_audience": "reaworks-community-feedback",
   "sample_only": true,
   "documentation_only": true,
   "secrets_excluded": true,
@@ -35,8 +33,26 @@
   ],
   "agentkit_result_hash_or_tx_ref": "exec_ref:9d2e8f7a6b5c4d3e2f1a0b9c8d7e6f5a4b3c2d1e0f9a8b7c6d5e4f3a2b1c0d9e8f7a6",
   "payment_lane": "basic",
-  "release_refund_cure_rule": "Buyer-pilot template only (not active for ReaWorks review): if a future buyer pays BeezShield for a Trust Receipt pilot, delivery/refund terms are defined in that buyer SOW — not implied here.",
-  "disclaimer": "Draft Trust Receipt for outside review only. Not a security guarantee, audit certificate, or execution-quality proof. Sentinel pre-check does not prove safe or correct execution. secrets_excluded is true: no private keys, seed phrases, env values, API keys, internal logs, or raw transaction internals.",
+  "payment_sent": false,
+  "tx_hash": null,
+  "revenue_confirmed": false,
+  "paid_customer_claim": false,
+  "release_refund_cure_rule": "Not applicable — paid ReaWorks review cancelled_or_paused; no payment sent.",
+  "disclaimer": "Public/community review packet only. Not a security guarantee or execution-quality proof. Optional $25 paid ReaWorks review was not proceeded. secrets_excluded is true.",
+  "reputation_axis": {
+    "status": "not_used_in_this_packet",
+    "provider": "aura_placeholder",
+    "verdict": "unknown",
+    "dimensions_ref": null,
+    "unavailable_behavior": "unknown"
+  },
+  "post_execution_trail": {
+    "provider": "mycelium_trails_placeholder",
+    "trail_ref": "trail_ref:demo-trail-placeholder-001",
+    "signature_scheme": "ed25519",
+    "onchain_record_ref": null,
+    "claims_hash": "claims_hash:8f2a1b0c9d8e7f6a5b4c3d2e1f0a9c8f1e2a09b7d6c5e4f3a2b1"
+  },
   "post_action_summary": {
     "layer": "agentkit-style-execution",
     "result_ref_only": true,
@@ -46,7 +62,7 @@
   },
   "acceptance_checks": {
     "a_reconstruct_what_sentinel_checked": "checked_signals + not_checked + normalized_args_hash",
-    "b_separate_precheck_from_post_action": "sections 2 vs 3; post_action_summary.result_ref_only",
+    "b_separate_precheck_from_post_action": "sentinel block vs post_execution_trail vs exec_ref",
     "c_guarantees_explicitly_excluded": "disclaimer + not_checked + notSecurityGuarantee"
   },
   "linking_refs": {

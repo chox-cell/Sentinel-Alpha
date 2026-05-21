@@ -1,15 +1,15 @@
-# ReaWorks Review Packet 001 — $25 outside review
+# ReaWorks Review Packet 001 — public / community review
 
 **Packet id:** `reaworks-review-packet-001`  
-**Commercial status:** ReaWorks **offered** a **$25 quick outside review** — commercial direction **pending clarification** (likely **BeezShield pays ReaWorks** for review, **not** BeezShield customer revenue). **No payment sent or received** is confirmed in this artifact.  
-**Scope:** Draft packet for **outside review** or a future **buyer** Trust Receipt pilot — one **Sentinel + AgentKit-style** run, redacted, falsifiable, no API routes.
+**Status:** **community_feedback_only** — ReaWorks offered optional **$25** paid outside review; BeezShield **did not proceed**. No payment sent (`tx_hash: null`). Relationship remains open for **community feedback** on Trust Receipt v0 boundaries.  
+**Scope:** Redacted **public review packet** (draft) for community/design-partner critique — **not** an active paid review. One **Sentinel + AgentKit-style** run; falsifiable; no API routes.
 
 **Attachments**
 
 | File | Role |
 | --- | --- |
 | `fixtures/trust_receipt_reaworks_review_packet_001.redacted.json` | Machine-readable receipt (this packet) |
-| `TRUST_RECEIPT_V0_SPEC.md` | Field definitions |
+| `TRUST_RECEIPT_V0_SPEC.md` | Field definitions + optional Mycelium/AURA composition |
 | `TRUST_RECEIPT_REAWORKS_PILOT.md` | Pilot context |
 
 ---
@@ -33,8 +33,6 @@
 }
 ```
 
-No raw contract address, API keys, `.env`, bearer tokens, or payment payloads appear in this packet.
-
 ---
 
 ## 2) Sentinel response (pre-execution only)
@@ -46,91 +44,78 @@ No raw contract address, API keys, `.env`, bearer tokens, or payment payloads ap
 | **policy_version** | `sentinel-policy-v0` |
 | **decision_timestamp** | `2026-05-19T16:45:00Z` |
 
-### checked_signals (categories only)
+### checked_signals / not_checked
 
-- `contract_metadata_present`
-- `proxy_pattern_hint`
-- `owner_concentration_band`
-- `liquidity_depth_band`
-- `abi_surface_stub`
-
-### not_checked (explicit limits)
-
-- `live_mempool_simulation`
-- `honeypot_bytecode_deep_scan`
-- `mev_sandwich_risk_model`
-- `full_agent_wallet_history`
-- `post_execution_profitability`
-- `execution_slippage_quality`
-- `agentkit_tool_success_guarantee`
+See JSON fixture — explicit coverage boundaries for third-party review.
 
 ---
 
-## 3) Post-action (AgentKit) — hash/ref only
+## 3) Post-action — hash/ref only (AgentKit)
 
 | Field | Value |
 | --- | --- |
 | **agentkit_result_hash_or_tx_ref** | `exec_ref:9d2e8f7a6b5c4d3e2f1a0b9c8d7e6f5a4b3c2d1e0f9a8b7c6d5e4f3a2b1c0d9e8f7a6` |
 
-**Excluded from packet:** calldata, revert traces, RPC logs, wallet labels, signed tx hex, internal mempool detail.
-
-`post_action_summary` in JSON marks `result_ref_only: true`, `raw_tx_internals_included: false`.
+No raw tx internals in packet.
 
 ---
 
-## 4) Commercial boundary
+## 4) Optional external layers (binder refs — not owned by Sentinel)
 
-**payment_lane:** `basic` (x402 Sentinel call label in sample run only — not a billing audit)
+| Layer | This packet |
+| --- | --- |
+| **Mycelium Trails** (post-execution) | `post_execution_trail.provider: mycelium_trails_placeholder` — trail/signature refs only |
+| **AURA** (optional reputation) | `reputation_axis.status: not_used_in_this_packet` / `verdict: unknown` |
+| **Sentinel** (forward-looking) | §2 — pre-execution risk only |
 
-**review_fee_context:** **$25** refers to ReaWorks’ **outside review offer**, not confirmed BeezShield revenue. Do **not** record payment received from a customer.
-
-**release_refund_cure_rule (buyer-pilot template only):** If BeezShield later sells a **buyer** Trust Receipt pilot, a separate SOW may state: deliver JSON within **5 business days** of confirmed **buyer** pilot payment or refund the **buyer** pilot fee. That template does **not** apply to unconfirmed ReaWorks review spend.
+Trust Receipt **does not replace** Mycelium Trails or AURA.
 
 ---
 
-## 5) What this proves / does not prove
+## 5) Commercial status (not active)
 
-### Proves (falsifiable within stated scope)
+| Field | Value |
+| --- | --- |
+| **paid_review_status** | **cancelled_or_paused** |
+| **payment_sent** | **false** |
+| **tx_hash** | **null** |
+| **revenue_confirmed** | **false** |
 
-- A named **proposed action** and **hashed non-secret args** were inputs to a Sentinel gate.
-- Sentinel emitted **`review`** at **risk_score 42** under **`sentinel-policy-v0`** at a stated UTC time.
-- **Signal categories** checked vs **not checked** are listed separately (no hidden coverage).
-- A **post-action** link exists only as **`exec_ref:<sha256>`** — separable from §2.
-- **`secrets_excluded: true`** documents redaction; packet omits keys, env, and raw tx internals.
+Historical context: ReaWorks offered **$25** paid review; BeezShield chose **not to pay**. Not customer revenue.
+
+**release_refund_cure_rule:** Not applicable — paid review cancelled_or_paused; no payment sent (see fixture).
+
+---
+
+## 6) What this proves / does not prove
+
+### Proves (community review scope)
+
+- Redacted **acceptance-boundary** artifact for falsifiable critique.
+- Pre vs post layers separable; optional external trail/reputation **refs** documented.
+- Unsupported guarantees listed in `not_checked` + disclaimer.
 
 ### Does not prove
 
-- Contract safety, honeypot absence, MEV resistance, or exploit-freedom.
-- Execution quality, profitability, slippage, or “safe to execute.”
-- AgentKit/Coinbase **partnership**, **official integration**, or **endorsement**.
-- That Sentinel output authorized or guaranteed an onchain outcome.
+- Paid review completed, payment sent, revenue, or customer acquired.
+- Partnership, integration, endorsement, execution quality, or onchain safety.
 
 ---
 
-## 6) Third-party acceptance checks (ReaWorks $25 review)
+## 7) Third-party acceptance checks
 
-| # | Question | Pass criteria | This packet |
-| --- | --- | --- | --- |
-| **a** | Can a third party reconstruct **what Sentinel checked**? | Reviewer can list `checked_signals` and `not_checked` without secret material | **Yes** — §2 lists both; hash anchors args |
-| **b** | Can they **separate pre-check from post-action**? | Pre fields (§2) distinct from `agentkit_result_hash_or_tx_ref` (§3) | **Yes** — layers labeled; JSON `post_action_summary` |
-| **c** | Are **unsupported guarantees** explicitly excluded? | Disclaimer + `not_checked` deny guarantee/MEV/honeypot/execution-quality claims | **Yes** — §5 + `notSecurityGuarantee` / `partnership_claimed: false` |
+| # | Question | Pass criteria |
+| --- | --- | --- |
+| **a** | Reconstruct what Sentinel checked? (`a_reconstruct_what_sentinel_checked`) | `checked_signals` + `not_checked` + args hash |
+| **b** | Separate pre-check from post-action? (`b_separate_precheck_from_post_action`) | §2 vs §3; `post_execution_trail` optional |
+| **c** | Guarantees explicitly excluded? (`c_guarantees_explicitly_excluded`) | disclaimer + `not_checked` |
 
-Reviewer response: mark each **pass / fail / needs clarification** with one-line rationale.
-
----
-
-## 7) Excluded materials (by design)
-
-- Private keys, seed phrases, `.env` values  
-- Raw auth headers, API keys, `X402-PAYMENT` payloads  
-- Internal application logs (unredacted)  
-- Unredacted wallet addresses or full transaction bodies  
+Community reviewer marks pass / fail / needs clarification.
 
 ---
 
 ## 8) Claim discipline
 
-- **No** security guarantee, audit certificate, or execution-quality proof.  
-- **No** partnership, endorsement, or official AgentKit integration claim.  
-- **No** Agentic.Market or x402scan **listing** claim from this artifact.  
-- Sample/draft only until buyer-specific run is minted under SOW.
+- **No** paid review in progress, payment, revenue, or customer acquired.
+- **No** partnership, endorsement, or protocol replacement claims.
+- Public/community packet only.

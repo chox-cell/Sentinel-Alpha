@@ -91,9 +91,9 @@ Optional `linking_refs` (hashes only) may connect pre-decision and payment conte
 | Item | Status |
 | --- | --- |
 | ReaWorks review artifact | **Ready** — `REAWORKS_REVIEW_PACKET_001.md` + fixtures |
-| ReaWorks commercial | **outside_review_offer_clarification_pending** — not customer revenue |
+| ReaWorks | **community_feedback_only** — optional $25 paid review **cancelled_or_paused** |
 | API mint routes | **Not implemented** (documentation-only) |
 | Bazaar v2 / Agentic.Market | Validator **passed** on production v2 (`62c0b1f`); **not listed** in search |
 | x402scan v1 | **Unchanged** — registered on `/contracts/risk-score` only |
 
-Deliver draft packet + §4 boundaries for outside review; no first-revenue, paid-customer, listing, or guarantee claims.
+Deliver public/community packet for feedback; paid ReaWorks review **not proceeded**. First-revenue target: **direct buyer/operator pilot**. No payment, revenue, or guarantee claims.

@@ -96,6 +96,29 @@ def test_fixture_required_fields_and_acceptance_checks():
     assert "c_guarantees_explicitly_excluded" in checks
 
 
+def test_fixture_community_feedback_no_payment():
+    data = _load_fixture()
+    assert data.get("status") == "community_feedback_only"
+    assert data.get("paid_review_status") in {"cancelled_or_paused", "cancelled", "paused"}
+    assert data.get("payment_sent") is False
+    assert data.get("tx_hash") is None
+    assert data.get("revenue_confirmed") is False
+    assert data.get("paid_customer_claim") is False
+
+
+def test_fixture_optional_mycelium_and_aura_refs():
+    data = _load_fixture()
+    trail = data.get("post_execution_trail") or {}
+    assert "mycelium" in str(trail.get("provider", "")).lower()
+    assert trail.get("trail_ref")
+    assert trail.get("signature_scheme") == "ed25519"
+    rep = data.get("reputation_axis") or {}
+    assert rep.get("verdict") == "unknown" or rep.get("status") == "not_used_in_this_packet"
+    spec = SPEC.read_text(encoding="utf-8").lower()
+    assert "does not replace" in spec or "does not" in spec
+    assert "mycelium" in spec
+
+
 def test_no_secrets_in_packet_and_fixture():
     for path in (PACKET, FIXTURE):
         blob = path.read_text(encoding="utf-8")

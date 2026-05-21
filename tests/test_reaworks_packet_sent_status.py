@@ -1,5 +1,6 @@
-"""ReaWorks commercial status — clarification pending; no revenue/customer claims."""
+"""ReaWorks — community feedback only; paid review cancelled; no payment/revenue claims."""
 
+import json
 import re
 from pathlib import Path
 
@@ -19,10 +20,12 @@ _FORBIDDEN_UNVERIFIED = [
     "official partnership",
     "endorsed by reaworks",
     "integration with reaworks",
+    "paid review completed",
+    "payment sent",
 ]
 
 _NEGATION = re.compile(
-    r"\b(not|no|never|false|forbidden|pending|clarification|do not|does not|without|likely)\b",
+    r"\b(not|no|never|false|forbidden|cancelled|paused|did not|does not|without|null)\b",
     re.IGNORECASE,
 )
 
@@ -35,34 +38,48 @@ def _reaworks_block(text: str) -> str:
     return text[start:nxt] if nxt >= 0 else text[start:]
 
 
-def test_tracker_clarification_pending_status():
+def _load_fixture() -> dict:
+    return json.loads(FIXTURE.read_text(encoding="utf-8"))
+
+
+def test_tracker_community_feedback_only_status():
     text = _reaworks_block(TRACKER.read_text(encoding="utf-8"))
-    assert "outside_review_offer_clarification_pending" in text
-    assert "clarification pending" in text.lower() or "clarification_pending" in text.lower()
+    assert "community_feedback_only" in text
+    assert "cancelled_or_paused" in text
     assert "REAWORKS_REVIEW_PACKET_001.md" in text
     assert "trust_receipt_reaworks_review_packet_001.redacted.json" in text
     assert "payment_sent" in text and "**false**" in text
-    assert "reviewer_payment_method_pending" in text
+    assert "tx_hash" in text and "**null**" in text
     assert "revenue_confirmed" in text and "**false**" in text
     assert "paid_customer_claim" in text and "**false**" in text
-    assert "first_revenue_claim" in text and "**false**" in text
+    assert "paid_review_completed" in text and "**false**" in text
 
 
-def test_claims_ledger_clarification_not_revenue():
+def test_fixture_payment_and_revenue_flags():
+    data = _load_fixture()
+    assert data["status"] == "community_feedback_only"
+    assert data["paid_review_status"] in {"cancelled_or_paused", "cancelled", "paused"}
+    assert data["payment_sent"] is False
+    assert data["tx_hash"] is None
+    assert data["revenue_confirmed"] is False
+    assert data["paid_customer_claim"] is False
+
+
+def test_claims_ledger_community_feedback_not_revenue():
     row = CLAIMS.read_text(encoding="utf-8")
     assert "ReaWorks" in row
-    assert "clarification pending" in row.lower() or "pending clarification" in row.lower()
-    assert "not customer revenue" in row.lower() or "not revenue" in row.lower()
+    assert "community feedback" in row.lower()
+    assert "paid review not proceeded" in row.lower() or "not proceeded" in row.lower()
     assert "Forbidden" in row or "forbidden" in row.lower()
-    assert "first revenue" in row.lower()
-    assert "pilot sold" in row.lower()
+    assert "payment sent" in row.lower()
+    assert "revenue confirmed" in row.lower()
 
 
-def test_roadmap_buyer_reviewer_validation_not_revenue():
+def test_roadmap_community_validation_not_first_revenue():
     text = ROADMAP.read_text(encoding="utf-8").lower()
-    assert "first buyer/reviewer validation loop" in text
-    assert "first-revenue loop" not in text
-    assert "clarification pending" in text
+    assert "community validation" in text or "community feedback" in text
+    assert "direct buyer" in text or "buyer/operator" in text
+    assert "cancelled_or_paused" in text or "not proceeded" in text
     assert "not revenue" in text
 
 
@@ -91,8 +108,10 @@ def test_no_unverified_revenue_customer_partnership_claims():
             raise AssertionError(f"unverified claim {phrase!r} in: {line.strip()!r}")
 
 
-def test_packet_no_payment_received_implied():
+def test_packet_no_active_paid_review():
     text = PACKET.read_text(encoding="utf-8").lower()
-    assert "no payment sent or received" in text or "not confirmed" in text
-    assert "pending clarification" in text
+    assert "community_feedback_only" in text or "community feedback" in text
+    assert "cancelled_or_paused" in text or "did not proceed" in text
+    assert "payment_sent" in text and "false" in text
+    assert "tx_hash" in text and "null" in text
     assert "partnership" in text and _NEGATION.search(text)

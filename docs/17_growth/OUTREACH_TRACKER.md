@@ -517,28 +517,28 @@ Paraphrased **community** reply on the closed x402 ecosystem PR thread (no impli
 - status: **community alignment signal** / **no partnership** / **no integration**
 - notes: positive **alignment signal** only; not partnership, not approval, not shared runtime stack; cross-reference is **optional** and **after** both listings are live — see `docs/17_growth/X402_DIRECTORY_SUBMISSION_PACK.md` §10
 
-## ReaWorks — Trust Receipt $25 outside review (v13.x)
+## ReaWorks — Trust Receipt community feedback (v13.x)
 
 | Field | Value |
 | --- | --- |
-| **status** | **outside_review_offer_clarification_pending** |
+| **status** | **community_feedback_only** |
+| **paid_review_status** | **cancelled_or_paused** |
 | **recorded_date** | 2026-05-20 |
 | **packet_prepared_at** | 2026-05-20T12:00:00Z |
-| **commercial_clarification** | ReaWorks offered a **$25 quick outside review** — likely **BeezShield pays ReaWorks** for review, **not** customer revenue to BeezShield |
-| **review_offer** | External review of one draft Sentinel/AgentKit Trust Receipt packet |
+| **community_feedback** | Public feedback on Trust Receipt v0 acceptance boundaries (ReaWorks) |
+| **paid_review_offer** | ReaWorks offered optional **$25** paid outside review; BeezShield **did not proceed** |
 | **files_prepared** | `docs/17_growth/REAWORKS_REVIEW_PACKET_001.md` |
 | | `docs/17_growth/fixtures/trust_receipt_reaworks_review_packet_001.redacted.json` |
 | **receipt_id** | `reaworks-review-packet-001` |
-| **payment_sent** | **false** (no payment to ReaWorks confirmed) |
-| **payment_received** | **false** (not BeezShield revenue) |
-| **reviewer_payment_method_pending** | **true** until commercial terms clarified |
-| **review_completed** | **not confirmed** |
+| **payment_sent** | **false** |
+| **tx_hash** | **null** |
+| **payment_received** | **false** |
 | **revenue_confirmed** | **false** |
 | **paid_customer_claim** | **false** |
-| **first_revenue_claim** | **false** |
-| **pilot_sold_claim** | **false** |
+| **paid_review_completed** | **false** |
+| **customer_acquired** | **false** |
 | **partnership_claim** | **false** |
 | **integration_claim** | **false** |
 | **endorsement_claim** | **false** |
 | **security_guarantee_claim** | **false** |
-| **notes** | Draft packet valid for outside review or future **buyer** pilot. Clarify whether BeezShield pays ReaWorks **$25** for review before any spend. **Not** a paid customer, **not** first revenue, **not** pilot sold. |
+| **notes** | ReaWorks clarified payment rails for a **$25** review; BeezShield decided **not to pay**. Not revenue (would have been BeezShield paying an external reviewer). Relationship open for **community feedback only**. First-revenue target remains **direct buyer/operator pilot**. |
