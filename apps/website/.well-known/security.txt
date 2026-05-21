@@ -1,0 +1,3 @@
+Contact: https://github.com/chox-cell/Sentinel-Alpha/issues
+Disclosure: https://beezshield.com/trust.html
+Preferred-Languages: en

@@ -141,8 +141,13 @@ def test_logo_count_patterns():
     reg_nav_logos = re.findall(r'beezshield-logo\.svg', reg_nav_match.group(0))
     assert len(reg_nav_logos) == 1
     
+    reg_footer_match = re.search(r'<footer class="site-footer">.*?</footer>', registry_html, re.DOTALL)
+    assert reg_footer_match is not None
+    reg_footer_logos = re.findall(r'beezshield-logo\.svg', reg_footer_match.group(0))
+    assert len(reg_footer_logos) == 1
+
     reg_total_logos = re.findall(r'beezshield-logo\.svg', registry_html)
-    assert len(reg_total_logos) == 1
+    assert len(reg_total_logos) == 2
 
     # Pilot page logo counts
     assert PILOT_TRUST_RECEIPT.exists()
@@ -223,3 +228,87 @@ def test_pilot_trust_receipt_page():
     assert "result ref" in low
     assert "notes" in low
     assert "copy packet json" in low
+
+
+def test_robots_txt():
+    robots_path = Path("apps/website/robots.txt")
+    assert robots_path.exists()
+    content = robots_path.read_text(encoding="utf-8")
+    assert "User-agent: *" in content
+    assert "Allow: /" in content
+    assert "Sitemap: https://beezshield.com/sitemap.xml" in content
+
+
+def test_sitemap_xml():
+    sitemap_path = Path("apps/website/sitemap.xml")
+    assert sitemap_path.exists()
+    content = sitemap_path.read_text(encoding="utf-8")
+    required_urls = [
+        "https://beezshield.com/",
+        "https://beezshield.com/index.html",
+        "https://beezshield.com/about.html",
+        "https://beezshield.com/docs.html",
+        "https://beezshield.com/pricing.html",
+        "https://beezshield.com/trust.html",
+        "https://beezshield.com/sdk.html",
+        "https://beezshield.com/agentkit.html",
+        "https://beezshield.com/x402.html",
+        "https://beezshield.com/registry/x402scan.html",
+        "https://beezshield.com/pilot/trust-receipt.html",
+    ]
+    for url in required_urls:
+        assert f"<loc>{url}</loc>" in content
+
+
+def test_security_txt():
+    sec_path = Path("apps/website/.well-known/security.txt")
+    assert sec_path.exists()
+    content = sec_path.read_text(encoding="utf-8")
+    assert "Contact: https://github.com/chox-cell/Sentinel-Alpha/issues" in content
+    assert "Disclosure: https://beezshield.com/trust.html" in content
+    # Ensure no fake/unverified emails or claims
+    assert "@beezshield.com" not in content
+    assert "@gmail.com" not in content
+    assert "partnership" not in content.lower()
+    assert "guarantee" not in content.lower()
+
+
+def test_homepage_organization_json_ld():
+    homepage_path = Path("apps/website/index.html")
+    assert homepage_path.exists()
+    content = homepage_path.read_text(encoding="utf-8")
+    
+    import json
+    import re
+    # Extract JSON-LD script blocks
+    blocks = re.findall(r'<script type="application/ld\+json">(.*?)</script>', content, re.DOTALL)
+    org_found = False
+    for block in blocks:
+        try:
+            data = json.loads(block.strip())
+            if data.get("@type") == "Organization":
+                assert data.get("name") == "BeezShield"
+                assert data.get("url") == "https://beezshield.com"
+                assert data.get("description") == "Machine Trust Infrastructure for autonomous agent actions."
+                assert "https://github.com/chox-cell/Sentinel-Alpha" in data.get("sameAs", [])
+                assert "https://www.npmjs.com/package/@beezshield/sentinel" in data.get("sameAs", [])
+                org_found = True
+        except json.JSONDecodeError:
+            continue
+    assert org_found, "Organization JSON-LD block not found on homepage"
+
+
+def test_trust_page_forbidden_phrases():
+    trust_path = Path("apps/website/trust.html")
+    assert trust_path.exists()
+    content = trust_path.read_text(encoding="utf-8").lower()
+    forbidden = [
+        "official partnership",
+        "endorsed by",
+        "guaranteed protection",
+        "security guarantee",
+        "certified integration",
+    ]
+    for phrase in forbidden:
+        assert phrase not in content, f"Found forbidden phrase '{phrase}' in trust.html"
+
