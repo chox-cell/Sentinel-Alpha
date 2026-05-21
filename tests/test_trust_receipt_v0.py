@@ -72,6 +72,12 @@ def test_spec_and_pilot_pack_exist():
     assert "not a security guarantee" in spec.lower()
     assert "$25" in pack or "25–$50" in pack or "25-$50" in pack
     assert FIXTURE.name in pack
+    assert "post_execution_trail" in spec
+    assert "reputation_axis" in spec
+    assert "mycelium" in spec.lower()
+    assert "does not replace" in spec.lower() or "does not" in spec.lower()
+    assert "Mycelium Trails" in pack
+    assert "AURA" in pack
 
 
 def test_fixture_has_required_fields_and_enums():
@@ -134,3 +140,37 @@ def test_fixture_flags_non_guarantee_boundaries():
     assert data.get("partnership_claimed") is False
     assert data.get("integration_claimed") is False
     assert data.get("automatic_settlement_claimed") is False
+
+
+def test_fixture_post_execution_trail_is_external_evidence():
+    data = _load_fixture()
+    trail = data.get("post_execution_trail")
+    assert trail is not None
+    provider = str(trail.get("provider", "")).lower()
+    assert "mycelium" in provider
+    assert trail.get("trail_ref")
+    assert trail.get("signature_scheme") == "ed25519"
+    blob = FIXTURE.read_text(encoding="utf-8").lower()
+    assert "sentinel-owned" not in blob
+    assert "replaces mycelium" not in blob
+
+
+def test_fixture_reputation_axis_optional_unknown():
+    data = _load_fixture()
+    rep = data.get("reputation_axis")
+    assert rep is not None
+    assert rep.get("verdict") == "unknown" or rep.get("unavailable_behavior") == "unknown"
+    claims = (REPO / "docs/18_investor/CLAIMS_LEDGER.md").read_text(encoding="utf-8")
+    assert "Trust Receipt v0 layer composition" in claims
+    assert "does not replace" in claims.lower() or "replacing" in claims.lower()
+
+
+def test_no_partnership_integration_endorsement_with_mycelium_aura():
+    combined = SPEC.read_text(encoding="utf-8") + PACK.read_text(encoding="utf-8")
+    for phrase in (
+        "official partnership with mycelium",
+        "official integration with aura",
+        "endorsed by mycelium",
+        "replaces mycelium trails protocol",
+    ):
+        assert phrase not in combined.lower()

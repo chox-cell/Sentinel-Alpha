@@ -31,6 +31,24 @@ Buyer scopes pilot action (staging/sandbox)
 
 **Independence:** Sentinel pre-check and AgentKit execution remain **separate layers**. The receipt **links** them with hashes; it does not attest that execution was correct or profitable.
 
+## 2.1) Architecture (layer composition)
+
+```text
+[AURA reputation — optional, backward-looking]
+        ↓
+[Sentinel risk — forward-looking allow/review/block]
+        ↓
+[AgentKit-style execution — buyer-controlled]
+        ↓
+[Mycelium Trails post-execution signed trail — external evidence]
+        ↓
+[BeezShield Trust Receipt v0 — binder: refs + boundaries only]
+```
+
+- **Sentinel** does not write Mycelium trails or AURA scores.
+- **Trust Receipt** binds `reputation_axis` + `post_execution_trail` **refs** when present — not full protocol payloads.
+- **No** official partnership or integration claim with Mycelium or AURA.
+
 ## 3) Pricing alignment (claim-safe)
 
 | Item | Pilot range | Notes |

@@ -29,6 +29,20 @@
   "payment_lane": "basic",
   "release_refund_cure_rule": "If BeezShield does not deliver a Trust Receipt v0 JSON matching this schema within 5 business days of confirmed pilot payment, buyer may request a one-time pilot fee refund; remedy limited to pilot fee; no consequential damages.",
   "disclaimer": "This Trust Receipt is policy-assistance metadata from one redacted AgentKit-style + Sentinel pilot run. It is not a security guarantee, audit certificate, or execution-quality proof. It does not prove profitability or onchain safety. secrets_excluded is true: no API keys, env values, wallet private material, or raw transaction internals are included.",
+  "reputation_axis": {
+    "status": "not_used_in_this_packet",
+    "provider": "aura_placeholder",
+    "verdict": "unknown",
+    "dimensions_ref": null,
+    "unavailable_behavior": "unknown"
+  },
+  "post_execution_trail": {
+    "provider": "mycelium_trails_placeholder",
+    "trail_ref": "trail_ref:sample-placeholder-001",
+    "signature_scheme": "ed25519",
+    "onchain_record_ref": null,
+    "claims_hash": "claims_hash:7c4e2f1a9b0d8e6f5a4c3b2d1e0f9a8b7c6d5e4f3a2b1c0d9e8f7a6"
+  },
   "linking_refs": {
     "action_ref": "e1a70f112f7407d4124d46f867f6b8ec8d5ef8cbde8dbe37d627ca2a9802de4d",
     "sentinel_decision_ref": "6fced8b43e5f6c67f5b57cf6d1ddf7d2c68f6f727d6f5a6f11f22f25cf84a3e6",

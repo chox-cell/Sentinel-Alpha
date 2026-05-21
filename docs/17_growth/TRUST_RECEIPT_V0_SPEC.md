@@ -37,7 +37,60 @@ Trust Receipt v0 is a **buyer-grade, redacted packet** summarizing one **AgentKi
 | `release_refund_cure_rule` | string | yes | Pilot commercial cure text (delivery/refund boundary) |
 | `disclaimer` | string | yes | Must state: not a security guarantee; not execution-quality proof |
 | `linking_refs` | object | no | Optional cross-surface refs (`action_ref`, `sentinel_decision_ref`, `payment_decision_link_ref`) — hashes only |
+| `reputation_axis` | object | no | Optional backward-looking reputation (e.g. AURA); see §3.3 |
+| `post_execution_trail` | object | no | Optional post-execution signed trail (e.g. Mycelium Trails); see §3.3 |
 | `sample_only` | boolean | no | `true` on public fixtures |
+
+### 3.3) Layer composition (binder — does not replace other protocols)
+
+Trust Receipt v0 is a **binder** across independent layers. It **does not** replace Mycelium Trails, AURA, AgentKit, or Sentinel runtime.
+
+| Layer | Role | Receipt field |
+| --- | --- | --- |
+| **AURA** (optional) | Backward-looking reputation | `reputation_axis` |
+| **Sentinel** | Forward-looking pre-execution risk | `sentinel_decision`, `risk_score`, `checked_signals` |
+| **AgentKit-style execution** | Tool/tx step (buyer-controlled) | `agentkit_result_hash_or_tx_ref` |
+| **Mycelium Trails** | Post-execution signed trail | `post_execution_trail` |
+| **BeezShield Trust Receipt** | Cross-layer refs + boundaries | whole packet |
+
+#### `reputation_axis` (optional)
+
+```json
+{
+  "status": "not_used_in_this_packet",
+  "provider": "aura",
+  "verdict": "unknown",
+  "dimensions_ref": "aura:dimensions:placeholder",
+  "unavailable_behavior": "unknown"
+}
+```
+
+- `provider`: reputation source id (e.g. `aura`)
+- `verdict`: provider verdict when present, else `unknown`
+- `dimensions_ref`: opaque ref to dimension set — not raw reputation dump
+- `unavailable_behavior`: must be `"unknown"` when provider unavailable
+
+#### `post_execution_trail` (optional)
+
+Mycelium Trails-style records include `{agent_id, action, payment_hash, claims, timestamp, Ed25519 signature}` on-chain/off-chain — **not** duplicated in full here.
+
+```json
+{
+  "provider": "mycelium_trails",
+  "trail_ref": "trail_ref:<opaque>",
+  "signature_scheme": "ed25519",
+  "onchain_record_ref": "anchor_ref:<opaque_or_null>",
+  "claims_hash": "claims_hash:<sha256>"
+}
+```
+
+- `provider`: `"mycelium_trails"` \| `"other"`
+- `trail_ref`: opaque trail id — **not** full trail body
+- `signature_scheme`: e.g. `ed25519`
+- `onchain_record_ref`: optional anchor ref — **not** full tx internals
+- `claims_hash`: hash of redacted claims object
+
+**Forbidden:** claiming Trust Receipt **is** the Mycelium trail or **replaces** Mycelium/AURA protocols.
 
 ### 3.1) `normalized_args_hash` canonicalization
 
@@ -124,11 +177,13 @@ Returns the redacted fixture at `docs/17_growth/fixtures/trust_receipt_v0.redact
 
 - “Trust Receipt v0 summarizes one redacted Sentinel + AgentKit-style pilot run.”
 - “Receipt is policy assistance metadata, not proof of safe execution.”
+- “Receipt may **reference** optional Mycelium Trails post-execution evidence and AURA reputation as external layers.”
 
 **Forbidden**
 
 - Security guarantee, audit certification, or “safe to execute” claim
-- Official AgentKit / Coinbase partnership or integration
+- Official AgentKit / Coinbase / Mycelium / AURA partnership, integration, or endorsement
+- Claiming Trust Receipt **replaces** Mycelium Trails or AURA
 - Honeypot detected, MEV prevented, or execution-quality proof
 - Listing Agentic.Market or x402scan as endorsement
 
