@@ -43,10 +43,10 @@
                     Paid pilot workflow: you send <strong>one redacted action</strong>; BeezShield returns a <strong>JSON + Markdown Trust Receipt</strong> with Sentinel pre-check boundaries and optional post-action refs.
                 </p>
                 <div class="mt-6">
-                    <a href="#pilotFormCard" onclick="selectTierAndScroll('50')" class="btn btn-primary">Request $50 Trust Receipt Pilot</a>
+                    <a href="#payForPilot" onclick="selectTierAndScroll('50')" class="btn btn-primary">Request $50 Trust Receipt Pilot</a>
                 </div>
                 <p class="text-xs text-muted mt-4 max-w-xl mx-auto" style="line-height:1.6;">
-                    Payment is <strong>manual</strong> (USDC on Base or invoice) after scope confirm — no checkout automation on this page.
+                    <strong>Checkout v0:</strong> choose tier → pay USDC on Base → submit tx hash + intake. BeezShield <strong>manually verifies</strong> payment before delivery — <strong>not</strong> escrow and <strong>not</strong> automated fulfillment.
                     Not a security guarantee, execution-quality proof, or official AgentKit / x402 / Coinbase endorsement.
                 </p>
             </div>
@@ -61,7 +61,7 @@
                         <p class="text-3xl font-bold mb-3" style="color: #fff;">$25 <span class="text-sm text-muted" style="font-weight:normal;">one-time</span></p>
                         <p class="text-muted text-sm mb-4">Direct assessment of one proposed contract target. Receive point-in-time risk classification logs.</p>
                     </div>
-                    <a href="#pilotFormCard" onclick="selectTierAndScroll('25')" class="btn btn-outline btn-sm btn-block">Select Draft Review</a>
+                    <a href="#payForPilot" onclick="selectTierAndScroll('25')" class="btn btn-outline btn-sm btn-block">Select Draft Review</a>
                 </div>
 
                 <!-- $50 Card -->
@@ -72,7 +72,7 @@
                         <p class="text-3xl font-bold mb-3" style="color: var(--accent);">$50 <span class="text-sm text-muted" style="font-weight:normal;">one-time</span></p>
                         <p class="text-muted text-sm mb-4">Standard Coinbase AgentKit execution trace validation. Perfect for sandbox testing and risk mitigation loops.</p>
                     </div>
-                    <a href="#pilotFormCard" onclick="selectTierAndScroll('50')" class="btn btn-primary btn-sm btn-block">Select Operator Pilot</a>
+                    <a href="#payForPilot" onclick="selectTierAndScroll('50')" class="btn btn-primary btn-sm btn-block">Select Operator Pilot</a>
                 </div>
 
                 <!-- $250 Card -->
@@ -83,7 +83,51 @@
                         <p class="text-3xl font-bold mb-3" style="color: #fff;">$250 <span class="text-sm text-muted" style="font-weight:normal;">one-time</span></p>
                         <p class="text-muted text-sm mb-4">Direct integration guidance and custom Sentinel client setup for your autonomous agent architecture.</p>
                     </div>
-                    <a href="#pilotFormCard" onclick="selectTierAndScroll('250')" class="btn btn-outline btn-sm btn-block">Select Integration Sprint</a>
+                    <a href="#payForPilot" onclick="selectTierAndScroll('250')" class="btn btn-outline btn-sm btn-block">Select Integration Sprint</a>
+                </div>
+            </div>
+
+            <!-- Pay for Pilot — checkout v0 -->
+            <div id="payForPilot" class="card mt-8" style="border: 1px solid var(--border-accent); background: linear-gradient(180deg, rgba(255, 176, 0, 0.05) 0%, rgba(5, 5, 5, 0.95) 100%); padding: 2.5rem;">
+                <h2 class="mono text-xl mb-2 text-center" style="color: var(--accent);">Pay for Pilot</h2>
+                <p class="text-xs text-muted text-center mb-6" style="line-height:1.6;">
+                    Semi-automated checkout v0: you pay on-chain; we verify manually and deliver JSON + Markdown. This is <strong>not</strong> escrow and does <strong>not</strong> trigger automated receipt delivery.
+                </p>
+
+                <ol class="text-sm text-muted mb-6" style="line-height: 2; padding-left: 1.25rem; max-width: 42rem; margin-left: auto; margin-right: auto;">
+                    <li><strong style="color:#fff;">Choose tier</strong> — $25 Draft Review · $50 Operator Pilot · $250 Integration Sprint</li>
+                    <li><strong style="color:#fff;">Send USDC on Base</strong> — exact tier amount to the manual pilot payment address below</li>
+                    <li><strong style="color:#fff;">Submit intake</strong> — contact, payment tx hash, and one redacted proposed action</li>
+                    <li><strong style="color:#fff;">Manual verification</strong> — BeezShield confirms payment, then returns Trust Receipt JSON + Markdown</li>
+                </ol>
+
+                <div class="grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; align-items: start;">
+                    <div style="background: rgba(0,0,0,0.45); border: 1px solid var(--border-light); padding: 1.5rem; border-radius: 4px;">
+                        <h3 class="mono text-xs text-amber mb-2">MANUAL PILOT PAYMENT ADDRESS</h3>
+                        <p class="mono text-xs mb-3" id="pilotPaymentAddress" style="word-break: break-all; color: #fff;">0x3cf9C2E55485fF8DAFfb59c84a0fa7c03bDbAeaf</p>
+                        <p class="text-xs text-muted mb-3" style="line-height:1.6;">
+                            Public BeezShield x402 treasury address. Labeled for <strong>manual pilot payment</strong> only — not a custodial escrow account.
+                        </p>
+                        <p class="mono text-xs mb-3" style="color: #f59e0b; line-height:1.6;">
+                            ⚠ Send <strong>only USDC on Base</strong>. Other assets or chains are not auto-credited.
+                        </p>
+                        <p class="mono text-xs text-muted mb-3">Amount due: <strong id="tierAmountLabel" style="color:var(--accent);">50 USDC</strong> (<span id="tierNameLabel">Operator Pilot</span>)</p>
+                        <button type="button" onclick="copyPaymentAddress()" class="btn btn-outline btn-xs btn-block">
+                            <i data-lucide="copy" class="icon-xs inline" style="margin-right: 0.25rem;"></i> Copy payment address
+                        </button>
+                        <div id="copyAddressAlert" class="mono text-xs text-center mt-2" style="display: none; color:#10b981;">Payment address copied!</div>
+                    </div>
+                    <div style="background: rgba(0,0,0,0.45); border: 1px solid var(--border-light); padding: 1.5rem; border-radius: 4px;">
+                        <h3 class="mono text-xs text-muted mb-2">PAYMENT + DELIVERY BOUNDARIES</h3>
+                        <ul class="text-xs text-muted" style="list-style: none; padding: 0; line-height: 1.8;">
+                            <li>• <strong style="color:#fff;">USDC on Base</strong> only for pilot checkout v0</li>
+                            <li>• <strong style="color:#fff;">Manual verification</strong> of your payment tx before work starts</li>
+                            <li>• <strong style="color:#fff;">No automated fulfillment</strong> — receipt minting is operator-driven</li>
+                            <li>• <strong style="color:#fff;">Not escrow</strong> — funds are not held in a release contract</li>
+                            <li>• <strong style="color:#fff;">No revenue claim</strong> for BeezShield until payment is confirmed on-chain</li>
+                        </ul>
+                        <a href="#pilotFormCard" class="btn btn-primary btn-sm btn-block mt-4" style="font-family:var(--font-mono);">Continue to intake (step 3)</a>
+                    </div>
                 </div>
             </div>
 
@@ -114,70 +158,75 @@
                 </div>
             </div>
 
-            <!-- Form-like Section & Outbound Packet Generator -->
+            <!-- Step 3–4: intake after payment -->
             <div id="pilotFormCard" class="card mt-8" style="border: 1px solid var(--border-accent); background: linear-gradient(180deg, rgba(255, 176, 0, 0.03) 0%, rgba(5, 5, 5, 0.9) 100%); padding: 2.5rem;">
-                <h2 class="mono text-xl mb-4 text-center" style="color: var(--accent);">Request $50 Trust Receipt Pilot — intake preview</h2>
-                <p class="text-xs text-muted text-center mb-4" style="line-height:1.6;">
-                    Copy the JSON below and email it, or submit the form. BeezShield will confirm tier and <strong>manual payment</strong> before delivery.
-                    You receive <strong>JSON + Markdown</strong> receipt files — not an on-chain security guarantee.
+                <h2 class="mono text-xl mb-2 text-center" style="color: var(--accent);">Submit payment proof &amp; intake (steps 3–4)</h2>
+                <p class="text-xs text-muted text-center mb-6" style="line-height:1.6; max-width: 600px; margin-left: auto; margin-right: auto;">
+                    After sending <strong>USDC on Base</strong> to the <strong>manual pilot payment address</strong>, submit contact, <strong>payment_tx_hash</strong>, and one redacted proposed action. BeezShield performs <strong>manual verification</strong> — delivery is <strong>not</strong> automated.
                 </p>
                 
-                <div class="grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; align-items: stretch;">
-                    <!-- Input Fields Form -->
+                <div class="grid" style="display: grid; grid-template-columns: 1.2fr 1.0fr; gap: 2.5rem; align-items: start;">
                     <form id="pilotForm" onsubmit="handlePilotSubmit(event)" style="display: flex; flex-direction: column; gap: 1rem;">
                         <div>
-                            <label for="email" class="mono text-xs text-muted" style="display:block; margin-bottom: 0.25rem;">CONTACT EMAIL</label>
-                            <input type="email" id="email" required placeholder="builder@example.com" oninput="updatePacketPreview()" style="width:100%; background:rgba(0,0,0,0.5); border:1px solid var(--border-light); border-radius:4px; padding:0.6rem; color:#fff; font-family:var(--font-mono); font-size:0.8rem;">
+                            <label for="email" class="mono text-xs text-muted" style="display:block; margin-bottom: 0.25rem;">CONTACT</label>
+                            <input type="email" id="email" required placeholder="builder@example.com" oninput="updateCheckoutPreview()" style="width:100%; background:rgba(0,0,0,0.5); border:1px solid var(--border-light); border-radius:4px; padding:0.6rem; color:#fff; font-family:var(--font-mono); font-size:0.8rem;">
                         </div>
 
                         <div>
-                            <label for="proposedAction" class="mono text-xs text-muted" style="display:block; margin-bottom: 0.25rem;">PROPOSED ACTION</label>
-                            <input type="text" id="proposedAction" required placeholder="e.g. Swap 10 USDC on Uniswap" oninput="updatePacketPreview()" style="width:100%; background:rgba(0,0,0,0.5); border:1px solid var(--border-light); border-radius:4px; padding:0.6rem; color:#fff; font-family:var(--font-mono); font-size:0.8rem;">
-                        </div>
-
-                        <div>
-                            <label for="chain" class="mono text-xs text-muted" style="display:block; margin-bottom: 0.25rem;">CHAIN</label>
-                            <input type="text" id="chain" required placeholder="base" oninput="updatePacketPreview()" style="width:100%; background:rgba(0,0,0,0.5); border:1px solid var(--border-light); border-radius:4px; padding:0.6rem; color:#fff; font-family:var(--font-mono); font-size:0.8rem;">
-                        </div>
-
-                        <div>
-                            <label for="resultRef" class="mono text-xs text-muted" style="display:block; margin-bottom: 0.25rem;">RESULT REF (TX HASH / WALLET)</label>
-                            <input type="text" id="resultRef" required placeholder="tx:0x..." oninput="updatePacketPreview()" style="width:100%; background:rgba(0,0,0,0.5); border:1px solid var(--border-light); border-radius:4px; padding:0.6rem; color:#fff; font-family:var(--font-mono); font-size:0.8rem;">
-                        </div>
-
-                        <div>
-                            <label for="pilotTier" class="mono text-xs text-muted" style="display:block; margin-bottom: 0.25rem;">SELECT PILOT TIER</label>
-                            <select id="pilotTier" onchange="updatePacketPreview()" style="width:100%; background:rgba(0,0,0,0.5); border:1px solid var(--border-light); border-radius:4px; padding:0.6rem; color:#fff; font-family:var(--font-mono); font-size:0.8rem;">
-                                <option value="25">$25 USDC Tier - Draft Review</option>
-                                <option value="50" selected>$50 USDC Tier - Operator Pilot</option>
-                                <option value="250">$250 USDC Tier - Integration Sprint</option>
+                            <label for="pilotTier" class="mono text-xs text-muted" style="display:block; margin-bottom: 0.25rem;">SELECTED TIER</label>
+                            <select id="pilotTier" onchange="updateCheckoutPreview()" style="width:100%; background:rgba(0,0,0,0.5); border:1px solid var(--border-light); border-radius:4px; padding:0.6rem; color:#fff; font-family:var(--font-mono); font-size:0.8rem;">
+                                <option value="25">$25 — Draft Review</option>
+                                <option value="50" selected>$50 — Operator Pilot</option>
+                                <option value="250">$250 — Integration Sprint</option>
                             </select>
                         </div>
 
                         <div>
-                            <label for="notes" class="mono text-xs text-muted" style="display:block; margin-bottom: 0.25rem;">NOTES</label>
-                            <textarea id="notes" required placeholder="Staging environment details..." rows="3" oninput="updatePacketPreview()" style="width:100%; background:rgba(0,0,0,0.5); border:1px solid var(--border-light); border-radius:4px; padding:0.6rem; color:#fff; font-family:var(--font-mono); font-size:0.8rem; resize:vertical;"></textarea>
+                            <label for="paymentTxHash" class="mono text-xs text-muted" style="display:block; margin-bottom: 0.25rem;">PAYMENT TX HASH (USDC ON BASE)</label>
+                            <input type="text" id="paymentTxHash" required placeholder="0x..." oninput="updateCheckoutPreview()" style="width:100%; background:rgba(0,0,0,0.5); border:1px solid var(--border-light); border-radius:4px; padding:0.6rem; color:#fff; font-family:var(--font-mono); font-size:0.8rem;">
                         </div>
 
-                        <button type="submit" class="btn btn-primary btn-block" style="font-family:var(--font-mono); margin-top: 0.5rem;">Request $50 Trust Receipt Pilot</button>
+                        <div>
+                            <label for="proposedAction" class="mono text-xs text-muted" style="display:block; margin-bottom: 0.25rem;">PROPOSED ACTION SUMMARY (REDACTED)</label>
+                            <input type="text" id="proposedAction" required placeholder="e.g. Contract risk precheck before one swap step" oninput="updateCheckoutPreview()" style="width:100%; background:rgba(0,0,0,0.5); border:1px solid var(--border-light); border-radius:4px; padding:0.6rem; color:#fff; font-family:var(--font-mono); font-size:0.8rem;">
+                        </div>
+
+                        <div>
+                            <label for="chain" class="mono text-xs text-muted" style="display:block; margin-bottom: 0.25rem;">CHAIN</label>
+                            <input type="text" id="chain" required placeholder="base" oninput="updateCheckoutPreview()" style="width:100%; background:rgba(0,0,0,0.5); border:1px solid var(--border-light); border-radius:4px; padding:0.6rem; color:#fff; font-family:var(--font-mono); font-size:0.8rem;">
+                        </div>
+
+                        <div>
+                            <label for="resultRef" class="mono text-xs text-muted" style="display:block; margin-bottom: 0.25rem;">RESULT REF (OPTIONAL)</label>
+                            <input type="text" id="resultRef" placeholder="exec_ref:... or trail_ref:..." oninput="updateCheckoutPreview()" style="width:100%; background:rgba(0,0,0,0.5); border:1px solid var(--border-light); border-radius:4px; padding:0.6rem; color:#fff; font-family:var(--font-mono); font-size:0.8rem;">
+                        </div>
+
+                        <div>
+                            <label for="notes" class="mono text-xs text-muted" style="display:block; margin-bottom: 0.25rem;">NOTES</label>
+                            <textarea id="notes" placeholder="Staging environment details..." rows="3" oninput="updateCheckoutPreview()" style="width:100%; background:rgba(0,0,0,0.5); border:1px solid var(--border-light); border-radius:4px; padding:0.6rem; color:#fff; font-family:var(--font-mono); font-size:0.8rem; resize:vertical;"></textarea>
+                        </div>
+
+                        <button type="submit" id="submitPilotBtn" class="btn btn-primary btn-block" style="font-family:var(--font-mono); margin-top: 0.5rem;">Submit intake for manual verification</button>
                     </form>
 
-                    <!-- JSON Outbound Packet Preview -->
-                    <div style="display: flex; flex-direction: column; justify-content: space-between; background: rgba(0, 0, 0, 0.4); border: 1px solid var(--border-light); padding: 1.5rem; border-radius: 4px;">
-                        <div>
-                            <h3 class="mono text-xs text-muted mb-2">OUTBOUND PACKET PREVIEW</h3>
-                            <pre style="margin: 0; background: transparent; border: none; padding: 0;"><code id="jsonPreview" class="mono text-xs text-amber" style="white-space: pre-wrap; word-break: break-all;"></code></pre>
-                        </div>
-                        <div class="mt-4">
-                            <button id="copyPacketBtn" onclick="copyPacketJSON()" class="btn btn-outline btn-xs btn-block"><i data-lucide="copy" class="icon-xs inline" style="margin-right: 0.25rem;"></i> Copy Packet JSON</button>
-                            <div id="copyAlert" class="mono text-xs text-green text-center mt-2" style="display: none; color:#10b981;">Copied successfully!</div>
+                    <div style="display: flex; flex-direction: column; justify-content: flex-start; gap: 1.5rem;">
+                        <div style="display: flex; flex-direction: column; justify-content: space-between; background: rgba(0, 0, 0, 0.4); border: 1px solid var(--border-light); padding: 1.5rem; border-radius: 4px;">
+                            <div>
+                                <h3 class="mono text-xs text-muted mb-2">CHECKOUT JSON PREVIEW</h3>
+                                <pre style="margin: 0; background: transparent; border: none; padding: 0;"><code id="jsonPreview" class="mono text-xs text-amber" style="white-space: pre-wrap; word-break: break-all;"></code></pre>
+                            </div>
+                            <div class="mt-4">
+                                <button type="button" onclick="copyCheckoutJSON()" class="btn btn-outline btn-xs btn-block"><i data-lucide="copy" class="icon-xs inline" style="margin-right: 0.25rem;"></i> Copy checkout JSON</button>
+                                <div id="copyAlert" class="mono text-xs text-center mt-2" style="display: none; color:#10b981;">Checkout JSON copied!</div>
+                            </div>
                         </div>
                     </div>
                 </div>
 
-                <div id="formSuccess" style="display:none; text-align:center; padding:1.5rem; border:1px solid var(--accent); border-radius:4px; background:rgba(255,176,0,0.05); margin-top:1.5rem;">
-                    <i data-lucide="check-circle" class="text-amber" style="width:32px; height:32px; margin-bottom:0.5rem;"></i>
-                    <p class="mono text-sm" style="color:var(--accent); margin:0;">Pilot request registered. We will contact you soon.</p>
+                <div id="formSuccess" style="display:none; text-align:center; padding:2rem; border:1px solid var(--accent); border-radius:4px; background:rgba(255,176,0,0.05); margin-top:1.5rem;">
+                    <i data-lucide="check-circle" class="text-amber" style="width:36px; height:36px; margin-bottom:0.5rem;"></i>
+                    <p class="mono text-sm" style="color:var(--accent); margin:0 0 0.5rem 0; font-weight: bold;">Intake received</p>
+                    <p class="text-xs text-muted" style="margin: 0;">BeezShield will <strong>manually verify</strong> your USDC payment on Base before delivering Trust Receipt JSON + Markdown. This is not automated fulfillment.</p>
                 </div>
             </div>
 
@@ -225,11 +274,18 @@
     </footer>
 
     <script>
+        const PILOT_PAYMENT_ADDRESS = "0x3cf9C2E55485fF8DAFfb59c84a0fa7c03bDbAeaf";
+        const TIER_LABELS = {
+            "25": { amount: "25 USDC", name: "Draft Review" },
+            "50": { amount: "50 USDC", name: "Operator Pilot" },
+            "250": { amount: "250 USDC", name: "Integration Sprint" }
+        };
+
         document.addEventListener('DOMContentLoaded', () => {
             if (window.lucide) {
                 lucide.createIcons();
             }
-            updatePacketPreview();
+            updateCheckoutPreview();
         });
 
         function handlePilotSubmit(event) {
@@ -246,47 +302,67 @@
             if (selectEl) {
                 selectEl.value = tierValue;
             }
-            updatePacketPreview();
-            const formCard = document.getElementById('pilotFormCard');
-            if (formCard) {
-                formCard.scrollIntoView({ behavior: 'smooth' });
+            updateCheckoutPreview();
+            const target = document.getElementById('payForPilot') || document.getElementById('pilotFormCard');
+            if (target) {
+                target.scrollIntoView({ behavior: 'smooth' });
             }
         }
 
-        function updatePacketPreview() {
+        function updateTierLabels(tier) {
+            const meta = TIER_LABELS[tier] || TIER_LABELS["50"];
+            const amountEl = document.getElementById('tierAmountLabel');
+            const nameEl = document.getElementById('tierNameLabel');
+            if (amountEl) amountEl.textContent = meta.amount;
+            if (nameEl) nameEl.textContent = meta.name;
+        }
+
+        function copyPaymentAddress() {
+            navigator.clipboard.writeText(PILOT_PAYMENT_ADDRESS).then(() => {
+                const alertEl = document.getElementById('copyAddressAlert');
+                if (alertEl) {
+                    alertEl.style.display = 'block';
+                    setTimeout(() => { alertEl.style.display = 'none'; }, 2000);
+                }
+            });
+        }
+
+        function updateCheckoutPreview() {
             const email = document.getElementById('email').value || "builder@example.com";
-            const proposedAction = document.getElementById('proposedAction').value || "Swap 10 USDC on Uniswap";
+            const proposedAction = document.getElementById('proposedAction').value || "Contract risk precheck before one swap step";
             const chain = document.getElementById('chain').value || "base";
-            const resultRef = document.getElementById('resultRef').value || "tx:0x...";
+            const resultRef = document.getElementById('resultRef').value || "";
             const tier = document.getElementById('pilotTier').value || "50";
-            const notes = document.getElementById('notes').value || "Staging environment details...";
+            const paymentTxHash = document.getElementById('paymentTxHash').value || "0x0000000000000000000000000000000000000000000000000000000000000000";
+            const notes = document.getElementById('notes').value || "";
+
+            updateTierLabels(tier);
 
             const payload = {
-                "schema": "trust-receipt-pilot-intake-v0",
-                "tier_usdc": parseInt(tier),
+                "schema": "trust-receipt-checkout-v0",
                 "contact": email,
+                "selected_tier": parseInt(tier, 10),
+                "payment_tx_hash": paymentTxHash,
                 "proposed_action_summary": proposedAction,
                 "chain": chain,
-                "has_post_action_result_ref": Boolean(resultRef && resultRef !== "tx:0x..."),
-                "contract_or_tool_ref_redacted": resultRef,
-                "preferred_payment_method": "usdc_base_manual",
+                "result_ref_optional": resultRef || null,
+                "manual_pilot_payment_address": PILOT_PAYMENT_ADDRESS,
+                "payment_asset": "USDC",
+                "payment_network": "base",
                 "notes": notes,
                 "timestamp": new Date().toISOString()
             };
 
-            const jsonStr = JSON.stringify(payload, null, 2);
-            document.getElementById('jsonPreview').textContent = jsonStr;
+            document.getElementById('jsonPreview').textContent = JSON.stringify(payload, null, 2);
         }
 
-        function copyPacketJSON() {
+        function copyCheckoutJSON() {
             const jsonText = document.getElementById('jsonPreview').textContent;
             navigator.clipboard.writeText(jsonText).then(() => {
                 const alertEl = document.getElementById('copyAlert');
                 if (alertEl) {
                     alertEl.style.display = 'block';
-                    setTimeout(() => {
-                        alertEl.style.display = 'none';
-                    }, 2000);
+                    setTimeout(() => { alertEl.style.display = 'none'; }, 2000);
                 }
             });
         }

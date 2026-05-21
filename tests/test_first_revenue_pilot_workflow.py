@@ -72,7 +72,8 @@ def test_pilot_page_has_fifty_dollar_cta():
     low = html.lower()
     assert "one redacted" in low or "redacted action" in low
     assert "json" in low and "markdown" in low
-    assert "manual" in low or "no payment automation" in low or "not automated" in low
+    assert "manual" in low or "pay for pilot" in low
+    assert "copy checkout json" in low
 
 
 def test_pilot_page_no_revenue_or_partnership_claims():

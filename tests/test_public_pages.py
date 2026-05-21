@@ -17,6 +17,7 @@ PAGES = [
 INDEX = Path("apps/website/index.html")
 REGISTRY_X402 = Path("apps/website/registry/x402scan.html")
 PILOT_TRUST_RECEIPT = Path("apps/website/pilot/trust-receipt.html")
+PILOT_TREASURY = "0x3cf9C2E55485fF8DAFfb59c84a0fa7c03bDbAeaf"
 
 
 def _merged() -> str:
@@ -221,13 +222,18 @@ def test_pilot_trust_receipt_page():
     assert "post-action result ref" in low
     assert "not-checked boundary" in low
 
-    # Form inputs & Copy Button
-    assert "contact email" in low
-    assert "proposed action" in low
+    # Checkout v0 form & copy buttons
+    assert "pay for pilot" in low
+    assert "payment tx hash" in low or "payment_tx_hash" in low
+    assert "proposed action summary" in low or "proposed_action_summary" in low
     assert "chain" in low
-    assert "result ref" in low
-    assert "notes" in low
-    assert "copy packet json" in low
+    assert "result ref" in low or "result_ref_optional" in low
+    assert "copy checkout json" in low
+    assert "copy payment address" in low
+    assert PILOT_TREASURY.lower() in low
+    assert "not escrow" in low or "no escrow" in low
+    assert "manual verification" in low
+
 
 
 def test_robots_txt():
