@@ -46,6 +46,26 @@
     <priority>0.7</priority>
   </url>
   <url>
+    <loc>https://beezshield.com/changelog.html</loc>
+    <lastmod>2026-05-21</lastmod>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://beezshield.com/demo.html</loc>
+    <lastmod>2026-05-21</lastmod>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://beezshield.com/manifesto.html</loc>
+    <lastmod>2026-05-21</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://beezshield.com/risk-feed.html</loc>
+    <lastmod>2026-05-21</lastmod>
+    <priority>0.6</priority>
+  </url>
+  <url>
     <loc>https://beezshield.com/registry/x402scan.html</loc>
     <lastmod>2026-05-21</lastmod>
     <priority>0.8</priority>

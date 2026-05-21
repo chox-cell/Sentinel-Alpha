@@ -1,3 +1,6 @@
+# https://beezshield.com/robots.txt
+
 User-agent: *
 Allow: /
+
 Sitemap: https://beezshield.com/sitemap.xml

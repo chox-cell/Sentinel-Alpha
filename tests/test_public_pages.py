@@ -36,7 +36,8 @@ def test_public_pages_required_copy():
         "npm install @beezshield/sentinel",
         "contract_address",
         "agentkit-style example",
-        "official provider coming next",
+        "provider-style adapter roadmap",
+        "not official/submitted upstream",
     ]
     for token in required:
         assert token in merged
@@ -236,20 +237,28 @@ def test_pilot_trust_receipt_page():
 
 
 
-def test_robots_txt():
+def test_robots_txt_multiline_format():
     robots_path = Path("apps/website/robots.txt")
-    assert robots_path.exists()
     content = robots_path.read_text(encoding="utf-8")
-    assert "User-agent: *" in content
-    assert "Allow: /" in content
-    assert "Sitemap: https://beezshield.com/sitemap.xml" in content
+    assert content.endswith("\n")
+    lines = [line.strip() for line in content.splitlines() if line.strip() and not line.strip().startswith("#")]
+    assert lines[0] == "User-agent: *"
+    assert lines[1] == "Allow: /"
+    assert lines[2] == "Sitemap: https://beezshield.com/sitemap.xml"
+    # Blank line separates crawler group from sitemap directive (RFC 9309 style)
+    assert "\n\nSitemap:" in content
 
 
-def test_sitemap_xml():
+def test_sitemap_xml_valid_and_complete():
+    import xml.etree.ElementTree as ET
+
     sitemap_path = Path("apps/website/sitemap.xml")
-    assert sitemap_path.exists()
     content = sitemap_path.read_text(encoding="utf-8")
-    required_urls = [
+    root = ET.fromstring(content)
+    assert root.tag.endswith("urlset")
+    ns = {"sm": "http://www.sitemaps.org/schemas/sitemap/0.9"}
+    locs = {el.text for el in root.findall("sm:url/sm:loc", ns)}
+    required_urls = {
         "https://beezshield.com/",
         "https://beezshield.com/index.html",
         "https://beezshield.com/about.html",
@@ -259,24 +268,53 @@ def test_sitemap_xml():
         "https://beezshield.com/sdk.html",
         "https://beezshield.com/agentkit.html",
         "https://beezshield.com/x402.html",
+        "https://beezshield.com/changelog.html",
+        "https://beezshield.com/demo.html",
+        "https://beezshield.com/manifesto.html",
+        "https://beezshield.com/risk-feed.html",
         "https://beezshield.com/registry/x402scan.html",
         "https://beezshield.com/pilot/trust-receipt.html",
-    ]
-    for url in required_urls:
-        assert f"<loc>{url}</loc>" in content
+    }
+    assert required_urls <= locs
+    public_html = {
+        p
+        for p in Path("apps/website").rglob("*.html")
+        if "node_modules" not in p.parts
+    }
+    for page in public_html:
+        rel = page.relative_to(Path("apps/website")).as_posix()
+        expected = f"https://beezshield.com/{rel}"
+        assert expected in locs, f"missing sitemap entry for {rel}"
 
 
-def test_security_txt():
+def test_security_txt_multiline_format():
     sec_path = Path("apps/website/.well-known/security.txt")
-    assert sec_path.exists()
     content = sec_path.read_text(encoding="utf-8")
-    assert "Contact: https://github.com/chox-cell/Sentinel-Alpha/issues" in content
-    assert "Disclosure: https://beezshield.com/trust.html" in content
-    # Ensure no fake/unverified emails or claims
+    assert content.endswith("\n")
+    lines = [line for line in content.splitlines() if line.strip()]
+    assert lines[0].startswith("Contact:")
+    assert any(line.startswith("Expires:") for line in lines)
+    assert any(line.startswith("Canonical:") for line in lines)
+    assert any(line.startswith("Policy:") for line in lines)
+    assert "Policy: https://beezshield.com/trust.html" in content
     assert "@beezshield.com" not in content
-    assert "@gmail.com" not in content
     assert "partnership" not in content.lower()
     assert "guarantee" not in content.lower()
+
+
+def test_homepage_pricing_aligned_with_pricing_page():
+    index = INDEX.read_text(encoding="utf-8").lower()
+    pricing = Path("apps/website/pricing.html").read_text(encoding="utf-8").lower()
+    for tier in ("0.02 usdc", "0.05 usdc", "0.10 usdc", "0.15 usdc"):
+        assert tier in index
+        assert tier in pricing
+
+
+def test_homepage_receipt_linking_not_transaction_proof():
+    text = INDEX.read_text(encoding="utf-8").lower()
+    assert "links point-in-time threat signals" in text or "links" in text
+    assert "not proof that an onchain transaction matched" in text
+    assert "proves that a specific agent" not in text
 
 
 def test_homepage_organization_json_ld():

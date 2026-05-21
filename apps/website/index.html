@@ -198,7 +198,7 @@
                     <div class="grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; align-items: start;">
                         <div>
                             <h4 class="mono text-sm text-green mb-3" style="color:#10b981;"><i data-lucide="shield-check" class="icon-sm inline" style="margin-right:0.25rem;"></i> What this proves</h4>
-                            <p class="text-xs text-muted" style="line-height: 1.6;">The Sentinel + Trust Receipt pipeline proves that a specific agent performed pre-execution contract verification prior to taking onchain action. It verifies that decisions were backed by point-in-time threat database intelligence and that the resulting transaction matches the validated contract target.</p>
+                            <p class="text-xs text-muted" style="line-height: 1.6;">The Sentinel + Trust Receipt pipeline documents that a specific agent performed pre-execution contract verification before onchain action. It links point-in-time threat signals to a redacted proposed-action summary and optional post-execution hash refs — not proof that an onchain transaction matched a validated target.</p>
                         </div>
                         <div>
                             <h4 class="mono text-sm text-amber mb-3"><i data-lucide="shield-alert" class="icon-sm inline" style="margin-right:0.25rem;"></i> What this does not prove</h4>
@@ -404,26 +404,33 @@ result = client.decideBeforeExecution({
             <div class="container">
                 <div class="section-header center">
                     <h2>Pricing</h2>
-                    <p class="text-muted">Transparent per-request pricing via x402 on Base.</p>
+                    <p class="text-muted">x402 lanes on Base USDC — same tiers on <a href="pricing.html" class="text-amber">pricing.html</a> and <a href="x402.html" class="text-amber">x402 guide</a>.</p>
                 </div>
-                <div class="grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; max-width: 800px; margin: 0 auto;">
-                    <div class="card" style="border: 2px solid var(--electric-blue); box-shadow: 0 0 30px rgba(56, 189, 248, 0.1); background: linear-gradient(180deg, rgba(56, 189, 248, 0.05) 0%, rgba(10, 10, 10, 0.8) 100%);">
-                        <div class="badge mb-4" style="border-color: var(--electric-blue);"><span class="pulse-dot" style="background: var(--electric-blue); box-shadow: 0 0 8px var(--electric-blue);"></span><span class="mono text-xs" style="color: var(--electric-blue);">LIVE & ACTIVE</span></div>
-                        <h3 class="mono text-lg mb-2">Basic Lane</h3>
-                        <p class="text-4xl font-bold mb-4" style="color: #fff;">0.02 <span class="text-sm text-muted" style="font-weight: normal;">USDC / request</span></p>
-                        <p class="text-muted text-sm mb-6">Standard pre-execution risk score. Direct automated routing with standard SLA.</p>
-                        <a href="#quickstart" class="btn btn-primary btn-block" style="background: var(--electric-blue); color: #000; box-shadow: 0 0 20px rgba(56, 189, 248, 0.3);">Integrate Basic Lane</a>
+                <div class="grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 1.5rem; max-width: 900px; margin: 0 auto;">
+                    <div class="card" style="border: 1px solid var(--border-light); background: rgba(5,5,5,0.6); padding: 1.5rem; text-align: center;">
+                        <h3 class="mono text-xs text-muted mb-2">BASIC</h3>
+                        <p class="text-2xl font-bold mb-1" style="color: #fff;">0.02 USDC</p>
+                        <span class="mono text-xs text-muted">per query</span>
                     </div>
-                    <div class="card" style="opacity: 0.65; border: 1px solid var(--border-light); display: flex; flex-direction: column; justify-content: space-between;">
-                        <div>
-                            <div class="badge mb-4"><span class="mono text-xs text-muted">COMING SOON</span></div>
-                            <h3 class="mono text-lg mb-2">Executive / Priority</h3>
-                            <p class="text-3xl font-bold mb-4">TBA</p>
-                            <p class="text-muted text-sm mb-6">High-throughput, dedicated infrastructure for high-value autonomous decisions.</p>
-                        </div>
-                        <p class="text-xs text-muted">Note: Pricing models may evolve as the network scales.</p>
+                    <div class="card" style="border: 1px solid var(--border-light); background: rgba(5,5,5,0.6); padding: 1.5rem; text-align: center;">
+                        <h3 class="mono text-xs text-muted mb-2">EXECUTIVE</h3>
+                        <p class="text-2xl font-bold mb-1" style="color: #fff;">0.05 USDC</p>
+                        <span class="mono text-xs text-muted">per query</span>
+                    </div>
+                    <div class="card" style="border: 1px solid var(--border-light); background: rgba(5,5,5,0.6); padding: 1.5rem; text-align: center;">
+                        <h3 class="mono text-xs text-muted mb-2">PREMIUM</h3>
+                        <p class="text-2xl font-bold mb-1" style="color: #fff;">0.10 USDC</p>
+                        <span class="mono text-xs text-muted">per query</span>
+                    </div>
+                    <div class="card" style="border: 1px solid var(--border-light); background: rgba(5,5,5,0.6); padding: 1.5rem; text-align: center;">
+                        <h3 class="mono text-xs text-muted mb-2">PRIORITY</h3>
+                        <p class="text-2xl font-bold mb-1" style="color: #fff;">0.15 USDC</p>
+                        <span class="mono text-xs text-muted">per query</span>
                     </div>
                 </div>
+                <p class="text-xs text-muted text-center mt-6" style="max-width: 42rem; margin-left: auto; margin-right: auto; line-height: 1.6;">
+                    Unpaid <code class="mono">POST /contracts/risk-score</code> returns an x402 payment challenge. Settlement is explicit in your client — not automatic in the SDK.
+                </p>
             </div>
         </section>
 

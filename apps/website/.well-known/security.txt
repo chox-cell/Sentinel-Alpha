@@ -1,3 +1,5 @@
 Contact: https://github.com/chox-cell/Sentinel-Alpha/issues
-Disclosure: https://beezshield.com/trust.html
+Expires: 2027-05-21T12:00:00.000Z
 Preferred-Languages: en
+Canonical: https://beezshield.com/.well-known/security.txt
+Policy: https://beezshield.com/trust.html
