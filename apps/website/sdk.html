@@ -1,35 +1,108 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>BeezShield SDK | @beezshield/sentinel</title>
-  <link rel="stylesheet" href="styles.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BeezShield SDK | @beezshield/sentinel</title>
+    <meta name="description" content="Integrate pre-execution decision checks into JS/TS loops using the @beezshield/sentinel SDK.">
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://unpkg.com/lucide@latest"></script>
 </head>
 <body>
-  <main class="section">
-    <div class="container">
-      <h1>SDK: @beezshield/sentinel</h1>
-      <p class="text-muted">Current npm package version: <strong>0.1.0</strong></p>
-      <p><code>npm install @beezshield/sentinel</code></p>
+    <div class="bg-abstract" aria-hidden="true">
+        <canvas id="swarmCanvas" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; pointer-events: none; opacity: 0.15;"></canvas>
+    </div>
 
-      <pre class="code-snippet"><code>import { createSentinelClient, SentinelPaymentRequiredError } from "@beezshield/sentinel";
+    <nav class="top-nav">
+        <div class="nav-container">
+            <a href="index.html" class="brand brand-link" aria-label="BeezShield home">
+                <img src="brand/beezshield-logo.svg?v=clean-logo-2" alt="BeezShield Logo" width="36" height="36" class="brand-logo-img">
+                <span class="brand-text">BeezShield</span>
+            </a>
+            <div class="nav-links">
+                <a href="docs.html">Docs</a>
+                <a href="pricing.html">Pricing</a>
+                <a href="trust.html">Trust</a>
+                <a href="about.html">About</a>
+                <a href="https://github.com/chox-cell/Sentinel-Alpha">GitHub</a>
+                <a href="https://www.npmjs.com/package/@beezshield/sentinel" class="active">npm SDK</a>
+            </div>
+        </div>
+    </nav>
 
-const client = createSentinelClient({ lane: "basic" });
-const decision = await client.decideBeforeExecution({
-  contract_address: "0x1111111111111111111111111111111111111111",
-  chain: "base",
+    <main style="padding-top: 10rem; padding-bottom: 6rem;">
+        <div class="container" style="max-width: 800px;">
+            <div class="section-header center">
+                <div class="badge mb-4">
+                    <span class="pulse-dot"></span>
+                    <span class="mono text-xs">TypeScript / JavaScript</span>
+                </div>
+                <h1>SDK: @beezshield/sentinel</h1>
+                <p class="subtitle text-muted">Current npm package version: <strong style="color:#fff;">0.1.0</strong></p>
+            </div>
+
+            <!-- Install -->
+            <div class="card mt-8" style="border: 1px solid var(--border-light); background: rgba(5,5,5,0.6); padding: 1.5rem; text-align: center;">
+                <code class="mono text-amber">npm install @beezshield/sentinel</code>
+            </div>
+
+            <!-- Code snippet -->
+            <div class="card mt-6" style="border: 1px solid var(--border-light); background: rgba(5,5,5,0.6); padding: 2rem;">
+                <h3 class="mono text-xs text-muted mb-3">INTEGRATION BLUEPRINT</h3>
+                <pre style="background: rgba(0,0,0,0.4); padding: 1.25rem; border-radius: 4px; border: 1px solid var(--border-light);"><code class="mono text-xs text-muted" style="white-space: pre-wrap; color: #94a3b8;"><span style="color:#f43f5e;">import</span> { createSentinelClient } <span style="color:#f43f5e;">from</span> <span style="color:#10b981;">"@beezshield/sentinel"</span>;
+
+<span style="color:#f43f5e;">const</span> client = createSentinelClient({ lane: <span style="color:#10b981;">"basic"</span> });
+<span style="color:#f43f5e;">const</span> decision = <span style="color:#f43f5e;">await</span> client.decideBeforeExecution({
+  contract_address: <span style="color:#10b981;">"0x1111111111111111111111111111111111111111"</span>,
+  chain: <span style="color:#10b981;">"base"</span>,
 });
 
-if (decision.shouldExecute) {
-  // execute
-}
-</code></pre>
+<span style="color:#f43f5e;">if</span> (decision.shouldExecute) {
+  <span style="color:#64748b;">// Safe to proceed based on point-in-time checks</span>
+}</code></pre>
+            </div>
 
-      <h2>Payment challenge handling</h2>
-      <p class="text-muted">On unpaid requests, the SDK can raise <code>SentinelPaymentRequiredError</code> so your app can run an explicit payment path.</p>
-      <p class="text-muted">The SDK does not auto-settle x402 payments.</p>
-    </div>
-  </main>
+            <!-- Challenges -->
+            <div class="card mt-6" style="border: 1px solid var(--border-light); background: rgba(5,5,5,0.6); padding: 2rem;">
+                <h3 class="mono text-sm text-amber mb-3"><i data-lucide="help-circle" class="icon-sm inline" style="margin-right: 0.5rem;"></i> Payment challenge handling</h3>
+                <p class="text-sm text-muted mb-2">
+                    On unpaid requests, the SDK can raise <code>SentinelPaymentRequiredError</code> so your app can run an explicit payment path.
+                </p>
+                <p class="text-xs text-muted">
+                    The SDK surfaces challenge details for explicit payment handling and does not fake settlement.
+                </p>
+            </div>
+        </div>
+    </main>
+
+    <footer class="site-footer">
+        <div class="container footer-content">
+            <div class="footer-brand">
+                <div style="display: flex; align-items: center; gap: 0.5rem;">
+                    <img src="brand/beezshield-logo.svg?v=clean-logo-2" alt="BeezShield Logo" width="28" height="28" class="brand-logo-img">
+                    <span class="brand-text">BeezShield</span>
+                </div>
+                <p class="text-muted text-sm mt-2">Machine Trust Infrastructure</p>
+                <p class="footer-claim-note text-xs text-muted mt-4">BeezShield builds pre-execution risk decision tools for agents. It does not provide a security guarantee, trading guarantee, or official x402 endorsement.</p>
+            </div>
+            <div class="footer-links text-sm">
+                <a href="docs.html">Docs</a>
+                <a href="registry/x402scan.html">x402scan registry</a>
+                <a href="pricing.html">Pricing</a>
+                <a href="trust.html">Trust</a>
+                <a href="about.html">About</a>
+                <a href="https://github.com/chox-cell/Sentinel-Alpha">GitHub</a>
+                <a href="https://www.npmjs.com/package/@beezshield/sentinel">npm SDK</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            if (window.lucide) {
+                lucide.createIcons();
+            }
+        });
+    </script>
 </body>
 </html>

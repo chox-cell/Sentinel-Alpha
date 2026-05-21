@@ -1,24 +1,105 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>BeezShield Pricing</title>
-  <link rel="stylesheet" href="styles.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BeezShield Pricing | Sentinel Alpha lanes</title>
+    <meta name="description" content="Pay-per-query pricing lanes for Sentinel Alpha pre-execution checks using the x402 protocol on Base.">
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://unpkg.com/lucide@latest"></script>
 </head>
 <body>
-  <main class="section">
-    <div class="container">
-      <h1>Pricing</h1>
-      <p class="text-muted">x402 lanes on Base USDC.</p>
-      <ul class="text-muted">
-        <li>basic 0.02</li>
-        <li>executive 0.05</li>
-        <li>premium 0.10</li>
-        <li>priority 0.15</li>
-      </ul>
-      <p class="text-muted">No account or dashboard is required to start integrating API-based policy checks.</p>
+    <div class="bg-abstract" aria-hidden="true">
+        <canvas id="swarmCanvas" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; pointer-events: none; opacity: 0.15;"></canvas>
     </div>
-  </main>
+
+    <nav class="top-nav">
+        <div class="nav-container">
+            <a href="index.html" class="brand brand-link" aria-label="BeezShield home">
+                <img src="brand/beezshield-logo.svg?v=clean-logo-2" alt="BeezShield Logo" width="36" height="36" class="brand-logo-img">
+                <span class="brand-text">BeezShield</span>
+            </a>
+            <div class="nav-links">
+                <a href="docs.html">Docs</a>
+                <a href="pricing.html" class="active">Pricing</a>
+                <a href="trust.html">Trust</a>
+                <a href="about.html">About</a>
+                <a href="https://github.com/chox-cell/Sentinel-Alpha">GitHub</a>
+                <a href="https://www.npmjs.com/package/@beezshield/sentinel">npm SDK</a>
+            </div>
+        </div>
+    </nav>
+
+    <main style="padding-top: 10rem; padding-bottom: 6rem;">
+        <div class="container" style="max-width: 800px;">
+            <div class="section-header center">
+                <div class="badge mb-4">
+                    <span class="pulse-dot"></span>
+                    <span class="mono text-xs">USDC lanes on Base</span>
+                </div>
+                <h1>Pricing</h1>
+                <p class="subtitle text-muted">x402 lanes on Base USDC. No dashboard or credit card required.</p>
+            </div>
+
+            <div class="grid mt-8" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 1.5rem;">
+                <div class="card" style="border: 1px solid var(--border-light); background: rgba(5,5,5,0.6); padding: 1.5rem; text-align: center;">
+                    <h3 class="mono text-xs text-muted mb-2">BASIC</h3>
+                    <p class="text-2xl font-bold mb-1" style="color: #fff;">0.02 USDC</p>
+                    <span class="mono text-xs text-muted">per query</span>
+                </div>
+                <div class="card" style="border: 1px solid var(--border-light); background: rgba(5,5,5,0.6); padding: 1.5rem; text-align: center;">
+                    <h3 class="mono text-xs text-muted mb-2">EXECUTIVE</h3>
+                    <p class="text-2xl font-bold mb-1" style="color: #fff;">0.05 USDC</p>
+                    <span class="mono text-xs text-muted">per query</span>
+                </div>
+                <div class="card" style="border: 1px solid var(--border-light); background: rgba(5,5,5,0.6); padding: 1.5rem; text-align: center;">
+                    <h3 class="mono text-xs text-muted mb-2">PREMIUM</h3>
+                    <p class="text-2xl font-bold mb-1" style="color: #fff;">0.10 USDC</p>
+                    <span class="mono text-xs text-muted">per query</span>
+                </div>
+                <div class="card" style="border: 1px solid var(--border-light); background: rgba(5,5,5,0.6); padding: 1.5rem; text-align: center;">
+                    <h3 class="mono text-xs text-muted mb-2">PRIORITY</h3>
+                    <p class="text-2xl font-bold mb-1" style="color: #fff;">0.15 USDC</p>
+                    <span class="mono text-xs text-muted">per query</span>
+                </div>
+            </div>
+
+            <div class="card mt-8" style="border: 1px solid var(--border-light); background: rgba(5,5,5,0.6); padding: 2rem; text-align: center;">
+                <p class="text-muted text-sm">
+                    No account or dashboard is required to start integrating API-based policy checks. Queries are settled programmatically using the x402 payment lane protocol.
+                </p>
+            </div>
+        </div>
+    </main>
+
+    <footer class="site-footer">
+        <div class="container footer-content">
+            <div class="footer-brand">
+                <div style="display: flex; align-items: center; gap: 0.5rem;">
+                    <img src="brand/beezshield-logo.svg?v=clean-logo-2" alt="BeezShield Logo" width="28" height="28" class="brand-logo-img">
+                    <span class="brand-text">BeezShield</span>
+                </div>
+                <p class="text-muted text-sm mt-2">Machine Trust Infrastructure</p>
+                <p class="footer-claim-note text-xs text-muted mt-4">BeezShield builds pre-execution risk decision tools for agents. It does not provide a security guarantee, trading guarantee, or official x402 endorsement.</p>
+            </div>
+            <div class="footer-links text-sm">
+                <a href="docs.html">Docs</a>
+                <a href="registry/x402scan.html">x402scan registry</a>
+                <a href="pricing.html">Pricing</a>
+                <a href="trust.html">Trust</a>
+                <a href="about.html">About</a>
+                <a href="https://github.com/chox-cell/Sentinel-Alpha">GitHub</a>
+                <a href="https://www.npmjs.com/package/@beezshield/sentinel">npm SDK</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            if (window.lucide) {
+                lucide.createIcons();
+            }
+        });
+    </script>
 </body>
 </html>

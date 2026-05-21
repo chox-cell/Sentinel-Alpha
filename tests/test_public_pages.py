@@ -10,6 +10,8 @@ PAGES = [
     Path("apps/website/pricing.html"),
     Path("apps/website/about.html"),
     Path("apps/website/changelog.html"),
+    Path("apps/website/demo.html"),
+    Path("apps/website/manifesto.html"),
 ]
 
 INDEX = Path("apps/website/index.html")
@@ -115,6 +117,22 @@ def test_logo_count_patterns():
     # Assert at most one icon in proof sections (not header/footer)
     total_logos = re.findall(r'beezshield-logo\.svg', index_html)
     assert len(total_logos) == 2
+
+    # Assert exactly one logo in header, one in footer, and 2 total for all subpages
+    for page in PAGES:
+        html = page.read_text(encoding="utf-8")
+        p_nav_match = re.search(r'<nav class="top-nav">.*?</nav>', html, re.DOTALL)
+        assert p_nav_match is not None, f"Missing nav header in {page}"
+        p_nav_logos = re.findall(r'beezshield-logo\.svg', p_nav_match.group(0))
+        assert len(p_nav_logos) == 1, f"Should have exactly 1 logo in nav of {page}"
+
+        p_footer_match = re.search(r'<footer class="site-footer">.*?</footer>', html, re.DOTALL)
+        assert p_footer_match is not None, f"Missing footer in {page}"
+        p_footer_logos = re.findall(r'beezshield-logo\.svg', p_footer_match.group(0))
+        assert len(p_footer_logos) == 1, f"Should have exactly 1 logo in footer of {page}"
+
+        p_total_logos = re.findall(r'beezshield-logo\.svg', html)
+        assert len(p_total_logos) == 2, f"Should have exactly 2 logos total in {page}"
     
     # Registry page header logo rule
     registry_html = REGISTRY_X402.read_text(encoding="utf-8")

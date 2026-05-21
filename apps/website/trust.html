@@ -1,30 +1,95 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>BeezShield Trust Layer</title>
-  <link rel="stylesheet" href="styles.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BeezShield Trust Layer</title>
+    <meta name="description" content="Discover boundaries, specifications, and identity registry parameters of the BeezShield Trust Layer.">
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://unpkg.com/lucide@latest"></script>
 </head>
 <body>
-  <main class="section">
-    <div class="container">
-      <h1>Trust Layer</h1>
-      <p class="text-muted">Sentinel Alpha provides pre-execution risk decisions for autonomous agents.</p>
-
-      <h2>Product truth</h2>
-      <ul class="text-muted">
-        <li>API access is x402 protected.</li>
-        <li>Identity is publicly registered on ERC-8004: <a href="https://8004scan.io/agents/base/45967">Agent 45967</a>.</li>
-        <li>No safety guarantees are implied.</li>
-      </ul>
-
-      <h2>Limitations</h2>
-      <ul class="text-muted">
-        <li>Not an audit replacement.</li>
-        <li>Not a substitute for full security review and monitoring.</li>
-      </ul>
+    <div class="bg-abstract" aria-hidden="true">
+        <canvas id="swarmCanvas" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; pointer-events: none; opacity: 0.15;"></canvas>
     </div>
-  </main>
+
+    <nav class="top-nav">
+        <div class="nav-container">
+            <a href="index.html" class="brand brand-link" aria-label="BeezShield home">
+                <img src="brand/beezshield-logo.svg?v=clean-logo-2" alt="BeezShield Logo" width="36" height="36" class="brand-logo-img">
+                <span class="brand-text">BeezShield</span>
+            </a>
+            <div class="nav-links">
+                <a href="docs.html">Docs</a>
+                <a href="pricing.html">Pricing</a>
+                <a href="trust.html" class="active">Trust</a>
+                <a href="about.html">About</a>
+                <a href="https://github.com/chox-cell/Sentinel-Alpha">GitHub</a>
+                <a href="https://www.npmjs.com/package/@beezshield/sentinel">npm SDK</a>
+            </div>
+        </div>
+    </nav>
+
+    <main style="padding-top: 10rem; padding-bottom: 6rem;">
+        <div class="container" style="max-width: 800px;">
+            <div class="section-header center">
+                <div class="badge mb-4">
+                    <span class="pulse-dot"></span>
+                    <span class="mono text-xs">Security Parameters</span>
+                </div>
+                <h1>Trust Layer</h1>
+                <p class="subtitle text-muted">Sentinel Alpha provides pre-execution risk decisions for autonomous agents.</p>
+            </div>
+
+            <div class="grid mt-8" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem;">
+                <div class="card" style="border: 1px solid var(--border-light); background: rgba(5,5,5,0.6); padding: 2rem;">
+                    <h3 class="mono text-sm text-amber mb-3"><i data-lucide="check-circle" class="icon-sm inline" style="margin-right:0.25rem;"></i> Product Truth</h3>
+                    <ul class="text-xs text-muted" style="list-style: none; padding: 0; line-height: 2;">
+                        <li><i data-lucide="arrow-right" class="icon-xs inline text-amber"></i> API access is x402 protected.</li>
+                        <li><i data-lucide="arrow-right" class="icon-xs inline text-amber"></i> Identity is publicly registered on ERC-8004: <a href="https://8004scan.io/agents/base/45967" target="_blank" class="text-electric">Agent 45967</a>.</li>
+                        <li><i data-lucide="arrow-right" class="icon-xs inline text-amber"></i> No safety guarantees are implied.</li>
+                    </ul>
+                </div>
+
+                <div class="card" style="border: 1px solid var(--border-light); background: rgba(5,5,5,0.6); padding: 2rem;">
+                    <h3 class="mono text-sm text-amber mb-3"><i data-lucide="alert-triangle" class="icon-sm inline" style="margin-right:0.25rem;"></i> Limitations</h3>
+                    <ul class="text-xs text-muted" style="list-style: none; padding: 0; line-height: 2;">
+                        <li><i data-lucide="arrow-right" class="icon-xs inline text-amber"></i> Not an audit replacement.</li>
+                        <li><i data-lucide="arrow-right" class="icon-xs inline text-amber"></i> Not a substitute for full security review and monitoring.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="site-footer">
+        <div class="container footer-content">
+            <div class="footer-brand">
+                <div style="display: flex; align-items: center; gap: 0.5rem;">
+                    <img src="brand/beezshield-logo.svg?v=clean-logo-2" alt="BeezShield Logo" width="28" height="28" class="brand-logo-img">
+                    <span class="brand-text">BeezShield</span>
+                </div>
+                <p class="text-muted text-sm mt-2">Machine Trust Infrastructure</p>
+                <p class="footer-claim-note text-xs text-muted mt-4">BeezShield builds pre-execution risk decision tools for agents. It does not provide a security guarantee, trading guarantee, or official x402 endorsement.</p>
+            </div>
+            <div class="footer-links text-sm">
+                <a href="docs.html">Docs</a>
+                <a href="registry/x402scan.html">x402scan registry</a>
+                <a href="pricing.html">Pricing</a>
+                <a href="trust.html">Trust</a>
+                <a href="about.html">About</a>
+                <a href="https://github.com/chox-cell/Sentinel-Alpha">GitHub</a>
+                <a href="https://www.npmjs.com/package/@beezshield/sentinel">npm SDK</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            if (window.lucide) {
+                lucide.createIcons();
+            }
+        });
+    </script>
 </body>
 </html>

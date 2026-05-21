@@ -1,40 +1,107 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>BeezShield Docs | Start with Sentinel Alpha</title>
-  <meta name="description" content="Start with Sentinel Alpha in 5 minutes using the npm SDK and AgentKit-style example.">
-  <link rel="stylesheet" href="styles.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BeezShield Docs | Start with Sentinel Alpha</title>
+    <meta name="description" content="Start with Sentinel Alpha in 5 minutes using the npm SDK and AgentKit-style example.">
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://unpkg.com/lucide@latest"></script>
 </head>
 <body>
-  <main class="section">
-    <div class="container">
-      <h1>Start with Sentinel Alpha</h1>
-      <p class="subtitle">A practical path for builders to add a pre-execution risk gate without changing their stack.</p>
-
-      <h2>5-minute integration path</h2>
-      <ol class="text-muted">
-        <li>Install the SDK: <code>npm install @beezshield/sentinel</code></li>
-        <li>Create a client with <code>createSentinelClient()</code>.</li>
-        <li>Call <code>decideBeforeExecution({ contract_address, chain })</code>.</li>
-        <li>Execute only when <code>shouldExecute</code> is true.</li>
-        <li>Handle x402 payment challenges explicitly.</li>
-      </ol>
-
-      <h2 class="mt-8">Registry & Discovery</h2>
-      <p class="text-muted">BeezShield Sentinel Alpha is registered as a payable x402 resource on x402scan (directory listing only).</p>
-      <div class="cta-group mt-4">
-        <a class="btn btn-outline" href="registry/x402scan.html">x402scan listing proof copy</a>
-        <a class="btn btn-outline" href="https://api.beezshield.com/contracts/risk-score" target="_blank">API endpoint</a>
-      </div>
-
-      <div class="cta-group mt-6">
-        <a class="btn btn-primary" href="sdk.html">SDK Guide</a>
-        <a class="btn btn-secondary" href="agentkit.html">AgentKit-style Example</a>
-        <a class="btn btn-outline" href="x402.html">x402 Flow</a>
-      </div>
+    <div class="bg-abstract" aria-hidden="true">
+        <canvas id="swarmCanvas" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; pointer-events: none; opacity: 0.15;"></canvas>
     </div>
-  </main>
+
+    <nav class="top-nav">
+        <div class="nav-container">
+            <a href="index.html" class="brand brand-link" aria-label="BeezShield home">
+                <img src="brand/beezshield-logo.svg?v=clean-logo-2" alt="BeezShield Logo" width="36" height="36" class="brand-logo-img">
+                <span class="brand-text">BeezShield</span>
+            </a>
+            <div class="nav-links">
+                <a href="docs.html" class="active">Docs</a>
+                <a href="pricing.html">Pricing</a>
+                <a href="trust.html">Trust</a>
+                <a href="about.html">About</a>
+                <a href="https://github.com/chox-cell/Sentinel-Alpha">GitHub</a>
+                <a href="https://www.npmjs.com/package/@beezshield/sentinel">npm SDK</a>
+            </div>
+        </div>
+    </nav>
+
+    <main style="padding-top: 10rem; padding-bottom: 6rem;">
+        <div class="container" style="max-width: 800px;">
+            <div class="section-header center">
+                <div class="badge mb-4">
+                    <span class="pulse-dot"></span>
+                    <span class="mono text-xs">Documentation</span>
+                </div>
+                <h1>Start with Sentinel Alpha</h1>
+                <p class="subtitle text-muted">A practical path for builders to add a pre-execution risk gate without changing their stack.</p>
+            </div>
+
+            <!-- Steps -->
+            <div class="card mt-8" style="border: 1px solid var(--border-light); background: rgba(5,5,5,0.6); padding: 2.5rem;">
+                <h3 class="mono text-sm text-amber mb-4"><i data-lucide="play" class="icon-sm inline" style="margin-right: 0.5rem;"></i> 5-Minute Integration Path</h3>
+                <ol class="text-sm text-muted" style="padding-left: 1.25rem; line-height: 2;">
+                    <li style="margin-bottom: 0.5rem;">Install the SDK: <code>npm install @beezshield/sentinel</code></li>
+                    <li style="margin-bottom: 0.5rem;">Create a client with <code>createSentinelClient()</code>.</li>
+                    <li style="margin-bottom: 0.5rem;">Call <code>decideBeforeExecution({ contract_address, chain })</code>.</li>
+                    <li style="margin-bottom: 0.5rem;">Execute only when <code>shouldExecute</code> is true.</li>
+                    <li style="margin-bottom: 0.5rem;">Handle x402 payment challenges explicitly.</li>
+                </ol>
+            </div>
+
+            <!-- Registry Info -->
+            <div class="card mt-6" style="border: 1px solid var(--border-light); background: rgba(5,5,5,0.6); padding: 2.5rem;">
+                <h3 class="mono text-sm text-amber mb-3"><i data-lucide="globe" class="icon-sm inline" style="margin-right: 0.5rem;"></i> Registry & Discovery</h3>
+                <p class="text-sm text-muted mb-4">
+                    BeezShield Sentinel Alpha is registered as a payable x402 resource on x402scan (directory listing only).
+                </p>
+                <div class="flex gap-4" style="display: flex; gap: 1rem; flex-wrap: wrap;">
+                    <a class="btn btn-outline btn-sm" href="registry/x402scan.html">x402scan listing proof copy</a>
+                    <a class="btn btn-outline btn-sm" href="https://api.beezshield.com/contracts/risk-score" target="_blank">API endpoint</a>
+                </div>
+            </div>
+
+            <!-- Nav Links to SDK etc -->
+            <div class="flex gap-4 mt-8" style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+                <a class="btn btn-primary" href="sdk.html">SDK Guide</a>
+                <a class="btn btn-secondary" href="agentkit.html">AgentKit-style Example</a>
+                <a class="btn btn-outline" href="x402.html">x402 Flow</a>
+            </div>
+        </div>
+    </main>
+
+    <footer class="site-footer">
+        <div class="container footer-content">
+            <div class="footer-brand">
+                <div style="display: flex; align-items: center; gap: 0.5rem;">
+                    <img src="brand/beezshield-logo.svg?v=clean-logo-2" alt="BeezShield Logo" width="28" height="28" class="brand-logo-img">
+                    <span class="brand-text">BeezShield</span>
+                </div>
+                <p class="text-muted text-sm mt-2">Machine Trust Infrastructure</p>
+                <p class="footer-claim-note text-xs text-muted mt-4">BeezShield builds pre-execution risk decision tools for agents. It does not provide a security guarantee, trading guarantee, or official x402 endorsement.</p>
+            </div>
+            <div class="footer-links text-sm">
+                <a href="docs.html">Docs</a>
+                <a href="registry/x402scan.html">x402scan registry</a>
+                <a href="pricing.html">Pricing</a>
+                <a href="trust.html">Trust</a>
+                <a href="about.html">About</a>
+                <a href="https://github.com/chox-cell/Sentinel-Alpha">GitHub</a>
+                <a href="https://www.npmjs.com/package/@beezshield/sentinel">npm SDK</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            if (window.lucide) {
+                lucide.createIcons();
+            }
+        });
+    </script>
 </body>
 </html>
