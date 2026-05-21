@@ -301,7 +301,12 @@ def test_homepage_organization_json_ld():
 def test_trust_page_forbidden_phrases():
     trust_path = Path("apps/website/trust.html")
     assert trust_path.exists()
-    content = trust_path.read_text(encoding="utf-8").lower()
+    content = trust_path.read_text(encoding="utf-8")
+    
+    # Strip footer to avoid matching the exact required footer copy
+    import re
+    body_content = re.sub(r'<footer class="site-footer">.*?</footer>', '', content, flags=re.DOTALL).lower()
+    
     forbidden = [
         "official partnership",
         "endorsed by",
@@ -310,5 +315,24 @@ def test_trust_page_forbidden_phrases():
         "certified integration",
     ]
     for phrase in forbidden:
-        assert phrase not in content, f"Found forbidden phrase '{phrase}' in trust.html"
+        assert phrase not in body_content, f"Found forbidden phrase '{phrase}' in trust.html main body"
+
+
+def test_footer_claim_note():
+    expected_copy = "BeezShield provides pre-execution risk decision support and Trust Receipt tooling for autonomous agent workflows. Directory and validator signals are discoverability evidence only, not security guarantees, endorsements, or official partnerships."
+    all_pages = PAGES + [INDEX, REGISTRY_X402, PILOT_TRUST_RECEIPT]
+    
+    for page in all_pages:
+        html = page.read_text(encoding="utf-8")
+        assert expected_copy in html, f"Missing expected footer copy in {page}"
+        
+        # Verify Coinbase/Base/Agentic.Market are not mentioned in the footer section
+        import re
+        footer_match = re.search(r'<footer class="site-footer">.*?</footer>', html, re.DOTALL)
+        assert footer_match is not None, f"Missing footer in {page}"
+        footer_content = footer_match.group(0).lower()
+        
+        for forbidden_term in ["coinbase", "base", "agentic.market"]:
+            assert forbidden_term not in footer_content, f"Forbidden term '{forbidden_term}' found in footer of {page}"
+
 
