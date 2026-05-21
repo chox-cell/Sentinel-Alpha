@@ -16,7 +16,7 @@ def test_beezshield_prime_website():
     assert sorted(b.get("data-target") for b in builder_copy) == ["tab-curl", "tab-py", "tab-ts"]
 
     # Required copy
-    assert "Machine Trust Infrastructure for Autonomous Agents" in text_content
+    assert "Trust receipts for autonomous agent actions" in text_content
     assert "Pre-execution decision engine for agents" in text_content
     assert "Your agent should not execute blind" in text_content
     assert "api.beezshield.com" in html_content

@@ -80,12 +80,12 @@
                         <span class="pulse-dot"></span>
                         <span class="mono text-sm">Sentinel Alpha is live on Base</span>
                     </div>
-                    <h1>Machine Trust Infrastructure for Autonomous Agents</h1>
-                    <p class="subtitle">BeezShield gives bots a pre-execution decision layer before they touch unsafe contracts. <strong class="highlight">Your agent should not execute blind.</strong></p>
+                    <h1>Trust receipts for autonomous agent actions</h1>
+                    <p class="subtitle">Pre-execution Sentinel decision + post-action receipt map. <strong class="highlight">Your agent should not execute blind.</strong></p>
                     
                     <div class="cta-group">
-                        <a href="pilot/trust-receipt.html" class="btn btn-primary">Request Trust Receipt Pilot</a>
-                        <a href="#builder" class="btn btn-secondary">Test x402 API</a>
+                        <a href="pilot/trust-receipt.html" class="btn btn-primary">Request $50 Pilot</a>
+                        <a href="#builder" class="btn btn-secondary">View x402 API</a>
                     </div>
                 </div>
 
@@ -136,7 +136,7 @@
         <section class="proof-strip">
             <div class="container proof-container mono text-sm" style="display: flex; justify-content: space-between; flex-wrap: wrap; gap: 1rem;">
                 <div class="proof-item"><i data-lucide="check-circle" class="text-green" style="color:#10b981; margin-right:0.25rem;"></i> x402scan: Registered</div>
-                <div class="proof-item"><i data-lucide="clock" class="text-amber" style="color:var(--accent); margin-right:0.25rem;"></i> Agentic.Market: Validation pending (Bazaar v2 in progress)</div>
+                <div class="proof-item"><i data-lucide="check-circle" class="text-green" style="color:#10b981; margin-right:0.25rem;"></i> Agentic.Market: Validator passed (not listed)</div>
                 <div class="proof-item"><i data-lucide="minus-circle" class="text-muted" style="color:var(--text-muted); margin-right:0.25rem;"></i> Pay.sh: Not submitted</div>
                 <div class="proof-item"><i data-lucide="minus-circle" class="text-muted" style="color:var(--text-muted); margin-right:0.25rem;"></i> Ampersend: Not submitted</div>
             </div>
@@ -310,25 +310,7 @@
             </div>
         </section>
 
-        <!-- Verifiable Proof Card / x402scan -->
-        <section id="x402scan-proof" class="section">
-            <div class="container">
-                <div class="card" style="border: 1px solid var(--border-accent); background: linear-gradient(135deg, rgba(255, 176, 0, 0.05) 0%, rgba(5, 5, 5, 0.9) 100%); padding: 2.5rem;">
-                    <div style="display: flex; align-items: center; gap: 1rem; flex-wrap: wrap;" class="mb-4">
-                        <i data-lucide="badge-check" class="text-amber" style="width: 40px; height: 40px; color: var(--accent);"></i>
-                        <div>
-                            <h3 class="mono text-lg mb-1" style="color: var(--accent);">Registered on x402scan</h3>
-                            <p class="text-muted text-xs">Directory Listing Record — Verified Payable Resource on Base</p>
-                        </div>
-                    </div>
-                    <p class="text-sm text-muted mb-6">Sentinel Alpha is registered under the x402 protocol specification as a payable machine-to-machine risk-score resource. Builders can query the API using standard ERC-20 payment lanes on Base Mainnet.</p>
-                    <div class="flex gap-4" style="display: flex; gap: 1rem; flex-wrap: wrap;">
-                        <a href="registry/x402scan.html" class="btn btn-outline btn-sm">Inspect Registry Record</a>
-                        <a href="#quickstart" class="btn btn-primary btn-sm">Interactive Quickstart</a>
-                    </div>
-                </div>
-            </div>
-        </section>
+
 
         <!-- Developer Quickstart / Builder -->
         <section id="builder" class="section bg-panel">

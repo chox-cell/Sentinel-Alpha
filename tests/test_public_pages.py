@@ -83,7 +83,7 @@ def test_index_x402scan_brand_surface():
     assert "BeezShield" in html
     assert "Machine Trust Infrastructure" in html
     assert "favicon.svg" in html
-    assert "agentic.market: validation pending" in low
+    assert "agentic.market: validator passed (not listed)" in low
 
 
 def test_no_wordmark_references_in_any_active_file():
@@ -172,6 +172,7 @@ def test_pilot_trust_receipt_page():
     # Required pricing and description copy
     assert "$25" in html
     assert "$50" in html
+    assert "$250" in html
     assert "agentkit" in low
     assert "sentinel" in low
     assert "redacted" in low
@@ -189,9 +190,18 @@ def test_pilot_trust_receipt_page():
 
     # Review-ready packet components
     assert "review-ready packet" in low
-    assert "request $25 review packet" in low
+    assert "$50 trust receipt pilot" in low
+    assert "json" in low and "markdown" in low
+    assert "manual" in low
     assert "redacted proposed action" in low
     assert "sentinel decision" in low
     assert "post-action result ref" in low
     assert "not-checked boundary" in low
-    assert "buyer/operator-readable receipt map" in low
+
+    # Form inputs & Copy Button
+    assert "contact email" in low
+    assert "proposed action" in low
+    assert "chain" in low
+    assert "result ref" in low
+    assert "notes" in low
+    assert "copy packet json" in low
